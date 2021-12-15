@@ -397,19 +397,20 @@
             <div class="col-sm-6">
               <div class="contact-form">
                 <form action="https://formsubmit.co/pegolotti.luca@gmail.com" method="POST">
+                  <input type="hidden" name="_subject" value="New email from vascularmodel.io">
                   <div class="form-group">
-                    <input type="text" class="form-control input-lg" placeholder="Your Name" required>
+                    <input type="text" name="name" class="form-control input-lg" placeholder="Your Name" required>
                   </div>
                   <div class="form-group">
-                    <input type="email" class="form-control input-lg" placeholder="E-mail" required>
+                    <input type="email" name="email" class="form-control input-lg" placeholder="E-mail" required>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control input-lg" placeholder="Subject" required>
+                    <input type="text" name="subject" class="form-control input-lg" placeholder="Subject" required>
                   </div>
                   <div class="form-group">
-                    <textarea class="form-control input-lg" rows="5" placeholder="Message" required></textarea>
+                    <textarea class="form-control input-lg" name="message" rows="5" placeholder="Message" required></textarea>
                   </div>
-                  <button type="submit" class="btn wow bounceInRight" data-wow-delay="0.8s">Send</button>
+                  <button type="submit" class="btn wow bounceInRight" data-wow-delay="0.8s" style="color:white">Send</button>
                 </form>
               </div>
             </div>
