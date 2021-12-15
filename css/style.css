@@ -6,7 +6,7 @@ Master Stylesheet
 	Author:		 imransdesign.com
 	URL:		 http://imransdesign.com/
     Designed By: https://www.behance.net/poljakova
-	Version:	1.0	
+	Version:	1.0
 
 ---------------------------------------------------------------------------------*/
 
@@ -22,6 +22,7 @@ body {
 body .body {
 	height: 100%;
 }
+
 .cover {
 	position: absolute;
 	width: 100%;
@@ -41,7 +42,7 @@ body .body {
 	-webkit-border-radius: 0 !important;
 	-moz-border-radius: 0 !important;
 }
-*:focus { 
+*:focus {
 	outline: none !important;
 	box-shadow: none !important;
 }
@@ -167,17 +168,22 @@ section {
 	-ms-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 }
+
 .navbar-default .navbar-brand {
-	background-image: url(../img/logo.png);
+	background-image: url(../img/logo_VMR.png);
+	background-size: 80px;
 }
 .navbar-shrink .navbar-brand {
-	background-image: url(../img/logo.png);
+	background-image: url(../img/logo_VMR.png);
+	background-size: 80px;
 }
 .navbar-transparent .navbar-brand {
-	background-image: url(../img/logo.png);
+	background-image: url(../img/logo_VMR.png);
+	background-size: 80px;
 }
 .navbar-inverse .navbar-brand {
-	background-image: url(../img/logo.png);
+	background-image: url(../img/logo_VMR.png);
+	background-size: 80px;
 }
 
 /* Navbar links */
@@ -539,7 +545,7 @@ a.rotate-box-1:hover, a.rotate-box-2:hover {
 	z-index: 5;
 	margin-bottom:30px;
 	overflow:hidden;
-	
+
 }
 .portfolio_single_content:hover img{
 	 -o-transform: scale(2);
@@ -648,7 +654,7 @@ a.rotate-box-1:hover, a.rotate-box-2:hover {
 /* ===== Begin team ===== */
 .team-item {
 	height: 120px;
-}	
+}
 .team-item .team-triangle {
 	width: 120px;
 	height: 120px;
@@ -1140,4 +1146,181 @@ p.subtitle {
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
+
+.vmr {
+	font-size:1.5em;
+	margin-top:50px;
+	color: white;
+
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+select::-ms-expand {
+            width:12px;
+            border:none;
+            background:#fff;
+        }
+
 /* ===== End buttons ===== */
+
+/* ===== Begin Repository===== */
+.repository_area{}
+.repository{}
+.repository_top{}
+.repository_content_area{}
+.repository_menu{
+	text-align: center;
+	overflow: hidden;
+	margin-top:22px;
+	margin-bottom:48px;
+}
+.repository_menu ul{
+	list-style: none outside none;
+    text-align: center;
+}
+.repository_menu ul li{
+    display: inline-block;
+}
+.repository_menu ul li a{
+	color: #363940;
+	background: transparent;
+    display: inline-block;
+    margin: 4px;
+    padding: 8px 10px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.repository_content{}
+.repository_single_content{
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 5;
+	margin-bottom:30px;
+	overflow:hidden;
+	border: 1px solid #7d7d7d !important;
+}
+.repository_single_content:hover img{
+	 -o-transform: scale(2);
+	 -webkit-transform: scale(2);
+	 -moz-transform: scale(2);
+	 -ms-transform: scale(2);
+	 transform: scale(2);
+}
+
+.repository_single_content img{
+	width: 100%;
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 6;
+	cursor:pointer;
+	-moz-transition:all 1s;
+	-webkit-transition:all 1s;
+	-o-transition:all 1s;
+	-ms-transition:all 1s;
+	transition:all 1s;
+}
+.repository_single_content .canv{
+	width:100% !important;
+	height:100% !important;
+}
+
+.repository_single_content div{
+	background: none repeat scroll 0 0 rgba(0,0,0,.4);
+	/* bottom: -100%; */
+	color: #FFC000;
+	font-weight: bold;
+	left: 0;
+	margin: 0;
+	min-height: 90px;
+	/* padding:31px 5px 0 10px; */
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 12;
+	border-top:0;
+}
+.repository_single_content div{
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:10;
+	width:100%;
+	height:100%;
+	text-align:center;
+	transform:scale(0);
+	transition:all .3s;
+	opacity:0;
+}
+
+.repository_single_content:hover div{
+	transform:scale(1);
+	opacity:1;
+}
+.repository_single_content div a{
+	color: #FFFFFF;
+	display: block;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 40%;
+	padding-bottom: 10px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+.repository_single_content div span{
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+.repository_content{}
+.repository_content{
+    margin-top: 36px;
+    overflow: hidden; */
+}
+/* ===== End Portfolio===== */
