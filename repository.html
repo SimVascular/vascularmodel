@@ -134,7 +134,7 @@
                   <div class="repository_single_content">
                     <img src="repository_img/0066_0001.png" alt="title"/>
                     <div>
-                      <a href="https://www.dropbox.com/s/zy6i2ldd314zro3/0066_0001.zip?dl=1" target="_blank" gtag('event', 'Model interaction', 'Download', '0066_0001', '', {'nonInteration':false}); downlaod>0066_0001</a>
+                      <a href="https://www.dropbox.com/s/zy6i2ldd314zro3/0066_0001.zip?dl=1" target="_blank" id="Btn1" downlaod>0066_0001</a>
                       <span>Click the model name to download</span>
                     </div>
                   </div>
@@ -1089,6 +1089,19 @@
 <script src="inc/jquery.easing.min.js"></script>
 <script src="inc/jquery.counterup.min.js"></script>
 <script src="inc/smoothscroll.js"></script>
+
+<script>
+ $("#Btn1").click( function() {
+
+    gtag('event', 'Click', {
+        'send_to': 'G-SRE0G5Y7Y5',
+        'event_category': 'Btn1',
+        'event_label': 'test',
+        'value': '1'
+   });
+
+ });
+ </script>
 
 <!-- Theme JS -->
 <script src="js/theme.js"></script>
