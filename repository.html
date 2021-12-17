@@ -58,16 +58,31 @@
   <div class="page-loader"></div>  <!-- Display loading image while page loads -->
   <div class="body">
 
-    <header class="sticky">
-      <a href="index.html" class="logo" style="text-decoration:none;">VMR</a>
-      <ul>
-        <li><a href="index.html" style="text-decoration:none;">Home</a></li>
-        <li><a href="#" style="text-decoration:none;">Repository</a></li>
-        <li><a href="documentation.html" style="text-decoration:none;">Documentation</a></li>
-        <li><a href="FAQs.html" style="text-decoration:none;">FAQs</a></li>
-        <li><a class="page-scroll" href="#contact-section" style="text-decoration:none;">Contacts</a></li>
-      </ul>
-    </header>
+    <nav id="main-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-left:10px; padding:0px;">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand page-scroll" id="logo" href="index.html">VMR</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html" style="text-decoration:none;">Home</a></li>
+            <li><a href="#" style="text-decoration:none; color: white;">Repository</a></li>
+            <li><a href="documentation.html" style="text-decoration:none;">Documentation</a></li>
+            <li><a href="FAQs.html" style="text-decoration:none;">FAQs</a></li>
+            <li><a class="page-scroll" href="#contact-section" style="text-decoration:none;">Contacts</a></li>
+        </div>
+      </div>
+  </nav>
+
+
 
     <!-- ========= END HEADER =========-->
 
@@ -92,7 +107,7 @@
   <div class="container">
     <div class="row" style="justify-content: center; text-align:center;">
       <div class="col-md-12 mx-auto" style="justify-content: center; text-align:center; color:white; width:100%;">
-        <p class="text-center"> First time visiting the Vascular Model Repository? Read our <a href=documentation.html>Documentation</a> and <a href="FAQs.html">FAQs</a> to get started. To download a model, click on model name when hovering on the corresponding picture.
+        <p class="text-center"> First time visiting the Vascular Model Repository? Read our <a href=documentation.html style="color: #5A9FE4; text-decoration:none;">Documentation</a> and <a href="FAQs.html" style="color: #5A9FE4; text-decoration:none;">FAQs</a> to get started. To download a model, click on model name when hovering on the corresponding picture.
       </div>
     </row>
   </div>
@@ -107,7 +122,7 @@
           <!-- Begin page header-->
           <div class="page-header-wrapper">
             <div class="container">
-              <div class="page-header text-center wow fadeInDown" data-wow-delay="0.4s">
+              <div class="page-header text-center" style="margin:0px;">
                 <h2 style="color:white;">Repository</h2>
               </div>
             </div>
@@ -117,7 +132,7 @@
             <div class="repository_menu" id="filters">
               <ul>
                 <li class="active_prot_menu"><a href="#repository_menu" data-filter="*">all</a></li>
-                <li><a href="#repository_menu" data-filter=".animal">Animal</a></li>
+                <!-- <li><a href="#repository_menu" data-filter=".animal">Animal</a></li> -->
                 <li><a href="#repository_menu" data-filter=".aorta" >Aorta</a></li>
                 <li><a href="#repository_menu" data-filter=".aortofemoral">Aortofemoral</a></li>
                 <li><a href="#repository_menu" data-filter=".cerebrovascular">Cerebrovascular</a></li>
@@ -128,7 +143,7 @@
             </div>
             <div class="repository_content">
               <div class="row" id="repository">
-                <div class="col-xs-12 col-sm-4 animal">
+                <!-- <div class="col-xs-12 col-sm-4 animal">
                   <div class="repository_single_content">
                     <img src="repository_img/0066_0001.png" alt="title"/>
                     <div>
@@ -208,7 +223,7 @@
                       <span>Click model name to download</span>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-xs-12 col-sm-4 aorta">
                   <div class="repository_single_content">
                     <img src="repository_img/0063_1001.png" alt="title"/>
@@ -812,7 +827,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-12 col-sm-4 coronary">
+                <!-- <div class="col-xs-12 col-sm-4 coronary">
                   <div class="repository_single_content">
                     <img src="repository_img/0158_0001.png" alt="title"/>
                     <div>
@@ -820,8 +835,8 @@
                       <span>Click model name to download</span>
                     </div>
                   </div>
-                </div>
-                <div class="col-xs-12 col-sm-4 coronary">
+                </div> -->
+                <!-- <div class="col-xs-12 col-sm-4 coronary">
                   <div class="repository_single_content">
                     <img src="repository_img/0164_0001.png" alt="title"/>
                     <div>
@@ -829,8 +844,8 @@
                       <span>Click model name to download</span>
                     </div>
                   </div>
-                </div>
-                <div class="col-xs-12 col-sm-4 coronary">
+                </div> -->
+                <!-- <div class="col-xs-12 col-sm-4 coronary">
                   <div class="repository_single_content">
                     <img src="repository_img/0165_0001.png" alt="title"/>
                     <div>
@@ -838,7 +853,7 @@
                       <span>Click model name to download</span>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-xs-12 col-sm-4 coronary">
                   <div class="repository_single_content">
                     <img src="repository_img/0172_0001.png" alt="title"/>

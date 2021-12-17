@@ -147,6 +147,17 @@ header .logo{
   transition: 0.6s;
 }
 
+#logo {
+  position: relative;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: 0.6s;
+}
+
 header ul {
   position: relative;
   display: flex;
@@ -204,140 +215,22 @@ header.sticky
 
 /* ===== Begin navbar ===== */
 .navbar {
-	margin: 0;
-	border: none;
-	-webkit-transition: all 0.2s ease-in-out;
-	-moz-transition: all 0.2s ease-in-out;
-	-o-transition: all 0.2s ease-in-out;
-	-ms-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
-}
-.navbar .container {
-	padding-left: 50px;
-	padding-right: 50px;
+  border: 0px;
 }
 
-
-/* Navbar brand (logo) */
-.navbar-brand {
-	background-repeat: no-repeat;
-	background-position: left center;
-	width: 150px;
-	height: auto;
-	padding: 24px 0;
-	text-indent: -99999px;
-	font-size: 24px;
-	font-weight: 600;
-	line-height: 20px;
-	letter-spacing: 4px;
-	-webkit-transition: all 0.2s ease-in-out;
-	-moz-transition: all 0.2s ease-in-out;
-	-o-transition: all 0.2s ease-in-out;
-	-ms-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
 }
 
-.navbar-default .navbar-brand {
-	background-image: url(../img/logo_VMR.png);
-	background-size: 80px;
-}
-.navbar-shrink .navbar-brand {
-	background-image: url(../img/logo_VMR.png);
-	background-size: 80px;
-}
-.navbar-transparent .navbar-brand {
-	background-image: url(../img/logo_VMR.png);
-	background-size: 80px;
-}
-.navbar-inverse .navbar-brand {
-	background-image: url(../img/logo_VMR.png);
-	background-size: 80px;
+.navbar .navbar-collapse {
+  text-align: center;
 }
 
-/* Navbar links */
-.navbar-nav > li > a {
-	padding: 24px 0;
-	margin-left: 25px;
-	text-transform: uppercase;
-	font-size: 13px;
-	font-weight: 600;
-}
-
-/* Navbar dropdown */
-.dropdown-left {
-	left: 0 !important;
-	right: auto !important;
-}
-.dropdown-right {
-	right: 0 !important;
-	left: auto !important;
-}
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-	background-color: transparent;
-}
-.navbar-default .dropdown-menu {
-	padding: 10px 0;
-}
-.dropdown-menu > li > a {
-	padding: 4px 20px;
-	text-transform: uppercase;
-}
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > li > a.active, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-	text-decoration: none;
-	background-color: transparent;
-}
-
-/* Navbar inverse dropdown */
-.navbar-inverse .dropdown-menu {
-	padding: 10px 0;
-}
-
-/* Navbar fixed */
-.navbar-fixed-top .container {
-	-webkit-transition: all 0.2s ease-in-out;
-	-moz-transition: all 0.2s ease-in-out;
-	-o-transition: all 0.2s ease-in-out;
-	-ms-transition: all 0.2s ease-in-out;
-	transition: all 0.2s ease-in-out;
-}
-
-.navbar-shrink {
-	z-index: 9999;
-	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-}
-.navbar-shrink .navbar-brand {
-	font-size: 20px;
-}
-.navbar-default.navbar-fixed-top.navbar-shrink .container {
-}
-.navbar-fixed-top.navbar-shrink .container {
-	padding-top: 0 !important;
-	padding-bottom: 0 !important;
-}
-.navbar-default.navbar-fixed-top.navbar-shrink .navbar-nav > li > a {
-	padding-top: 24px;
-	padding-bottom: 24px;
-}
-
-/* Navbar transparent */
-.navbar-transparent {
-	background-color: rgba(0, 0, 0, 0);
-}
-.navbar-fixed-top.navbar-transparent .container {
-	padding-top: 30px;
-	padding-bottom: 0;
-}
-.navbar-fixed-bottom.navbar-transparent .container {
-	padding-top: 0;
-	padding-bottom: 30px;
-}
-.navbar-transparent .navbar-nav > li > a {
-	color: #FFF;
-}
-.navbar-transparent .navbar-brand, .navbar-transparent .navbar-brand:focus {
-	color: #FFF;
+.navbar ul li a {
+  letter-spacing: 2px;
+  font-weight: 500px;
 }
 /* ===== End navbar ===== */
 
@@ -1406,3 +1299,16 @@ select::-ms-expand {
     overflow: hidden; */
 }
 /* ===== End Portfolio===== */
+
+/* ===== Start FAQs ====== */
+.question-faqs {
+  color: #05080B;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.answer-faqs {
+  color: #05080B;
+  font-weight: 300;
+  margin-bottom: 50px;
+}
