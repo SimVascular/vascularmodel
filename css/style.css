@@ -133,7 +133,7 @@ header {
   align-items: center;
   z-index: 12;
   transition: 0.6s;
-  padding: 40px 100px;
+  padding: 40px 10%;
 }
 
 header .logo{
@@ -152,6 +152,20 @@ header ul {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#open-repository-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 16px;
+  border-radius: 12px;
+  border-collapse: separate; 
 }
 
 header ul li
@@ -174,7 +188,7 @@ header ul li a
 
 header.sticky
 {
-  padding: 5px 100px;
+  padding: 5px 10%;
   background: #363940;
 }
 
