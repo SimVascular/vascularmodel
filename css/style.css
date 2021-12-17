@@ -1273,15 +1273,26 @@ select::-ms-expand {
 /* ===== End buttons ===== */
 
 /* ===== Begin Repository===== */
-.repository_area{}
-.repository{}
+#repository-section{
+  background-color: #05080B;
+}
+
+.repository_area{
+  background-color:#05080B;
+}
+.repository{
+
+}
 .repository_top{}
-.repository_content_area{}
+.repository_content_area{
+  background-color:#05080B;
+}
 .repository_menu{
 	text-align: center;
 	overflow: hidden;
 	margin-top:22px;
 	margin-bottom:48px;
+  background-color: #05080B;
 }
 .repository_menu ul{
 	list-style: none outside none;
@@ -1291,13 +1302,15 @@ select::-ms-expand {
     display: inline-block;
 }
 .repository_menu ul li a{
-	color: #363940;
+	/* color: white; #363940; */
+  color: white;
 	background: transparent;
-    display: inline-block;
-    margin: 4px;
-    padding: 8px 10px;
-    text-decoration: none;
-    text-transform: uppercase;
+  display: inline-block;
+  margin: 4px;
+  padding: 8px 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+
 }
 .repository_content{}
 .repository_single_content{
@@ -1305,6 +1318,7 @@ select::-ms-expand {
 	top: 0;
 	left: 0;
 	width: 100%;
+  background-color:#05080B;
 	z-index: 5;
 	margin-bottom:30px;
 	overflow:hidden;
