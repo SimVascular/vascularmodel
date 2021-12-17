@@ -88,22 +88,27 @@
       <div class="extra-space-l"></div>
       <div class="extra-space-l"></div>
 
-      <!-- <div class="container">
-
-      <select id="model-type" class="form-select" aria-label="Default select example">
-      <option selected>Select model type</option>
-      <option value="all">All</option>
-      <option value="animal">Animal</option>
-      <option value="aorta">Aorta</option>
-      <option value="aortofemoral">Aortofemoral</option>
-      <option value="cerebrovascular">Cerebrovascular</option>
-      <option value="congenital_heart">Congenital heart disease</option>
-      <option value="pulmonary">Pulmonary</option>
-    </select>
-  </div> -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mx-auto">
+        <h3 class="title-documentation">Getting started</h3>
+      </div>
+      <div class="col-md-12 mx-auto">
+        <p class="body-documentation">The Vascular Model Repository is a library of human cardiovascular models. Model projects can be downloaded in <code>.zip</code> format from the <a href="repository.html" style="color: #5A9FE4; text-decoration:none;">Repository</a>. Each archive contains a project compatible with SimVascular, an open-source software for patient-specific cardiovascular modeling and simulation. We refer to the <a href="http://simvascular.github.io/" target="_blank" style="color: #5A9FE4;">SimVascular website</a> and <a href=http://simvascular.github.io/docsQuickGuide.html target="_blank" style="color: #5A9FE4;">Getting started page</a> for an in-depth discussion of the software capabilities and its usage. In this documentation, we limit ourselves to recall that a SimVascular project can be opened by clicking <span style="font-weight:600">File > Open SV Project...</span> in the graphical user interface and by selecting the desired project folder.</p>
+        <p class="body-documentation">Although the models are compatible with SimVascular by design, some components (in particular, image data and computational meshes) can be easily opened in other pieces of software too. Here is a brief description of the subfolders contained in each project:</p>
+        <p class="list-documentation"><span style="font-weight:600">Images:</span> directory containing medical image data in <code>.vti</code>, which can be opened for example using <a style="color: #5A9FE4;" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p class="list-documentation"><span style="font-weight:600">Paths:</span> directory containing path files in <code>*.pth</code> format, where <code>*</code> is usually one of the vessels making up the current model. Path files store path points (in <code>.xml</code> format) manually identified during the centerline identification stage of SimVascular.</p>
+        <p class="list-documentation"><span style="font-weight:600">Segmentations:</span> directory containing contour files in <code>*.ctgr</code> format, where <code>*</code> is usually one of the vessels making up the current model. Contour files store contour points (in <code>.xml</code> format) manually identified during the segmentation stage of SimVascular.</p>
+        <p class="list-documentation"><span style="font-weight:600">Models:</span> directory containing the surface model of the geometry.</p>
+        <p class="list-documentation"><span style="font-weight:600">Meshes:</span> directory containing the meshes of the model. Surface meshes are stored in <code>.vtp</code>, while volumetric meshes are stored in <code>.msh</code> and <code>.vtu</code> formats; <code>.vtp</code> and <code>.vtu</code> files can be opened for example using <a style="color: #5A9FE4;" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p class="list-documentation"><span style="font-weight:600">flow-files:</span> directory containing inflow boundary conditions. These as stored in files called <code>inflow_3d.flow</code>, i.e., as raw text files in which each row corresponds to a particular timestep and flowrate value. Note that, in SimVascular, a positive inflow requires a negative sign (as the normal to the inlet surface and the velocity field have opposite orientations).</p>
+        <p class="list-documentation"><span style="font-weight:600">Simulations:</span> directory containing simulation files compatible with SimVascular. Please note that simulation results are currently not included in the repository.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- Begin contact section -->
-  <section id="contact-section" class="page text-white parallax" data-stellar-background-ratio="0.5" style="background-image: url(img/map-bg.png);">
+  <section id="contact-section" class="page text-white parallax" data-stellar-background-ratio="0.5" style="background-image: url(img/map-bg.png); z-index: 1000;">
     <div class="cover"></div>
 
     <!-- Begin page header-->

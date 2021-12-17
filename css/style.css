@@ -1312,3 +1312,23 @@ select::-ms-expand {
   font-weight: 300;
   margin-bottom: 50px;
 }
+
+/* ===== Start Documentation ====== */
+.title-documentation {
+  color: #05080B;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.body-documentation {
+  color: #05080B;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.list-documentation {
+  color: #05080B;
+  font-weight: 300;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
