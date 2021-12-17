@@ -9,7 +9,7 @@ Master Stylesheet
 	Version:	1.0
 
 ---------------------------------------------------------------------------------*/
-
+@import url('https://fonts.googleapis.com/?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 html {
 	height: 100% !important;
 }
@@ -49,33 +49,33 @@ body .body {
 
 /* Begin Fonts */
 body {
-	font-family: 'Roboto', Helvetica, Arial, sans-serif;
+	font-family: 'Poppins', sans-serif;
 }
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Roboto', Helvetica, Arial, sans-serif;
+	font-family: 'Poppins', sans-serif;
 	font-weight: 700;
 	margin-bottom: 10px;
 }
 h1 {
-	font-size: 36px;
+	font-size: 42px;
 }
 h2 {
-	font-size: 30px;
+	font-size: 34px;
 }
 h3 {
-	font-size: 26px;
+	font-size: 30px;
 }
 h4 {
-	font-size: 22px;
+	font-size: 25px;
 }
 h5 {
-	font-size: 18px;
+	font-size: 20px;
 }
 p {
-	font: 14px/1.5em "Roboto";
+	font: 16px/1.5em "Poppins", sans-serif;
 }
 .navbar-nav > li > a {
-	font-family: "Lato", Helvetica, Arial, sans-serif;
+	font-family: "Poppins", sans-serif;
 }
 /* End Fonts */
 
@@ -122,9 +122,61 @@ section {
   	background-size: cover;
 }
 
-#header {
-	/* height: 98px; */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 12;
+  transition: 0.6s;
+  padding: 40px 100px;
 }
+
+header .logo{
+  position: relative;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: 0.6s;
+}
+
+header ul {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header ul li
+{
+  position: relative;
+  list-style: none;
+  text-decoration: none;
+}
+
+header ul li a
+{
+  position: relative;
+  margin: 0 15px;
+  text-decoration: none;
+  color: #fff;
+  letter-spacing: 2px;
+  font-weight: 500px;
+  transition: 0.6s;
+}
+
+header.sticky
+{
+  padding: 5px 100px;
+  background: #363940;
+}
+
 
 
 /* ===== Begin text colors ===== */
