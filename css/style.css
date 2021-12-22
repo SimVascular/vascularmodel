@@ -1280,7 +1280,7 @@ select::-ms-expand {
 	display: block;
 	font-size: 18px;
 	font-weight: bold;
-	margin-top: 40%;
+	margin-top: 30%;
 	padding-bottom: 10px;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -1299,6 +1299,10 @@ select::-ms-expand {
   border-radius: 12px;
   border-collapse: separate;
   font-weight:700;
+}
+
+.repository_single_content div a:hover{
+	cursor: pointer;
 }
 
 .repository_single_content div span{
