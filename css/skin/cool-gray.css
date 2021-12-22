@@ -44,10 +44,10 @@ a, a:hover, a:focus {
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
 	background-color: transparent;
-	
+
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li.active > a {
-	
+
 }
 /* Navbar inverse */
 .navbar-inverse {
@@ -139,7 +139,7 @@ a, a:hover, a:focus {
 
 /* === CTA Section, Social & Partners === */
 #cta-section, #partners-section, #social-section {
-	background: #f8f8f8 url('../../img/pat-bg.png') repeat;
+	background: #f8f8f8; /* url('../../img/pat-bg.png') repeat; */
 }
 
 
@@ -211,7 +211,7 @@ a, a:hover, a:focus {
 
 
 /* === Buttons === */
-.btn-default, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active { 
+.btn-default, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active {
 	background: #363940;
 	color: #fff;
 }
