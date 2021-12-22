@@ -1333,6 +1333,17 @@ select::-ms-expand {
   margin-bottom: 50px;
 }
 
+.license-faqs {
+  color: #05080B;
+  font-weight: 200;
+  width:100%;
+  height:200px;
+  overflow-y: scroll;
+  resize: none;
+  margin-bottom: 50px;
+  padding:5px;
+}
+
 /* ===== Start Documentation ====== */
 .title-documentation {
   color: #05080B;
