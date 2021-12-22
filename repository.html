@@ -228,7 +228,9 @@
                   <div class="repository_single_content">
                     <img src="repository_img/0063_1001.png" alt="title"/>
                     <div>
-                      <a href="svprojects/0063_1001.zip" target="_blank" id="0063_1001" download>0063_1001</a>
+                      <!-- <a href="/svprojects/0063_1001.zip" id="0063_1001">0063_1001</a> -->
+                      <button type="submit" onclick="window.open('svprojects/0063_1001.zip')" id="0063_1001">0063_1001</button>
+                      <!-- <input type="button" id="btn" value="Download" /> -->
                       <span>Click model name to download</span>
                     </div>
                   </div>
@@ -1158,6 +1160,37 @@
 <script src="inc/jquery.counterup.min.js"></script>
 <script src="inc/smoothscroll.js"></script>
 <script src="js/download_tracking.js"></script>
+
+<script>
+function download(file, text) {
+
+    //creating an invisible element
+    var element = document.createElement('a');
+    element.setAttribute('href', text);
+    element.setAttribute('download', file);
+    console.log(element.getAttribute('href'));
+    // Above code is equivalent to
+    // <a href="path of file" download="file name">
+
+    document.body.appendChild(element);
+
+    //onClick property
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+// Start file download.
+document.getElementById("btn")
+.addEventListener("click", function() {
+    // Generate download of hello.txt
+    // file with some content
+    var text = "svprojects/0063_1001.zip";
+    var filename = "svprojects/0063_1001.zip";
+
+    download(filename, text);
+}, false);
+</script>
 
 <!-- Theme JS -->
 <script src="js/theme.js"></script>
