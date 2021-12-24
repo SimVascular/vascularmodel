@@ -4,12 +4,12 @@
 
 /*==========  Mobile First Method  ==========*/
 
-/* Custom, iPhone Retina */ 
+/* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
-    
+
 }
 
-/* Extra Small Devices, Phones */ 
+/* Extra Small Devices, Phones */
 @media only screen and (min-width : 480px) {
 
 }
@@ -29,7 +29,7 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
-	
+
 }
 
 
@@ -47,7 +47,7 @@
 	}
 
 	/* Team */
-	.team-item .team-triangle {
+	/* .team-item .team-triangle {
 		width: 90px;
 		height: 90px;
 	}
@@ -60,7 +60,7 @@
 	}
 	.team-hover p {
 		font-size: 14px;
-	}
+	} */
 
 }
 
@@ -69,7 +69,7 @@
 
 
 	/* Team */
-	.team-item .team-triangle {
+	/* .team-item .team-triangle {
 		width: 120px;
 		height: 120px;
 	}
@@ -89,7 +89,7 @@
         float: left;
         margin-bottom: 80px;
         width: 33.3333%;
-    }
+    } */
 
 	/* Prices */
 	.price-box-featured .panel {
@@ -220,7 +220,7 @@
 
 	/* Rotate Box */
 	.rotate-box-1 .rotate-box-info {
-		padding-left: 0; 
+		padding-left: 0;
 	  	text-align: center;
 	}
 	.rotate-box-1 .rotate-box-icon {
@@ -234,11 +234,11 @@
 	}
 
 	/* Team */
-	 #team-section .col-md-2 {
+	 /* #team-section .col-md-2 {
         width: 50%;
         float: left;
         margin-bottom: 80px;
-    }
+    } */
 
 	/* Prices */
 	.prices .price-box-featured .panel-footer {
@@ -263,17 +263,17 @@
 
 }
 
-/* Extra Small Devices, Phones */ 
+/* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
 
 	/* Team */
-	 #team-section .col-md-2 {
+	 /* #team-section .col-md-2 {
         width: 100%;
-    }
+    } */
 
 }
 
-/* Custom, iPhone Retina */ 
+/* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
-    
+
 }
