@@ -654,7 +654,7 @@ a.rotate-box-1:hover, a.rotate-box-2:hover {
 	/* position: absolute; */
 	/* left: -37px; */
 	/* width: 200px; */
-	height: 200px;
+	height: 100%;
   border-radius: 50%;
 }
 
