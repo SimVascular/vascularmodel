@@ -266,10 +266,21 @@
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
 
-	/* Team */
-	 /* #team-section .col-md-2 {
-        width: 100%;
-    } */
+  .team-item {
+  	height: 150px;
+  }
+  .team-item .team-triangle {
+  	width: 150px;
+  	height: 150px;
+  }
+
+  .team-hover p {
+      color: #ffffff;
+      font-size: 16px;
+      position: relative;
+      margin-top: 65px;
+      font-weight: 400;
+  }
 
 }
 
