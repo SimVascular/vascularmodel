@@ -1,0 +1,3 @@
+# command to update https certificate on tetra
+
+sudo certbot --apache
