@@ -3,7 +3,7 @@ function parseFileDimensions(data) {
   let models = data.split(/\r?\n/)
   let numModels = models.length
   for (var i = 0; i <= numModels; ++i) {
-    if (models[i].length > 0) {
+    if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
         let model = data.split(/\t/)
         modelDict[model[1].replace('.zip','')] = model[0].replace('M','');
@@ -18,7 +18,7 @@ function parseFile(data) {
   let models = data.split(/\r?\n/)
   let numModels = models.length
   for (var i = 0; i <= numModels; ++i) {
-    if (models[i].length > 0) {
+    if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
         modelDict[models[i]] = 'hello'
       }
