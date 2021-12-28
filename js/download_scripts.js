@@ -15,7 +15,7 @@ let selectedModels = []
 let selectionColor = '#4caf50'
 let downlaodButtonActivated = false
 
-console.log(loadFile(pathRoot + '/repository_text/aorta.txt'))
+console.log(loadFile('repository_text/aorta.txt'))
 
 function hexc(colorval) {
 var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
