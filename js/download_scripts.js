@@ -81,7 +81,7 @@ let aortaFiles
 $.get('repository_text/aorta.txt', function(data) {
    console.log('running aorta')
    aortaFiles = parseFile(data, fileDimensions, 'aorta')
-   populate(aortaFiles, repoWindow)
+   // populate(aortaFiles, repoWindow)
 }, 'text');
 
 let aortofemoralFiles
