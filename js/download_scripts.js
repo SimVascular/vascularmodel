@@ -130,22 +130,22 @@ $(window).ready(function() {
 
 // isotope menu
 $(window).load(function() {
-  $(document).on('click', '.repository_menu ul li', function(){
-    $('.repository_menu ul li').removeClass('active_prot_menu');
-    $(this).addClass('active_prot_menu');
-  });
-
-  var $container = $('#repository');
-  $container.isotope({
-    itemSelector: '.col-sm-4',
-    layoutMode: 'fitRows'
-  });
-
-  $(document).on('click', '#filters', function() {
-    var filterValue = $(this).attr('data-filter');
-    $container.isotope({ filter: filterValue });
-    return false;
-  });
+  // $(document).on('click', '.repository_menu ul li', function(){
+  //   $('.repository_menu ul li').removeClass('active_prot_menu');
+  //   $(this).addClass('active_prot_menu');
+  // });
+  //
+  // var $container = $('#repository');
+  // $container.isotope({
+  //   itemSelector: '.col-sm-4',
+  //   layoutMode: 'fitRows'
+  // });
+  //
+  // $(document).on('click', '#filters', function() {
+  //   var filterValue = $(this).attr('data-filter');
+  //   $container.isotope({ filter: filterValue });
+  //   return false;
+  // });
 
   $(document).on('click', '.repository_single_content', function() {
     let contentStyle = getComputedStyle($(this)[0])
