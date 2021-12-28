@@ -17,7 +17,7 @@ function readTXT(xmlHttpFile) {
 let selectedModels = []
 let selectionColor = '#4caf50'
 let downlaodButtonActivated = false
-let xmlhttp = loadFile('repository_text/aorta.txt')
+let xmlhttp = loadXML('repository_text/aorta.txt')
 console.log(readTXT(xmlhttp))
 // console.log(loadFile('repository_text/aorta.txt'))
 
