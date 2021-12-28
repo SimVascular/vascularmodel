@@ -42,7 +42,9 @@ function populate(files, element) {
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
   for (var i = 0; i < numFiles; i++) {
+    console.log('appending ' + arrayFiles[i][0])
     element.appendChild(generateContent(arrayFiles[i][0], arrayFiles[i][1]))
+    console.log(element)
   }
 }
 
