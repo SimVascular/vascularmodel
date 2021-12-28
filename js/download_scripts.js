@@ -43,9 +43,7 @@ function populate(files, element) {
   for (var i = 0; i < numFiles; i++) {
     // then the file is in svprojects
     if (arrayFiles[i][1]['dim'] != null) {
-      console.log('appending ' + arrayFiles[i][0])
       element.appendChild(generateContent(arrayFiles[i][0], arrayFiles[i][1]))
-      console.log(element)
     }
   }
 }
@@ -78,8 +76,7 @@ function generateContent(fileName, fileData) {
   return extDiv
 }
 
-// isotope menu
-$(window).load(function() {
+$(window).ready(function() {
   let repoWindow = document.getElementById("repository")
 
   let fileDimensions;
@@ -123,7 +120,10 @@ $(window).load(function() {
      pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
      populate(pulmonaryFiles, repoWindow)
   }, 'text');
+});
 
+// isotope menu
+$(window).load(function() {
   $(document).on('click', '.repository_menu ul li', function(){
     $('.repository_menu ul li').removeClass('active_prot_menu');
     $(this).addClass('active_prot_menu');
@@ -133,8 +133,9 @@ $(window).load(function() {
   $container.isotope({
     itemSelector: '.col-sm-4',
     layoutMode: 'fitRows'
-    });
-    $('#filters').on( 'click', 'a', function() {
+  });
+
+  $('#filters').on('click', 'a', function() {
     var filterValue = $(this).attr('data-filter');
     $container.isotope({ filter: filterValue });
     return false;
