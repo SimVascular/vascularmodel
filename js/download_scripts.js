@@ -37,10 +37,38 @@ function parseFile(data, fDimensions, fileClass) {
   return modelDict
 }
 
+function populate(files, element) {
+  console.log('running this')
+  let arrayFiles = Object.entries(files)
+  let numFiles = arrayFiles.length
+  for (var i = 0; i < numFiles; i++) {
+    console.log(arrayFiles[i]);
+    console.log(numFiles[i]);
+  }
+  // for (var i = 0; i < numFiles; i++) {
+  //   if (files[i]['dim'] != null) {
+  //     element.appendChild(generateContent(files[i]));
+  //   }
+  // }
+}
+
+function generateContent(fileData) {
+  let extDiv = document.createElement("div");
+  extDiv.classList.add("col-xs-12")
+  extDiv.classList.add("col-sm-4")
+  extDiv.classList.add(fileData.class)
+
+  let innerDiv = document.createElement("div");
+  innerDiv.classList.add("repository_single_content")
+  innerDiv.id = fileData
+}
+
+let repoWindow = document.getElementById("repository")
 let aortaFiles;
 $.get('repository_text/aorta.txt', function(data) {
    console.log('running aorta')
    aortaFiles = parseFile(data, fileDimensions, 'aorta')
+   populate(aortaFiles, repoWindow)
 }, 'text');
 
 let aortofemoralFiles;
@@ -67,38 +95,6 @@ let pulmonaryFiles;
 $.get('repository_text/pulmonary.txt', function(data) {
    pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
 }, 'text');
-
-
-// populating window
-let repoWindow = document.getElementById("repository")
-
-function generateContent(fileData) {
-  let extDiv = document.createElement("div");
-  extDiv.classList.add("col-xs-12")
-  extDiv.classList.add("col-sm-4")
-  extDiv.classList.add(fileData.class)
-
-  let innerDiv = document.createElement("div");
-  innerDiv.classList.add("repository_single_content")
-  innerDiv.id = fileData
-}
-
-function populate(files, element) {
-  console.log('running this')
-  // let arrayFiles = Object.entries(files)
-  // let numFiles = arrayFiles.length
-  // for (var i = 0; i < numFiles; i++) {
-  //   console.log(arrayFiles[i]);
-  //   console.log(numFiles[i]);
-  // }
-  // for (var i = 0; i < numFiles; i++) {
-  //   if (files[i]['dim'] != null) {
-  //     element.appendChild(generateContent(files[i]));
-  //   }
-  // }
-}
-
-populate(aortaFiles, repoWindow)
 
 // selecting models
 
