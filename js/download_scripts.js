@@ -1,7 +1,8 @@
+// retrieving repository info
+
 function parseFileDimensions(data) {
   let dimensionDict = {}
   let models = data.split(/\r?\n/)
-  console.log(models)
   let numModels = models.length
   for (var i = 0; i <= numModels; ++i) {
     if (models[i] != null && models[i].length > 0) {
@@ -18,7 +19,6 @@ $.get('repository_text/file_dimensions.txt', function(data) {
   fileDimensions = parseFileDimensions(data)
 }, 'text');
 
-
 function parseFile(data) {
   let modelDict = {}
   let models = data.split(/\r?\n/)
@@ -26,7 +26,10 @@ function parseFile(data) {
   for (var i = 0; i <= numModels; ++i) {
     if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
-        modelDict[models[i]] = fileDimensions[models[i]]
+        fileData = {path: 'svprojects/' + models[i] + '.zip',
+                    dim: fileDimensions[models[i]],
+                    image: 'repository_img/' + models[i] + '.png'}
+        modelDict[models[i]] = fileData
       }
     }
   }
@@ -52,6 +55,16 @@ $.get('repository_text/congenital_heart.txt', function(data) {
 $.get('repository_text/coronary.txt', function(data) {
    coronaryFiles = parseFile(data)
 }, 'text');
+
+// // populating window
+// let repoWindow = document.getElementById("repository")
+//
+// function populate(files) {
+//   let numFiles
+// }
+
+
+// selecting models
 
 let selectedModels = []
 let selectionColor = '#4caf50'
