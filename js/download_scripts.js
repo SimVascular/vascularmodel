@@ -42,8 +42,8 @@ function populate(files, element) {
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
   for (var i = 0; i < numFiles; i++) {
-    console.log(arrayFiles[i]);
-    console.log(numFiles[i]);
+    console.log(arrayFiles[i][0]);
+    console.log(arrayFiles[i][1]);
   }
   // for (var i = 0; i < numFiles; i++) {
   //   if (files[i]['dim'] != null) {
@@ -68,6 +68,7 @@ let aortaFiles;
 $.get('repository_text/aorta.txt', function(data) {
    console.log('running aorta')
    aortaFiles = parseFile(data, fileDimensions, 'aorta')
+   populate(aortaFiles, repoWindow)
 }, 'text');
 
 let aortofemoralFiles;
