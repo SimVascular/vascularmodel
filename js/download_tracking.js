@@ -1,4 +1,4 @@
- $("a").click( function() {
+$('a').click( function() {
   console.log($(this).attr('href'));
   if ($(this).attr('href') == undefined) {
     var id = $(this).attr('id');
@@ -12,4 +12,4 @@
         'value': '1'
     });
   }
- });
+});
