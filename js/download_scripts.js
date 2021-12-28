@@ -140,7 +140,7 @@ $(window).load(function() {
     return false;
   });
 
-  $('.repository_single_content').on('click', '.fClick', function() {
+  $(document).on('click', '.repository_single_content', function() {
     let contentStyle = getComputedStyle($(this)[0])
     let backcolor = hexc(contentStyle['background-color'])
 
@@ -152,7 +152,7 @@ $(window).load(function() {
     }
   });
 
-  $( "#select-btn" ).on('click', '.fClick', function() {
+  $(document).on('click', '#select-btn', function() {
     let visibleElements = $('.repository_single_content:visible')
     var arrayLength = visibleElements.length;
 
@@ -161,7 +161,7 @@ $(window).load(function() {
     }
   });
 
-  $( "#deselect-btn" ).on('click', '.fClick', function() {
+  $(document).on('click', '#deselect-btn', function() {
     let visibleElements = $('.repository_single_content:visible')
     var arrayLength = visibleElements.length;
 
@@ -169,11 +169,6 @@ $(window).load(function() {
       deselectModel(visibleElements[i])
     }
   });
-
-  var $items = $(html);
-
-  //Add item to isotope
-  $('.grid').isotope( 'insert', $items );
 
 });
 
