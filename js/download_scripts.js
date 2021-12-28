@@ -6,11 +6,11 @@ function parseFileDimensions(data) {
     if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
         let model = data.split(/\t/)
-        modelDict[model[1].replace('.zip','')] = model[0].replace('M','');
+        dimensionDict[model[1].replace('.zip','')] = model[0].replace('M','');
       }
     }
   }
-  return modelDict
+  return dimensionDict
 }
 
 function parseFile(data) {
