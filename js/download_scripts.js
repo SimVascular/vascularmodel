@@ -135,7 +135,7 @@ $(window).load(function() {
     layoutMode: 'fitRows'
   });
 
-  $('#filters').on('click', 'a', function() {
+  $(document).on('click', '#filters', function() {
     var filterValue = $(this).attr('data-filter');
     $container.isotope({ filter: filterValue });
     return false;
