@@ -145,7 +145,6 @@ $(window).load(function() {
     $container.isotope({ filter: filterValue });
     return false;
   });
-  });
 
   $(document).on('click', '.repository_single_content', function() {
     let contentStyle = getComputedStyle($(this)[0])
