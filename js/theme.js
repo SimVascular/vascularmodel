@@ -166,7 +166,7 @@ $('#filters').on( 'click', 'a', function() {
 // Isotop Package
 ////////////////////////////////////////////////////////////////////////////////////////////
 $(window).load(function() {
-$(document).on('click', '.repository_menu ul li', function(){
+$('.repository_menu ul li').click( function(){
 	$('.repository_menu ul li').removeClass('active_prot_menu');
 	$(this).addClass('active_prot_menu');
 });
