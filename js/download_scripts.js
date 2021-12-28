@@ -6,7 +6,7 @@ function parseFileDimensions(data) {
   for (var i = 0; i <= numModels; ++i) {
     if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
-        let model = data.split(/\t/)
+        let model = models[i].split(/\t/)
         dimensionDict[model[1].replace('.zip','')] = model[0].replace('M','');
       }
     }
