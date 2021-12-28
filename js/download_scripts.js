@@ -169,6 +169,12 @@ $(window).load(function() {
       deselectModel(visibleElements[i])
     }
   });
+
+  var $items = $(html);
+
+  //Add item to isotope
+  $('.grid').isotope( 'insert', $items );
+
 });
 
 function hexc(colorval) {
