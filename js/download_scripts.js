@@ -1,24 +1,12 @@
-function loadXML(filePath) {
-  var result = null
-  var xmlhttp = new XMLHttpRequest()
-  xmlhttp.open("GET", filePath, true)
-  xmlhttp.send()
-  return xmlhttp
-}
-
-function readTXT(xmlHttpFile) {
-  var result = null
-  if (xmlHttpFile.status == 200) {
-    result = xmlHttpFile.responseText
-  }
-  return result
-}
+$.get('repository_text/aorta.txt', function(data) {
+   console.log(data)
+}, 'text');
 
 let selectedModels = []
 let selectionColor = '#4caf50'
 let downlaodButtonActivated = false
-let xmlhttp = loadXML('repository_text/aorta.txt')
-console.log(readTXT(xmlhttp))
+// let xmlhttp = loadXML('repository_text/aorta.txt')
+// console.log(readTXT(xmlhttp))
 // console.log(loadFile('repository_text/aorta.txt'))
 
 function hexc(colorval) {
