@@ -20,6 +20,7 @@ let selectedModels = []
 let selectionColor = '#4caf50'
 let downlaodButtonActivated = false
 let xmlttp = loadFile('repository_text/aorta.txt')
+console.log(xmlttp.status)
 // console.log(loadFile('repository_text/aorta.txt'))
 
 function hexc(colorval) {
