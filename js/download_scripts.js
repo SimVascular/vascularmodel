@@ -3,8 +3,8 @@ function parseFile(data) {
   let models = data.split(/\r?\n/)
   let numModels = models.length
   for (var i = 0; i <= numModels; ++i) {
-    if (numModels.length > 0) {
-      if (model[0][0] != '#') {
+    if (models[0].length > 0) {
+      if (models[0][0] != '#') {
         modelDict[model[0]] = 'hello'
       }
     }
