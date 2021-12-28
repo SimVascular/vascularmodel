@@ -123,35 +123,54 @@ $(window).ready(function() {
 });
 
 // isotope menu
+$(window).load(function() {
+  $(document).on('click', '.repository_menu ul li', function(){
+    $('.repository_menu ul li').removeClass('active_prot_menu');
+    $(this).addClass('active_prot_menu');
+  });
 
-$(document).on('click', '.repository_single_content', function() {
-  let contentStyle = getComputedStyle($(this)[0])
-  let backcolor = hexc(contentStyle['background-color'])
+  var $container = $('#repository');
+  $container.isotope({
+    itemSelector: '.col-sm-4',
+    layoutMode: 'fitRows'
+  });
 
-  if (backcolor != selectionColor) {
-   selectModel($(this)[0])
-  }
-  else {
-   deselectModel($(this)[0])
-  }
-});
+  $('#filters').on('click', 'a', function() {
+    var filterValue = $(this).attr('data-filter');
+    $container.isotope({ filter: filterValue });
+    return false;
+  });
 
-$(document).on('click', '#select-btn', function() {
-  let visibleElements = $('.repository_single_content:visible')
-  var arrayLength = visibleElements.length;
+  $(document).on('click', '.repository_single_content', function() {
+    let contentStyle = getComputedStyle($(this)[0])
+    let backcolor = hexc(contentStyle['background-color'])
 
-  for (var i = 0; i < arrayLength; i++) {
-    selectModel(visibleElements[i])
-  }
-});
+    if (backcolor != selectionColor) {
+     selectModel($(this)[0])
+    }
+    else {
+     deselectModel($(this)[0])
+    }
+  });
 
-$(document).on('click', '#deselect-btn', function() {
-  let visibleElements = $('.repository_single_content:visible')
-  var arrayLength = visibleElements.length;
+  $(document).on('click', '#select-btn', function() {
+    let visibleElements = $('.repository_single_content:visible')
+    var arrayLength = visibleElements.length;
 
-  for (var i = 0; i < arrayLength; i++) {
-    deselectModel(visibleElements[i])
-  }
+    for (var i = 0; i < arrayLength; i++) {
+      selectModel(visibleElements[i])
+    }
+  });
+
+  $(document).on('click', '#deselect-btn', function() {
+    let visibleElements = $('.repository_single_content:visible')
+    var arrayLength = visibleElements.length;
+
+    for (var i = 0; i < arrayLength; i++) {
+      deselectModel(visibleElements[i])
+    }
+  });
+
 });
 
 function hexc(colorval) {
