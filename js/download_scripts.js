@@ -1,6 +1,7 @@
 function parseFileDimensions(data) {
   let dimensionDict = {}
   let models = data.split(/\r?\n/)
+  console.log(models)
   let numModels = models.length
   for (var i = 0; i <= numModels; ++i) {
     if (models[i] != null && models[i].length > 0) {
