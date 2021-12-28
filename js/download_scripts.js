@@ -19,7 +19,7 @@ $.get('repository_text/file_dimensions.txt', function(data) {
   fileDimensions = parseFileDimensions(data)
 }, 'text');
 
-function parseFile(data) {
+function parseFile(data, fileDimensions) {
   let modelDict = {}
   let models = data.split(/\r?\n/)
   let numModels = models.length
@@ -37,23 +37,23 @@ function parseFile(data) {
 }
 
 $.get('repository_text/aorta.txt', function(data) {
-   aortaFiles = parseFile(data)
+   aortaFiles = parseFile(data, fileDimensions)
 }, 'text');
 
 $.get('repository_text/aortofemoral.txt', function(data) {
-   aortofemoralFiles = parseFile(data)
+   aortofemoralFiles = parseFile(data, fileDimensions)
 }, 'text');
 
 $.get('repository_text/cerebrovascular.txt', function(data) {
-   cerebrovascularFiles = parseFile(data)
+   cerebrovascularFiles = parseFile(data, fileDimensions)
 }, 'text');
 
 $.get('repository_text/congenital_heart.txt', function(data) {
-   congenitalFiles = parseFile(data)
+   congenitalFiles = parseFile(data, fileDimensions)
 }, 'text');
 
 $.get('repository_text/coronary.txt', function(data) {
-   coronaryFiles = parseFile(data)
+   coronaryFiles = parseFile(data, fileDimensions)
 }, 'text');
 
 // // populating window
