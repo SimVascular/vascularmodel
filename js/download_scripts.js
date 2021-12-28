@@ -14,6 +14,7 @@ function parseFileDimensions(data) {
   return dimensionDict
 }
 
+let fileDimensions;
 $.get('repository_text/file_dimensions.txt', function(data) {
   fileDimensions = parseFileDimensions(data)
 }, 'text');
