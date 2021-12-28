@@ -14,11 +14,6 @@ function parseFileDimensions(data) {
   return dimensionDict
 }
 
-let fileDimensions;
-$.get('repository_text/file_dimensions.txt', function(data) {
-  fileDimensions = parseFileDimensions(data)
-}, 'text');
-
 function parseFile(data, fDimensions, fileClass) {
   let modelDict = {}
   let models = data.split(/\r?\n/)
@@ -76,38 +71,68 @@ function generateContent(fileName, fileData) {
   return extDiv
 }
 
-let repoWindow = document.getElementById("repository")
-let aortaFiles
-$.get('repository_text/aorta.txt', function(data) {
-   console.log('running aorta')
-   aortaFiles = parseFile(data, fileDimensions, 'aorta')
-   populate(aortaFiles, repoWindow)
-}, 'text');
+// isotope menu
+$(window).load(function() {
+  let repoWindow = document.getElementById("repository")
 
-let aortofemoralFiles
-$.get('repository_text/aortofemoral.txt', function(data) {
-   aortofemoralFiles = parseFile(data, fileDimensions, 'aortofemoral')
-}, 'text');
+  let fileDimensions;
+  $.get('repository_text/file_dimensions.txt', function(data) {
+    fileDimensions = parseFileDimensions(data)
+  }, 'text');
 
-let cerebrovascularFiles
-$.get('repository_text/cerebrovascular.txt', function(data) {
-   cerebrovascularFiles = parseFile(data, fileDimensions, 'cerebrovascular')
-}, 'text');
+  let aortaFiles
+  $.get('repository_text/aorta.txt', function(data) {
+     console.log('running aorta')
+     aortaFiles = parseFile(data, fileDimensions, 'aorta')
+     populate(aortaFiles, repoWindow)
+  }, 'text');
 
-let congenitalFiles
-$.get('repository_text/congenital_heart.txt', function(data) {
-   congenitalFiles = parseFile(data, fileDimensions, 'congenital_heart')
-}, 'text');
+  let aortofemoralFiles
+  $.get('repository_text/aortofemoral.txt', function(data) {
+     aortofemoralFiles = parseFile(data, fileDimensions, 'aortofemoral')
+     populate(aortofemoralFiles, repoWindow)
+  }, 'text');
 
-let coronaryFiles
-$.get('repository_text/coronary.txt', function(data) {
-   coronaryFiles = parseFile(data, fileDimensions, 'coronary')
-}, 'text');
+  let cerebrovascularFiles
+  $.get('repository_text/cerebrovascular.txt', function(data) {
+     cerebrovascularFiles = parseFile(data, fileDimensions, 'cerebrovascular')
+     populate(cerebrovascularFiles, repoWindow)
+  }, 'text');
 
-let pulmonaryFiles
-$.get('repository_text/pulmonary.txt', function(data) {
-   pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
-}, 'text');
+  let congenitalFiles
+  $.get('repository_text/congenital_heart.txt', function(data) {
+     congenitalFiles = parseFile(data, fileDimensions, 'congenital_heart')
+     populate(congenitalFiles, repoWindow)
+  }, 'text');
+
+  let coronaryFiles
+  $.get('repository_text/coronary.txt', function(data) {
+     coronaryFiles = parseFile(data, fileDimensions, 'coronary')
+     populate(coronaryFiles, repoWindow)
+  }, 'text');
+
+  let pulmonaryFiles
+  $.get('repository_text/pulmonary.txt', function(data) {
+     pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
+     populate(pulmonaryFiles, repoWindow)
+  }, 'text');
+
+  $('.repository_menu ul li').click(function(){
+    $('.repository_menu ul li').removeClass('active_prot_menu');
+    $(this).addClass('active_prot_menu');
+  });
+
+  var $container = $('#repository');
+  $container.isotope({
+    itemSelector: '.col-sm-4',
+    layoutMode: 'fitRows'
+    });
+    $('#filters').on( 'click', 'a', function() {
+    var filterValue = $(this).attr('data-filter');
+    $container.isotope({ filter: filterValue });
+    return false;
+  });
+});
 
 // selecting models
 
