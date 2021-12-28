@@ -83,7 +83,7 @@ function generateContent(fileData) {
 }
 
 function populate(files, element) {
-  for (const [key, value] of Object.entries(numFiles)) {
+  for (const [key, value] of Object.entries(files)) {
     console.log(key);
     console.log(value);
   }
