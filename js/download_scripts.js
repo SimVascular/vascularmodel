@@ -27,7 +27,7 @@ function parseFile(data) {
   return modelDict
 }
 
-$.get('repository_text/file_dimensions.txt', function(data) ) {
+$.get('repository_text/file_dimensions.txt', function(data) {
   dimensions = parseFileDimensions(data)
 }, 'text');
 
