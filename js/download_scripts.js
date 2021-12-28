@@ -37,26 +37,32 @@ function parseFile(data, fDimensions, fileClass) {
   return modelDict
 }
 
+let aortaFiles;
 $.get('repository_text/aorta.txt', function(data) {
    aortaFiles = parseFile(data, fileDimensions, 'aorta')
 }, 'text');
 
+let aortofemoralFiles;
 $.get('repository_text/aortofemoral.txt', function(data) {
    aortofemoralFiles = parseFile(data, fileDimensions, 'aortofemoral')
 }, 'text');
 
+let cerebrovascularFiles;
 $.get('repository_text/cerebrovascular.txt', function(data) {
    cerebrovascularFiles = parseFile(data, fileDimensions, 'cerebrovascular')
 }, 'text');
 
+let congenitalFiles;
 $.get('repository_text/congenital_heart.txt', function(data) {
    congenitalFiles = parseFile(data, fileDimensions, 'congenital_heart')
 }, 'text');
 
+let coronaryFiles;
 $.get('repository_text/coronary.txt', function(data) {
    coronaryFiles = parseFile(data, fileDimensions, 'coronary')
 }, 'text');
 
+let pulmonaryFiles;
 $.get('repository_text/pulmonary.txt', function(data) {
    pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
 }, 'text');
