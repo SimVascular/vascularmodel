@@ -5,6 +5,8 @@ function loadFile(filePath) {
   var xmlhttp = new XMLHttpRequest()
   xmlhttp.open("GET", filePath, true)
   xmlhttp.send()
+  console.log(xmlhttp)
+  console.log(xmlhttp.status)
   if (xmlhttp.status == 200) {
     result = xmlhttp.responseText
     console.log(result)
