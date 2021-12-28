@@ -1,10 +1,9 @@
 // retrieving repository info
-
 function parseFileDimensions(data) {
   let dimensionDict = {}
   let models = data.split(/\r?\n/)
   let numModels = models.length
-  for (var i = 0; i <= numModels; ++i) {
+  for (var i = 0; i < numModels; ++i) {
     if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
         let model = models[i].split(/\t/)
@@ -19,16 +18,17 @@ $.get('repository_text/file_dimensions.txt', function(data) {
   fileDimensions = parseFileDimensions(data)
 }, 'text');
 
-function parseFile(data, fileDimensions) {
+function parseFile(data, fileDimensions, fileClass) {
   let modelDict = {}
   let models = data.split(/\r?\n/)
   let numModels = models.length
-  for (var i = 0; i <= numModels; ++i) {
+  for (var i = 0; i < numModels; ++i) {
     if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
         fileData = {path: 'svprojects/' + models[i] + '.zip',
                     dim: fileDimensions[models[i]],
-                    image: 'repository_img/' + models[i] + '.png'}
+                    image: 'repository_img/' + models[i] + '.png',
+                    class: fileClass}
         modelDict[models[i]] = fileData
       }
     }
@@ -37,32 +37,58 @@ function parseFile(data, fileDimensions) {
 }
 
 $.get('repository_text/aorta.txt', function(data) {
-   aortaFiles = parseFile(data, fileDimensions)
+   aortaFiles = parseFile(data, fileDimensions, 'aorta')
 }, 'text');
 
 $.get('repository_text/aortofemoral.txt', function(data) {
-   aortofemoralFiles = parseFile(data, fileDimensions)
+   aortofemoralFiles = parseFile(data, fileDimensions, 'aortofemoral')
 }, 'text');
 
 $.get('repository_text/cerebrovascular.txt', function(data) {
-   cerebrovascularFiles = parseFile(data, fileDimensions)
+   cerebrovascularFiles = parseFile(data, fileDimensions, 'cerebrovascular')
 }, 'text');
 
 $.get('repository_text/congenital_heart.txt', function(data) {
-   congenitalFiles = parseFile(data, fileDimensions)
+   congenitalFiles = parseFile(data, fileDimensions, 'congenital_heart')
 }, 'text');
 
 $.get('repository_text/coronary.txt', function(data) {
-   coronaryFiles = parseFile(data, fileDimensions)
+   coronaryFiles = parseFile(data, fileDimensions, 'coronary')
 }, 'text');
 
-// // populating window
-// let repoWindow = document.getElementById("repository")
-//
-// function populate(files) {
-//   let numFiles
-// }
+$.get('repository_text/pulmonary.txt', function(data) {
+   pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
+}, 'text');
 
+
+// populating window
+let repoWindow = document.getElementById("repository")
+
+function generateContent(fileData) {
+  let extDiv = document.createElement("div");
+  extDiv.classList.add("col-xs-12")
+  extDiv.classList.add("col-sm-4")
+  extDiv.classList.add(fileData.class)
+
+  let innerDiv = document.createElement("div");
+  innerDiv.classList.add("repository_single_content")
+  innerDiv.id = fileData
+}
+
+function populate(files, element) {
+  let numFiles = files.length
+  for (const [key, value] of Object.entries(numFiles)) {
+    console.log(key);
+    console.log(value);
+  }
+  // for (var i = 0; i < numFiles; i++) {
+  //   if (files[i]['dim'] != null) {
+  //     element.appendChild(generateContent(files[i]));
+  //   }
+  // }
+}
+
+populate(aortaFiles, repoWindow)
 
 // selecting models
 
