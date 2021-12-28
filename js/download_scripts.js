@@ -42,17 +42,11 @@ function populate(files, element) {
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
   for (var i = 0; i < numFiles; i++) {
-    console.log(arrayFiles[i][0]);
-    console.log(arrayFiles[i][1]);
+    element.appendChild(generateContent(arrayFiles[i][0], arrayFiles[i][1]))
   }
-  // for (var i = 0; i < numFiles; i++) {
-  //   if (files[i]['dim'] != null) {
-  //     element.appendChild(generateContent(files[i]));
-  //   }
-  // }
 }
 
-function generateContent(fileData) {
+function generateContent(fileName, fileData) {
   let extDiv = document.createElement("div");
   extDiv.classList.add("col-xs-12")
   extDiv.classList.add("col-sm-4")
@@ -60,38 +54,55 @@ function generateContent(fileData) {
 
   let innerDiv = document.createElement("div");
   innerDiv.classList.add("repository_single_content")
-  innerDiv.id = fileData
+  innerDiv.id = fileName
+
+  let innerImg = document.createElement("img");
+  innerImg.src = fileData.image
+  innerImg.alt = fileName
+
+  let innerInnerDiv = document.createElement("div")
+
+  let innerA = document.createElement("a");
+  innerA.id = fileName
+  innerA.text = fileName
+
+  innerInnerDiv.appendChild(innerA)
+  innerDiv.appendChild(innerImg)
+  innerDiv.appendChild(innerInnerDiv)
+  extDiv.appendChild(innerDiv)
+
+  return extDiv
 }
 
 let repoWindow = document.getElementById("repository")
-let aortaFiles;
+let aortaFiles
 $.get('repository_text/aorta.txt', function(data) {
    console.log('running aorta')
    aortaFiles = parseFile(data, fileDimensions, 'aorta')
    populate(aortaFiles, repoWindow)
 }, 'text');
 
-let aortofemoralFiles;
+let aortofemoralFiles
 $.get('repository_text/aortofemoral.txt', function(data) {
    aortofemoralFiles = parseFile(data, fileDimensions, 'aortofemoral')
 }, 'text');
 
-let cerebrovascularFiles;
+let cerebrovascularFiles
 $.get('repository_text/cerebrovascular.txt', function(data) {
    cerebrovascularFiles = parseFile(data, fileDimensions, 'cerebrovascular')
 }, 'text');
 
-let congenitalFiles;
+let congenitalFiles
 $.get('repository_text/congenital_heart.txt', function(data) {
    congenitalFiles = parseFile(data, fileDimensions, 'congenital_heart')
 }, 'text');
 
-let coronaryFiles;
+let coronaryFiles
 $.get('repository_text/coronary.txt', function(data) {
    coronaryFiles = parseFile(data, fileDimensions, 'coronary')
 }, 'text');
 
-let pulmonaryFiles;
+let pulmonaryFiles
 $.get('repository_text/pulmonary.txt', function(data) {
    pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
 }, 'text');
