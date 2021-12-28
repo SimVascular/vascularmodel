@@ -37,9 +37,12 @@ function populate(files, element) {
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
   for (var i = 0; i < numFiles; i++) {
-    console.log('appending ' + arrayFiles[i][0])
-    element.appendChild(generateContent(arrayFiles[i][0], arrayFiles[i][1]))
-    console.log(element)
+    // then the file is in svprojects
+    if (arrayFiles[i][1]['dim'] != null) {
+      console.log('appending ' + arrayFiles[i][0])
+      element.appendChild(generateContent(arrayFiles[i][0], arrayFiles[i][1]))
+      console.log(element)
+    }
   }
 }
 
