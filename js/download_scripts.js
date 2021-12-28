@@ -1,23 +1,45 @@
+function parseFile(data) {
+  let modelNames = data.split(/\r?\n/)
+  let numModels = modelNames.length
+  for (var i = 0; i <= numModels; ++i) {
+    console.log(modelNames[i])
+  }
+  return 0
+}
+
 $.get('repository_text/aorta.txt', function(data) {
-   console.log(data)
+   aortaFiles = parseFile(data)
+}, 'text');
+
+$.get('repository_text/aortofemoral.txt', function(data) {
+   aortofemoralFiles = parseFile(data)
+}, 'text');
+
+$.get('repository_text/cerebrovascular.txt', function(data) {
+   cerebrovascularFiles = parseFile(data)
+}, 'text');
+
+$.get('repository_text/congenital_heart.txt', function(data) {
+   congenitalFiles = parseFile(data)
+}, 'text');
+
+$.get('repository_text/coronary.txt', function(data) {
+   coronaryFiles = parseFile(data)
 }, 'text');
 
 let selectedModels = []
 let selectionColor = '#4caf50'
 let downlaodButtonActivated = false
-// let xmlhttp = loadXML('repository_text/aorta.txt')
-// console.log(readTXT(xmlhttp))
-// console.log(loadFile('repository_text/aorta.txt'))
 
 function hexc(colorval) {
-var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-delete(parts[0]);
-for (var i = 1; i <= 3; ++i) {
-  parts[i] = parseInt(parts[i]).toString(16);
-  if (parts[i].length == 1) parts[i] = '0' + parts[i];
-}
-color = '#' + parts.join('');
-return color
+  var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+  delete(parts[0]);
+  for (var i = 1; i <= 3; ++i) {
+    parts[i] = parseInt(parts[i]).toString(16);
+    if (parts[i].length == 1) parts[i] = '0' + parts[i];
+  }
+  color = '#' + parts.join('');
+  return color
 }
 
 $(".download-button").click( function() {
