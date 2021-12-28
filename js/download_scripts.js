@@ -1,3 +1,16 @@
+function parseFileDimensions(data) {
+  let dimensionDict = {}
+  let models = data.split(/\r?\n/)
+  let numModels = models.length
+  for (var i = 0; i <= numModels; ++i) {
+    if (models[0].length > 0) {
+      let model = data.split(/\t/)
+      modelDict[model[1].replace('.zip','');] = model[0].replace('M','');
+    }
+  }
+  return modelDict
+}
+
 function parseFile(data) {
   let modelDict = {}
   let models = data.split(/\r?\n/)
@@ -11,6 +24,10 @@ function parseFile(data) {
   }
   return modelDict
 }
+
+$.get('repository_text/file_dimensions.txt', function(data) ) {
+  dimensions = parseFileDimensions(data)
+}, 'text');
 
 $.get('repository_text/aorta.txt', function(data) {
    aortaFiles = parseFile(data)
