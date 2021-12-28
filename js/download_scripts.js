@@ -8,14 +8,15 @@ function loadFile(filePath) {
   if (xmlhttp.status==200) {
     result = xmlhttp.responseText;
   }
-  return result;
+  // return result;
+  return xmlhttp;
 }
 
 let selectedModels = []
 let selectionColor = '#4caf50'
 let downlaodButtonActivated = false
-
-console.log(loadFile('repository_text/aorta.txt'))
+let xmlttp = loadFile('repository_text/aorta.txt')
+// console.log(loadFile('repository_text/aorta.txt'))
 
 function hexc(colorval) {
 var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
