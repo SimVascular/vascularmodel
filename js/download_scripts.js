@@ -1,3 +1,7 @@
+let selectedModels = []
+let selectionColor = '#4caf50'
+let downlaodButtonActivated = false
+
 // retrieving repository info
 function parseFileDimensions(data) {
   let dimensionDict = {}
@@ -135,13 +139,37 @@ $(window).load(function() {
     $container.isotope({ filter: filterValue });
     return false;
   });
+
+  $('.repository_single_content').click( function() {
+    let contentStyle = getComputedStyle($(this)[0])
+    let backcolor = hexc(contentStyle['background-color'])
+
+    if (backcolor != selectionColor) {
+     selectModel($(this)[0])
+    }
+    else {
+     deselectModel($(this)[0])
+    }
+  });
+
+  $( "#select-btn" ).click(function() {
+    let visibleElements = $('.repository_single_content:visible')
+    var arrayLength = visibleElements.length;
+
+    for (var i = 0; i < arrayLength; i++) {
+      selectModel(visibleElements[i])
+    }
+  });
+
+  $( "#deselect-btn" ).click(function() {
+    let visibleElements = $('.repository_single_content:visible')
+    var arrayLength = visibleElements.length;
+
+    for (var i = 0; i < arrayLength; i++) {
+      deselectModel(visibleElements[i])
+    }
+  });
 });
-
-// selecting models
-
-let selectedModels = []
-let selectionColor = '#4caf50'
-let downlaodButtonActivated = false
 
 function hexc(colorval) {
   var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -205,33 +233,3 @@ function deselectModel(element) {
    }
    updateNumSelectedModels()
 }
-
-$('.repository_single_content').click( function() {
-  let contentStyle = getComputedStyle($(this)[0])
-  let backcolor = hexc(contentStyle['background-color'])
-
-  if (backcolor != selectionColor) {
-   selectModel($(this)[0])
-  }
-  else {
-   deselectModel($(this)[0])
-  }
-});
-
-$( "#select-btn" ).click(function() {
-  let visibleElements = $('.repository_single_content:visible')
-  var arrayLength = visibleElements.length;
-
-  for (var i = 0; i < arrayLength; i++) {
-    selectModel(visibleElements[i])
-  }
-});
-
-$( "#deselect-btn" ).click(function() {
-  let visibleElements = $('.repository_single_content:visible')
-  var arrayLength = visibleElements.length;
-
-  for (var i = 0; i < arrayLength; i++) {
-    deselectModel(visibleElements[i])
-  }
-});
