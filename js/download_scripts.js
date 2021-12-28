@@ -140,7 +140,7 @@ $(window).load(function() {
     return false;
   });
 
-  $('.repository_single_content').click( function() {
+  $('.repository_single_content').on('click', '.fClick', function() {
     let contentStyle = getComputedStyle($(this)[0])
     let backcolor = hexc(contentStyle['background-color'])
 
@@ -152,7 +152,7 @@ $(window).load(function() {
     }
   });
 
-  $( "#select-btn" ).click(function() {
+  $( "#select-btn" ).on('click', '.fClick', function() {
     let visibleElements = $('.repository_single_content:visible')
     var arrayLength = visibleElements.length;
 
@@ -161,7 +161,7 @@ $(window).load(function() {
     }
   });
 
-  $( "#deselect-btn" ).click(function() {
+  $( "#deselect-btn" ).on('click', '.fClick', function() {
     let visibleElements = $('.repository_single_content:visible')
     var arrayLength = visibleElements.length;
 
