@@ -18,7 +18,7 @@ $.get('repository_text/file_dimensions.txt', function(data) {
   fileDimensions = parseFileDimensions(data)
 }, 'text');
 
-function parseFile(data, fileDimensions, fileClass) {
+function parseFile(data, fDimensions, fileClass) {
   let modelDict = {}
   let models = data.split(/\r?\n/)
   let numModels = models.length
@@ -26,7 +26,7 @@ function parseFile(data, fileDimensions, fileClass) {
     if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
         fileData = {path: 'svprojects/' + models[i] + '.zip',
-                    dim: fileDimensions[models[i]],
+                    dim: fDimensions[models[i]],
                     image: 'repository_img/' + models[i] + '.png',
                     class: fileClass}
         modelDict[models[i]] = fileData
