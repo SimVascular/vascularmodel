@@ -1,26 +1,24 @@
-let pathRoot = '/var/www/vascularmodel'
-
-function loadFile(filePath) {
+function loadXML(filePath) {
   var result = null
   var xmlhttp = new XMLHttpRequest()
   xmlhttp.open("GET", filePath, true)
   xmlhttp.send()
-  console.log(xmlhttp)
-  console.log(xmlhttp.status)
-  if (xmlhttp.status == 200) {
-    result = xmlhttp.responseText
-    console.log(result)
-  }
-  console.log(result)
-  // return result;
   return xmlhttp
+}
+
+function readTXT(xmlHttpFile) {
+  var result = null
+  if (xmlHttpFile.status == 200) {
+    result = xmlHttpFile.responseText
+  }
+  return result
 }
 
 let selectedModels = []
 let selectionColor = '#4caf50'
 let downlaodButtonActivated = false
-let xmlttp = loadFile('repository_text/aorta.txt')
-console.log(xmlttp.status)
+let xmlhttp = loadFile('repository_text/aorta.txt')
+console.log(readTXT(xmlhttp))
 // console.log(loadFile('repository_text/aorta.txt'))
 
 function hexc(colorval) {
