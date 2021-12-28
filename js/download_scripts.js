@@ -83,9 +83,11 @@ function generateContent(fileData) {
 }
 
 function populate(files, element) {
-  for (const [key, value] of Object.entries(files)) {
-    console.log(key);
-    console.log(value);
+  let arrayFiles = Object.entries(files)
+  let numFiles = arrayFiles.length
+  for (var i = 0; i < numFiles; i++) {
+    console.log(arrayFiles[i]);
+    console.log(numFiles[i]);
   }
   // for (var i = 0; i < numFiles; i++) {
   //   if (files[i]['dim'] != null) {
