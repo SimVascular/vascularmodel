@@ -124,7 +124,7 @@ $(window).load(function() {
      populate(pulmonaryFiles, repoWindow)
   }, 'text');
 
-  $('.repository_menu ul li').click(function(){
+  $(document).on('click', '.repository_menu ul li', function(){
     $('.repository_menu ul li').removeClass('active_prot_menu');
     $(this).addClass('active_prot_menu');
   });
