@@ -5,7 +5,7 @@ function parseFile(data) {
   for (var i = 0; i <= numModels; ++i) {
     if (models[0].length > 0) {
       if (models[0][0] != '#') {
-        modelDict[model[0]] = 'hello'
+        modelDict[models[0]] = 'hello'
       }
     }
   }
