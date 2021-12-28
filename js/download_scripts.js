@@ -14,6 +14,11 @@ function parseFileDimensions(data) {
   return dimensionDict
 }
 
+$.get('repository_text/file_dimensions.txt', function(data) {
+  fileDimensions = parseFileDimensions(data)
+}, 'text');
+
+
 function parseFile(data) {
   let modelDict = {}
   let models = data.split(/\r?\n/)
@@ -21,16 +26,12 @@ function parseFile(data) {
   for (var i = 0; i <= numModels; ++i) {
     if (models[i] != null && models[i].length > 0) {
       if (models[i][0] != '#') {
-        modelDict[models[i]] = 'hello'
+        modelDict[models[i]] = fileDimensions[models[i]]
       }
     }
   }
   return modelDict
 }
-
-$.get('repository_text/file_dimensions.txt', function(data) {
-  dimensions = parseFileDimensions(data)
-}, 'text');
 
 $.get('repository_text/aorta.txt', function(data) {
    aortaFiles = parseFile(data)
