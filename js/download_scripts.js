@@ -51,6 +51,7 @@ function populate(files, element, dopush) {
       // element.appendChild(newContent)
     }
   }
+  console.log(listElements)
   $('#repository').append(listElements)
                   .isotope('appended', listElements)
                   .isotope('insert', listElements);
