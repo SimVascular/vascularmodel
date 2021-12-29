@@ -225,7 +225,7 @@ $(window).load(function() {
   // this is to update isotope with appended elements
   // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
   // let $appendedElements = $('.content-ext-div')
-  consoole.log('running here')
+  console.log('running here')
   console.log(content)
   $('#repository').append(content)
                   .isotope('appended', content)
