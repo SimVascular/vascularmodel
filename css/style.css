@@ -1268,6 +1268,7 @@ select::-ms-expand {
 	top: 0;
 	left: 0;
 	width: 100%;
+  padding-bottom: 60%;
   background-color:#05080B;
 	z-index: 5;
 	margin-bottom:30px;
@@ -1284,7 +1285,7 @@ select::-ms-expand {
 
 .repository_single_content img{
 	width: 100%;
-	position: relative;
+	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 6;
