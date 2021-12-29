@@ -216,7 +216,7 @@ $(window).ready(function() {
                         .isotope('appended', content[i])
                         .isotope('insert', content[i]);
       }
-    }, 1);
+    }, 10);
 
 });
 
