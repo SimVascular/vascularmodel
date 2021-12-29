@@ -209,15 +209,10 @@ $(document).ready(function() {
   setTimeout(function() {
       // this is to update isotope with appended elements
       // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
-      // let $appendedElements = $('.content-ext-div')
-      let numContent = content.length
-      console.log(numContent)
-      console.log(content)
-      for (var i = 0; i < numContent; i++) {
-        $('#repository').append(content[i])
-                        .isotope('appended', content[i])
-                        .isotope('insert', content[i]);
-      }
+      let $appendedElements = $('.content-ext-div')
+      $('#repository').append($appendedElements)
+                      .isotope('appended', $appendedElements)
+                      .isotope('insert', $appendedElements);
     }, 1000);
 });
 
