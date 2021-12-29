@@ -276,12 +276,27 @@ function updateNumSelectedModels() {
 }
 
 function updateModalDialog() {
-  if (selectedModels.length == 1) {
-    $('#modal-greeting')[0].innerText = 'You have selected ' + selectedModels.length.toString() + ' model'
+  var numModels = selectedModels.length
+  if (numModels == 1) {
+    $('#modal-greeting')[0].innerText = 'You have selected ' + selectedModels.length.toString() + ' model. Here are the details:'
   }
   else {
-    $('#modal-greeting')[0].innerText = 'You have selected ' + selectedModels.length.toString() + ' models'
+    $('#modal-greeting')[0].innerText = 'You have selected ' + selectedModels.length.toString() + ' models. Here are the details:'
   }
+
+  var totalSize = 0
+  var details = ''
+  for (var i = 0; i < numModels; i++) {
+    details = details + (i+1).toString()
+    details = details + ': model '
+    details = details + selectedModels[i]
+    details = details + ', size = '
+    details = details + fileDimensions[selectedModels[i]]
+    details = details + '\n'
+    totalSize = totalSize + parseInt()
+  }
+  $('.details-text')[0].value = details
+  $('#modal-closure')[0].innerText = 'Total size = ' + totalSize.toString() + ' Mb'
 }
 
 function activateDownloadButton() {
