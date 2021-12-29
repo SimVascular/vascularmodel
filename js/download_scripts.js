@@ -51,10 +51,12 @@ function populate(files, element, dopush) {
       // element.appendChild(newContent)
     }
   }
-  console.log(listElements)
-  $('#repository').append(listElements)
-                  .isotope('appended', listElements)
-                  .isotope('insert', listElements);
+  if (dopush) {
+    console.log(listElements)
+    $('#repository').append(listElements)
+                    .isotope('appended', listElements)
+                    .isotope('insert', listElements);
+  }
 }
 
 function generateContent(fileName, fileData) {
