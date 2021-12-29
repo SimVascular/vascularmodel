@@ -46,6 +46,7 @@ function populate(files, element, dopush) {
     if (arrayFiles[i][1]['dim'] != null) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
+      listElements.push(newContent)                                 
       if (dopush) {
         element.appendChild(newContent)
       }
