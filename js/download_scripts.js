@@ -356,6 +356,7 @@ $('.download-button-modal').click(function(e) {
                filename: selectedModels[i].toString() + '.zip'})
     // window.open('svprojects/' + selectedModels[i].toString() + '.zip')
   }
+  console.log(urls)
   urls.forEach(function (e) {
                 fetch(e.download)
                   .then(res => res.blob()) // Gets the response and returns it as a blob
