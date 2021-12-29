@@ -203,6 +203,19 @@ $(window).ready(function() {
        populate(pulmonaryFiles, content)
     }, 'text');
   }, 'text');
+
+  setTimeout(function() {
+      // this is to update isotope with appended elements
+      // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
+      // let $appendedElements = $('.content-ext-div')
+      let numContent = content.length
+      for (var i = 0; i < numContent; i++) {
+        $('#repository').append(content[i])
+                        .isotope('appended', content[i])
+                        .isotope('insert', content[i]);
+      }
+    }, 1);
+
 });
 
 // isotope menu
@@ -223,21 +236,6 @@ $(window).load(function() {
     $container.isotope({ filter: filterValue });
     return false;
   });
-
-  // this is to update isotope with appended elements
-  // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
-  // let $appendedElements = $('.content-ext-div')
-  console.log('running here')
-  let numContent = content.length
-  console.log(content)
-  console.log(numContent)
-  for (var i = 0; i < numContent; i++) {
-    console.log('adding')
-    console.log(content[i])
-    $('#repository').append(content[i])
-                    .isotope('appended', content[i])
-                    .isotope('insert', content[i]);
-  }
 
   $(document).on('click', '.repository_single_content', function() {
     let contentStyle = getComputedStyle($(this)[0])
