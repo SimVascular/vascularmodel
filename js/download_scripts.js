@@ -46,7 +46,6 @@ function populate(files, element, dopush) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.appendChild(newContent)
-      await new Promise(r => setTimeout(r, 2000))
       ('#repository').isotope('insert', newContent)
     }
   }
