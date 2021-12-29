@@ -347,6 +347,16 @@ $('.close-button-modal').click(function() {
   $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"});
 });
 
+$('.download-button-modal').click(function(e) {
+  e.preventDefault()
+  let nModels = selectedModels.length
+  for (var i = 0; i < nModels; i++) {
+    window.open('svprojects/' + selectedModels[i].toString() + '.zip')
+  }
+  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
+  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"});
+});
+
 // recaptcha validation
 function onSubmit(token) {
   console.log(token)
