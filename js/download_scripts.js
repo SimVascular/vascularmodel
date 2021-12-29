@@ -218,7 +218,7 @@ $(document).ready(function() {
                         .isotope('appended', content[i])
                         .isotope('insert', content[i]);
       }
-    }, 1);
+    }, 1000);
 });
 
 // isotope menu
