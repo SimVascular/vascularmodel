@@ -40,21 +40,15 @@ function populate(files, element, dopush) {
   // var iso = new Isotope('#repository');
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
-  let listElements = []
   for (var i = 0; i < numFiles; i++) {
     // then the file is in svprojects
     if (arrayFiles[i][1]['dim'] != null) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
-      listElements.push(newContent)                                 
-      if (dopush) {
-        element.appendChild(newContent)
-      }
+      element.appendChild(newContent)
+      await new Promise(r => setTimeout(r, 2000))
+      ('#repository').isotope('insert', newContent)
     }
-  }
-  if (dopush) {
-    console.log(listElements)
-    $('#repository').isotope('insert', listElements);
   }
 }
 
