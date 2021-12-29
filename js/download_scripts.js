@@ -287,13 +287,15 @@ function updateModalDialog() {
   var totalSize = 0
   var details = ''
   for (var i = 0; i < numModels; i++) {
+    var size = parseInt(fileDimensions[selectedModels[i]]) / 1000
+    size = (Math.round(size * 100) / 100).toFixed(2);
     details = details + (i+1).toString()
     details = details + ': model '
     details = details + selectedModels[i]
     details = details + ', size = '
-    details = details + fileDimensions[selectedModels[i]]
+    details = details + size.toString()
     details = details + ' Mb\n'
-    totalSize = totalSize + parseInt(fileDimensions[selectedModels[i]])
+    totalSize = totalSize + size
   }
   $('.details-text')[0].value = details
   $('#modal-closure')[0].innerText = 'Total size = ' + totalSize.toString() + ' Mb'
