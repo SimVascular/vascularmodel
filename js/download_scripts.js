@@ -347,23 +347,19 @@ $('.close-button-modal').click(function() {
   $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"});
 });
 
+import multiDownload from 'multi-download';
+
 $('.download-button-modal').click(function(e) {
   e.preventDefault()
   let urls = []
   let nModels = selectedModels.length
   for (var i = 0; i < nModels; i++) {
-    urls.push({download: 'svprojects/' + selectedModels[i].toString() + '.zip',
-               filename: selectedModels[i].toString() + '.zip'})
+    // urls.push({download: 'svprojects/' + selectedModels[i].toString() + '.zip',
+    //            filename: selectedModels[i].toString() + '.zip'})
+    urls.push('svprojects/' + selectedModels[i].toString() + '.zip')
     // window.open('svprojects/' + selectedModels[i].toString() + '.zip')
   }
-  urls.forEach(function (e) {
-                console.log(e.download)
-                fetch(e.download)
-                  .then(res => res.blob()) // Gets the response and returns it as a blob
-                  .then(blob => {
-                    saveAs(blob, e.filename);
-                });
-            });
+  multiDownload(urls);
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
   $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"});
 });
