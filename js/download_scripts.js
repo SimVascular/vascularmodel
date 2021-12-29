@@ -36,20 +36,24 @@ function parseFile(data, fDimensions, fileClass) {
   return modelDict
 }
 
-function populate(files, element) {
+function populate(files, element, dopush) {
   // var iso = new Isotope('#repository');
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
+  let listElements = []
   for (var i = 0; i < numFiles; i++) {
     // then the file is in svprojects
     if (arrayFiles[i][1]['dim'] != null) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.push(newContent)
+      listElements.push(newContent)
       // element.appendChild(newContent)
     }
   }
-  console.log(element)
+  $('#repository').append(listElements)
+                  .isotope('appended', listElements)
+                  .isotope('insert', listElements);
 }
 
 function generateContent(fileName, fileData) {
@@ -170,51 +174,51 @@ $(window).ready(function() {
 
     $.get('repository_text/aorta.txt', function(data) {
        aortaFiles = parseFile(data, fileDimensions, 'aorta')
-       populate(aortaFiles, content)
+       populate(aortaFiles, content, true)
     }, 'text');
 
     let aortofemoralFiles
     $.get('repository_text/aortofemoral.txt', function(data) {
        aortofemoralFiles = parseFile(data, fileDimensions, 'aortofemoral')
-       populate(aortofemoralFiles, content)
+       populate(aortofemoralFiles, content, false)
     }, 'text');
 
     let cerebrovascularFiles
     $.get('repository_text/cerebrovascular.txt', function(data) {
        cerebrovascularFiles = parseFile(data, fileDimensions, 'cerebrovascular')
-       populate(cerebrovascularFiles, content)
+       populate(cerebrovascularFiles, content, false)
     }, 'text');
 
     let congenitalFiles
     $.get('repository_text/congenital_heart.txt', function(data) {
        congenitalFiles = parseFile(data, fileDimensions, 'congenital_heart')
-       populate(congenitalFiles, content)
+       populate(congenitalFiles, content, false)
     }, 'text');
 
     let coronaryFiles
     $.get('repository_text/coronary.txt', function(data) {
        coronaryFiles = parseFile(data, fileDimensions, 'coronary')
-       populate(coronaryFiles, content)
+       populate(coronaryFiles, content, false)
     }, 'text');
 
     let pulmonaryFiles
     $.get('repository_text/pulmonary.txt', function(data) {
        pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
-       populate(pulmonaryFiles, content)
+       populate(pulmonaryFiles, content, false)
     }, 'text');
   }, 'text');
 });
 
-$(document).ready(function() {
-  setTimeout(function() {
-      // this is to update isotope with appended elements
-      // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
-      let $appendedElements = $('.content-ext-div')
-      $('#repository').append($appendedElements)
-                      .isotope('appended', $appendedElements)
-                      .isotope('insert', $appendedElements);
-    }, 1000);
-});
+// $(document).ready(function() {
+//   setTimeout(function() {
+//       // this is to update isotope with appended elements
+//       // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
+//       let $appendedElements = $('.content-ext-div')
+//       $('#repository').append($appendedElements)
+//                       .isotope('appended', $appendedElements)
+//                       .isotope('insert', $appendedElements);
+//     }, 1000);
+// });
 
 // isotope menu
 $(window).load(function() {
