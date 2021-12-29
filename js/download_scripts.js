@@ -287,7 +287,7 @@ function updateModalDialog() {
   var totalSize = 0
   var details = ''
   for (var i = 0; i < numModels; i++) {
-    var size = parseInt(fileDimensions[selectedModels[i]]) / 1000
+    var size = parseInt(fileDimensions[selectedModels[i]]) / 100000
     details = details + (i+1).toString()
     details = details + ': model '
     details = details + selectedModels[i]
