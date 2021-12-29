@@ -46,9 +46,6 @@ function populate(files, element) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.appendChild(newContent)
-      // this is to update isotope with appended elements
-      // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
-      $('#repository').isotope('insert', newContent);
     }
   }
 }
@@ -59,6 +56,7 @@ function generateContent(fileName, fileData) {
   extDiv.classList.add("col-xs-12")
   extDiv.classList.add("col-sm-4")
   extDiv.classList.add(fileData.class)
+  extDiv.id = "content-ext-div"
 
   let innerDiv = document.createElement("div");
   innerDiv.classList.add("repository_single_content")
@@ -201,6 +199,11 @@ $(window).ready(function() {
        populate(pulmonaryFiles, repoWindow)
     }, 'text');
   }, 'text');
+
+  // this is to update isotope with appended elements
+  // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
+  let $appendedElements = $('#content-ext-div')
+  $('#repository').isotope('insert', $appendedElements);
 });
 
 // isotope menu
