@@ -292,8 +292,8 @@ function updateModalDialog() {
     details = details + selectedModels[i]
     details = details + ', size = '
     details = details + fileDimensions[selectedModels[i]]
-    details = details + '\n'
-    totalSize = totalSize + parseInt()
+    details = details + ' Mb\n'
+    totalSize = totalSize + parseInt(fileDimensions[selectedModels[i]])
   }
   $('.details-text')[0].value = details
   $('#modal-closure')[0].innerText = 'Total size = ' + totalSize.toString() + ' Mb'
