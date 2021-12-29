@@ -338,12 +338,11 @@ function deselectModel(element) {
 $('.download-button').click(function() {
   if (downlaodButtonActivated){
     $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-    $('.body').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"}); /* Avoid width reflow */
+    $('.body').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
   }
 });
 
 $('.close-button-modal').click(function() {
-  const body = document.querySelector("body");
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"}); /* Avoid width reflow */
+  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"});
 });
