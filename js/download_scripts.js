@@ -161,6 +161,7 @@ let pulmonaryFiles
 
 var content = []
 $(window).ready(function() {
+  console.log('running this')
   let repoWindow = document.getElementById("repository")
 
   $.get('repository_text/file_dimensions.txt', function(data) {
