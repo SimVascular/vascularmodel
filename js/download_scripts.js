@@ -346,3 +346,9 @@ $('.close-button-modal').click(function() {
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
   $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"});
 });
+
+// recaptcha validation
+function onSubmit(token) {
+  console.log(token)
+  // document.getElementById("demo-form").submit();
+}

@@ -1443,7 +1443,7 @@ select::-ms-expand {
     pointer-events: auto;
 }
 .modalDialog > div {
-    width: 400px;
+    width: 300px;
     position: relative;
     margin: 10% auto;
     padding: 20px 20px 13px 20px;
@@ -1502,6 +1502,8 @@ select::-ms-expand {
   border-radius: 5px !important;
   border-collapse: separate;
   font-weight: 400;
+  margin-top:10px;
+  margin-bottom:10px;
   cursor: pointer;
 }
 
@@ -1523,4 +1525,6 @@ select::-ms-expand {
   border-collapse: separate;
   font-weight: 400;
   cursor: pointer;
+  margin-top:10px;
+  margin-bottom:10px;
 }
