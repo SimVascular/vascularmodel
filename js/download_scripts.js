@@ -47,6 +47,7 @@ function populate(files, element) {
                                        arrayFiles[i][1])
       element.push(newContent)
       // element.appendChild(newContent)
+      console.log(element)
     }
   }
 }
