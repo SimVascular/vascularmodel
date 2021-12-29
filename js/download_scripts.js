@@ -228,6 +228,8 @@ $(window).load(function() {
   // let $appendedElements = $('.content-ext-div')
   console.log('running here')
   let numContent = content.length
+  console.log(content)
+  console.log(numContent)
   for (var i = 0; i < numContent; i++) {
     console.log('adding')
     console.log(content[i])
