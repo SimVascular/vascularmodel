@@ -227,10 +227,14 @@ $(window).load(function() {
   // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
   // let $appendedElements = $('.content-ext-div')
   console.log('running here')
-  console.log(content)
-  $('#repository').append(content)
-                  .isotope('appended', content)
-                  .isotope('insert', content);
+  let numContent = content.length
+  for (var i = 0; i < numContent; i++) {
+    console.log('adding')
+    console.log(content[i])
+    $('#repository').append(content[i])
+                    .isotope('appended', content[i])
+                    .isotope('insert', content[i]);
+  }
 
   $(document).on('click', '.repository_single_content', function() {
     let contentStyle = getComputedStyle($(this)[0])
