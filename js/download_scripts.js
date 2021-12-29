@@ -198,6 +198,10 @@ $(window).ready(function() {
        pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
        populate(pulmonaryFiles, repoWindow)
     }, 'text');
+    // this is to update isotope with appended elements
+    // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
+    let $appendedElements = $('#content-ext-div')
+    $('#repository').isotope('insert', $appendedElements);
   }, 'text');
 });
 
@@ -250,10 +254,6 @@ $(window).load(function() {
     }
   });
 
-  // this is to update isotope with appended elements
-  // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
-  let $appendedElements = $('#content-ext-div')
-  $('#repository').isotope('insert', $appendedElements);
 });
 
 function hexc(colorval) {
