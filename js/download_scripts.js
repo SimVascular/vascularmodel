@@ -176,37 +176,37 @@ $(window).ready(function() {
 
     $.get('repository_text/aorta.txt', function(data) {
        aortaFiles = parseFile(data, fileDimensions, 'aorta')
-       populate(aortaFiles, content, true)
+       populate(aortaFiles, repoWindow, true)
     }, 'text');
 
     let aortofemoralFiles
     $.get('repository_text/aortofemoral.txt', function(data) {
        aortofemoralFiles = parseFile(data, fileDimensions, 'aortofemoral')
-       populate(aortofemoralFiles, content, false)
+       populate(aortofemoralFiles, repoWindow, false)
     }, 'text');
 
     let cerebrovascularFiles
     $.get('repository_text/cerebrovascular.txt', function(data) {
        cerebrovascularFiles = parseFile(data, fileDimensions, 'cerebrovascular')
-       populate(cerebrovascularFiles, content, false)
+       populate(cerebrovascularFiles, repoWindow, false)
     }, 'text');
 
     let congenitalFiles
     $.get('repository_text/congenital_heart.txt', function(data) {
        congenitalFiles = parseFile(data, fileDimensions, 'congenital_heart')
-       populate(congenitalFiles, content, false)
+       populate(congenitalFiles, repoWindow, false)
     }, 'text');
 
     let coronaryFiles
     $.get('repository_text/coronary.txt', function(data) {
        coronaryFiles = parseFile(data, fileDimensions, 'coronary')
-       populate(coronaryFiles, content, false)
+       populate(coronaryFiles, repoWindow, false)
     }, 'text');
 
     let pulmonaryFiles
     $.get('repository_text/pulmonary.txt', function(data) {
        pulmonaryFiles = parseFile(data, fileDimensions, 'pulmonary')
-       populate(pulmonaryFiles, content, false)
+       populate(pulmonaryFiles, repoWindow, false)
     }, 'text');
   }, 'text');
 });
