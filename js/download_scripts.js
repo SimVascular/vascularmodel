@@ -287,7 +287,7 @@ function updateModalDialog() {
   var totalSize = 0
   var details = ''
   for (var i = 0; i < numModels; i++) {
-    var size = parseInt(fileDimensions[selectedModels[i]]) / 100000
+    var size = parseInt(fileDimensions[selectedModels[i]]) / 1000000
     details = details + (i+1).toString()
     details = details + ': model '
     details = details + selectedModels[i]
@@ -297,7 +297,7 @@ function updateModalDialog() {
     totalSize = totalSize + size
   }
   $('.details-text')[0].value = details
-  $('#modal-closure')[0].innerText = 'Total size = ' + totalSize.toFixed(2) + ' Mb'
+  $('#modal-closure')[0].innerText = 'Total size = ' + totalSize.toFixed(2) + ' Mb (' + (totalSize/1000).toFixed(2) + ' Gb)'
 }
 
 function activateDownloadButton() {
