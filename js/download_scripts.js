@@ -47,7 +47,6 @@ function populate(files, element) {
                                        arrayFiles[i][1])
       element.push(newContent)
       // element.appendChild(newContent)
-      console.log(element)
     }
   }
 }
@@ -209,6 +208,8 @@ $(window).ready(function() {
       // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
       // let $appendedElements = $('.content-ext-div')
       let numContent = content.length
+      console.log(numContent)
+      console.log(content)
       for (var i = 0; i < numContent; i++) {
         $('#repository').append(content[i])
                         .isotope('appended', content[i])
