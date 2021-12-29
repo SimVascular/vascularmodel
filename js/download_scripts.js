@@ -49,6 +49,7 @@ function populate(files, element) {
       // element.appendChild(newContent)
     }
   }
+  console.log(element)
 }
 
 function generateContent(fileName, fileData) {
@@ -207,6 +208,7 @@ $(window).ready(function() {
       // this is to update isotope with appended elements
       // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
       // let $appendedElements = $('.content-ext-div')
+      let content = $(.e)
       let numContent = content.length
       console.log(numContent)
       console.log(content)
