@@ -45,7 +45,7 @@ function populate(files, element) {
     if (arrayFiles[i][1]['dim'] != null) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
-      element.appendChild(newContent)
+      // element.appendChild(newContent)
     }
   }
 }
@@ -223,7 +223,9 @@ $(window).load(function() {
   // this is to update isotope with appended elements
   // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
   let $appendedElements = $('.content-ext-div')
-  $('#repository').isotope('insert', $appendedElements);
+  $('#repository').append($appendedElements)
+                  .isotope('appended',$appendedElements)
+                  .isotope('insert', $appendedElements);
 
   $(document).on('click', '.repository_single_content', function() {
     let contentStyle = getComputedStyle($(this)[0])
