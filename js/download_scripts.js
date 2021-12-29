@@ -199,11 +199,6 @@ $(window).ready(function() {
        populate(pulmonaryFiles, repoWindow)
     }, 'text');
   }, 'text');
-
-  // this is to update isotope with appended elements
-  // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
-  let $appendedElements = $('#content-ext-div')
-  $('#repository').isotope('insert', $appendedElements);
 });
 
 // isotope menu
@@ -255,6 +250,10 @@ $(window).load(function() {
     }
   });
 
+  // this is to update isotope with appended elements
+  // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
+  let $appendedElements = $('#content-ext-div')
+  $('#repository').isotope('insert', $appendedElements);
 });
 
 function hexc(colorval) {
