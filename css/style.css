@@ -1463,6 +1463,7 @@ select::-ms-expand {
   resize: none;
   margin-bottom: 10px;
   margin-top: 10px;
+  font-family: 'Lucida Console', sans-serif;
   padding:10px;
   border: 1px #c9c9c9 solid;
 }
