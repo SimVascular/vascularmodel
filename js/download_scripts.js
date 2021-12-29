@@ -46,6 +46,7 @@ function populate(files, element, dopush) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.appendChild(newContent)
+      // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
       $('#repository').isotope('insert', newContent)
     }
   }
@@ -203,17 +204,6 @@ $(window).ready(function() {
     }, 'text');
   }, 'text');
 });
-
-// $(document).ready(function() {
-//   setTimeout(function() {
-//       // this is to update isotope with appended elements
-//       // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
-//       let $appendedElements = $('.content-ext-div')
-//       $('#repository').append($appendedElements)
-//                       .isotope('appended', $appendedElements)
-//                       .isotope('insert', $appendedElements);
-//     }, 1000);
-// });
 
 // isotope menu
 $(window).load(function() {
