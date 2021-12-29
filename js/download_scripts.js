@@ -352,7 +352,8 @@ $('.download-button-modal').click(function(e) {
   let urls = []
   let nModels = selectedModels.length
   for (var i = 0; i < nModels; i++) {
-    urls.push('svprojects/' + selectedModels[i].toString() + '.zip')
+    urls.push({download: 'svprojects/' + selectedModels[i].toString() + '.zip',
+               filename: selectedModels[i].toString() + '.zip'})
     // window.open('svprojects/' + selectedModels[i].toString() + '.zip')
   }
   urls.forEach(function (e) {
