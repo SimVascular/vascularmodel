@@ -1446,13 +1446,27 @@ select::-ms-expand {
     width: 400px;
     position: relative;
     margin: 10% auto;
-    padding: 5px 20px 13px 20px;
-    border-radius: 10px;
+    padding: 20px 20px 13px 20px;
+    border-radius: 8px !important;
     background: #fff;
     /* background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
     background: -o-linear-gradient(#fff, #999); */
 }
+
+.details-text {
+  color: #05080B;
+  font-weight: 200;
+  width:100%;
+  height: 100px;
+  overflow-y: scroll;
+  resize: none;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding:10px;
+  border: 1px #c9c9c9 solid;
+}
+
 .close {
     background: #606061;
     color: #FFFFFF;
