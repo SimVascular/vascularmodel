@@ -203,7 +203,9 @@ $(window).ready(function() {
        populate(pulmonaryFiles, content)
     }, 'text');
   }, 'text');
+});
 
+$(document).ready(function() {
   setTimeout(function() {
       // this is to update isotope with appended elements
       // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
@@ -216,8 +218,7 @@ $(window).ready(function() {
                         .isotope('appended', content[i])
                         .isotope('insert', content[i]);
       }
-    }, 10);
-
+    }, 1);
 });
 
 // isotope menu
