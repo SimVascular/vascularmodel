@@ -1489,3 +1489,38 @@ select::-ms-expand {
 .close:hover {
     background: #00d9ff;
 }
+
+.close-button-modal {
+  background-color: #363940;
+  border: none;
+  color: #b5b5b5;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none !important;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px !important;
+  border-collapse: separate;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.close-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+}
+
+.download-button-modal {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none !important;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px !important;
+  border-collapse: separate;
+  font-weight: 400;
+  cursor: pointer;
+}
