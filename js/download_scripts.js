@@ -37,7 +37,7 @@ function parseFile(data, fDimensions, fileClass) {
 }
 
 function populate(files, element) {
-  var iso = new Isotope('#repository');
+  // var iso = new Isotope('#repository');
   console.log('running this')
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
@@ -47,7 +47,7 @@ function populate(files, element) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.appendChild(newContent)
-      iso.appended(newContent);
+      $('#repository').isotope('insert', newContent);
     }
   }
 }
