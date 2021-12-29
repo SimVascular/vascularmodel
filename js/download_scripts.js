@@ -46,7 +46,7 @@ function populate(files, element, dopush) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.appendChild(newContent)
-      ('#repository').isotope('insert', newContent)
+      $('#repository').isotope('insert', newContent)
     }
   }
 }
