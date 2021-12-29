@@ -38,7 +38,6 @@ function parseFile(data, fDimensions, fileClass) {
 
 function populate(files, element) {
   // var iso = new Isotope('#repository');
-  console.log('running this')
   let arrayFiles = Object.entries(files)
   let numFiles = arrayFiles.length
   for (var i = 0; i < numFiles; i++) {
@@ -47,6 +46,8 @@ function populate(files, element) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.appendChild(newContent)
+      // this is to update isotope with appended elements
+      // https://stackoverflow.com/questions/41959740/isotope-not-working-with-appended-html
       $('#repository').isotope('insert', newContent);
     }
   }
@@ -166,7 +167,6 @@ $(window).ready(function() {
     fileDimensions = parseFileDimensions(data)
 
     $.get('repository_text/aorta.txt', function(data) {
-       console.log('running aorta')
        aortaFiles = parseFile(data, fileDimensions, 'aorta')
        populate(aortaFiles, repoWindow)
     }, 'text');
