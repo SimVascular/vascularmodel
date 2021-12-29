@@ -336,7 +336,7 @@ function deselectModel(element) {
 }
 
 $('.download-button').click(function() {
-  if (!downlaodButtonActivated){
+  if (downlaodButtonActivated){
     $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
     $('.body').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"}); /* Avoid width reflow */
   }
