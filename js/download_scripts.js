@@ -47,15 +47,14 @@ function populate(files, element, dopush) {
       let newContent = generateContent(arrayFiles[i][0],
                                        arrayFiles[i][1])
       element.push(newContent)
-      listElements.push(newContent)
-      // element.appendChild(newContent)
+      if (dopush) {
+        element.appendChild(newContent)
+      }
     }
   }
   if (dopush) {
     console.log(listElements)
-    $('#repository').append(listElements)
-                    .isotope('appended', listElements)
-                    .isotope('insert', listElements);
+    $('#repository').isotope('insert', listElements);
   }
 }
 
