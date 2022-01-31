@@ -90,76 +90,6 @@ let congenitalFiles
 let coronaryFiles
 let pulmonaryFiles
 
-// function populateFilters() {
-//   let menu = document.getElementById("repository_content_area")
-//
-//   let extDiv = document.createElement('div')
-//   extDiv.classList.add('repository_menu')
-//   extDiv.id = "filters"
-//
-//   let menuUl = document.createElement('ul')
-//
-//   let li0 = document.createElement('li')
-//   li.classList.add('active_prot_menu')
-//   let a0 = document.createElement('a')
-//   a0.href = '#repository_menu'
-//   a0['data-filter'] = '*'
-//   a0['text'] = 'All'
-//   l0.appendChild(a0)
-//
-//   let li1 = document.createElement('li')
-//   let a1 = document.createElement('a')
-//   a1.href = '#repository_menu'
-//   a1['data-filter'] = '.aorta'
-//   a1['text'] = 'Aorta'
-//   l1.appendChild(a1)
-//
-//   let li2 = document.createElement('li')
-//   let a2 = document.createElement('a')
-//   a2.href = '#repository_menu'
-//   a2['data-filter'] = '.aortofemoral'
-//   a2['text'] = 'Aortofemoral'
-//   l2.appendChild(a2)
-//
-//   let li3 = document.createElement('li')
-//   let a3 = document.createElement('a')
-//   a3.href = '#repository_menu'
-//   a3['data-filter'] = '.cerebrovascular'
-//   a3['text'] = 'Cerebrovascular'
-//   l3.appendChild(a3)
-//
-//   let li4 = document.createElement('li')
-//   let a4 = document.createElement('a')
-//   a4.href = '#repository_menu'
-//   a4['data-filter'] = '.congenital_heart'
-//   a4['text'] = 'Congenital'
-//   l4.appendChild(a4)
-//
-//   let li5 = document.createElement('li')
-//   let a5 = document.createElement('a')
-//   a5.href = '#repository_menu'
-//   a5['data-filter'] = '.coronary'
-//   a5['text'] = 'Coronary'
-//   l5.appendChild(a5)
-//
-//   let li6 = document.createElement('li')
-//   let a6 = document.createElement('a')
-//   a6.href = '#repository_menu'
-//   a6['data-filter'] = '.pulmonary'
-//   a6['text'] = 'Pulmonary'
-//   l6.appendChild(a6)
-//
-//   menuUl.appendChild(l0)
-//   menuUl.appendChild(l1)
-//   menuUl.appendChild(l2)
-//   menuUl.appendChild(l3)
-//   menuUl.appendChild(l4)
-//   menuUl.appendChild(l5)
-//   menuUl.appendChild(l6)
-//   extDiv.appendChild(menuUl)
-//   menu.appendChild(extDiv)
-// }
-
 var content = []
 $(window).ready(function() {
   console.log('running this')
@@ -371,7 +301,7 @@ function downloadFiles(files) {
     // Download the next file with a small timeout. The timeout is necessary
     // for IE, which will otherwise only download the first file.
     setTimeout(function() {
-      download_next(i + 1);
+      downloadNext(i + 1);
     }, 500);
   }
   // Initiate the first download.
