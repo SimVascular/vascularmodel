@@ -1,107 +1,69 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="en">
 <head>
+  <!-- This corresponds to a fontawesome kit but can be customized -->
+  <script src="https://kit.fontawesome.com/48644805cd.js" crossorigin="anonymous"></script>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Vascular Model Repository</title>
-  <meta name="description" content="Vascular Model Repository">
-  <meta name="keywords" content="HTML5, Bootsrtrap, One Page, Responsive, Template, Portfolio" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" target="_blank">
+  <link rel="preconnect" href="http://fonts.googleapis.com">
+  <link rel="preconnect" href="http://fonts.gstatic.com" crossorigin>
+  <link href="http://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
-  <!-- Google Fonts  -->
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">  -->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-  <!-- Libs and Plugins CSS -->
-  <link rel="stylesheet" href="inc/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="inc/animations/css/animate.min.css">
-  <link rel="stylesheet" href="inc/font-awesome_/css/font-awesome.min.css"> <!-- Font Icons -->
-  <link rel="stylesheet" href="inc/owl-carousel/css/owl.carousel.css">
-  <link rel="stylesheet" href="inc/owl-carousel/css/owl.theme.css">
-
-  <!-- Theme CSS -->
-  <link rel="stylesheet" href="css/reset.css">
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/mobile.css">
 
-  <!-- Skin CSS -->
-  <link rel="stylesheet" href="css/skin/cool-gray.css">
-  <!-- <link rel="stylesheet" href="css/skin/ice-blue.css"> -->
-  <!-- <link rel="stylesheet" href="css/skin/summer-orange.css"> -->
-  <!-- <link rel="stylesheet" href="css/skin/fresh-lime.css"> -->
-  <!-- <link rel="stylesheet" href="css/skin/night-purple.css"> -->
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVVR1546XJ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-YVVR1546XJ');
-  </script>
+  <title>Vascular Model Repository</title>
 </head>
+<body>
 
-<body data-spy="scroll" data-target="#main-navbar">
-  <div class="page-loader"></div>  <!-- Display loading image while page loads -->
-  <div class="body">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-custom">
+    <div class="container-fluid ">
+      <a class="navbar-brand " href="index.html">Vascular Model Repository</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav ">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Repository
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="dataset.html">Dataset</a>
+              <a class="dropdown-item" href="documentation.html">Documentation</a>
+              <a class="dropdown-item" href="faqs.html">FAQs</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-
-    <nav id="main-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-left:10px; padding:0px;">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand page-scroll" id="logo" href="index.html">VMR</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.html" style="text-decoration:none;">Home</a></li>
-            <li><a href="repository.html" style="text-decoration:none;">Repository</a></li>
-            <li><a href="#" style="text-decoration:none; color: white;">Documentation</a></li>
-            <li><a href="FAQs.html" style="text-decoration:none;">FAQs</a></li>
-            <li><a class="page-scroll" href="#contact-section" style="text-decoration:none;">Contacts</a></li>
-          </div>
-        </div>
-      </nav>
-
-      <!-- ========= END HEADER =========-->
-
-      <div class="extra-space-l"></div>
-      <div class="extra-space-l"></div>
-
-  <div class="container">
+  <div class="container" id="documentation">
     <div class="row">
       <div class="col-md-12 mx-auto">
         <h3 class="title-documentation">Getting started</h3>
       </div>
       <div class="col-md-12 mx-auto">
-        <p class="body-documentation">The Vascular Model Repository is a library of human cardiovascular models. Model projects can be downloaded in <code>.zip</code> format from the <a href="repository.html" style="color: #5A9FE4; text-decoration:none;">Repository</a>. Each archive contains a project compatible with SimVascular, an open-source software for patient-specific cardiovascular modeling and simulation. We refer to the <a href="http://simvascular.github.io/" target="_blank" style="color: #5A9FE4;">SimVascular website</a> and <a href=http://simvascular.github.io/docsQuickGuide.html target="_blank" style="color: #5A9FE4;">Getting started page</a> for an in-depth discussion of the software capabilities and its usage. In this documentation, we limit ourselves to recall that a SimVascular project can be opened by clicking <span style="font-weight:600">File > Open SV Project...</span> in the graphical user interface and by selecting the desired project folder.</p>
+        <p class="body-documentation">The Vascular Model Repository is a library of human cardiovascular models. Model projects can be downloaded in <code>.zip</code> format from the <a href="repository.html" class="link" target="_blank">Repository</a>. Each archive contains a project compatible with SimVascular, an open-source software for patient-specific cardiovascular modeling and simulation. We refer to the <a href="http://simvascular.github.io/" target="_blank" class="link">SimVascular website</a> and <a href=http://simvascular.github.io/docsQuickGuide.html target="_blank" class="link" target="_blank">Getting started page</a> for an in-depth discussion of the software capabilities and its usage. In this documentation, we limit ourselves to recall that a SimVascular project can be opened by clicking <span style="font-weight:600">File > Open SV Project...</span> in the graphical user interface and by selecting the desired project folder.</p>
         <p class="body-documentation">Although the models are compatible with SimVascular by design, some components (in particular, image data and computational meshes) can be easily opened in other pieces of software too. Here is a brief description of the subfolders contained in each project:</p>
-        <p class="list-documentation"><span style="font-weight:600">Images:</span> directory containing medical image data in <code>.vti</code> format, which can be opened, for example, using <a style="color: #5A9FE4;" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p class="list-documentation"><span style="font-weight:600">Images:</span> directory containing medical image data in <code>.vti</code> format, which can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
         <p class="list-documentation"><span style="font-weight:600">Paths:</span> directory containing path files in <code>*.pth</code> format, where <code>*</code> is usually one of the vessels making up the current model. Path files store path points (in <code>.xml</code> format) manually identified during the centerline identification stage of SimVascular.</p>
         <p class="list-documentation"><span style="font-weight:600">Segmentations:</span> directory containing contour files in <code>*.ctgr</code> format, where <code>*</code> is usually one of the vessels making up the current model. Contour files store contour points (in <code>.xml</code> format) manually identified during the segmentation stage of SimVascular.</p>
         <p class="list-documentation"><span style="font-weight:600">Models:</span> directory containing the surface model of the geometry.</p>
-        <p class="list-documentation"><span style="font-weight:600">Meshes:</span> directory containing the meshes of the model. Surface meshes are stored in <code>.vtp</code>, while volumetric meshes are stored in <code>.msh</code> and <code>.vtu</code> formats; <code>.vtp</code> and <code>.vtu</code> files can be opened, for example, using <a style="color: #5A9FE4;" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p class="list-documentation"><span style="font-weight:600">Meshes:</span> directory containing the meshes of the model. Surface meshes are stored in <code>.vtp</code>, while volumetric meshes are stored in <code>.msh</code> and <code>.vtu</code> formats; <code>.vtp</code> and <code>.vtu</code> files can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
         <p class="list-documentation"><span style="font-weight:600">flow-files:</span> directory containing inflow boundary conditions. These as stored in files called <code>inflow_3d.flow</code>, i.e., as raw text files in which each row corresponds to a particular timestep and flowrate value. Note that, in SimVascular, a positive inflow requires a negative sign (as the normal to the inlet surface and the velocity field have opposite orientations).</p>
         <p class="list-documentation" style="margin-bottom:50px;"><span style="font-weight:600">Simulations:</span> directory containing simulation files compatible with SimVascular. Please note that simulation results are currently not included in the repository.</p>
       </div>
@@ -109,7 +71,7 @@
         <h3 class="title-documentation">History</h3>
       </div>
       <div class="col-md-12 mx-auto">
-        <p class="body-documentation" style="margin-bottom:50px;">The Vascular Model Repository was originally created by <a style="color: #5A9FE4;" href="https://www.anderson.ucla.edu/faculty-and-research/global-economics-and-management/faculty/wilson" target="_blank">Nathan Wilson</a> and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institues of Health (NIH). The repository has then been migrated into its current form in a joint effort between the <a href="https://cbcl.stanford.edu" style="color: #5A9FE4;">Cardiovascular Biomechanics Computation Lab</a> at Stanford University, the <a href="https://shaddenlab.berkeley.edu" style="color: #5A9FE4;">Shadden Lab</a> at Berkeley University, and Nathan Wilson. The project is currently supported by the NIH National Library of Medicine (grant 5R01LM013120).</p>
+        <p class="body-documentation" style="margin-bottom:50px;">The Vascular Model Repository was originally created by <a class="link" href="https://www.anderson.ucla.edu/faculty-and-research/global-economics-and-management/faculty/wilson" target="_blank">Nathan Wilson</a> and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institues of Health (NIH). The repository has then been migrated into its current form in a joint effort between the <a href="https://cbcl.stanford.edu" class="link" target="_blank">Cardiovascular Biomechanics Computation Lab</a> at Stanford University, the <a href="https://shaddenlab.berkeley.edu" class="link" target="_blank">Shadden Lab</a> at Berkeley University, and Nathan Wilson. The project is currently supported by the NIH National Library of Medicine (grant 5R01LM013120).</p>
       </div>
       <div class="col-md-12 mx-auto">
         <h3 class="title-documentation">References</h3>
@@ -117,84 +79,66 @@
       <div class="col-md-12 mx-auto">
         <p class="body-documentation">We refer to the following publications for additional details on the Vascular Model Repository. If you find the repository useful, please consider citing these references.</p>
         <p class="list-documentation"> N.M. Wilson, A.K. Ortiz, and A.B. Johnson, <em>The Vascular Model Repository: A Public Resource of Medical Imaging Data and Blood Flow Simulation Results</em>, J. Med. Devices 7(4), 040923 (Dec 05, 2013) doi:10.1115/1.4025983.
-        <p class="list-documentation" style="margin-bottom:50px;"> M.R. Pfaller, J. Pham, A. Verma, N.M. Wilson, D.W. Parker, W. Yang, and A.L. Marsden, <em>Automated generation of 0D and 1D reduced-order models of patient-specific blood flow</em>, arXiv:2111.04878.
-      </div>
-    </div>
-  </div>
-
-  <!-- Begin contact section -->
-  <section id="contact-section" class="page text-white parallax" data-stellar-background-ratio="0.5" style="z-index: 1000;">
-    <div class="cover"></div>
-
-    <!-- Begin page header-->
-    <div class="page-header-wrapper">
-      <div class="container">
-        <div class="page-header text-center wow fadeInDown" data-wow-delay="0.4s">
-          <h2>Contact us</h2>
+          <p class="list-documentation"> M.R. Pfaller, J. Pham, A. Verma, N.M. Wilson, D.W. Parker, W. Yang, and A.L. Marsden, <em>Automated generation of 0D and 1D reduced-order models of patient-specific blood flow</em>, arXiv:2111.04878.
+          </div>
         </div>
       </div>
-    </div>
-    <!-- End page header-->
 
-    <div class="contact wow bounceInRight" data-wow-delay="0.4s">
-      <div class="container">
-        <div class="row">
+      <section id="contact-section">
+        <div class="container">
+          <div class="row align-items-center">
 
-          <div class="col-sm-6">
-            <div class="contact-info">
-              <h4>Our Address</h4>
-              <ul class="contact-address">
-                <li><i class="fa fa-map-marker fa-lg"></i>&nbsp; Clark Center E1.3.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 318 Campus Drive,<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stanford, CA 94305-5428</li>
-                <li><i class="fa fa-envelope"></i> simvascular@gmail.com</li>
-              </ul>
+            <div class="col-md-4 col-12">
+              <div style="text-align: left;">
+                <div class="contact-info">
+                  <ul class="contact-address">
+                    <li><i class="fa fa-map-marker fa-lg"></i>&nbsp; Clark Center E1.3.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 318 Campus Drive,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stanford, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CA 94305-5428</li>
+                    <li><i class="fa fa-envelope"></i> simvascular@gmail.com</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="explore"  style="text-align: left;">
+                <h5>Explore</h5>
+                <div><a href="*">Dataset</a></div>
+                <div><a href="*">Documentation</a></div>
+                <div><a href="*">FAQs</a></div>
+                <div><a href="*">Contact us</a></div>
+              </div>
+            </div>
+            <div class="col-md-4 col-12" style="text-align: center;">
+              <div class="social-media">
+                <div>Follow SimVascular on social media</div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-4">
+                      <div href="#" style="display: flex;  justify-content: center; font-size:20px;">
+                        <a href="https://www.facebook.com/groups/835227759855853" target="_blank" class="social-logo"><i class="fa fa-facebook fa-lg"></i></a>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div href="#" style="display: flex;  justify-content: center; font-size:20px;">
+                        <a href="https://twitter.com/simvascular" target="_blank"  class="social-logo";><i class="fa fa-twitter fa-lg"></i></a>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div href="#" style="display: flex;  justify-content: center; font-size:20px;">
+                        <a href="https://www.youtube.com/channel/UCT61XgTRqpfb39Hyio9IqGQ" target="_blank" class="social-logo"><i class="fa fa-youtube fa-lg"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div class="col-sm-6">
-            <div class="contact-form">
-              <form action="https://formsubmit.co/simvascular@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="New email from vascularmodel.io">
-                <div class="form-group">
-                  <input type="text" name="name" class="form-control input-lg" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                  <input type="email" name="email" class="form-control input-lg" placeholder="E-mail" required>
-                </div>
-                <div class="form-group">
-                  <input type="text" name="subject" class="form-control input-lg" placeholder="Subject" required>
-                </div>
-                <div class="form-group">
-                  <textarea class="form-control input-lg" name="message" rows="5" placeholder="Message" required></textarea>
-                </div>
-                <button type="submit" class="btn wow bounceInRight" data-wow-delay="0.8s" style="color:white">Send</button>
-              </form>
-            </div>
-          </div>
-        </div> <!-- /.row -->
-      </div> <!-- /.container -->
-    </div>
-  </section>
-
-</div><!-- body ends -->
-
-<!-- Plugins JS -->
-<script src="inc/jquery/jquery-1.11.1.min.js"></script>
-<script src="inc/bootstrap/js/bootstrap.min.js"></script>
-<script src="inc/owl-carousel/js/owl.carousel.min.js"></script>
-<script src="inc/stellar/js/jquery.stellar.min.js"></script>
-<script src="inc/animations/js/wow.min.js"></script>
-<script src="inc/waypoints.min.js"></script>
-<script src="inc/isotope.pkgd.min.js"></script>
-<script src="inc/classie.js"></script>
-<script src="inc/jquery.easing.min.js"></script>
-<script src="inc/jquery.counterup.min.js"></script>
-<script src="inc/smoothscroll.js"></script>
-<script src="js/download_tracking.js"></script>
-
-<!-- Theme JS -->
-<script src="js/theme.js"></script>
-
-</body>
-
-
-</html>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </body>
+    </html>
