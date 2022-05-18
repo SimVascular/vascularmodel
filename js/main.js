@@ -64,6 +64,7 @@ $(document).ready(function($){
     type: "GET",
     url: "dataset/dataset.csv",
     dataType: "text",
+    async: false,
     success: function(fdata) {
       var data = $.csv.toObjects(fdata);
       // we shuffle array to make it always different
