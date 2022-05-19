@@ -3,24 +3,32 @@
 function generateContent(data) {
   console.log(data);
   console.log(data['Name']);
-  var li = document.createElement("li");
-  li.classList.add("mix")
-  li.classList.add(data['Name'])
-  li.classList.add(data['Type'])
+  var div = document.createElement("div");
+  div.classList.add("col-md-3");
+  div.classList.add("col-sm-12");
+  var divModelImage = document.createElement("div");
+  divModelImage.classList.add("model-image");
+  divModelImage.classList.add("animate");
 
-  var folders = ['Images','Paths','Segmentations','Models','Meshes','Simulations']
-
-  for (var i = 0; i < folders.length; i++) {
-    if (data[folders[i]] == 1) {
-      li.classList.add(folders[i])
-    }
-  }
+  // var li = document.createElement("li");
+  // li.classList.add("mix")
+  // li.classList.add(data['Name'])
+  // li.classList.add(data['Type'])
+  //
+  // var folders = ['Images','Paths','Segmentations','Models','Meshes','Simulations']
+  //
+  // for (var i = 0; i < folders.length; i++) {
+  //   if (data[folders[i]] == 1) {
+  //     li.classList.add(folders[i])
+  //   }
+  // }
 
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + data['Name'] + '.png'
   innerImg.alt = data['Name']
 
-  li.appendChild(innerImg)
+  divModelImage.appendChild(innerImg);
+  div.appendChild(divModelImage);
 
   // let innerDiv = document.createElement("div");
   // innerDiv.classList.add('overlay')
@@ -47,17 +55,26 @@ function generateContent(data) {
   // innerDiv.appendChild(innerInnerDiv)
   // extDiv.appendChild(innerDiv)
   //
-  return li
+  return div
 }
 
-function populate(data) {
-  var modelList = document.getElementById("model-list")
+var cur_index = 0;
+
+function populate(data, num_images = 16) {
+  var modelList = document.getElementById("model-gallery")
   var arrayLength = data.length;
-  for (var i = 0; i < arrayLength; i++) {
+  var ubound = arrayLength;
+  if (cur_index + num_images < arrayLength) {
+    ubound = cur_index + num_images
+  }
+  for (var i = cur_index; i < ubound; i++) {
       var newContent = generateContent(data[i]);
       modelList.appendChild(newContent);
   }
+  cur_index = ubound;
 }
+
+var data;
 
 $(document).ready(function($){
   $.ajax({
@@ -66,12 +83,13 @@ $(document).ready(function($){
     dataType: "text",
     async: false,
     success: function(fdata) {
-      var data = $.csv.toObjects(fdata);
+      data = $.csv.toObjects(fdata);
       // we shuffle array to make it always different
       data.sort(() => (Math.random() > .5) ? 1 : -1);
-      populate(data);
     }
   });
+
+  populate(data);
 
   //open/close lateral filter
   $('.cd-filter-trigger').on('click', function(){
@@ -123,20 +141,31 @@ $(document).ready(function($){
   //   }
   // });
 
-  //close filter dropdown inside lateral .cd-filter
-  $('.cd-filter-block h4').on('click', function(){
-    $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-  })
+  // close filter dropdown inside lateral .cd-filter
+  // $('.cd-filter-block h4').on('click', function(){
+  //   $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
+  // })
+  //
+  // //fix lateral filter and gallery on scrolling
+  // $(window).on('scroll', function(){
+  //   (!window.requestAnimationFrame) ? fixGallery() : window.requestAnimationFrame(fixGallery);
+  // });
+  //
+  // function fixGallery() {
+  //   var offsetTop = $('.cd-main-content').offset().top,
+  //     scrollTop = $(window).scrollTop();
+  //   ( scrollTop >= offsetTop ) ? $('.cd-main-content').addClass('is-fixed') : $('.cd-main-content').removeClass('is-fixed');
+  // }
+});
 
-  //fix lateral filter and gallery on scrolling
-  $(window).on('scroll', function(){
-    (!window.requestAnimationFrame) ? fixGallery() : window.requestAnimationFrame(fixGallery);
-  });
-
-  function fixGallery() {
-    var offsetTop = $('.cd-main-content').offset().top,
-      scrollTop = $(window).scrollTop();
-    ( scrollTop >= offsetTop ) ? $('.cd-main-content').addClass('is-fixed') : $('.cd-main-content').removeClass('is-fixed');
+window.addEventListener('scroll', () => {
+  var footerHeight = $('#contact-section').height();
+  // var footerHeight = document.getElementById("contact-section").height()
+  console.log(footerHeight)
+  var padding = 50;
+  if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
+    console.log(window.innerHeight)
+    populate(data, 4);
   }
 });
 
@@ -149,58 +178,58 @@ $(window).load(function(){
     http://codepen.io/patrickkunka/
   *************************************/
 
-  buttonFilter.init();
-  $('.cd-gallery ul').mixItUp({
-      controls: {
-        enable: false
-      },
-      callbacks: {
-        onMixStart: function(){
-          $('.cd-fail-message').fadeOut(200);
-        },
-          onMixFail: function(){
-            $('.cd-fail-message').fadeIn(200);
-        }
-      }
-  });
+  // buttonFilter.init();
+  // $('.cd-gallery ul').mixItUp({
+  //     controls: {
+  //       enable: false
+  //     },
+  //     callbacks: {
+  //       onMixStart: function(){
+  //         $('.cd-fail-message').fadeOut(200);
+  //       },
+  //         onMixFail: function(){
+  //           $('.cd-fail-message').fadeIn(200);
+  //       }
+  //     }
+  // });
 
-  //search filtering
-  //credits http://codepen.io/edprats/pen/pzAdg
-  var inputText;
-  var $matching = $();
-
-  var delay = (function(){
-    var timer = 0;
-    return function(callback, ms){
-      clearTimeout (timer);
-        timer = setTimeout(callback, ms);
-    };
-  })();
-
-  $(".cd-filter-content input[type='search']").keyup(function(){
-      // Delay function invoked to make sure user stopped typing
-      delay(function(){
-        inputText = $(".cd-filter-content input[type='search']").val().toLowerCase();
-         // Check to see if input field is empty
-        if ((inputText.length) > 0) {
-            $('.mix').each(function() {
-              var $this = $(this);
-
-              // add item to be filtered out if input text matches items inside the title
-              if($this.attr('class').toLowerCase().match(inputText)) {
-                  $matching = $matching.add(this);
-              } else {
-                  // removes any previously matched item
-                  $matching = $matching.not(this);
-              }
-            });
-            $('.cd-gallery ul').mixItUp('filter', $matching);
-        } else {
-            // resets the filter to show all item if input is empty
-            $('.cd-gallery ul').mixItUp('filter', 'all');
-        }
-      }, 200 );
-  });
+  // search filtering
+  // credits http://codepen.io/edprats/pen/pzAdg
+  // var inputText;
+  // var $matching = $();
+  //
+  // var delay = (function(){
+  //   var timer = 0;
+  //   return function(callback, ms){
+  //     clearTimeout (timer);
+  //       timer = setTimeout(callback, ms);
+  //   };
+  // })();
+  //
+  // $(".cd-filter-content input[type='search']").keyup(function(){
+  //     // Delay function invoked to make sure user stopped typing
+  //     delay(function(){
+  //       inputText = $(".cd-filter-content input[type='search']").val().toLowerCase();
+  //        // Check to see if input field is empty
+  //       if ((inputText.length) > 0) {
+  //           $('.mix').each(function() {
+  //             var $this = $(this);
+  //
+  //             // add item to be filtered out if input text matches items inside the title
+  //             if($this.attr('class').toLowerCase().match(inputText)) {
+  //                 $matching = $matching.add(this);
+  //             } else {
+  //                 // removes any previously matched item
+  //                 $matching = $matching.not(this);
+  //             }
+  //           });
+  //           $('.cd-gallery ul').mixItUp('filter', $matching);
+  //       } else {
+  //           // resets the filter to show all item if input is empty
+  //           $('.cd-gallery ul').mixItUp('filter', 'all');
+  //       }
+  //     }, 200 );
+  // });
 });
 
 /*****************************************************
