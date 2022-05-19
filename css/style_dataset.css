@@ -695,6 +695,21 @@ xcustom form elements
   display: block;
 }
 
+.btn-primary, .btn-primary:visited {
+    background-color: var(--dark2) !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark2) !important;
+    text-decoration: underline !important;
+}
+
+.btn-primary:active {
+  background-color: var(--dark3) !important;
+  color: white !important;
+}
+
 @-moz-document url-prefix() {
   /* hide custom arrow on Firefox - select element */
   .cd-filter-block .cd-select::after {

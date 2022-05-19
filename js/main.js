@@ -1,27 +1,12 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
 function generateContent(data) {
-  console.log(data);
-  console.log(data['Name']);
   var div = document.createElement("div");
   div.classList.add("col-md-3");
   div.classList.add("col-sm-12");
   var divModelImage = document.createElement("div");
   divModelImage.classList.add("model-image");
   divModelImage.classList.add("animate");
-
-  // var li = document.createElement("li");
-  // li.classList.add("mix")
-  // li.classList.add(data['Name'])
-  // li.classList.add(data['Type'])
-  //
-  // var folders = ['Images','Paths','Segmentations','Models','Meshes','Simulations']
-  //
-  // for (var i = 0; i < folders.length; i++) {
-  //   if (data[folders[i]] == 1) {
-  //     li.classList.add(folders[i])
-  //   }
-  // }
 
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + data['Name'] + '.png'
@@ -30,51 +15,35 @@ function generateContent(data) {
   divModelImage.appendChild(innerImg);
   div.appendChild(divModelImage);
 
-  // let innerDiv = document.createElement("div");
-  // innerDiv.classList.add('overlay')
-  // li.appendChild(innerDiv)
-
-  // var extDiv = document.createElement("li");
-  // extDiv.classList.add("mix")
-  // extDiv.classList.add("col-sm-4")
-  // extDiv.classList.add(fileData.class)
-  // extDiv.classList.add("content-ext-div")
-  //
-  // let innerImg = document.createElement("img");
-  // innerImg.src = fileData.image
-  // innerImg.alt = fileName
-  //
-  // let innerInnerDiv = document.createElement("div")
-  //
-  // let innerA = document.createElement("a");
-  // innerA.id = fileName
-  // innerA.text = fileName
-  //
-  // innerInnerDiv.appendChild(innerA)
-  // innerDiv.appendChild(innerImg)
-  // innerDiv.appendChild(innerInnerDiv)
-  // extDiv.appendChild(innerDiv)
-  //
   return div
 }
 
-var cur_index = 0;
+function removeContent() {
+  var modelList = document.getElementById("model-gallery")
+  while (modelList.firstChild) {
+    modelList.removeChild(modelList.firstChild);
+  }
+}
+
+var curIndex = 0;
 
 function populate(data, num_images = 16) {
+  console.log(data);
   var modelList = document.getElementById("model-gallery")
   var arrayLength = data.length;
   var ubound = arrayLength;
-  if (cur_index + num_images < arrayLength) {
-    ubound = cur_index + num_images
+  if (curIndex + num_images < arrayLength) {
+    ubound = curIndex + num_images
   }
-  for (var i = cur_index; i < ubound; i++) {
+  for (var i = curIndex; i < ubound; i++) {
       var newContent = generateContent(data[i]);
       modelList.appendChild(newContent);
   }
-  cur_index = ubound;
+  curIndex = ubound;
 }
 
 var data;
+var filteredData;
 
 $(document).ready(function($){
   $.ajax({
@@ -89,6 +58,8 @@ $(document).ready(function($){
     }
   });
 
+  // create copy of data
+  filteredData = {...data};
   populate(data);
 
   //open/close lateral filter
@@ -96,6 +67,11 @@ $(document).ready(function($){
     triggerFilter(true);
   });
   $('.cd-filter .cd-close').on('click', function(){
+    triggerFilter(false);
+  });
+
+  $('#apply-btn').on('click', function(){
+    applyFilters();
     triggerFilter(false);
   });
 
@@ -158,6 +134,53 @@ $(document).ready(function($){
   // }
 });
 
+function applyFilters(){
+  curIndex = 0;
+  filteredData = data;
+  console.log(filteredData)
+  filteredData = applySearchFilter(filteredData);
+  removeContent()
+  populate(filteredData)
+}
+
+function applySearchFilter(partialData){
+  var filteredData = []
+  var valueToSearch = document.getElementById('search-field').value.toLowerCase()
+
+  if (valueToSearch == '')
+    return partialData;
+
+  var arrayLength = partialData.length;
+  console.log(partialData);
+  console.log(arrayLength);
+  for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var str1 = key.toLowerCase();
+        var str2 = value.toLowerCase();
+        // we check if the value is in the name
+        if (str1 == 'name') {
+          if (str2.includes(valueToSearch)) {
+            filteredData.push(partialData[i])
+          }
+        }
+        else if (str1 == 'type') {
+          if (str2.includes(valueToSearch)) {
+            filteredData.push(partialData[i])
+          }
+        }
+        else { // we check if the value is a tag and if the value is 1
+          console.log(str1)
+          console.log(valueToSearch)
+          if (str1 == valueToSearch && str2 == '1') {
+            filteredData.push(partialData[i])
+          }
+        }
+      }
+  }
+  console.log(filteredData)
+  return filteredData;
+}
+
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
@@ -165,7 +188,7 @@ window.addEventListener('scroll', () => {
   var padding = 50;
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
     console.log(window.innerHeight)
-    populate(data, 4);
+    populate(filteredData, 4);
   }
 });
 

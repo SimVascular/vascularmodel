@@ -118,7 +118,7 @@
         <h4>Search</h4>
 
         <div class="cd-filter-content">
-          <input type="search" placeholder="Try pulmonary, 0003_0001...">
+          <input type="search" placeholder="Try pulmonary, 0003_0001..." id="search-field">
         </div> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
 
@@ -129,7 +129,7 @@
           <div class="cd-select cd-filters">
             <select class="filter" name="selectThis" id="selectThis">
               <option value="">All</option>
-              <option value=".Animakl">Animal</option>
+              <option value=".Animal">Animal</option>
               <option value=".Aorta">Aorta</option>
               <option value=".Aortofemoral">Aortofemoral</option>
               <option value=".Cerebrovascular">Cerebrovascular</option>
@@ -176,6 +176,8 @@
           </li>
         </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
+
+      <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div>
 
       <!-- These buttons are mutually exclusive -->
       <!-- <div class="cd-filter-block">
