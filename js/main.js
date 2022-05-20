@@ -59,7 +59,7 @@ $(document).ready(function($){
   });
 
   // create copy of data
-  filteredData = {...data};
+  filteredData = data;
   populate(data);
 
   //open/close lateral filter
