@@ -27,8 +27,7 @@ function removeContent() {
 
 var curIndex = 0;
 
-function populate(data, num_images = 16) {
-  console.log(data);
+function populate(data, num_images = 24) {
   var modelList = document.getElementById("model-gallery")
   var arrayLength = data.length;
   var ubound = arrayLength;
@@ -85,60 +84,26 @@ $(document).ready(function($){
     });
   }
 
-  // This functionality is for the filters on the top
-  // //mobile version - detect click event on filters tab
-  // var filter_tab_placeholder = $('.cd-tab-filter .placeholder a'),
-  //   filter_tab_placeholder_default_value = 'Select',
-  //   filter_tab_placeholder_text = filter_tab_placeholder.text();
-  //
-  // $('.cd-tab-filter li').on('click', function(event){
-  //   //detect which tab filter item was selected
-  //   var selected_filter = $(event.target).data('type');
-  //
-  //   //check if user has clicked the placeholder item
-  //   if( $(event.target).is(filter_tab_placeholder) ) {
-  //     (filter_tab_placeholder_default_value == filter_tab_placeholder.text()) ? filter_tab_placeholder.text(filter_tab_placeholder_text) : filter_tab_placeholder.text(filter_tab_placeholder_default_value) ;
-  //     $('.cd-tab-filter').toggleClass('is-open');
-  //
-  //   //check if user has clicked a filter already selected
-  //   } else if( filter_tab_placeholder.data('type') == selected_filter ) {
-  //     filter_tab_placeholder.text($(event.target).text());
-  //     $('.cd-tab-filter').removeClass('is-open');
-  //
-  //   } else {
-  //     //close the dropdown and change placeholder text/data-type value
-  //     $('.cd-tab-filter').removeClass('is-open');
-  //     filter_tab_placeholder.text($(event.target).text()).data('type', selected_filter);
-  //     filter_tab_placeholder_text = $(event.target).text();
-  //
-  //     //add class selected to the selected filter item
-  //     $('.cd-tab-filter .selected').removeClass('selected');
-  //     $(event.target).addClass('selected');
-  //   }
-  // });
+  // we apply the filter when enter is pressed on the search field
+  $('#search-field').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters()
+      triggerFilter(false);
+      return true;
+    }
+  });
 
-  // close filter dropdown inside lateral .cd-filter
-  // $('.cd-filter-block h4').on('click', function(){
-  //   $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-  // })
-  //
-  // //fix lateral filter and gallery on scrolling
-  // $(window).on('scroll', function(){
-  //   (!window.requestAnimationFrame) ? fixGallery() : window.requestAnimationFrame(fixGallery);
-  // });
-  //
-  // function fixGallery() {
-  //   var offsetTop = $('.cd-main-content').offset().top,
-  //     scrollTop = $(window).scrollTop();
-  //   ( scrollTop >= offsetTop ) ? $('.cd-main-content').addClass('is-fixed') : $('.cd-main-content').removeClass('is-fixed');
-  // }
+
 });
 
 function applyFilters(){
   curIndex = 0;
   filteredData = data;
-  console.log(filteredData)
   filteredData = applySearchFilter(filteredData);
+  filteredData = applyModelTypeFilter(filteredData);
+  filteredData = applyMustContainFilter(filteredData);
   removeContent()
   populate(filteredData)
 }
@@ -151,8 +116,6 @@ function applySearchFilter(partialData){
     return partialData;
 
   var arrayLength = partialData.length;
-  console.log(partialData);
-  console.log(arrayLength);
   for (var i = 0; i < arrayLength; i++) {
       for (const [key, value] of Object.entries(partialData[i])) {
         var str1 = key.toLowerCase();
@@ -169,26 +132,76 @@ function applySearchFilter(partialData){
           }
         }
         else { // we check if the value is a tag and if the value is 1
-          console.log(str1)
-          console.log(valueToSearch)
           if (str1 == valueToSearch && str2 == '1') {
             filteredData.push(partialData[i])
           }
         }
       }
   }
-  console.log(filteredData)
+
+  return filteredData;
+}
+
+function applyModelTypeFilter(partialData){
+  var filteredData = []
+  var keys = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations'];
+
+  var arrayLength = partialData.length;
+
+  var filter = []
+  for (var i = 0;  i < arrayLength; i++) {
+    filter.push(true);
+  }
+
+  for (var j = 0; j < keys.length; j++) {
+    if (document.getElementById('checkbox-' + keys[j]).checked) {
+      for (var i = 0; i < arrayLength; i++) {
+        if (partialData[i][keys[j]] != '1') {
+          filter[i] = false;
+        }
+      }
+    }
+  }
+
+  for (var i = 0;  i < arrayLength; i++) {
+    if (filter[i]) {
+      filteredData.push(partialData[i]);
+    }
+  }
+
+  return filteredData;
+}
+
+function applyMustContainFilter(partialData){
+  var filteredData = []
+  var valueToSearch = document.getElementById('model-type-filter').value.toLowerCase()
+
+  if (valueToSearch == 'all')
+    return partialData;
+
+  var arrayLength = partialData.length;
+
+  for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var str1 = key.toLowerCase();
+        var str2 = value.toLowerCase();
+        // we check if the value is in the name
+        if (str1 == 'type') {
+          if (str2.includes(valueToSearch)) {
+            filteredData.push(partialData[i])
+          }
+        }
+      }
+  }
   return filteredData;
 }
 
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
-  console.log(footerHeight)
   var padding = 50;
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
-    console.log(window.innerHeight)
-    populate(filteredData, 4);
+    populate(filteredData, 8);
   }
 });
 

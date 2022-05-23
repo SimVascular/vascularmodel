@@ -642,6 +642,7 @@ xcustom form elements
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  vertical-align: middle;
 }
 .cd-filter-block .checkbox-label::before, .cd-filter-block .checkbox-label::after,
 .cd-filter-block .radio-label::before,
@@ -650,7 +651,7 @@ xcustom form elements
   content: '';
   display: block;
   position: absolute;
-  top: 50%;
+  top: 40%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -672,7 +673,7 @@ xcustom form elements
   /* check mark style for check boxes */
   width: 16px;
   height: 16px;
-  background: url("../img/cd-icon-check.svg") no-repeat center center;
+  /* background: url("../img/cd-icon-check.svg") no-repeat center center; */
 }
 .cd-filter-block .radio-label::before,
 .cd-filter-block .radio-label::after {

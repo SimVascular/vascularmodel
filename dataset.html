@@ -129,15 +129,15 @@
 
         <div class="cd-filter-content">
           <div class="cd-select cd-filters">
-            <select class="filter" name="selectThis" id="selectThis">
-              <option value="">All</option>
-              <option value=".Animal">Animal</option>
-              <option value=".Aorta">Aorta</option>
-              <option value=".Aortofemoral">Aortofemoral</option>
-              <option value=".Cerebrovascular">Cerebrovascular</option>
-              <option value=".Congenital_heart_disease">Congenital heart disease</option>
-              <option value=".Coronary">Coronary</option>
-              <option value=".Pulmonary">Pulmonary</option>
+            <select class="filter" name="model-type-filter" id="model-type-filter">
+              <option value="all">All</option>
+              <option value="animal">Animal</option>
+              <option value="aorta">Aorta</option>
+              <option value="aortofemoral">Aortofemoral</option>
+              <option value="cerebrovascular">Cerebrovascular</option>
+              <option value="congenital_heart_disease">Congenital heart disease</option>
+              <option value="coronary">Coronary</option>
+              <option value="pulmonary">Pulmonary</option>
             </select>
           </div> <!-- cd-select -->
         </div> <!-- cd-filter-content -->
@@ -147,34 +147,35 @@
         <h4>Project must contain</h4>
 
         <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+
           <li>
-            <input class="filter" data-filter=".Images" type="checkbox" id="checkbox1">
-            <label class="checkbox-label" for="checkbox1">Images</label>
+            <input class="filter" data-filter="Images" type="checkbox" id="checkbox-Images">
+            <label class="checkbox-label" for="checkbox-Images">Images</label>
           </li>
 
           <li>
-            <input class="filter" data-filter=".Paths" type="checkbox" id="checkbox2">
-            <label class="checkbox-label" for="checkbox2">Paths</label>
+            <input class="filter" data-filter="Paths" type="checkbox" id="checkbox-Paths">
+            <label class="checkbox-label" for="checkbox-Paths">Paths</label>
           </li>
 
           <li>
-            <input class="filter" data-filter=".Segmentations" type="checkbox" id="checkbox3">
-            <label class="checkbox-label" for="checkbox3">Segmentations</label>
+            <input class="filter" data-filter="Segmentations" type="checkbox" id="checkbox-Segmentations">
+            <label class="checkbox-label" for="checkbox-Segmentations">Segmentations</label>
           </li>
 
           <li>
-            <input class="filter" data-filter=".Models" type="checkbox" id="checkbox4">
-            <label class="checkbox-label" for="checkbox4">Models</label>
+            <input class="filter" data-filter="Models" type="checkbox" id="checkbox-Models">
+            <label class="checkbox-label" for="checkbox-Models">Models</label>
           </li>
 
           <li>
-            <input class="filter" data-filter=".Meshes" type="checkbox" id="checkbox5">
-            <label class="checkbox-label" for="checkbox5">Meshes</label>
+            <input class="filter" data-filter="Meshes" type="checkbox" id="checkbox-Meshes">
+            <label class="checkbox-label" for="checkbox-Meshes">Meshes</label>
           </li>
 
           <li>
-            <input class="filter" data-filter=".Simulations" type="checkbox" id="checkbox6">
-            <label class="checkbox-label" for="checkbox6">Simulations</label>
+            <input class="filter" data-filter="Simulations" type="checkbox" id="checkbox-Simulations">
+            <label class="checkbox-label" for="checkbox-Simulations">Simulations</label>
           </li>
         </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
