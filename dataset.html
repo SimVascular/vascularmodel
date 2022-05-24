@@ -56,22 +56,15 @@
     <main class="cd-main-content">
       <div class="cd-tab-filter-wrapper">
         <div class="cd-tab-filter">
-          <!-- This part implements some filters on the top bar. We don't need it for now -->
-          <!-- <ul class="cd-filters">
-          <li class="placeholder">
-          <a data-type="all" href="#0">All</a>
-        </li>
-        <li class="filter"><a class="selected" href="#0" data-type="all">All</a></li>
-        <li class="filter" data-filter=".color-1"><a href="#0" data-type="color-1">Color 1</a></li>
-        <li class="filter" data-filter=".color-2"><a href="#0" data-type="color-2">Color 2</a></li>
-      </ul> -->
-    </div> <!-- cd-tab-filter -->
-  </div> <!-- cd-tab-filter-wrapper -->
+          <span id="model-counter">Filters not applied.</span>
+        </div> <!-- cd-tab-filter -->
+      </div> <!-- cd-tab-filter-wrapper -->
 
   <!-- As a trick, we load the loading_image first but keep it 0px to not display it -->
-  <img src="img/loading_image.jpg" style="width:0px; height:0px">
+  <!-- <img src="img/loading_image.jpg" style="width:0px; height:0px"> -->
 
   <section class="gallery">
+    <div class="error-msg-block"><span id="error-msg">It looks like there are no results matching the filters! Please consider using less restrictive rules.</span></div>
     <div class="container-fluid">
       <div class="row" id="model-gallery">
         <!-- <div class="col-md-3 col-sm-12 model-image">
@@ -109,18 +102,16 @@
         <li class="gap"></li> -->
       </div>
     </div>
-    <!-- <div class="cd-fail-message">Open the filters on the top left to start navigating the repository.<br>If filters are already applied, try something less restrictive.</div> -->
   </section> <!-- cd-gallery -->
 
   <div class="cd-filter">
     <form>
-      <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div>
-
+      <!-- <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div> -->
       <div class="cd-filter-block">
         <h4>Search</h4>
 
         <div class="cd-filter-content">
-          <input type="search" placeholder="Try pulmonary, 0003_0001..." id="search-field">
+          <input type="search" placeholder="Type something and press enter" id="search-field">
         </div> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
 
@@ -207,6 +198,7 @@
 </div> <!-- cd-filter -->
 
 <a href="#0" class="cd-filter-trigger">Filters</a>
+
 </main> <!-- cd-main-content -->
 
 <section id="contact-section">

@@ -57,8 +57,11 @@ $(document).ready(function($){
     }
   });
 
+  checkWidth();
+
   // create copy of data
   filteredData = data;
+  updateCounter(false, data)
   populate(data);
 
   //open/close lateral filter
@@ -98,22 +101,83 @@ $(document).ready(function($){
 
 });
 
+var smallScreen = false
+
+function checkWidth() {
+    if (screen.width >= 769 && (document.documentElement.clientWidth >= 769)) {
+        if (smallScreen) {
+          smallScreen = false;
+          updateCounter(lastFapplied, lastFdata);
+        }
+    }
+    else {
+      if (!smallScreen) {
+        smallScreen = true;
+        updateCounter(lastFapplied, lastFdata);
+      }
+    }
+}
+$(window).ready(checkWidth);
+$(window).resize(checkWidth);
+
+var lastFapplied = 0;
+var lastFdata = [];
+function updateCounter(fApplied, fData) {
+  lastFdata = fData;
+  lastFapplied = fApplied;
+  if (smallScreen) {
+    if (fApplied) {
+      document.getElementById('model-counter').textContent = fData.length + '/' + data.length + ' models'
+    }
+    else {
+      document.getElementById('model-counter').textContent = + fData.length + '/' + data.length + ' models'
+    }
+  }
+  else {
+    if (fApplied) {
+      document.getElementById('model-counter').textContent = "Filters applied: " + fData.length + '/' + data.length + ' models'
+    }
+    else {
+      document.getElementById('model-counter').textContent = "Filters not applied: " + fData.length + '/' + data.length + ' models'
+    }
+  }
+}
+
 function applyFilters(){
+  var filterApplied = false
   curIndex = 0;
   filteredData = data;
-  filteredData = applySearchFilter(filteredData);
-  filteredData = applyModelTypeFilter(filteredData);
-  filteredData = applyMustContainFilter(filteredData);
-  removeContent()
-  populate(filteredData)
+  filterOutput = applySearchFilter(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]
+  filterOutput = applyModelTypeFilter(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]
+  filterOutput = applyMustContainFilter(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]
+  removeContent();
+  populate(filteredData);
+  updateCounter(filterApplied, filteredData);
+  if (filteredData.length == 0) {
+    document.getElementById('error-msg').style.transitionDuration = '0.3s';
+    document.getElementById('error-msg').style.opacity = 1;
+  }
+  else {
+    document.getElementById('error-msg').style.transitionDuration = '0s';
+    document.getElementById('error-msg').style.opacity = 0;
+  }
 }
 
 function applySearchFilter(partialData){
+  var filterApplied = false
   var filteredData = []
   var valueToSearch = document.getElementById('search-field').value.toLowerCase()
 
   if (valueToSearch == '')
-    return partialData;
+    return [partialData,filterApplied];
+
+  filterApplied = true
 
   var arrayLength = partialData.length;
   for (var i = 0; i < arrayLength; i++) {
@@ -139,10 +203,11 @@ function applySearchFilter(partialData){
       }
   }
 
-  return filteredData;
+  return [filteredData,filterApplied];
 }
 
 function applyModelTypeFilter(partialData){
+  var filterApplied = false
   var filteredData = []
   var keys = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations'];
 
@@ -155,6 +220,7 @@ function applyModelTypeFilter(partialData){
 
   for (var j = 0; j < keys.length; j++) {
     if (document.getElementById('checkbox-' + keys[j]).checked) {
+      filterApplied = true
       for (var i = 0; i < arrayLength; i++) {
         if (partialData[i][keys[j]] != '1') {
           filter[i] = false;
@@ -169,15 +235,18 @@ function applyModelTypeFilter(partialData){
     }
   }
 
-  return filteredData;
+  return [filteredData, filterApplied];
 }
 
 function applyMustContainFilter(partialData){
+  var filterApplied = false
   var filteredData = []
   var valueToSearch = document.getElementById('model-type-filter').value.toLowerCase()
 
   if (valueToSearch == 'all')
-    return partialData;
+    return [partialData, filterApplied];
+
+  filterApplied = true;
 
   var arrayLength = partialData.length;
 
@@ -193,7 +262,7 @@ function applyMustContainFilter(partialData){
         }
       }
   }
-  return filteredData;
+  return [filteredData, filterApplied];
 }
 
 window.addEventListener('scroll', () => {
@@ -203,6 +272,34 @@ window.addEventListener('scroll', () => {
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
     populate(filteredData, 8);
   }
+});
+
+$("#model-type-filter").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Images").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Paths").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Segmentations").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Models").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Meshes").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Simulations").change(function () {
+  applyFilters();
 });
 
 $(window).load(function(){

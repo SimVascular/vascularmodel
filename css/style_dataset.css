@@ -116,11 +116,16 @@ xtab-filter
 
 .cd-tab-filter {
   /* tabbed navigation style on mobile - dropdown */
-  position: relative;
+  position: fixed;
+  top: 59.5px;
   height: 50px;
   width: 140px;
   margin: 0 auto;
   z-index: 1;
+  text-align: right;
+  line-height: 50px;
+  background-color: #ffffff;
+  border-bottom: 1px solid;
 }
 .cd-tab-filter::after {
   /* small arrow icon */
@@ -188,6 +193,9 @@ xtab-filter
   /* reduces the opacity of the placeholder on mobile when the menu is open */
   opacity: .4;
 }
+#model-counter {
+  margin-right: 10px !important;
+}
 @media only screen and (min-width: 768px) {
   .cd-tab-filter {
     /* tabbed navigation style on medium devices */
@@ -244,7 +252,7 @@ xtab-filter
   }
   .cd-tab-filter.filter-is-visible {
     /* reduce width when filter is visible */
-    width: 80%;
+    /* width: 80%; */
   }
 }
 
@@ -309,7 +317,7 @@ xgallery
   }
   .cd-gallery.filter-is-visible {
     /* reduce width when filter is visible */
-    width: 80%;
+    /* width: 80%; */
   }
 }
 
@@ -320,7 +328,7 @@ gallery
 -------------------------------- */
 
 .gallery {
-  margin-top:20px;
+  margin-top:60px;
   margin-bottom:20px;
 }
 
@@ -372,8 +380,7 @@ xfilter
 
 -------------------------------- */
 .cd-filter {
-  position: absolute;
-  top: 0;
+  top: 59.5px;
   left: 0;
   width: 280px;
   height: 100%;
@@ -397,6 +404,7 @@ xfilter
   -moz-transition: -moz-transform 0.3s, box-shadow 0.3s;
   transition: transform 0.3s, box-shadow 0.3s;
   font-size: 17px;
+  position: fixed;
 }
 .cd-filter::before {
   /* top colored bar */
@@ -453,8 +461,8 @@ xfilter
 }
 
 .cd-filter-trigger {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 59.5px;
   left: 0;
   height: 50px;
   line-height: 50px;
@@ -469,6 +477,8 @@ xfilter
 }
 .cd-filter-trigger.filter-is-visible {
   pointer-events: none;
+  position: fixed;
+  top: 59.5px;
 }
 @media only screen and (min-width: 1170px) {
   .cd-filter-trigger {
@@ -716,4 +726,25 @@ xcustom form elements
   .cd-filter-block .cd-select::after {
     display: none;
   }
+}
+
+/* --------------------------------
+
+error msg block behavior
+
+-------------------------------- */
+
+.error-msg-block {
+  position:fixed;
+  text-align:center;
+  top: 120px;
+  width:100%;
+}
+
+#error-msg {
+  margin-top: 50px;
+  display: inline-block;
+  max-width: 70%;
+  transition: opacity 0.5s;
+  opacity: 0;
 }
