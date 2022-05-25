@@ -9,8 +9,8 @@ function addClickListener(data) {
     $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
     // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
     // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
-    $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
-    $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
+    $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+    $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
 
     var details = ''
     details = details + 'Name: ' + data['Name'] + '\n'
