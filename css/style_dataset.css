@@ -748,3 +748,128 @@ error msg block behavior
   transition: opacity 0.5s;
   opacity: 0;
 }
+
+/* ===== Modal dialog for download ====== */
+
+.modalDialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 0ms ease-in;
+    -moz-transition: opacity 0ms ease-in;
+    transition: opacity 0ms ease-in;
+    pointer-events: none;
+}
+
+#modal-greeting {
+  margin-bottom: 0px !important;
+}
+
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    width: 300px;
+    position: relative;
+    margin: 10% auto;
+    padding: 20px 20px 13px 20px;
+    border-radius: 8px !important;
+    background: #fff;
+    /* background: -moz-linear-gradient(#fff, #999);
+    background: -webkit-linear-gradient(#fff, #999);
+    background: -o-linear-gradient(#fff, #999); */
+}
+
+@media only screen and (min-width: 576px) {
+  .modalDialog > div {
+      width: 500px;
+  }
+}
+
+.details-text {
+  color: #05080B;
+  font-weight: 200;
+  width:100%;
+  height: 100px;
+  overflow-y: scroll;
+  resize: none;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-family: 'Lucida Console', sans-serif;
+  padding:10px;
+  border: 1px #c9c9c9 solid;
+}
+
+.close {
+    background: #606061;
+    color: #FFFFFF;
+    line-height: 25px;
+    position: absolute;
+    right: -12px;
+    text-align: center;
+    top: -10px;
+    width: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+.close:hover {
+    background: #00d9ff;
+}
+
+.close-button-modal {
+  background-color: var(--dark2);
+  border: none;
+  color: white !important;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none !important;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px !important;
+  border-collapse: separate;
+  font-weight: 400;
+  margin-top:10px;
+  margin-bottom:10px;
+  cursor: pointer;
+}
+
+.close-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  text-decoration: underline !important;
+}
+
+.download-button-modal {
+  background-color: var(--light1);
+  border: none;
+  color: white !important;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none !important;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px !important;
+  border-collapse: separate;
+  font-weight: 400;
+  cursor: pointer;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.download-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  text-decoration: underline !important;
+}

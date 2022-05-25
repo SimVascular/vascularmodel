@@ -1,5 +1,38 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
+var selectedModel = ''
+function addClickListener(data) {
+  $('#' + data['Name']).click(function() {
+    selectedModel = data['Name']
+    $('.details-text').scrollTop(0);
+    $('#modal-greeting')[0].innerText = 'You have selected ' + data['Name'] + '.\nHere are the details:'
+    $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
+    // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
+    // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
+    $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
+
+    var details = ''
+    details = details + 'Name: ' + data['Name'] + '\n'
+    details = details + 'Type: ' + data['Type'] + '\n'
+    var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
+    for (var i = 0; i < fdrs.length; i++) {
+      if (data[fdrs[i]] == '1') {
+        details = details + fdrs[i] + ' available: yes'
+      }
+      else {
+        if (data[fdrs[i]] == '1') {
+          details = details + fdrs[i] + ' available: no'
+        }
+      }
+      if (i != fdrs.length-1)
+        details = details + '\n'
+    }
+    var size = parseInt(data['Size']) / 1000000
+    $('.details-text')[0].value = details
+    $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+  });
+}
+
 function generateContent(data) {
   var div = document.createElement("div");
   div.classList.add("col-md-3");
@@ -8,11 +41,16 @@ function generateContent(data) {
   divModelImage.classList.add("model-image");
   divModelImage.classList.add("animate");
 
+  let aWrap = document.createElement("a");
+  aWrap.classList.add("a-img")
+  aWrap.setAttribute("id",data['Name']);
+
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + data['Name'] + '.png'
   innerImg.alt = data['Name']
 
-  divModelImage.appendChild(innerImg);
+  aWrap.appendChild(innerImg)
+  divModelImage.appendChild(aWrap);
   div.appendChild(divModelImage);
 
   return div
@@ -37,6 +75,7 @@ function populate(data, num_images = 24) {
   for (var i = curIndex; i < ubound; i++) {
       var newContent = generateContent(data[i]);
       modelList.appendChild(newContent);
+      addClickListener(data[i])
   }
   curIndex = ubound;
 }
@@ -103,7 +142,26 @@ $(document).ready(function($){
     }
   });
 
+});
 
+$('.close-button-modal').click(function() {
+  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
+  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+});
+
+$('.download-button-modal').click(function() {
+  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
+  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  // download tracking
+  console.log(data['Name']);
+  window.open('svprojects/' + selectedModel + '.zip')
+  console.log('svprojects/' + selectedModel + '.zip')
+  gtag('event', 'download_' + selectedModel, {
+      'send_to': 'G-YVVR1546XJ',
+      'event_category': 'Model download',
+      'event_label': 'test',
+      'value': '1'
+  });
 });
 
 var smallScreen = false
