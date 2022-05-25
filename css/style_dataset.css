@@ -119,10 +119,10 @@ xtab-filter
   position: fixed;
   top: 59.5px;
   height: 50px;
-  width: 140px;
+  width: 100%;
   margin: 0 auto;
   z-index: 1;
-  text-align: right;
+  text-align: center;
   line-height: 50px;
   background-color: #ffffff;
   border-bottom: 1px solid;
@@ -199,7 +199,7 @@ xtab-filter
 @media only screen and (min-width: 768px) {
   .cd-tab-filter {
     /* tabbed navigation style on medium devices */
-    width: auto;
+    /* width: auto; */
     cursor: auto;
   }
   .cd-tab-filter::after {

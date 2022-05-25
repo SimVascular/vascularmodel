@@ -26,8 +26,6 @@ body, html {
 
 /* ============= Navbar style ============= */
 
-/* Modify the background color */
-
 /* change the background color */
 .navbar-custom {
     background-color: var(--dark1);
@@ -37,6 +35,8 @@ body, html {
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
     color: var(--white);
+    font-weight: 900;
+    font-size: 23px;
 }
 
 /* change the link color */
@@ -66,6 +66,18 @@ body, html {
 .navbar-custom .navbar-nav .dropdown-item:focus {
     color: var(--white);
     background-color: var(--dark2);
+}
+
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(93,176,232, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.custom-toggler.navbar-toggler {
+  border-color: var(--light1);
+}
+
+.custom-active {
+  font-weight: bold !important;
 }
 
 /* ============= end Navbar style ============= */

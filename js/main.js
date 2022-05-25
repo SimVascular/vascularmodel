@@ -87,6 +87,11 @@ $(document).ready(function($){
     });
   }
 
+  //close filter dropdown inside lateral .cd-filter
+	$('.cd-filter-block h4').on('click', function(){
+		$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
+	})
+
   // we apply the filter when enter is pressed on the search field
   $('#search-field').keydown(function (e) {
     if (e.keyCode == 13) {
@@ -272,6 +277,10 @@ window.addEventListener('scroll', () => {
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
     populate(filteredData, 8);
   }
+});
+
+$("#search-field").change(function () {
+  applyFilters();
 });
 
 $("#model-type-filter").change(function () {
