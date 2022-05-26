@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" class="html">
+<head>
+  <!-- This corresponds to a fontawesome kit but can be customized -->
+  <script src="https://kit.fontawesome.com/48644805cd.js" crossorigin="anonymous"></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preconnect" href="http://fonts.googleapis.com">
+  <link rel="preconnect" href="http://fonts.gstatic.com" crossorigin>
+  <link href="http://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style_dataset.css">
+
+  <title>Vascular Model Repository</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVVR1546XJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YVVR1546XJ');
+  </script>
+</head>
+<body class="body">
+
+  <div id="page-container">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
+      <div class="container-fluid ">
+        <a class="navbar-brand" href="index.html">VMR</a>
+        <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white;">
+                Repository
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item custom-active" href="dataset.html">Dataset</a>
+                <a class="dropdown-item" href="documentation.html">Documentation</a>
+                <a class="dropdown-item" href="FAQs.html">FAQs</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contacts.html">Contact us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="cd-main-content">
+      <div class="cd-tab-filter-wrapper">
+        <div class="cd-tab-filter">
+          <span id="model-counter"></span>
+        </div> <!-- cd-tab-filter -->
+      </div> <!-- cd-tab-filter-wrapper -->
+
+  <!-- As a trick, we load the loading_image first but keep it 0px to not display it -->
+  <!-- <img src="img/loading_image.jpg" style="width:0px; height:0px"> -->
+
+  <section class="gallery">
+    <div class="error-msg-block"><span id="error-msg">It looks like there are no results matching the filters! Please consider using less restrictive rules.</span></div>
+    <div class="container-fluid">
+      <div class="row" id="model-gallery">
+        <!-- <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div>
+        <div class="col-md-3 col-sm-12 model-image">
+          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
+        </div> -->
+        <!-- <li class="gap"></li>
+        <li class="gap"></li>
+        <li class="gap"></li> -->
+      </div>
+    </div>
+  </section> <!-- cd-gallery -->
+
+  <div class="cd-filter">
+    <form>
+      <!-- <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div> -->
+      <div class="cd-filter-block">
+        <h4>Search</h4>
+
+        <div class="cd-filter-content">
+          <input type="search" placeholder="Type something and press enter" id="search-field">
+        </div> <!-- cd-filter-content -->
+      </div> <!-- cd-filter-block -->
+
+      <div class="cd-filter-block">
+        <h4>Model type</h4>
+
+        <div class="cd-filter-content">
+          <div class="cd-select cd-filters">
+            <select class="filter" name="model-type-filter" id="model-type-filter">
+              <option value="all">All</option>
+              <option value="animal">Animal</option>
+              <option value="aorta">Aorta</option>
+              <option value="aortofemoral">Aortofemoral</option>
+              <option value="cerebrovascular">Cerebrovascular</option>
+              <option value="congenital_heart_disease">Congenital heart disease</option>
+              <option value="coronary">Coronary</option>
+              <option value="pulmonary">Pulmonary</option>
+            </select>
+          </div> <!-- cd-select -->
+        </div> <!-- cd-filter-content -->
+      </div> <!-- cd-filter-block -->
+
+      <div class="cd-filter-block">
+        <h4>Project must contain</h4>
+
+        <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+
+          <li>
+            <input class="filter" data-filter="Images" type="checkbox" id="checkbox-Images">
+            <label class="checkbox-label" for="checkbox-Images">Images</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Paths" type="checkbox" id="checkbox-Paths">
+            <label class="checkbox-label" for="checkbox-Paths">Paths</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Segmentations" type="checkbox" id="checkbox-Segmentations">
+            <label class="checkbox-label" for="checkbox-Segmentations">Segmentations</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Models" type="checkbox" id="checkbox-Models">
+            <label class="checkbox-label" for="checkbox-Models">Models</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Meshes" type="checkbox" id="checkbox-Meshes">
+            <label class="checkbox-label" for="checkbox-Meshes">Meshes</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Simulations" type="checkbox" id="checkbox-Simulations">
+            <label class="checkbox-label" for="checkbox-Simulations">Simulations</label>
+          </li>
+        </ul> <!-- cd-filter-content -->
+      </div> <!-- cd-filter-block -->
+
+      <!-- These buttons are mutually exclusive -->
+      <!-- <div class="cd-filter-block">
+      <h4>Radio buttons</h4>
+
+      <ul class="cd-filter-content cd-filters list">
+      <li>
+      <input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
+      <label class="radio-label" for="radio1">All</label>
+    </li>
+
+    <li>
+    <input class="filter" data-filter=".radio2" type="radio" name="radioButton" id="radio2">
+    <label class="radio-label" for="radio2">Choice 2</label>
+  </li>
+
+  <li>
+  <input class="filter" data-filter=".radio3" type="radio" name="radioButton" id="radio3">
+  <label class="radio-label" for="radio3">Choice 3</label>
+</li>
+</ul> <!-- cd-filter-content -->
+<!-- </div> -->
+</form>
+
+<a href="#0" class="cd-close">Close</a>
+</div> <!-- cd-filter -->
+
+<a href="#0" class="cd-filter-trigger">Filters</a>
+
+</main> <!-- cd-main-content -->
+
+<div class="container">
+  <div id="openModal" class="modalDialog">
+    <div>
+          <p id="modal-greeting">Placeholder</p>
+          <textarea class="details-text" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dolor elementum, malesuada est in, molestie libero. Morbi in nibh est. Quisque venenatis cursus augue, in pellentesque est. Nam placerat finibus sapien, venenatis placerat nibh tincidunt sed. Curabitur vehicula vulputate leo ac suscipit. Pellentesque sollicitudin, justo sed maximus porttitor, tellus orci ornare sem, et finibus augue leo vitae libero. Morbi vitae diam dui. Donec ac mollis felis, vel ornare quam. Nam risus elit, semper sed nulla vitae, vulputate ultrices dolor. Donec interdum molestie eros nec facilisis. Integer vel pretium magna, non tempor lorem. Aliquam semper est in odio condimentum ultricies. Maecenas non nulla viverra, cursus tellus ut, posuere ligula. Praesent massa eros, rutrum eget eros in, rhoncus scelerisque justo. Cras lacus diam, congue vitae elit ut, convallis rhoncus diam.
+
+          Pellentesque non faucibus tortor, ut ornare tortor. Etiam nisl nulla, lacinia nec nulla quis, vestibulum fermentum magna. Aliquam ullamcorper, ipsum vitae varius luctus, ligula velit vehicula purus, sed aliquam dui libero eget ipsum. Curabitur tristique ex at tortor ullamcorper laoreet. Suspendisse consectetur ligula at commodo bibendum. Donec tempor mauris risus, non auctor tellus dapibus sit amet. Sed in malesuada dolor. Praesent scelerisque consequat elementum. Proin congue ipsum maximus est congue, at elementum magna eleifend.
+
+          Mauris elit leo, semper et lobortis eget, iaculis at erat. Nulla vulputate purus in rhoncus semper. Donec dolor ante, hendrerit eget ullamcorper sed, egestas ac libero. Morbi vestibulum nulla nec enim pretium, eu tincidunt tortor suscipit. Integer porta fringilla nunc, ut pulvinar enim lobortis ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas pellentesque ligula orci, sed aliquam enim ultrices quis. Nunc imperdiet imperdiet lorem, at tempus elit tincidunt facilisis. Donec vitae pharetra lectus, ac tempus odio. Integer vitae pellentesque ipsum, id semper velit. Etiam sapien arcu, rutrum vitae sapien quis, semper tincidunt elit. Ut placerat urna nec enim imperdiet gravida. Aliquam eget odio at lorem tempus pharetra. Pellentesque pellentesque turpis vel nibh consequat dictum.</textarea>
+      <p id="modal-closure" style="margin-bottom:10px;">Placeholder</p>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-center">
+          <a class="button close-button-modal">Close</a>
+        </div>
+        <div class="col-xs-12 col-sm-6 text-center">
+          <!-- <a class="button download-button-modal" data-sitekey="6LedB9gdAAAAAEB4uWHC-H5OS1Xuj8_WZGT2HdIt"
+             data-callback='onDownload' data-action='submit'>Download</a> -->
+        <a class="button download-button-modal">Download</a>
+        </div>
+        <!-- 6LedB9gdAAAAANK8mQLhxsR7-mpeDlxzPdm9fQkV secret key -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="contact-section">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <div class="col-md-4 col-12">
+        <div style="text-align: left;">
+          <div class="contact-info">
+            <ul class="contact-address">
+              <li><i class="fa fa-map-marker fa-lg"></i>&nbsp; Clark Center E1.3.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 318 Campus Drive,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stanford, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CA 94305-5428</li>
+              <li><i class="fa fa-envelope"></i> simvascular@gmail.com</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="explore"  style="text-align: left;">
+          <h5>Explore</h5>
+          <div><a href="dataset.html">Dataset</a></div>
+          <div><a href="documentation.html">Documentation</a></div>
+          <div><a href="FAQs.html">FAQs</a></div>
+          <div><a href="contacts.html">Contact us</a></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" style="text-align: center;">
+        <div class="social-media">
+          <div>Follow SimVascular on social media</div>
+          <div class="container">
+            <div class="row">
+              <div class="col-4">
+                <div href="#" style="display: flex;  justify-content: center; font-size:20px;">
+                  <a href="https://www.facebook.com/groups/835227759855853" target="_blank" class="social-logo"><i class="fa fa-facebook fa-lg"></i></a>
+                </div>
+              </div>
+              <div class="col-4">
+                <div href="#" style="display: flex;  justify-content: center; font-size:20px;">
+                  <a href="https://twitter.com/simvascular" target="_blank"  class="social-logo";><i class="fa fa-twitter fa-lg"></i></a>
+                </div>
+              </div>
+              <div class="col-4">
+                <div href="#" style="display: flex;  justify-content: center; font-size:20px;">
+                  <a href="https://www.youtube.com/channel/UCT61XgTRqpfb39Hyio9IqGQ" target="_blank" class="social-logo"><i class="fa fa-youtube fa-lg"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
+<!-- <script src="js/jquery-2.1.1.js"></script> -->
+<script src="js/jquery.mixitup.min.js"></script>
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+</body>
+</html>

@@ -1,0 +1,8 @@
+Useful guides, links, comments:
+
+- How to start local apache server for testing https://www.youtube.com/watch?v=78wFR5Rp_Mw
+
+- commands to update https certificate on tetra
+  sudo certbot --apache
+  # restart apache server
+  systemctl restart apache2
