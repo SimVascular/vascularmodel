@@ -21,7 +21,7 @@ function addClickListener(data) {
         details = details + fdrs[i] + ' available: yes'
       }
       else {
-        if (data[fdrs[i]] == '1') {
+        if (data[fdrs[i]] == '0') {
           details = details + fdrs[i] + ' available: no'
         }
       }
