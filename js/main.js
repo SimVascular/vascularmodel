@@ -223,6 +223,7 @@ function applyFilters(){
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
   removeContent();
+  scrollToTop();
   populate(filteredData);
   updateCounter(filterApplied, filteredData);
   if (filteredData.length == 0) {
@@ -434,6 +435,10 @@ $(window).load(function(){
   //     }, 200 );
   // });
 });
+
+function scrollToTop() {
+  window.scrollTo(0, 0);
+}
 
 /*****************************************************
   MixItUp - Define a single object literal
