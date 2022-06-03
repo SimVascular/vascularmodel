@@ -128,109 +128,226 @@
       <div class="cd-filter-block">
         <h4>Sex</h4>
 
-        <div class="cd-filter-content">
-          <div class="cd-select cd-filters">
-            <select class="filter" name="sex-filter" id="sex-filter">
-              <option value="all">Select Sex</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div> <!-- cd-select -->
-        </div> <!-- cd-filter-content -->
+        <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+
+          <li>
+            <input class="filter" data-filter="Male" type="checkbox" id="checkbox-Male">
+            <label class="checkbox-label" for="checkbox-Male">Male</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Female" type="checkbox" id="checkbox-Female">
+            <label class="checkbox-label" for="checkbox-Female">Female</label>
+          </li>
+
+        </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
 
       <div class="cd-filter-block">
         <h4>Age</h4>
 
-        <div class="cd-filter-content">
-          <div class="cd-select cd-filters">
-            <select class="filter" name="age-filter" id="age-filter">
-              <option value="all">Select Age</option>
-              <option value="pediatric">Pediatric</option>
-              <option value="adult">Adult</option>
-            </select>
-          </div> <!-- cd-select -->
-        </div> <!-- cd-filter-content -->
+        <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+
+          <li>
+            <input class="filter" data-filter="Pediatric" type="checkbox" id="checkbox-Pediatric">
+            <label class="checkbox-label" for="checkbox-Pediatric">Pediatric</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Adult" type="checkbox" id="checkbox-Adult">
+            <label class="checkbox-label" for="checkbox-Adult">Adult</label>
+          </li>
+
+        </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
+
 
       <div class="cd-filter-block">
         <h4>Species</h4>
-        <div class="cd-filter-content">
-          <div class="cd-select cd-filters">
-            <select class="filter" name="species-filter" id="species-filter">
-              <option value="all">Select Species</option>
-              <option value="animal">Animal</option>
-              <option value="Human">Human</option>
-            </select>
-          </div> <!-- cd-select -->
-        </div> <!-- cd-filter-content -->
+
+        <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+
+          <li>
+            <input class="filter" data-filter="Animal" type="checkbox" id="checkbox-Animal">
+            <label class="checkbox-label" for="checkbox-Animal">Animal</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Human" type="checkbox" id="checkbox-Human">
+            <label class="checkbox-label" for="checkbox-Human">Human</label>
+          </li>
+
+        </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
+
 
       <div class="cd-filter-block">
         <h4>Anatomy</h4>
 
-        <div class="cd-filter-content">
-          <div class="cd-select cd-filters">
-            <select class="filter" name="model-type-filter" id="model-type-filter">
-              <option value="all">Select Anatomy</option>
-              <option value="aorta">Aorta</option>
-              <option value="aortofemoral">Aortofemoral</option>
-              <option value="cerebrovascular">Cerebrovascular</option>
-              <option value="coronary">Coronary</option>
-              <option value="pulmonary">Pulmonary</option>
-            </select>
-          </div> <!-- cd-select -->
-        </div> <!-- cd-filter-content -->
+        <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+
+          <li>
+            <input class="filter" data-filter="Aorta" type="checkbox" id="checkbox-Aorta">
+            <label class="checkbox-label" for="checkbox-Aorta">Aorta</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Aortofemoral" type="checkbox" id="checkbox-Aortofemoral">
+            <label class="checkbox-label" for="checkbox-Aortofemoral">Aortofemoral</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Cerebrovascular" type="checkbox" id="checkbox-Cerebrovascular">
+            <label class="checkbox-label" for="checkbox-Cerebrovascular">Cerebrovascular</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Coronary" type="checkbox" id="checkbox-Coronary">
+            <label class="checkbox-label" for="checkbox-Coronary">Coronary</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Pulmonary" type="checkbox" id="checkbox-Pulmonary">
+            <label class="checkbox-label" for="checkbox-Pulmonary">Pulmonary</label>
+          </li>
+
+        </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
+
 
       <div class="cd-filter-block">
         <h4>Disease</h4>
 
-        <div class="cd-filter-content">
-          <div class="cd-select cd-filters">
-            <select class="filter" name="disease-filter" id="disease-filter">
-              <option value="all">Select Disease</option>
-              <option value="Healthy">Healthy</option>
-              <option value="AS">Alagille Syndrome (AS)</option>
-              <option value="Aneurysm">Aneurysm</option>
-              <option value="APOD">Aortofemoral Peripheral Occlusive</option>
-              <option value="CTEPH">Chronic Thromboembolic Pulmonary Hypertension</option>
-              <option value="Coarctation_of_Aorta">Coarctation of Aorta</option>
-              <option value="congenital_heart_disease">Congenital heart disease</option>
-              <option value="CAD">Coronary Artery Disease</option>
-              <option value="HLHS">Hypoplastic Left Heart Syndrome</option>
-              <option value="KD">Kawasaki Disease</option>
-              <option value="MS">Marfan Syndrome</option>
-              <option value="PH">Pulmonary Hypertension</option>
-              <option value="Stenosis">Stenosis</option>
-              <option value="ToF">Tetralogy of Fallot</option>
-              <option value="WS">Williams Syndrome</option>
-            </select>
-          </div> <!-- cd-select -->
-        </div> <!-- cd-filter-content -->
+        <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+
+          <li>
+            <input class="filter" data-filter="Healthy" type="checkbox" id="checkbox-Healthy">
+            <label class="checkbox-label" for="checkbox-Healthy">Healthy</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="AS" type="checkbox" id="checkbox-AS">
+            <label class="checkbox-label" for="checkbox-AS">Alagille Syndrome</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Aneurysm" type="checkbox" id="checkbox-Aneurysm">
+            <label class="checkbox-label" for="checkbox-Aneurysm">Aneurysm</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="APOD" type="checkbox" id="checkbox-APOD">
+            <label class="checkbox-label" for="checkbox-APOD">Coronary</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="CTEPH" type="checkbox" id="checkbox-CTEPH">
+            <label class="checkbox-label" for="checkbox-CTEPH">Chronic Thromboembolic Pulmonary Hypertension</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="CoA" type="checkbox" id="checkbox-CoA">
+            <label class="checkbox-label" for="checkbox-CoA">Coarctation of Aorta</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="congenital_heart_disease" type="checkbox" id="checkbox-congenital_heart_disease">
+            <label class="checkbox-label" for="checkbox-congenital_heart_disease">Congenital heart disease</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="CAD" type="checkbox" id="checkbox-CAD">
+            <label class="checkbox-label" for="checkbox-CAD">Coronary Artery Disease</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="HLHS" type="checkbox" id="checkbox-HLHS">
+            <label class="checkbox-label" for="checkbox-HLHS">Hypoplastic Left Heart Syndrome</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="KD" type="checkbox" id="checkbox-KD">
+            <label class="checkbox-label" for="checkbox-KD">Kawasaki Disease</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="MS" type="checkbox" id="checkbox-MS">
+            <label class="checkbox-label" for="checkbox-MS">Marfan Syndrome</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="PH" type="checkbox" id="checkbox-PH">
+            <label class="checkbox-label" for="checkbox-PH">Pulmonary Hypertension</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Stenosis" type="checkbox" id="checkbox-Stenosis">
+            <label class="checkbox-label" for="checkbox-Stenosis">Stenosis</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="ToF" type="checkbox" id="checkbox-ToF">
+            <label class="checkbox-label" for="checkbox-ToF">Tetralogy of Fallot</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="WS" type="checkbox" id="checkbox-WS">
+            <label class="checkbox-label" for="checkbox-WS">Williams Syndrome</label>
+          </li>
+
+        </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
 
       <div class="cd-filter-block">
         <h4>Procedure Type</h4>
 
-        <div class="cd-filter-content">
-          <div class="cd-select cd-filters">
-            <select class="filter" name="procedure-filter" id="procedure-filter">
-              <option value="all">Select Procedure</option>
-              <option value="BT Shunt">BT Shunt</option>
-              <option value="CABG">Coronary Artery Bypass Grafting</option>
-              <option value="End-to-end Anastomosis">End-to-end Anastomosis</option>
-              <option value="End-to-side Anastomosis">End-to-side Anastomosis</option>
-              <option value="Fontan">Fontan</option>
-              <option value="Glenn">Glenn</option>
-              <option value="Norwood">Norwood</option>
-              <option value="PA_plasty">PA plasty</option>
-              <option value="Sano_Shunt">Sano Shunt</option>
-              <option value="Subclavian flap repair">Subclavian_flap_repair</option>
+        <ul class="cd-filter-content cd-filters list" style="list-style-type: none;">
+          <li>
+            <input class="filter" data-filter="Anastomosis" type="checkbox" id="checkbox-Anastomosis">
+            <label class="checkbox-label" for="checkbox-Anastomosis">Anastomosis</label>
+          </li>
 
-            </select>
-          </div> <!-- cd-select -->
-        </div> <!-- cd-filter-content -->
+          <li>
+            <input class="filter" data-filter="BT-Shunt" type="checkbox" id="checkbox-BT-Shunt">
+            <label class="checkbox-label" for="checkbox-BT-Shunt">BT Shunt</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="CABG" type="checkbox" id="checkbox-CABG">
+            <label class="checkbox-label" for="checkbox-CABG">Coronary Artery Bypass Grafting</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Fontan" type="checkbox" id="checkbox-Fontan">
+            <label class="checkbox-label" for="checkbox-Fontan">Fontan</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Glenn" type="checkbox" id="checkbox-Glenn">
+            <label class="checkbox-label" for="checkbox-Glenn">Glenn</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Norwood" type="checkbox" id="checkbox-Norwood">
+            <label class="checkbox-label" for="checkbox-Norwood">Norwood</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="PA_plasty" type="checkbox" id="checkbox-PA_plasty">
+            <label class="checkbox-label" for="checkbox-PA_plasty">PA Plasty</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Sano_Shunt" type="checkbox" id="checkbox-Sano_Shunt">
+            <label class="checkbox-label" for="checkbox-Sano_Shunt">Sano Shunt</label>
+          </li>
+
+          <li>
+            <input class="filter" data-filter="Subclavian_flap_repair" type="checkbox" id="checkbox-Subclavian_flap_repair">
+            <label class="checkbox-label" for="checkbox-Subclavian_flap_repair">Subclavian Flap Repair</label>
+          </li>
+
+        </ul> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
 
       <div class="cd-filter-block">
