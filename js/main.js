@@ -333,9 +333,14 @@ function applyMustContainFilter(partialData){
 }
 
 function applyAgeFilter(partialData){
-  var filterApplied = true
+  var filterApplied = false
   var filteredData = []
   var valueToSearch = document.getElementById('age-filter').value.toLowerCase()
+
+  if (valueToSearch == 'all')
+    return [partialData, filterApplied];
+
+  filterApplied = true;
 
   var arrayLength = partialData.length;
 
