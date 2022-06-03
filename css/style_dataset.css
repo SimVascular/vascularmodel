@@ -451,7 +451,9 @@ xfilter
   -o-transform: translateX(0);
   transform: translateX(0);
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
+  overflow: scroll;
 }
+
 .cd-filter.filter-is-visible .cd-close {
   opacity: 1;
 }
