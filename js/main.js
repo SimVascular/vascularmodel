@@ -332,6 +332,28 @@ function applyMustContainFilter(partialData){
   return [filteredData, filterApplied];
 }
 
+function applyAgeFilter(partialData){
+  var filterApplied = true
+  var filteredData = []
+  var valueToSearch = document.getElementById('age-filter').value.toLowerCase()
+
+  var arrayLength = partialData.length;
+
+  for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var str1 = key.toLowerCase();
+        var str2 = value.toLowerCase();
+        // we check if the value is in the name
+        if (str1 == 'type') {
+          if (str2.includes(valueToSearch)) {
+            filteredData.push(partialData[i])
+          }
+        }
+      }
+  }
+  return [filteredData, filterApplied];
+}
+
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
