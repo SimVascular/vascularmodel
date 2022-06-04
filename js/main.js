@@ -15,6 +15,7 @@ function addClickListener(data) {
     var details = ''
     details = details + 'Name: ' + data['Name'] + '\n'
     details = details + 'Type: ' + data['Type'] + '\n'
+    details = details + 'Sex: ' + data['Sex'] + '\n'
     var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
     for (var i = 0; i < fdrs.length; i++) {
       if (data[fdrs[i]] == '1') {
@@ -34,7 +35,7 @@ function addClickListener(data) {
   });
 }
 
-function generateContent(data) {
+function generateContent(modelData) {
   var div = document.createElement("div");
   div.classList.add("col-md-3");
   div.classList.add("col-sm-12");
@@ -44,11 +45,11 @@ function generateContent(data) {
 
   let aWrap = document.createElement("a");
   aWrap.classList.add("a-img")
-  aWrap.setAttribute("id",data['Name']);
+  aWrap.setAttribute("id",modelData['Name']);
 
   let innerImg = document.createElement("img");
-  innerImg.src = 'img/vmr-images/' + data['Name'] + '.png'
-  innerImg.alt = data['Name']
+  innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
+  innerImg.alt = modelData['Name']
 
   aWrap.appendChild(innerImg)
   divModelImage.appendChild(aWrap);
@@ -66,17 +67,17 @@ function removeContent() {
 
 var curIndex = 0;
 
-function populate(data, num_images = 24) {
+function populate(dataArray, num_images = 24) {
   var modelList = document.getElementById("model-gallery")
-  var arrayLength = data.length;
+  var arrayLength = dataArray.length;
   var ubound = arrayLength;
   if (curIndex + num_images < arrayLength) {
     ubound = curIndex + num_images
   }
   for (var i = curIndex; i < ubound; i++) {
-      var newContent = generateContent(data[i]);
+      var newContent = generateContent(dataArray[i]);
       modelList.appendChild(newContent);
-      addClickListener(data[i])
+      addClickListener(dataArray[i])
   }
   curIndex = ubound;
 }
@@ -219,7 +220,10 @@ function applyFilters(){
   filterOutput = applyModelTypeFilter(filteredData);
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
-  filterOutput = applyMustContainFilter(filteredData);
+  /*filterOutput = applyMustContainFilter(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]*/
+  filterOutput = applySexFilter(filteredData);
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
   removeContent();
@@ -304,7 +308,7 @@ function applyModelTypeFilter(partialData){
 
   return [filteredData, filterApplied];
 }
-
+/*
 function applyMustContainFilter(partialData){
   var filterApplied = false
   var filteredData = []
@@ -331,31 +335,43 @@ function applyMustContainFilter(partialData){
   }
   return [filteredData, filterApplied];
 }
-
-function applyAgeFilter(partialData){
+*/
+function applySexFilter(partialData){
   var filterApplied = false
   var filteredData = []
-  var valueToSearch = document.getElementById('age-filter').value.toLowerCase()
-
-  if (valueToSearch == 'all')
-    return [partialData, filterApplied];
-
-  filterApplied = true;
 
   var arrayLength = partialData.length;
 
-  for (var i = 0; i < arrayLength; i++) {
-      for (const [key, value] of Object.entries(partialData[i])) {
-        var str1 = key.toLowerCase();
-        var str2 = value.toLowerCase();
-        // we check if the value is in the name
-        if (str1 == 'type') {
-          if (str2.includes(valueToSearch)) {
-            filteredData.push(partialData[i])
-          }
-        }
-      }
+  var filter = []
+  for (var i = 0;  i < arrayLength; i++) {
+    filter.push(true);
   }
+
+  if (document.getElementById('checkbox-Male').checked)
+  {
+    filterApplied = true
+    for (var i = 0; i < arrayLength; i++) {
+      if (partialData[i]['Sex'] != 'Male') {
+        filter[i] = false;
+      }
+    }
+  }
+  
+  if (document.getElementById('checkbox-Female').checked){
+    filterApplied = true
+    for (var i = 0; i < arrayLength; i++) {
+      if (partialData[i]['Sex'] != 'Female') {
+        filter[i] = false;
+      }
+    }
+  }
+
+  for (var i = 0;  i < arrayLength; i++) {
+    if (filter[i]) {
+      filteredData.push(partialData[i]);
+    }
+  }
+
   return [filteredData, filterApplied];
 }
 
@@ -373,6 +389,14 @@ $("#search-field").change(function () {
 });
 
 $("#model-type-filter").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Male").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Female").change(function () {
   applyFilters();
 });
 
@@ -549,4 +573,4 @@ var buttonFilter = {
         self.$container.mixItUp('filter', self.outputString);
     }
     }
-};
+}
