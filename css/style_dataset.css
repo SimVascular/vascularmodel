@@ -163,6 +163,9 @@ xtab-filter
   /* this way the placehodler is alway visible */
   display: block;
 }
+.descriptive_label{
+  font-style: italic;
+}
 .cd-tab-filter a {
   display: block;
   /* set same size of the .cd-tab-filter */
