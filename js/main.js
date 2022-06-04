@@ -225,13 +225,14 @@ function applyFilters(){
   "Animal", "Human", 
   "Aorta", "Aortofemoral", "Cerebrovascular", "Coronary", "Pulmonary", 
   "Healthy", "AS", "Aneurysm", "APOD", "CTEPH", "CoA", "congenital_heart_disease","CAD", "HLHS", "KD", "MS", "PH", "Stenosis", "ToF", "WS", 
-  "Anastomosis", "BT-Shunt", "CABG", "Fontan", "Glenn", "Norwood", "PA_plasty", "Sano_Shunt", "Subclavian_flap_repair"] 
+  "Anastomosis", "BT_Shunt", "CABG", "Fontan", "Glenn", "Norwood", "PA_plasty", "Sano_Shunt", "Subclavian_flap_repair"] 
   
   var keys = []
   for(var i = 0; i < checkboxID.length; i++)
   {
     keys.push(checkboxID[i]);
   }
+
   keys.push("1", "1", "1", "1", "1", "1");
   checkboxID.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
   
@@ -282,132 +283,48 @@ function applyFilters(){
     document.getElementById('error-msg').style.opacity = 0;
   }
 }
-/*
-function applySearchFilter(partialData){
-  var filterApplied = false
-  var filteredData = []
-  var valueToSearch = document.getElementById('search-field').value.toLowerCase()
 
-  if (valueToSearch == '')
-    return [partialData,filterApplied];
-
-  filterApplied = true
-
-  var arrayLength = partialData.length;
-  for (var i = 0; i < arrayLength; i++) {
-      for (const [key, value] of Object.entries(partialData[i])) {
-        var str1 = key.toLowerCase();
-        var str2 = value.toLowerCase();
-        // we check if the value is in the name
-        if (str1 == 'name') {
-          if (str2.includes(valueToSearch)) {
-            filteredData.push(partialData[i])
-          }
-        }
-        else if (str1 == 'type') {
-          if (str2.includes(valueToSearch)) {
-            filteredData.push(partialData[i])
-          }
-        }
-        else { // we check if the value is a tag and if the value is 1
-          if (str1 == valueToSearch && str2 == '1') {
-            filteredData.push(partialData[i])
-          }
-        }
-      }
-  }
-
-  return [filteredData,filterApplied];
-}
-
-function applyModelTypeFilter(partialData){
-  var filterApplied = false
-  var filteredData = []
-  var keys = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations'];
-
-  var arrayLength = partialData.length;
-
-  var filter = []
-  for (var i = 0;  i < arrayLength; i++) {
-    filter.push(true);
-  }
-
-  for (var j = 0; j < keys.length; j++) {
-    if (document.getElementById('checkbox-' + keys[j]).checked) {
-      filterApplied = true
-      for (var i = 0; i < arrayLength; i++) {
-        if (partialData[i][keys[j]] != '1') {
-          filter[i] = false;
-        }
-      }
-    }
-  }
-
-  for (var i = 0;  i < arrayLength; i++) {
-    if (filter[i]) {
-      filteredData.push(partialData[i]);
-    }
-  }
-
-  return [filteredData, filterApplied];
-}
-
-function applySexFilter(partialData){
-  var filterApplied = false
-  var filteredData = []
-
-  var arrayLength = partialData.length;
-
-  var filter = []
-  for (var i = 0;  i < arrayLength; i++) {
-    filter.push(true);
-  }
-
-  if (document.getElementById('checkbox-Male').checked)
-  {
-    filterApplied = true
-    for (var i = 0; i < arrayLength; i++) {
-      if (partialData[i]['Sex'] != 'Male') {
-        filter[i] = false;
-      }
-    }
-  }
-  
-  if (document.getElementById('checkbox-Female').checked){
-    filterApplied = true
-    for (var i = 0; i < arrayLength; i++) {
-      if (partialData[i]['Sex'] != 'Female') {
-        filter[i] = false;
-      }
-    }
-  }
-
-  for (var i = 0;  i < arrayLength; i++) {
-    if (filter[i]) {
-      filteredData.push(partialData[i]);
-    }
-  }
-
-  return [filteredData, filterApplied];
-}
-*/
 function genericFilter(checkboxID, category, keys, partialData){
   var tempFilterApp = false
   var filteredData = []
 
   var arrayLength = partialData.length;
   
+  //automatically returns everything if nothing selected
   var filter = []
   for (var i = 0;  i < arrayLength; i++) {
     filter.push(true);
   }
-
+  
   if (document.getElementById(checkboxID).checked)
   {
     tempFilterApp = true
-    for (var i = 0; i < arrayLength; i++) {
-      if (partialData[i][category] != keys) {
-        filter[i] = false;
+
+    //because the sorting for Age is more complicated
+    if (category == "Age")
+    {
+      if (checkboxID == 'checkbox-Pediatric')
+      {
+        for (var i = 0; i < arrayLength; i++) {
+          if (partialData[i][category] >= 18) {
+            filter[i] = false;
+          }
+        }
+      }
+      else if (checkboxID == 'checkbox-Adult')
+      {
+        for (var i = 0; i < arrayLength; i++) {
+          if (partialData[i][category] < 18) {
+            filter[i] = false;
+          }
+        }
+      }
+    }
+    else {
+      for (var i = 0; i < arrayLength; i++) {
+        if (partialData[i][category] != keys) {
+          filter[i] = false;
+        }
       }
     }
   }
@@ -436,43 +353,43 @@ $("#search-field").change(function () {applyFilters();});
 $("#checkbox-Male").change(function () {applyFilters();});
 $("#checkbox-Female").change(function () {applyFilters();});
 
-$("#search-Pediatrics").change(function () {applyFilters();});
-$("#search-Adult").change(function () {applyFilters();});
+$("#checkbox-Pediatric").change(function () {applyFilters();});
+$("#checkbox-Adult").change(function () {applyFilters();});
 
-$("#search-Animal").change(function () {applyFilters();});
-$("#search-Human").change(function () {applyFilters();});
+$("#checkbox-Animal").change(function () {applyFilters();});
+$("#checkbox-Human").change(function () {applyFilters();});
 
-$("#search-Aorta").change(function () {applyFilters();});
-$("#search-Aortofemoral").change(function () {applyFilters();});
-$("#search-Cerebrovascular").change(function () {applyFilters();});
-$("#search-Coronary").change(function () {applyFilters();});
-$("#search-Pulmonary").change(function () {applyFilters();});
+$("#checkbox-Aorta").change(function () {applyFilters();});
+$("#checkbox-Aortofemoral").change(function () {applyFilters();});
+$("#checkbox-Cerebrovascular").change(function () {applyFilters();});
+$("#checkbox-Coronary").change(function () {applyFilters();});
+$("#checkbox-Pulmonary").change(function () {applyFilters();});
 
-$("#search-Healthy").change(function () {applyFilters();});
-$("#search-AS").change(function () {applyFilters();});
-$("#search-Aneurysm").change(function () {applyFilters();});
-$("#search-APOD").change(function () {applyFilters();});
-$("#search-CTEPH").change(function () {applyFilters();});
-$("#search-CoA").change(function () {applyFilters();});
-$("#search-congenital_heart_disease").change(function () {applyFilters();});
-$("#search-CAD").change(function () {applyFilters();});
-$("#search-HLHS").change(function () {applyFilters();});
-$("#search-KD").change(function () {applyFilters();});
-$("#search-MS").change(function () {applyFilters();});
-$("#search-PH").change(function () {applyFilters();});
-$("#search-Stenosis").change(function () {applyFilters();});
-$("#search-ToF").change(function () {applyFilters();});
-$("#search-WS").change(function () {applyFilters();});
+$("#checkbox-Healthy").change(function () {applyFilters();});
+$("#checkbox-AS").change(function () {applyFilters();});
+$("#checkbox-Aneurysm").change(function () {applyFilters();});
+$("#checkbox-APOD").change(function () {applyFilters();});
+$("#checkbox-CTEPH").change(function () {applyFilters();});
+$("#checkbox-CoA").change(function () {applyFilters();});
+$("#checkbox-congenital_heart_disease").change(function () {applyFilters();});
+$("#checkbox-CAD").change(function () {applyFilters();});
+$("#checkbox-HLHS").change(function () {applyFilters();});
+$("#checkbox-KD").change(function () {applyFilters();});
+$("#checkbox-MS").change(function () {applyFilters();});
+$("#checkbox-PH").change(function () {applyFilters();});
+$("#checkbox-Stenosis").change(function () {applyFilters();});
+$("#checkbox-ToF").change(function () {applyFilters();});
+$("#checkbox-WS").change(function () {applyFilters();});
 
-$("#search-Anastomosis").change(function () {applyFilters();});
-$("#search-BT-Shunt").change(function () {applyFilters();});
-$("#search-CABG").change(function () {applyFilters();});
-$("#search-Fontan").change(function () {applyFilters();});
-$("#search-Glenn").change(function () {applyFilters();});
-$("#search-Norwood").change(function () {applyFilters();});
-$("#search-PA_plasty").change(function () {applyFilters();});
-$("#search-Sano_Shunt").change(function () {applyFilters();});
-$("#search-Subclavian_flap_repair").change(function () {applyFilters();});
+$("#checkbox-Anastomosis").change(function () {applyFilters();});
+$("#checkbox-BT_Shunt").change(function () {applyFilters();});
+$("#checkbox-CABG").change(function () {applyFilters();});
+$("#checkbox-Fontan").change(function () {applyFilters();});
+$("#checkbox-Glenn").change(function () {applyFilters();});
+$("#checkbox-Norwood").change(function () {applyFilters();});
+$("#checkbox-PA_plasty").change(function () {applyFilters();});
+$("#checkbox-Sano_Shunt").change(function () {applyFilters();});
+$("#checkbox-Subclavian_flap_repair").change(function () {applyFilters();});
 
 $("#checkbox-Images").change(function () {applyFilters();});
 $("#checkbox-Paths").change(function () {applyFilters();});
