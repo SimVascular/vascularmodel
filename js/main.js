@@ -11,15 +11,13 @@ function addClickListener(data) {
     // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
     $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-
-    var details = ''
-    details = details + 'Name: ' + data['Name'] + '\n'
-    details = details + 'Sex: ' + data['Sex'] + '\n'
-    details = details + 'Age: ' + data['Age'] + '\n'
-    details = details + 'Species: ' + data['Species'] + '\n'
-    details = details + 'Anatomy: ' + data['Anatomy'] + '\n'
-    details = details + 'Disease: ' + data['Disease'] + '\n'
-    details = details + 'Procedure: ' + data['Procedure'] + '\n'
+    
+    var details = []
+    var titles = ["Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"]
+    for(var i = 0; i < titles.length; i++)
+    {
+      details += titles[i] + ": " + data[titles[i]] + '\n'
+    }
 
     var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
     for (var i = 0; i < fdrs.length; i++) {
@@ -85,6 +83,15 @@ function populate(dataArray, num_images = 24) {
       addClickListener(dataArray[i])
   }
   curIndex = ubound;
+}
+
+function generateCheckbox(categoryName)
+{
+  var modelList = document.getElementById("dropDown-" + categoryName)
+  //li
+  //append
+
+  //hook
 }
 
 var data;
