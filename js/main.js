@@ -138,7 +138,7 @@ function getFilterMenu()
 
 function addHooks(hooks) {
   for (var i = 0; i < hooks.length; i++) {
-    console.log($("#checkbox-" + hooks[i]).change(function() {console.log('hello')}));
+    $("#checkbox-" + hooks[i]).change(function() {applyFilters();});
   }
 }
 
@@ -167,23 +167,15 @@ function generateCheckboxUl(categoryName)
   }
 
   var hooks = []
+  
   for (var i = 0; i < checkboxNameArray.length; i++) {
       var newLi = generateCheckboxLi(checkboxNameArray[i]);
       ul.appendChild(newLi);
       hooks.push(checkboxNameArray[i])
-      //$("#checkbox-Male").change(function() {console.log("hello");});
   }
 
   return [ul, hooks];
 }
-
-// function checkboxHooks(checkboxName)
-// {
-//   $("#checkbox-Male").change(function () {applyFilters();});
-//   //console.log("#checkbox-" + checkboxName)
-//   var whatwewant = "#checkbox-" + checkboxName;
-//   $(whatwewant).change(function() {applyFilters();});
-// }
 
 function generateCheckboxLi(checkboxName) {
   let li = document.createElement('li');
@@ -207,7 +199,7 @@ function generateCheckboxLi(checkboxName) {
 
 var data;
 var filteredData;
-//data[0]
+
 $(document).ready(function($){
   $.ajax({
     type: "GET",
