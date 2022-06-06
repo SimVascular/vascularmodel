@@ -633,6 +633,7 @@ xcustom form elements
 
 .list {
   list-style-type: none;
+  display: none;
 }
 
 .cd-filter-block .list li {

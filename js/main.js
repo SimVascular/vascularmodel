@@ -13,10 +13,10 @@ function addClickListener(data) {
     $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     
     var details = []
-    var titles = ["Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"]
-    for(var i = 0; i < titles.length; i++)
+
+    for(var i = 0; i < categoryName.length; i++)
     {
-      details += titles[i] + ": " + data[titles[i]] + '\n'
+      details += categoryName[i] + ": " + data[categoryName[i]] + '\n'
     }
 
     var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
@@ -85,18 +85,129 @@ function populate(dataArray, num_images = 24) {
   curIndex = ubound;
 }
 
-function generateCheckbox(categoryName)
+function getCategoryName()
 {
-  var modelList = document.getElementById("dropDown-" + categoryName)
-  //li
-  //append
+  var allCategories = []
+  var onlyTheAttributes = []
 
-  //hook
+  for (const [key, value] of Object.entries(data[0])) {
+    allCategories.push(key);
+  }
+
+  //skips Name
+  //ends before start of MustContain filters
+  for (var i = 1; i < allCategories.indexOf("Images"); i++)
+  {
+    onlyTheAttributes[i-1] = allCategories[i];
+  }
+
+  return onlyTheAttributes;
+}
+
+function getFilterMenu()
+{
+  var filterCheckboxes = document.getElementById("filterCheckboxes")
+  var categoryName = getCategoryName();
+
+  var allHooks = []
+
+  for(var i = 0; i < categoryName.length; i++)
+  {
+    var div = document.createElement('div');
+    div.classList.add("cd-filter-block")
+
+    var h4 = document.createElement('h4');
+    h4.classList.add("closed");
+    h4.textContent = categoryName[i];
+    var output = generateCheckboxUl(categoryName[i]);
+    var ulContent = output[0]
+    var hooks = output[1]
+
+    div.appendChild(h4);
+    div.appendChild(ulContent);
+    filterCheckboxes.appendChild(div);
+    allHooks.push(hooks);
+  }
+
+  for (var i = 0; i < allHooks.length; i++)
+  {
+    addHooks(allHooks[i]);
+  }
+
+}
+
+function addHooks(hooks) {
+  for (var i = 0; i < hooks.length; i++) {
+    console.log($("#checkbox-" + hooks[i]).change(function() {console.log('hello')}));
+  }
+}
+
+function generateCheckboxUl(categoryName)
+{
+  var ul = document.createElement("ul")
+  ul.setAttribute("id", "dropDown-" + categoryName)
+  ul.classList.add("cd-filter-content");
+  ul.classList.add("cd-filters");
+  ul.classList.add("list");
+  
+  //separate for Age
+  if(categoryName == "Age")
+  {
+    var checkboxNameArray = ["Pediatric", "Adult"]
+  }
+  else{
+    var checkboxNameSet = new Set();
+  
+    for(var i = 0; i < data.length; i++)
+    {
+      checkboxNameSet.add(data[i][categoryName])
+    }
+
+    var checkboxNameArray = Array.from(checkboxNameSet);
+  }
+
+  var hooks = []
+  for (var i = 0; i < checkboxNameArray.length; i++) {
+      var newLi = generateCheckboxLi(checkboxNameArray[i]);
+      ul.appendChild(newLi);
+      hooks.push(checkboxNameArray[i])
+      //$("#checkbox-Male").change(function() {console.log("hello");});
+  }
+
+  return [ul, hooks];
+}
+
+// function checkboxHooks(checkboxName)
+// {
+//   $("#checkbox-Male").change(function () {applyFilters();});
+//   //console.log("#checkbox-" + checkboxName)
+//   var whatwewant = "#checkbox-" + checkboxName;
+//   $(whatwewant).change(function() {applyFilters();});
+// }
+
+function generateCheckboxLi(checkboxName) {
+  let li = document.createElement('li');
+  
+  let input = document.createElement('input');
+  input.classList.add("filter");
+  input.setAttribute("data-filter", checkboxName);
+  input.type = "checkbox";
+  input.setAttribute("id", "checkbox-" + checkboxName);
+
+  let label = document.createElement('label');
+  label.classList.add("checkbox-label");
+  label.setAttribute("for", "checkbox-" + checkboxName)
+  label.textContent = checkboxName;
+
+  li.appendChild(input);
+  li.appendChild(label);
+
+  return li;
 }
 
 var data;
 var filteredData;
-
+//data[0]
 $(document).ready(function($){
   $.ajax({
     type: "GET",
@@ -109,12 +220,12 @@ $(document).ready(function($){
       data.sort(() => (Math.random() > .5) ? 1 : -1);
     }
   });
-
+  triggerFilter(true);
   checkWidth();
-
   // create copy of data
   filteredData = data;
   updateCounter(false, data)
+  getFilterMenu();
   populate(data);
 
   //open/close lateral filter
@@ -222,43 +333,61 @@ function updateCounter(fApplied, fData) {
   }
 }
 
+function getNTimes()
+{
+  var nTimesRepeat = []
+  var categoryName = getCategoryName();
+
+  for(var cN = 0; cN < categoryName.length; cN ++)
+  {
+    if (categoryName[cN] == "Age")
+    {
+      nTimesRepeat[cN] = 2;
+    }
+    else
+    {
+      var noRepeatArray = new Set();
+      for(var dI = 0; dI < data.length; dI++)
+      {
+        noRepeatArray.add(data[dI][categoryName[cN]])
+      }
+      nTimesRepeat[cN] = noRepeatArray.size;
+    }
+  }
+
+  return nTimesRepeat;
+}
+
 function applyFilters(){
   var filterApplied = false
   curIndex = 0;
   var filteredData = data
 
-  var checkboxID = ['Male', "Female", 
-  "Pediatric", "Adult", 
-  "Animal", "Human", 
-  "Aorta", "Aortofemoral", "Cerebrovascular", "Coronary", "Pulmonary", 
-  "Healthy", "AS", "Aneurysm", "APOD", "CTEPH", "CoA", "congenital_heart_disease","CAD", "HLHS", "KD", "MS", "PH", "Stenosis", "ToF", "WS", 
-  "Anastomosis", "BT_Shunt", "CABG", "Fontan", "Glenn", "Norwood", "PA_plasty", "Sano_Shunt", "Subclavian_flap_repair"] 
+  var checkboxID = fillCheckboxID();
+  var keys = fillKeys();
   
-  var keys = []
-  for(var i = 0; i < checkboxID.length; i++)
-  {
-    keys.push(checkboxID[i]);
-  }
-
-  keys.push("1", "1", "1", "1", "1", "1");
-  checkboxID.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
-  
+  var categoryName = getCategoryName();
+  var nTimes = getNTimes();
   var category = []
-  var categoryName = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"]
-  var nTimes = [2, 2, 2, 5, 15, 9]
+
   for(var i = 0; i < categoryName.length; i++)
   {
-    category = generateCategory(category, nTimes[i], categoryName[i]);
-
+    category = fillCategory(category, nTimes[i], categoryName[i]);
   }
   
-  category.push('Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations');
+  category.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations");
+
+  var filterOutput;
 
   for(var i = 0; i < checkboxID.length; i++){
-    var filterOutput = genericFilter("checkbox-" + checkboxID[i], category[i], keys[i], filteredData)
+    filterOutput = genericFilter("checkbox-" + checkboxID[i], category[i], keys[i], filteredData)
     filteredData = filterOutput[0]
     filterApplied = filterApplied || filterOutput[1]
   }
+
+  filterOutput = applySearchFilter(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]
 
   removeContent();
   scrollToTop();
@@ -274,7 +403,63 @@ function applyFilters(){
   }
 }
 
-function generateCategory(category, n, categoryName)
+function fillWithCheckboxNames()
+{
+  var checkboxNames = []
+  var categoryName = getCategoryName();
+  for(var cNI = 0; cNI < categoryName.length; cNI++)
+  {
+    //separate for Age
+    if(categoryName[cNI] == "Age")
+    {
+      var checkboxNameArray = ["Pediatric", "Adult"]
+    }
+    else{
+      var checkboxNameSet = new Set();
+    
+      for(var dI = 0; dI < data.length; dI++)
+      {
+        checkboxNameSet.add(data[dI][categoryName[cNI]])
+      }
+
+      var checkboxNameArray = Array.from(checkboxNameSet);
+    }
+
+    for(var cNAI = 0; cNAI < checkboxNameArray.length; cNAI++)
+    {
+      checkboxNames.push(checkboxNameArray[cNAI]);
+    }
+  }
+  return checkboxNames;
+}
+
+function fillCheckboxID(){
+  var checkboxID = fillWithCheckboxNames();
+  checkboxID.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
+  return checkboxID;
+}
+/*
+function fillKeys(){
+  var keys = []
+  for (const [key, value] of Object.entries(data[0])) {
+    if (key != "Name"){
+      allCategories.push(value);
+    }
+  }
+
+
+  return onlyTheAttributes;
+}
+*/
+
+function fillKeys()
+{
+  var keys = fillWithCheckboxNames();
+  keys.push("1", "1", "1", "1", "1", "1");
+  return keys;
+}
+
+function fillCategory(category, n, categoryName)
 {
   for(var i = 0; i < n; i++)
   {
@@ -284,7 +469,7 @@ function generateCategory(category, n, categoryName)
   return category;
 }
 
-function genericFilter(checkboxID, category, keys, partialData){
+function genericFilter(checkboxID, category, key, partialData){
   var tempFilterApp = false
   var filteredData = []
 
@@ -322,7 +507,7 @@ function genericFilter(checkboxID, category, keys, partialData){
     }
     else {
       for (var i = 0; i < arrayLength; i++) {
-        if (partialData[i][category] != keys) {
+        if (partialData[i][category] != key) {
           filter[i] = false;
         }
       }
@@ -338,6 +523,43 @@ function genericFilter(checkboxID, category, keys, partialData){
   return [filteredData, tempFilterApp];
 }
 
+function applySearchFilter(partialData){
+  var filterApplied = false
+  var filteredData = []
+  var valueToSearch = document.getElementById('search-field').value.toLowerCase()
+
+  if (valueToSearch == '')
+    return [partialData,filterApplied];
+
+  filterApplied = true
+
+  var arrayLength = partialData.length;
+  for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var str1 = key.toLowerCase();
+        var str2 = value.toLowerCase();
+        // we check if the value is in the name
+        if (str1 == 'name') {
+          if (str2.includes(valueToSearch)) {
+            filteredData.push(partialData[i])
+          }
+        }
+        else if (str1 == 'type') {
+          if (str2.includes(valueToSearch)) {
+            filteredData.push(partialData[i])
+          }
+        }
+        else { // we check if the value is a tag and if the value is 1
+          if (str1 == valueToSearch && str2 == '1') {
+            filteredData.push(partialData[i])
+          }
+        }
+      }
+  }
+
+  return [filteredData,filterApplied];
+}
+
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
@@ -347,56 +569,14 @@ window.addEventListener('scroll', () => {
   }
 });
 
-
 $("#search-field").change(function () {applyFilters();});
-
-$("#checkbox-Male").change(function () {applyFilters();});
-$("#checkbox-Female").change(function () {applyFilters();});
-
-$("#checkbox-Pediatric").change(function () {applyFilters();});
-$("#checkbox-Adult").change(function () {applyFilters();});
-
-$("#checkbox-Animal").change(function () {applyFilters();});
-$("#checkbox-Human").change(function () {applyFilters();});
-
-$("#checkbox-Aorta").change(function () {applyFilters();});
-$("#checkbox-Aortofemoral").change(function () {applyFilters();});
-$("#checkbox-Cerebrovascular").change(function () {applyFilters();});
-$("#checkbox-Coronary").change(function () {applyFilters();});
-$("#checkbox-Pulmonary").change(function () {applyFilters();});
-
-$("#checkbox-Healthy").change(function () {applyFilters();});
-$("#checkbox-AS").change(function () {applyFilters();});
-$("#checkbox-Aneurysm").change(function () {applyFilters();});
-$("#checkbox-APOD").change(function () {applyFilters();});
-$("#checkbox-CTEPH").change(function () {applyFilters();});
-$("#checkbox-CoA").change(function () {applyFilters();});
-$("#checkbox-congenital_heart_disease").change(function () {applyFilters();});
-$("#checkbox-CAD").change(function () {applyFilters();});
-$("#checkbox-HLHS").change(function () {applyFilters();});
-$("#checkbox-KD").change(function () {applyFilters();});
-$("#checkbox-MS").change(function () {applyFilters();});
-$("#checkbox-PH").change(function () {applyFilters();});
-$("#checkbox-Stenosis").change(function () {applyFilters();});
-$("#checkbox-ToF").change(function () {applyFilters();});
-$("#checkbox-WS").change(function () {applyFilters();});
-
-$("#checkbox-Anastomosis").change(function () {applyFilters();});
-$("#checkbox-BT_Shunt").change(function () {applyFilters();});
-$("#checkbox-CABG").change(function () {applyFilters();});
-$("#checkbox-Fontan").change(function () {applyFilters();});
-$("#checkbox-Glenn").change(function () {applyFilters();});
-$("#checkbox-Norwood").change(function () {applyFilters();});
-$("#checkbox-PA_plasty").change(function () {applyFilters();});
-$("#checkbox-Sano_Shunt").change(function () {applyFilters();});
-$("#checkbox-Subclavian_flap_repair").change(function () {applyFilters();});
-
 $("#checkbox-Images").change(function () {applyFilters();});
 $("#checkbox-Paths").change(function () {applyFilters();});
 $("#checkbox-Segmentations").change(function () {applyFilters();});
 $("#checkbox-Models").change(function () {applyFilters();});
 $("#checkbox-Meshes").change(function () {applyFilters();});
 $("#checkbox-Simulations").change(function () {applyFilters();});
+
 
 $(window).load(function(){
   /************************************
