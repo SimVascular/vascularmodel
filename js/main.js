@@ -237,30 +237,13 @@ function applyFilters(){
   checkboxID.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
   
   var category = []
+  var categoryName = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"]
+  var nTimes = [2, 2, 2, 5, 15, 9]
+  for(var i = 0; i < categoryName.length; i++)
+  {
+    category = generateCategory(category, nTimes[i], categoryName[i]);
 
-  // repeat twice
-  for(var sex = 0; sex < 2; sex++)
-  { category.push('Sex'); }
-
-  // repeat twice
-  for(var age = 0; age < 2; age++)
-  { category.push("Age"); }
-
-  // repeat twice
-  for(var species = 0; species < 2; species++)
-  { category.push("Species"); }
-
-  // repeat 5 times
-  for(var anatomy = 0; anatomy < 5; anatomy++)
-  { category.push("Anatomy"); }
-
-  //repeat 15 times
-  for(var disease = 0; disease < 15; disease++)
-  { category.push("Disease"); }
-
-  //repeat 9 times
-  for(var procedure = 0; procedure < 9; procedure++)
-  { category.push("Procedure"); }
+  }
   
   category.push('Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations');
 
@@ -282,6 +265,16 @@ function applyFilters(){
     document.getElementById('error-msg').style.transitionDuration = '0s';
     document.getElementById('error-msg').style.opacity = 0;
   }
+}
+
+function generateCategory(category, n, categoryName)
+{
+  for(var i = 0; i < n; i++)
+  {
+    category.push(categoryName);
+  }
+  
+  return category;
 }
 
 function genericFilter(checkboxID, category, keys, partialData){
