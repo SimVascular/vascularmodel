@@ -13,6 +13,7 @@ function addClickListener(data) {
     $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     
     var details = []
+    var categoryName = getCategoryName(false);
 
     for(var i = 0; i < categoryName.length; i++)
     {
@@ -85,29 +86,64 @@ function populate(dataArray, num_images = 24) {
   curIndex = ubound;
 }
 
-function getCategoryName()
+function getCategoryName(all)
 {
   var allCategories = []
-  var onlyTheAttributes = []
 
   for (const [key, value] of Object.entries(data[0])) {
     allCategories.push(key);
   }
 
-  //skips Name
-  //ends before start of MustContain filters
-  for (var i = 1; i < allCategories.indexOf("Images"); i++)
+  if (all)
   {
-    onlyTheAttributes[i-1] = allCategories[i];
+    return allCategories;
+  }
+  else
+  {
+    var onlyTheAttributes = []
+
+    //skips Name
+    //ends before start of MustContain filters
+    for (var i = 1; i < allCategories.indexOf("Images"); i++)
+    {
+      onlyTheAttributes.push(allCategories[i]);
+    }
+
+    return onlyTheAttributes;
+  }
+  
+}
+
+function getCheckboxName()
+{
+  var allCategories = []
+  var notDropDownNames = []
+
+  for (const [key, value] of Object.entries(data[0])) {
+    allCategories.push(key);
   }
 
-  return onlyTheAttributes;
+  for (var i = 0; i < allCategories.length; i++)
+  {
+    if (getNTimesPerCategory(allCategories[i]) != 2 && allCategories[i] != "Name" && allCategories[i] != "Size")
+    {
+      notDropDownNames.push(allCategories[i]);
+    }
+  }
+
+  return notDropDownNames;
 }
+
+/*function getUorIButton()
+{
+  var UorIButton = document.getElementById("UorIButton")
+  UorIButton.classList.add("cd-UorIButton")
+}*/
 
 function getFilterMenu()
 {
   var filterCheckboxes = document.getElementById("filterCheckboxes")
-  var categoryName = getCategoryName();
+  var categoryName = getCategoryName(false);
 
   var allHooks = []
 
@@ -119,12 +155,20 @@ function getFilterMenu()
     var h4 = document.createElement('h4');
     h4.classList.add("closed");
     h4.textContent = categoryName[i];
-    var output = generateCheckboxUl(categoryName[i]);
-    var ulContent = output[0]
+
+    if (getNTimesPerCategory(categoryName[i]) == 2)
+    {
+      var output = generateDropDownMenu(categoryName[i]);
+    }
+    else{
+      var output = generateCheckboxUl(categoryName[i]);
+    }
+
+    var insideContent = output[0]
     var hooks = output[1]
 
     div.appendChild(h4);
-    div.appendChild(ulContent);
+    div.appendChild(insideContent);
     filterCheckboxes.appendChild(div);
     allHooks.push(hooks);
   }
@@ -138,22 +182,33 @@ function getFilterMenu()
 
 function addHooks(hooks) {
   for (var i = 0; i < hooks.length; i++) {
-    $("#checkbox-" + hooks[i]).change(function() {applyFilters();});
+    $(hooks[i]).change(function() {applyFilters();});
   }
 }
 
-function generateCheckboxUl(categoryName)
+function generateDropDownMenu(categoryName)
 {
-  var ul = document.createElement("ul")
-  ul.setAttribute("id", "dropDown-" + categoryName)
-  ul.classList.add("cd-filter-content");
-  ul.classList.add("cd-filters");
-  ul.classList.add("list");
-  
+  var div = document.createElement("div")
+  div.classList.add("cd-filter-content");
+  div.classList.add("cd-select");
+  div.classList.add("cd-filters");
+  div.classList.add("list");
+
+  var select = document.createElement("select")
+  select.classList.add("filter")
+  select.setAttribute("id", "select-" + categoryName)
+
+  var option = document.createElement("option")
+  option.value = "none";
+  option.textContent = "Select One";
+  select.appendChild(option);
+
+  var hooks = ["select-" + categoryName];
+
   //separate for Age
   if(categoryName == "Age")
   {
-    var checkboxNameArray = ["Pediatric", "Adult"]
+    var checkboxNameArray = ["Adult", "Pediatric"]
   }
   else{
     var checkboxNameSet = new Set();
@@ -166,12 +221,47 @@ function generateCheckboxUl(categoryName)
     var checkboxNameArray = Array.from(checkboxNameSet);
   }
 
+  //checkboxNameArray.length should = 2
+  for (var i = 0; i < checkboxNameArray.length; i++) {
+      var newOption = generateOptions(checkboxNameArray[i]);
+      select.appendChild(newOption);
+  }
+  
+  div.appendChild(select);
+
+  return [div, hooks]
+}
+
+function generateOptions(optionName)
+{
+  var option = document.createElement("option")
+  option.value = optionName;
+  option.textContent = optionName;
+  return option;
+}
+
+function generateCheckboxUl(categoryName)
+{
+  var ul = document.createElement("ul")
+  ul.classList.add("cd-filter-content");
+  ul.classList.add("cd-filters");
+  ul.classList.add("list");
+  
+  var checkboxNameSet = new Set();
+  
+  for(var i = 0; i < data.length; i++)
+  {
+    checkboxNameSet.add(data[i][categoryName])
+  }
+
+  var checkboxNameArray = Array.from(checkboxNameSet);
+
   var hooks = []
   
   for (var i = 0; i < checkboxNameArray.length; i++) {
       var newLi = generateCheckboxLi(checkboxNameArray[i]);
       ul.appendChild(newLi);
-      hooks.push(checkboxNameArray[i])
+      hooks.push("checkbox-" + checkboxNameArray[i])
   }
 
   return [ul, hooks];
@@ -214,6 +304,7 @@ $(document).ready(function($){
   });
   triggerFilter(true);
   checkWidth();
+  
   // create copy of data
   filteredData = data;
   updateCounter(false, data)
@@ -325,28 +416,53 @@ function updateCounter(fApplied, fData) {
   }
 }
 
+function getNTimesPerCategory(categoryName)
+{
+  var nTimesRepeat = 0;
+
+  var categoryNames = []
+  var allCategoryNames = []
+
+  for (const [key, value] of Object.entries(data[0])) {
+    allCategoryNames.push(key);
+  }
+    
+  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
+  {
+    categoryNames.push(allCategoryNames[i])
+  }
+  
+  if (categoryName == "Age")
+  {
+    nTimesRepeat = 2;
+  }
+  else if (categoryNames.includes(categoryName))
+  {
+    nTimesRepeat = 1;
+  }
+  else
+  {
+    var noRepeatArray = new Set();
+    for(var dI = 0; dI < data.length; dI++)
+    {
+      noRepeatArray.add(data[dI][categoryName])
+    }
+    nTimesRepeat = noRepeatArray.size;
+  }
+
+  return nTimesRepeat;
+}
+
 function getNTimes()
 {
   var nTimesRepeat = []
-  var categoryName = getCategoryName();
+  var listOfNames = getCheckboxName();
 
-  for(var cN = 0; cN < categoryName.length; cN ++)
+  for(var i = 0; i < listOfNames.length; i ++)
   {
-    if (categoryName[cN] == "Age")
-    {
-      nTimesRepeat[cN] = 2;
-    }
-    else
-    {
-      var noRepeatArray = new Set();
-      for(var dI = 0; dI < data.length; dI++)
-      {
-        noRepeatArray.add(data[dI][categoryName[cN]])
-      }
-      nTimesRepeat[cN] = noRepeatArray.size;
-    }
+    nTimesRepeat[i] = getNTimesPerCategory(listOfNames[i]);
   }
-
+  
   return nTimesRepeat;
 }
 
@@ -355,10 +471,10 @@ function applyFilters(){
   curIndex = 0;
   var filteredData = data
 
-  var checkboxID = fillCheckboxID();
+  var IDs = fillIDs();
   var keys = fillKeys();
   
-  var categoryName = getCategoryName();
+  var categoryName = getCheckboxName();
   var nTimes = getNTimes();
   var category = []
 
@@ -366,20 +482,31 @@ function applyFilters(){
   {
     category = fillCategory(category, nTimes[i], categoryName[i]);
   }
-  
-  category.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations");
 
   var filterOutput;
 
-  for(var i = 0; i < checkboxID.length; i++){
-    filterOutput = genericFilter("checkbox-" + checkboxID[i], category[i], keys[i], filteredData)
-    filteredData = filterOutput[0]
-    filterApplied = filterApplied || filterOutput[1]
+  for(var cN = 0; cN < categoryName.length; cN++){
+    
+    if (getNTimesPerCategory(categoryName[cN]) == 2)
+    {
+      filterOutput = dropDownFilter(categoryName[cN], filteredData)
+      filteredData = filterOutput[0]
+      filterApplied = filterApplied || filterOutput[1]
+    }
+    else {
+      for(var cbFI = 0; cbFI < category.length; cbFI++)
+      {
+        filterOutput = checkboxFilter("checkbox-" + IDs[cbFI], category[cbFI], keys[cbFI], filteredData)
+        filteredData = filterOutput[0]
+        filterApplied = filterApplied || filterOutput[1]
+      }
+    }
+    console.log(filterOutput[0])
   }
-
   filterOutput = applySearchFilter(filteredData);
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
+
 
   removeContent();
   scrollToTop();
@@ -398,51 +525,34 @@ function applyFilters(){
 function fillWithCheckboxNames()
 {
   var checkboxNames = []
-  var categoryName = getCategoryName();
+  var categoryName = getCategoryName(false);
   for(var cNI = 0; cNI < categoryName.length; cNI++)
   {
-    //separate for Age
-    if(categoryName[cNI] == "Age")
+    if (getNTimesPerCategory(categoryName[cNI]) != 2)
     {
-      var checkboxNameArray = ["Pediatric", "Adult"]
-    }
-    else{
       var checkboxNameSet = new Set();
-    
+          
       for(var dI = 0; dI < data.length; dI++)
       {
         checkboxNameSet.add(data[dI][categoryName[cNI]])
       }
 
       var checkboxNameArray = Array.from(checkboxNameSet);
-    }
 
-    for(var cNAI = 0; cNAI < checkboxNameArray.length; cNAI++)
-    {
-      checkboxNames.push(checkboxNameArray[cNAI]);
+      for(var cNAI = 0; cNAI < checkboxNameArray.length; cNAI++)
+      {
+        checkboxNames.push(checkboxNameArray[cNAI]);
+      }
     }
   }
   return checkboxNames;
 }
 
-function fillCheckboxID(){
-  var checkboxID = fillWithCheckboxNames();
-  checkboxID.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
-  return checkboxID;
+function fillIDs(){
+  var IDs = fillWithCheckboxNames();
+  IDs.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
+  return IDs;
 }
-/*
-function fillKeys(){
-  var keys = []
-  for (const [key, value] of Object.entries(data[0])) {
-    if (key != "Name"){
-      allCategories.push(value);
-    }
-  }
-
-
-  return onlyTheAttributes;
-}
-*/
 
 function fillKeys()
 {
@@ -461,95 +571,128 @@ function fillCategory(category, n, categoryName)
   return category;
 }
 
-function genericFilter(checkboxID, category, key, partialData){
-  var tempFilterApp = false
+function dropDownFilter(categoryName, partialData){
+
+  var filterApplied = false
   var filteredData = []
+  var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
+
+  if (valueToSearch == 'none')
+    return [partialData, filterApplied];
+
+  filterApplied = true;
 
   var arrayLength = partialData.length;
-  
-  //automatically returns everything if nothing selected
-  var filter = []
-  for (var i = 0;  i < arrayLength; i++) {
-    filter.push(true);
+
+  for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var category = key.toLowerCase();
+        var option = value.toLowerCase();
+        // we check if the value is in the name
+        if (category == categoryName) {
+          if (option.includes(valueToSearch)) {
+            filteredData.push(partialData[i])
+          }
+        }
+      }
   }
+
+  return [filteredData, filterApplied];
+}
+
+function checkboxFilter(checkboxID, category, key, partialData){
   
   if (document.getElementById(checkboxID).checked)
   {
-    tempFilterApp = true
+    var filteredData = []
+    var whichToKeep = []
+    var arrayLength = partialData.length;
+    
 
-    //because the sorting for Age is more complicated
-    if (category == "Age")
-    {
-      if (checkboxID == 'checkbox-Pediatric')
-      {
-        for (var i = 0; i < arrayLength; i++) {
-          if (partialData[i][category] >= 18) {
-            filter[i] = false;
-          }
-        }
-      }
-      else if (checkboxID == 'checkbox-Adult')
-      {
-        for (var i = 0; i < arrayLength; i++) {
-          if (partialData[i][category] < 18) {
-            filter[i] = false;
-          }
-        }
+    for (var i = 0;  i < arrayLength; i++) {
+      whichToKeep.push(true);
+    }
+
+    for (var i = 0; i < arrayLength; i++) {
+      if (partialData[i][category] != key) {
+        whichToKeep[i] = false;
       }
     }
-    else {
-      for (var i = 0; i < arrayLength; i++) {
-        if (partialData[i][category] != key) {
-          filter[i] = false;
-        }
+  
+    for (var i = 0;  i < arrayLength; i++) {
+      if (whichToKeep[i]) {
+        filteredData.push(partialData[i]);
       }
     }
+
+    return [filteredData, true];
   }
 
-  for (var i = 0;  i < arrayLength; i++) {
-    if (filter[i]) {
-      filteredData.push(partialData[i]);
-    }
-  }
-
-  return [filteredData, tempFilterApp];
+  //nothing checked; returns same array as input
+  return [partialData, false]
 }
 
 function applySearchFilter(partialData){
-  var filterApplied = false
-  var filteredData = []
-  var valueToSearch = document.getElementById('search-field').value.toLowerCase()
-
   if (valueToSearch == '')
-    return [partialData,filterApplied];
+  {
+    return [partialData, false]
+  }
+  else
+  {
+    var filteredData = new Set()
+    var valueToSearch = document.getElementById('search-field').value.toLowerCase()
+    var arrayLength = partialData.length;
+    var allCategories = getCategoryName(true);
+    var categoriesWith1s = []
 
-  filterApplied = true
-
-  var arrayLength = partialData.length;
-  for (var i = 0; i < arrayLength; i++) {
-      for (const [key, value] of Object.entries(partialData[i])) {
-        var str1 = key.toLowerCase();
-        var str2 = value.toLowerCase();
-        // we check if the value is in the name
-        if (str1 == 'name') {
-          if (str2.includes(valueToSearch)) {
-            filteredData.push(partialData[i])
-          }
-        }
-        else if (str1 == 'type') {
-          if (str2.includes(valueToSearch)) {
-            filteredData.push(partialData[i])
-          }
-        }
-        else { // we check if the value is a tag and if the value is 1
-          if (str1 == valueToSearch && str2 == '1') {
-            filteredData.push(partialData[i])
-          }
-        }
+    for(var i = 0; i < allCategories.length; i++)
+    {
+      if (getNTimesPerCategory(allCategories[i]) == 1)
+      {
+        categoriesWith1s.push(allCategories[i])
       }
+    }
+    
+
+    for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var category = key.toLowerCase();
+        var input = value.toLowerCase();
+
+        if (!categoriesWith1s.includes(category))
+        {
+          if (input.includes(valueToSearch)) {
+            filteredData.add(partialData[i])
+          }
+        }
+        else
+        {
+          if (category == valueToSearch && input == '1') {
+            filteredData.add(partialData[i])
+          }
+        }
+
+      }
+    }
+
+    filteredData = Array.from(filteredData);
+
+    return [filteredData, true];
+  }
+}
+
+function getOptionsUnderCategory(categoryName)
+{
+  var optionsSet = new Set();
+          
+  for(var dI = 0; dI < data.length; dI++)
+  {
+    optionsSet.add(data[dI][categoryName])
   }
 
-  return [filteredData,filterApplied];
+  var options = Array.from(optionsSet);
+
+  return options;
 }
 
 window.addEventListener('scroll', () => {
