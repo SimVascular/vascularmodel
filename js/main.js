@@ -13,7 +13,7 @@ function addClickListener(data) {
     $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     
     var details = []
-    var categoryName = getCategoryName(false);
+    var categoryName = getCategoryName();
 
     for(var i = 0; i < categoryName.length; i++)
     {
@@ -86,7 +86,7 @@ function populate(dataArray, num_images = 24) {
   curIndex = ubound;
 }
 
-function getCategoryName(all)
+function getAllCategories()
 {
   var allCategories = []
 
@@ -94,24 +94,38 @@ function getCategoryName(all)
     allCategories.push(key);
   }
 
-  if (all)
-  {
-    return allCategories;
-  }
-  else
-  {
-    var onlyTheAttributes = []
+  return allCategories;
+}
 
-    //skips Name
-    //ends before start of MustContain filters
-    for (var i = 1; i < allCategories.indexOf("Images"); i++)
+function getFilterTitles()
+{
+  var allCategories = getAllCategories()
+  var onlyFilterTitles = []
+
+  for(var i = 0; i < allCategories.length; i++)
+  {
+    if(allCategories[i] != "Size" && allCategories[i] != "Name")
     {
-      onlyTheAttributes.push(allCategories[i]);
+      onlyFilterTitles.push(allCategories[i])
     }
-
-    return onlyTheAttributes;
   }
-  
+
+  return onlyFilterTitles;
+}
+
+function getCategoryName()
+{
+  var allCategories = getAllCategories()
+  var onlyTheAttributes = []
+
+  //skips Name
+  //ends before start of MustContain filters
+  for (var i = 1; i < allCategories.indexOf("Images"); i++)
+  {
+    onlyTheAttributes.push(allCategories[i]);
+  }
+
+  return onlyTheAttributes;
 }
 
 function getCheckboxName()
@@ -143,7 +157,7 @@ function getCheckboxName()
 function getFilterMenu()
 {
   var filterCheckboxes = document.getElementById("filterCheckboxes")
-  var categoryName = getCategoryName(false);
+  var categoryName = getCategoryName();
 
   var allHooks = []
 
@@ -183,7 +197,7 @@ function getFilterMenu()
 
 function addHooks(hooks) {
   for (var i = 0; i < hooks.length; i++) {
-    $(hooks[i]).change(function() {console.log ("enters hook"); applyFilters();});
+    console.log($("#" + hooks[i]).change(function() {console.log ("enters hook"); applyFilters();}));
     console.log("creates hook: " + hooks[i]);
   }
 }
@@ -493,11 +507,13 @@ function applyFilters(){
 
   var filterOutput;
 
-  for(var cN = 0; cN < categoryName.length; cN++){
+  var titles = getFilterTitles();
+
+  for(var t = 0; t < titles.length; t++){
     
-    if (getNTimesPerCategory(categoryName[cN]) == 2)
+    if (getNTimesPerCategory(titles[t]) == 2)
     {
-      filterOutput = dropDownFilter(categoryName[cN], filteredData)
+      filterOutput = dropDownFilter(titles[t], filteredData)
       filteredData = filterOutput[0]
       filterApplied = filterApplied || filterOutput[1]
     }
@@ -532,7 +548,7 @@ function applyFilters(){
 function fillWithCheckboxNames()
 {
   var checkboxNames = []
-  var categoryName = getCategoryName(false);
+  var categoryName = getCategoryName();
   for(var cNI = 0; cNI < categoryName.length; cNI++)
   {
     if (getNTimesPerCategory(categoryName[cNI]) != 2)
@@ -580,31 +596,49 @@ function fillCategory(category, n, categoryName)
 
 function dropDownFilter(categoryName, partialData){
 
-  var filterApplied = false
-  var filteredData = []
   var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
 
-  if (valueToSearch == 'none')
-    return [partialData, filterApplied];
+  if(valueToSearch == 'none')
+  {
+    return [partialData, false];
+  }
+  else
+  {
+    var filteredData = []
+    var arrayLength = partialData.length;
 
-  filterApplied = true;
-
-  var arrayLength = partialData.length;
-
-  for (var i = 0; i < arrayLength; i++) {
+    for (var i = 0; i < arrayLength; i++) {
       for (const [key, value] of Object.entries(partialData[i])) {
         var category = key.toLowerCase();
         var option = value.toLowerCase();
-        // we check if the value is in the name
-        if (category == categoryName) {
-          if (option.includes(valueToSearch)) {
-            filteredData.push(partialData[i])
+        
+        if (category == categoryName.toLowerCase()) {
+          var pushValue = false;
+
+          if (option == valueToSearch) 
+          {
+            pushValue = true; 
           }
+
+          //different for Age
+          if(category.toLowerCase() == "age")
+          {
+            if (valueToSearch == "pediatric" && parseInt(option) < 18) {
+              pushValue = true;
+            }
+            else if (valueToSearch == "adult" && parseInt(option) >= 18){
+              pushValue = true;
+            }
+          }
+
+          if (pushValue)
+            filteredData.push(partialData[i]);
         }
       }
-  }
+    }
 
-  return [filteredData, filterApplied];
+    return [filteredData, true];
+  }
 }
 
 function checkboxFilter(checkboxID, category, key, partialData){
@@ -650,7 +684,7 @@ function applySearchFilter(partialData){
   {
     var filteredData = new Set()
     var arrayLength = partialData.length;
-    var allCategories = getCategoryName(true);
+    var allCategories = getAllCategories();
     var categoriesWith1s = []
 
     for(var i = 0; i < allCategories.length; i++)
