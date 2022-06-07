@@ -197,8 +197,7 @@ function getFilterMenu()
 
 function addHooks(hooks) {
   for (var i = 0; i < hooks.length; i++) {
-    console.log($("#" + hooks[i]).change(function() {console.log ("enters hook"); applyFilters();}));
-    console.log("creates hook: " + hooks[i]);
+    $("#" + hooks[i]).change(function() {applyFilters();});
   }
 }
 
@@ -212,8 +211,6 @@ function generateDropDownMenu(categoryName)
 
   var select = document.createElement("select")
   select.classList.add("filter")
-
-  console.log("creates id: " + "select-" + categoryName)
   select.setAttribute("id", "select-" + categoryName)
 
   var option = document.createElement("option")
@@ -294,8 +291,6 @@ function generateCheckboxLi(checkboxName) {
   input.classList.add("filter");
   input.setAttribute("data-filter", checkboxName);
   input.type = "checkbox";
-
-  console.log("creates id: " + "checkbox-" + checkboxName)
   input.setAttribute("id", "checkbox-" + checkboxName);
 
   let label = document.createElement('label');
