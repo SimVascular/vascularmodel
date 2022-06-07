@@ -160,7 +160,8 @@ function getFilterMenu()
     {
       var output = generateDropDownMenu(categoryName[i]);
     }
-    else{
+    else
+    {
       var output = generateCheckboxUl(categoryName[i]);
     }
 
@@ -182,7 +183,8 @@ function getFilterMenu()
 
 function addHooks(hooks) {
   for (var i = 0; i < hooks.length; i++) {
-    $(hooks[i]).change(function() {applyFilters();});
+    $(hooks[i]).change(function() {console.log ("enters hook"); applyFilters();});
+    console.log("creates hook: " + hooks[i]);
   }
 }
 
@@ -196,6 +198,8 @@ function generateDropDownMenu(categoryName)
 
   var select = document.createElement("select")
   select.classList.add("filter")
+
+  console.log("creates id: " + "select-" + categoryName)
   select.setAttribute("id", "select-" + categoryName)
 
   var option = document.createElement("option")
@@ -219,6 +223,7 @@ function generateDropDownMenu(categoryName)
     }
 
     var checkboxNameArray = Array.from(checkboxNameSet);
+    checkboxNameArray.sort();
   }
 
   //checkboxNameArray.length should = 2
@@ -255,6 +260,7 @@ function generateCheckboxUl(categoryName)
   }
 
   var checkboxNameArray = Array.from(checkboxNameSet);
+  checkboxNameArray.sort();
 
   var hooks = []
   
@@ -274,6 +280,8 @@ function generateCheckboxLi(checkboxName) {
   input.classList.add("filter");
   input.setAttribute("data-filter", checkboxName);
   input.type = "checkbox";
+
+  console.log("creates id: " + "checkbox-" + checkboxName)
   input.setAttribute("id", "checkbox-" + checkboxName);
 
   let label = document.createElement('label');
@@ -501,7 +509,6 @@ function applyFilters(){
         filterApplied = filterApplied || filterOutput[1]
       }
     }
-    console.log(filterOutput[0])
   }
   filterOutput = applySearchFilter(filteredData);
   filteredData = filterOutput[0]
@@ -633,6 +640,8 @@ function checkboxFilter(checkboxID, category, key, partialData){
 }
 
 function applySearchFilter(partialData){
+  var valueToSearch = document.getElementById('search-field').value.toLowerCase()
+
   if (valueToSearch == '')
   {
     return [partialData, false]
@@ -640,7 +649,6 @@ function applySearchFilter(partialData){
   else
   {
     var filteredData = new Set()
-    var valueToSearch = document.getElementById('search-field').value.toLowerCase()
     var arrayLength = partialData.length;
     var allCategories = getCategoryName(true);
     var categoriesWith1s = []
