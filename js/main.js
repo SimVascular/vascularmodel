@@ -590,80 +590,6 @@ function isChecked(title)
   }  
 }
 
-// function unionOfCollection(collectionOfWhatToKeep)
-// {
-//   var filteredDataList = []
-//   var filteredData = new Set()
-
-//   var filterAppliedList = []
-//   var filterApplied = false;
-
-//   for(var i = 0; i < collectionOfWhatToKeep.length; i++)
-//   {
-//     filteredDataList.push(collectionOfWhatToKeep[i][0]);
-//     filterAppliedList.push(collectionOfWhatToKeep[i][1]);
-//   }
-
-//   for(var i = 0; i < filteredDataList.length; i++)
-//   {
-//     for(var j = 0; j < filteredDataList[i].length; j++)
-//     {
-//       filteredData.add(filteredDataList[i][j]);
-//     }
-//   }
-
-//   for(var i = 0; i < filterAppliedList.length; i++)
-//   {
-//     if(filterAppliedList[i])
-//     {
-//       filterApplied = true;
-//     }
-//   }
-
-//   return [filteredData, filterApplied]
-// }
-
-/*
-function unionFilteredData(partialData, newSelections)
-{
-  var filteredData = []
-  var arrayLength = partialData.length
-
-  for (var i = 0;  i < arrayLength; i++) {
-    if (newSelections[i]) {
-      filteredData.push(partialData[i]);
-    }
-  }
-
-  return filteredData;
-}
-
-function fillWithCheckboxNames()
-{
-  var checkboxNames = []
-  var categoryName = getCategoryName();
-  for(var cNI = 0; cNI < categoryName.length; cNI++)
-  {
-    if (getNTimesPerCategory(categoryName[cNI]) != 2)
-    {
-      var checkboxNameSet = new Set();
-          
-      for(var dI = 0; dI < data.length; dI++)
-      {
-        checkboxNameSet.add(data[dI][categoryName[cNI]])
-      }
-
-      var checkboxNameArray = Array.from(checkboxNameSet);
-
-      for(var cNAI = 0; cNAI < checkboxNameArray.length; cNAI++)
-      {
-        checkboxNames.push(checkboxNameArray[cNAI]);
-      }
-    }
-  }
-  return checkboxNames;
-}*/
-
 function checkboxNamesPerCategory(categoryName, isKey)
 {
   var checkboxNames = []
@@ -683,20 +609,6 @@ function checkboxNamesPerCategory(categoryName, isKey)
   return checkboxNames;
 }
 
-/*
-function fillIDs(){
-  var IDs = fillWithCheckboxNames();
-  IDs.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
-  return IDs;
-}
-
-function fillKeys()
-{
-  var keys = fillWithCheckboxNames();
-  keys.push("1", "1", "1", "1", "1", "1");
-  return keys;
-}
-*/
 function fillCategory(category, n, categoryName)
 {
   for(var i = 0; i < n; i++)
@@ -855,6 +767,7 @@ $("#checkbox-Meshes").change(function () {applyFilters();});
 $("#checkbox-Simulations").change(function () {applyFilters();});
 
 $(window).load(function(){
+  
   /************************************
     MitItUp filter settings
     More details:
