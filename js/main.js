@@ -322,7 +322,7 @@ $(document).ready(function($){
       data.sort(() => (Math.random() > .5) ? 1 : -1);
     }
   });
-  triggerFilter(true);
+
   checkWidth();
   
   // create copy of data
@@ -490,7 +490,7 @@ function getNTimes()
 function applyFilters(){
   var filterApplied = false
   curIndex = 0;
-  var filteredData = data
+  var filteredData = data;
   /*
   var IDs = fillIDs();
   var keys = fillKeys();
@@ -517,25 +517,36 @@ function applyFilters(){
       filterApplied = filterApplied || filterOutput[1]
     }
     else {
-      for(var i = 0; i < nTimes[t]; i++)
-      {
-        IDs = checkboxNamesPerCategory(titles[t], false)
-        keys = checkboxNamesPerCategory(titles[t], true)
-        filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData)
-        //filterOutput[0] = whichToKeep array of booleans
+      var whichToKeep = []
+      //if a box is checked in the category
+      if (isChecked(titles[t]))
+      {    
+        for (var i = 0;  i < filteredData.length; i++) {
+          whichToKeep.push(false);
+        }
 
-        var newSelections = filterOutput[0]
-        var filteredData = unionFilteredData(filteredData, newSelections)
-        /*var pastToKeep = newSelections*/
-        console.log("filteredData at checkbox-" + IDs[i])
-        filterApplied = filterApplied || filterOutput[1]
+        for(var i = 0; i < nTimes[t]; i++)
+        {
+          IDs = checkboxNamesPerCategory(titles[t], false)
+          keys = checkboxNamesPerCategory(titles[t], true)
+          filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData, whichToKeep)
+          whichToKeep = filterOutput[0]
+          filterApplied = filterApplied || filterOutput[1]
+        }
       }
+      else{
+        for (var i = 0;  i < filteredData.length; i++) {
+          whichToKeep.push(true);
+        }
+      }
+      //whichToKeep and filteredData should have the same length
+      filteredData = updatedFilteredData(whichToKeep, filteredData);
     }
   }
+
   filterOutput = applySearchFilter(filteredData);
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
-
 
   removeContent();
   scrollToTop();
@@ -551,6 +562,68 @@ function applyFilters(){
   }
 }
 
+function updatedFilteredData(whichToKeep, filteredData)
+{
+  var updatedFilteredData = []
+
+  for (var i = 0 ; i < filteredData.length; i++)
+  {
+    if (whichToKeep[i])
+    {
+      updatedFilteredData.push(filteredData[i]);
+    }
+  }
+
+  return updatedFilteredData;
+}
+
+function isChecked(title)
+{
+  IDs = checkboxNamesPerCategory(title, false)
+
+  for(var i = 0; i < IDs.length; i++)
+  {
+    if (document.getElementById("checkbox-" + IDs[i]).checked)
+    {
+      return true;
+    }
+  }  
+}
+
+// function unionOfCollection(collectionOfWhatToKeep)
+// {
+//   var filteredDataList = []
+//   var filteredData = new Set()
+
+//   var filterAppliedList = []
+//   var filterApplied = false;
+
+//   for(var i = 0; i < collectionOfWhatToKeep.length; i++)
+//   {
+//     filteredDataList.push(collectionOfWhatToKeep[i][0]);
+//     filterAppliedList.push(collectionOfWhatToKeep[i][1]);
+//   }
+
+//   for(var i = 0; i < filteredDataList.length; i++)
+//   {
+//     for(var j = 0; j < filteredDataList[i].length; j++)
+//     {
+//       filteredData.add(filteredDataList[i][j]);
+//     }
+//   }
+
+//   for(var i = 0; i < filterAppliedList.length; i++)
+//   {
+//     if(filterAppliedList[i])
+//     {
+//       filterApplied = true;
+//     }
+//   }
+
+//   return [filteredData, filterApplied]
+// }
+
+/*
 function unionFilteredData(partialData, newSelections)
 {
   var filteredData = []
@@ -564,7 +637,7 @@ function unionFilteredData(partialData, newSelections)
 
   return filteredData;
 }
-/*
+
 function fillWithCheckboxNames()
 {
   var checkboxNames = []
@@ -681,37 +754,23 @@ function dropDownFilter(categoryName, partialData){
   }
 }
 
-function checkboxFilter(checkboxID, category, key, partialData){
+function checkboxFilter(checkboxID, category, key, partialData, whichToKeep){
   
   if (document.getElementById(checkboxID).checked)
   {
-    //var filteredData = []
-    var whichToKeep = []
     var arrayLength = partialData.length;
-    
-
-    for (var i = 0;  i < arrayLength; i++) {
-      whichToKeep.push(true);
-    }
-
+  
     for (var i = 0; i < arrayLength; i++) {
-      if (partialData[i][category] != key) {
-        whichToKeep[i] = false;
+      if (partialData[i][category] == key) {
+        whichToKeep[i] = true;
       }
     }
   
-    /*for (var i = 0;  i < arrayLength; i++) {
-      if (whichToKeep[i]) {
-        filteredData.push(partialData[i]);
-      }
-    }*/
-
-    //return [filteredData, true];
     return [whichToKeep, true];
   }
 
   //nothing checked; returns same array as input
-  return [partialData, false]
+  return [whichToKeep, false]
 }
 
 function applySearchFilter(partialData){
