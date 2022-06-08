@@ -509,3 +509,6 @@ function searchBarFilter(partialData)
       return [filteredData, true];
     }
 }
+
+//listener for the search bar
+$("#search-field").change(function () {applyFilters();});

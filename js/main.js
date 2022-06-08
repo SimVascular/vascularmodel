@@ -1,6 +1,7 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
 
+
 function addClickListener(data) {
   $('#' + data['Name']).click(function() {
     selectedModel = data['Name']
@@ -215,14 +216,6 @@ window.addEventListener('scroll', () => {
     populate(filteredData, 8);
   }
 });
-
-$("#search-field").change(function () {applyFilters();});
-$("#checkbox-Images").change(function () {applyFilters();});
-$("#checkbox-Paths").change(function () {applyFilters();});
-$("#checkbox-Segmentations").change(function () {applyFilters();});
-$("#checkbox-Models").change(function () {applyFilters();});
-$("#checkbox-Meshes").change(function () {applyFilters();});
-$("#checkbox-Simulations").change(function () {applyFilters();});
 
 $(window).load(function(){
   
