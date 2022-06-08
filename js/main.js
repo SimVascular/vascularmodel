@@ -519,7 +519,9 @@ function applyFilters(){
       for(var cbFI = 0; cbFI < category.length; cbFI++)
       {
         filterOutput = checkboxFilter("checkbox-" + IDs[cbFI], category[cbFI], keys[cbFI], filteredData)
-        filteredData = filterOutput[0]
+        //filterOutput[0] = whichToKeep array of booleans
+        newSelections = filterOutput[0]
+        filteredData = unionFilteredData(filteredData, newSelections)
         filterApplied = filterApplied || filterOutput[1]
       }
     }
@@ -541,6 +543,20 @@ function applyFilters(){
     document.getElementById('error-msg').style.transitionDuration = '0s';
     document.getElementById('error-msg').style.opacity = 0;
   }
+}
+
+function unionFilteredData(partialData, newSelections)
+{
+  var filteredData = []
+  var arrayLength = partialData.length
+
+  for (var i = 0;  i < arrayLength; i++) {
+    if (newSelections[i]) {
+      filteredData.push(partialData[i]);
+    }
+  }
+
+  return filteredData;
 }
 
 function fillWithCheckboxNames()
@@ -643,7 +659,7 @@ function checkboxFilter(checkboxID, category, key, partialData){
   
   if (document.getElementById(checkboxID).checked)
   {
-    var filteredData = []
+    //var filteredData = []
     var whichToKeep = []
     var arrayLength = partialData.length;
     
@@ -658,13 +674,14 @@ function checkboxFilter(checkboxID, category, key, partialData){
       }
     }
   
-    for (var i = 0;  i < arrayLength; i++) {
+    /*for (var i = 0;  i < arrayLength; i++) {
       if (whichToKeep[i]) {
         filteredData.push(partialData[i]);
       }
-    }
+    }*/
 
-    return [filteredData, true];
+    //return [filteredData, true];
+    return [whichToKeep, true];
   }
 
   //nothing checked; returns same array as input
