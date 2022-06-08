@@ -1,7 +1,5 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
-
-
 function addClickListener(data) {
   $('#' + data['Name']).click(function() {
     selectedModel = data['Name']
@@ -215,70 +213,6 @@ window.addEventListener('scroll', () => {
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
     populate(filteredData, 8);
   }
-});
-
-$(window).load(function(){
-  
-  /************************************
-    MitItUp filter settings
-    More details:
-    https://mixitup.kunkalabs.com/
-    or:
-    http://codepen.io/patrickkunka/
-  *************************************/
-
-  // buttonFilter.init();
-  // $('.cd-gallery ul').mixItUp({
-  //     controls: {
-  //       enable: false
-  //     },
-  //     callbacks: {
-  //       onMixStart: function(){
-  //         $('.cd-fail-message').fadeOut(200);
-  //       },
-  //         onMixFail: function(){
-  //           $('.cd-fail-message').fadeIn(200);
-  //       }
-  //     }
-  // });
-
-  // search filtering
-  // credits http://codepen.io/edprats/pen/pzAdg
-  // var inputText;
-  // var $matching = $();
-  //
-  // var delay = (function(){
-  //   var timer = 0;
-  //   return function(callback, ms){
-  //     clearTimeout (timer);
-  //       timer = setTimeout(callback, ms);
-  //   };
-  // })();
-  //
-  // $(".cd-filter-content input[type='search']").keyup(function(){
-  //     // Delay function invoked to make sure user stopped typing
-  //     delay(function(){
-  //       inputText = $(".cd-filter-content input[type='search']").val().toLowerCase();
-  //        // Check to see if input field is empty
-  //       if ((inputText.length) > 0) {
-  //           $('.mix').each(function() {
-  //             var $this = $(this);
-  //
-  //             // add item to be filtered out if input text matches items inside the title
-  //             if($this.attr('class').toLowerCase().match(inputText)) {
-  //                 $matching = $matching.add(this);
-  //             } else {
-  //                 // removes any previously matched item
-  //                 $matching = $matching.not(this);
-  //             }
-  //           });
-  //           $('.cd-gallery ul').mixItUp('filter', $matching);
-  //       } else {
-  //           // resets the filter to show all item if input is empty
-  //           $('.cd-gallery ul').mixItUp('filter', 'all');
-  //       }
-  //     }, 200 );
-  // });
 });
 
 function scrollToTop() {

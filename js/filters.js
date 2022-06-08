@@ -469,45 +469,149 @@ function searchBarFilter(partialData)
     }
     else
     {
-      var filteredData = new Set()
-      var arrayLength = partialData.length;
-      var allCategories = getAllCategories();
-      var categoriesWith1s = []
-  
-      for(var i = 0; i < allCategories.length; i++)
+      //if valueToSearch contains a space
+      if(valueToSearch.indexOf(" ") != -1)
       {
-        if (getNTimesPerCategory(allCategories[i]) == 1)
-        {
-          categoriesWith1s.push(allCategories[i])
-        }
+        var output = searchBarFilterMultipleEntries(partialData, valueToSearch)
       }
+      else
+      {
+        var output = searchBarFilterOneEntry(partialData, valueToSearch);
+      }
+      //output[0] is filter w booleans length of partialData.length
       
-  
-      for (var i = 0; i < arrayLength; i++) {
-        for (const [key, value] of Object.entries(partialData[i])) {
-          var category = key.toLowerCase();
-          var input = value.toLowerCase();
-  
-          if (!categoriesWith1s.includes(category))
-          {
-            if (input.includes(valueToSearch)) {
-              filteredData.add(partialData[i])
-            }
-          }
-          else
-          {
-            if (category == valueToSearch && input == '1') {
-              filteredData.add(partialData[i])
-            }
-          }
-  
+      var filter = output[0];
+      var filteredData = []
+      
+      for(var i = 0; i < partialData.length; i++)
+      {
+        if(filter[i])
+        {
+          filteredData.push(partialData[i]);
         }
       }
+      return [filteredData, output[1]];
+  }
+}
+
+function searchBarFilterOneEntry(partialData, valueToSearch)
+{
+  //set up variables
+  var filter = []
+
+  for(var i = 0; i < partialData.length; i++)
+  {
+    filter.push(false);
+  }
+
+  var allCategories = getAllCategories();
+  var categoriesWith1s = []
   
-      filteredData = Array.from(filteredData);
-  
-      return [filteredData, true];
+  for(var i = 0; i < allCategories.length; i++)
+  {
+    if (getNTimesPerCategory(allCategories[i]) == 1)
+    {
+      categoriesWith1s.push(allCategories[i])
     }
+  }
+      
+  //filtering part
+  for (var i = 0; i < partialData.length; i++) {
+    for (const [key, value] of Object.entries(partialData[i])) {
+      var category = key.toLowerCase();
+      var subCategory = value.toLowerCase();
+  
+      if (!categoriesWith1s.includes(category))
+      {
+        if (subCategory.includes(valueToSearch))
+        {
+          if(valueToSearch == "male" && subCategory != "female")
+          filter[i] = true;
+        }
+        //separate case for age since subCategory is in numbers and search bar input is a string
+        else if(category.toLowerCase() == "age")
+        {
+          if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
+            filter[i] = true;
+          }
+          else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
+            filter[i] = true;
+          }
+        }
+      }
+      else
+      {
+        if (category == valueToSearch && subCategory == '1') {
+          filter[i] = true;
+        }
+      }
+    }
+  }
+    
+  return [filter, true];
+}
+
+function searchBarFilterMultipleEntries(partialData, valueToSearch)
+{
+  var valuesToSearch = valueToSearchInArrayForm(valueToSearch);
+
+  //set up variables
+  var filteredData = []
+  var filter = []
+  
+  var allCategories = getAllCategories();
+  var categoriesWith1s = []
+  
+  for(var i = 0; i < allCategories.length; i++)
+  {
+    if (getNTimesPerCategory(allCategories[i]) == 1)
+    {
+      categoriesWith1s.push(allCategories[i])
+    }
+  }
+  
+  //searching
+  for(var v = 0; v < valuesToSearch.length; v++)
+  {
+    var output = searchBarFilterOneEntry(partialData, valuesToSearch[v])
+    //imagine output[0] is tempFilter
+    tempFilter = output[0];
+
+    if (v == 0)
+    {
+      filter = tempFilter;
+    }
+    else
+    {
+      for(var f = 0; f < filter.length; f++)
+      {
+        if(!tempFilter[f])
+        {
+          filter[f] = false;
+        }
+      }
+    }
+  }
+    
+  return [filter, true];
+
+}
+
+function valueToSearchInArrayForm(valueToSearch)
+{
+  var array = []
+  var indexOfSpace = valueToSearch.indexOf(" ");
+
+  while(indexOfSpace != -1)
+  {
+    array.push(valueToSearch.substring(0, indexOfSpace));
+    valueToSearch = valueToSearch.substring(indexOfSpace + 1);
+    indexOfSpace = valueToSearch.indexOf(" ")
+  }
+
+  array.push(valueToSearch);
+
+  return array;
 }
 
 //listener for the search bar
