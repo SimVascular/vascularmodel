@@ -1,3 +1,9 @@
+/*----------------------------
+
+JavaScript for Filter Bar
+
+----------------------------*/
+
 function getFilterMenu()
 {
   var filterCheckboxes = document.getElementById("filterCheckboxes")
@@ -131,7 +137,8 @@ function generateCheckboxUl(categoryName)
   return [ul, hooks];
 }
 
-function generateCheckboxLi(checkboxName) {
+function generateCheckboxLi(checkboxName) 
+{
   let li = document.createElement('li');
   
   let input = document.createElement('input');
@@ -151,73 +158,19 @@ function generateCheckboxLi(checkboxName) {
   return li;
 }
 
-function getNTimesPerCategory(categoryName)
+/*----------------------------
+
+JavaScript to Apply Filters
+
+----------------------------*/
+
+function applyFilters()
 {
-  var nTimesRepeat = 0;
-
-  var categoryNames = []
-  var allCategoryNames = []
-
-  for (const [key, value] of Object.entries(data[0])) {
-    allCategoryNames.push(key);
-  }
-    
-  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
-  {
-    categoryNames.push(allCategoryNames[i])
-  }
-  
-  if (categoryName == "Age")
-  {
-    nTimesRepeat = 2;
-  }
-  else if (categoryNames.includes(categoryName))
-  {
-    nTimesRepeat = 1;
-  }
-  else
-  {
-    var noRepeatArray = new Set();
-    for(var dI = 0; dI < data.length; dI++)
-    {
-      noRepeatArray.add(data[dI][categoryName])
-    }
-    nTimesRepeat = noRepeatArray.size;
-  }
-
-  return nTimesRepeat;
-}
-
-function getNTimes()
-{
-  var nTimesRepeat = []
-  var listOfNames = getAllCategories();
-
-  //skips Name and Size
-  for(var i = 1; i < listOfNames.length - 1; i ++)
-  {
-    nTimesRepeat.push(getNTimesPerCategory(listOfNames[i]));
-  }
-  
-  return nTimesRepeat;
-}
-
-function applyFilters(){
   var filterApplied = false
   curIndex = 0;
   var filteredData = data;
-  /*
-  var IDs = fillIDs();
-  var keys = fillKeys();
-  
-  var categoryName = getCheckboxName();*/
-  var nTimes = getNTimes();/*
-  var category = []
 
-  for(var i = 0; i < categoryName.length; i++)
-  {
-    category = fillCategory(category, nTimes[i], categoryName[i]);
-  }*/
+  var nTimes = getNTimes();
 
   var filterOutput;
 
@@ -259,7 +212,7 @@ function applyFilters(){
     }
   }
 
-  filterOutput = applySearchFilter(filteredData);
+  filterOutput = searchBarFilter(filteredData);
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
 
@@ -277,19 +230,55 @@ function applyFilters(){
   }
 }
 
-function updatedFilteredData(whichToKeep, filteredData)
+function getNTimes()
 {
-  var updatedFilteredData = []
+  var nTimesRepeat = []
+  var listOfNames = getAllCategories();
 
-  for (var i = 0 ; i < filteredData.length; i++)
+  //skips Name and Size
+  for(var i = 1; i < listOfNames.length - 1; i ++)
   {
-    if (whichToKeep[i])
+    nTimesRepeat.push(getNTimesPerCategory(listOfNames[i]));
+  }
+  
+  return nTimesRepeat;
+}
+
+function getNTimesPerCategory(categoryName)
+{
+  var nTimesRepeat = 0;
+
+  var categoryNames = []
+  var allCategoryNames = []
+
+  for (const [key, value] of Object.entries(data[0])) {
+    allCategoryNames.push(key);
+  }
+    
+  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
+  {
+    categoryNames.push(allCategoryNames[i])
+  }
+  
+  if (categoryName == "Age")
+  {
+    nTimesRepeat = 2;
+  }
+  else if (categoryNames.includes(categoryName))
+  {
+    nTimesRepeat = 1;
+  }
+  else
+  {
+    var noRepeatArray = new Set();
+    for(var dI = 0; dI < data.length; dI++)
     {
-      updatedFilteredData.push(filteredData[i]);
+      noRepeatArray.add(data[dI][categoryName])
     }
+    nTimesRepeat = noRepeatArray.size;
   }
 
-  return updatedFilteredData;
+  return nTimesRepeat;
 }
 
 function isChecked(title)
@@ -303,6 +292,21 @@ function isChecked(title)
       return true;
     }
   }  
+}
+
+function updatedFilteredData(whichToKeep, filteredData)
+{
+  var updatedFilteredData = []
+
+  for (var i = 0 ; i < filteredData.length; i++)
+  {
+    if (whichToKeep[i])
+    {
+      updatedFilteredData.push(filteredData[i]);
+    }
+  }
+
+  return updatedFilteredData;
 }
 
 function checkboxNamesPerCategory(categoryName, isKey)
@@ -324,17 +328,15 @@ function checkboxNamesPerCategory(categoryName, isKey)
   return checkboxNames;
 }
 
-function fillCategory(category, n, categoryName)
-{
-  for(var i = 0; i < n; i++)
-  {
-    category.push(categoryName);
-  }
-  
-  return category;
-}
+/*----------------------------
 
-function dropDownFilter(categoryName, partialData){
+JavaScript for Filter Bar:
+  The Three Different Types of Filters
+
+----------------------------*/
+
+function dropDownFilter(categoryName, partialData)
+{
 
   var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
 
@@ -381,7 +383,8 @@ function dropDownFilter(categoryName, partialData){
   }
 }
 
-function checkboxFilter(checkboxID, category, key, partialData, whichToKeep){
+function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
+{
   
   if (document.getElementById(checkboxID).checked)
   {
@@ -400,8 +403,8 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep){
   return [whichToKeep, false]
 }
 
-
-function applySearchFilter(partialData){
+function searchBarFilter(partialData)
+{
     var valueToSearch = document.getElementById('search-field').value.toLowerCase()
   
     if (valueToSearch == '')
@@ -449,20 +452,4 @@ function applySearchFilter(partialData){
   
       return [filteredData, true];
     }
-  }
-  
-  function getOptionsUnderCategory(categoryName)
-  {
-    var optionsSet = new Set();
-            
-    for(var dI = 0; dI < data.length; dI++)
-    {
-      optionsSet.add(data[dI][categoryName])
-    }
-  
-    var options = Array.from(optionsSet);
-  
-    return options;
-  }
-
-  
+}
