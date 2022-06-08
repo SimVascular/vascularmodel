@@ -77,39 +77,6 @@
     <div class="error-msg-block"><span id="error-msg">It looks like there are no results matching the filters! Please consider using less restrictive rules.</span></div>
     <div class="container-fluid">
       <div class="row" id="model-gallery">
-        <!-- <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div>
-        <div class="col-md-3 col-sm-12 model-image">
-          <img src="img/vmr-images/0003_0001.png" alt="Image 2">
-        </div> -->
-        <!-- <li class="gap"></li>
-        <li class="gap"></li>
-        <li class="gap"></li> -->
       </div>
     </div>
   </section> <!-- cd-gallery -->
@@ -117,80 +84,19 @@
   <div class="cd-filter">
     <form>
       <!-- <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div> -->
-      
-      <!-- <button id="UorIButton">UorIButton</button> -->
 
       <div class="cd-filter-block">
         <h4>Search</h4>
 
         <div class="cd-filter-content">
-          <input type="search" placeholder="Type something and press enter" id="search-field">
+          <input type="search" placeholder="Search" id="search-field">
         </div> <!-- cd-filter-content -->
       </div> <!-- cd-filter-block -->
 
       <div id = "filterCheckboxes"></div> 
+  </form>
 
-      <div class="cd-filter-block">
-        <h4 class = "closed">Project must contain</h4>
-
-        <ul class="cd-filter-content cd-filters list" style="list-style-type: none; display : none;">
-          <li class = "descriptive_label">Select all</li>
-          <li>
-            <input class="filter" data-filter="Images" type="checkbox" id="checkbox-Images">
-            <label class="checkbox-label" for="checkbox-Images">Images</label>
-          </li>
-
-          <li>
-            <input class="filter" data-filter="Paths" type="checkbox" id="checkbox-Paths">
-            <label class="checkbox-label" for="checkbox-Paths">Paths</label>
-          </li>
-
-          <li>
-            <input class="filter" data-filter="Segmentations" type="checkbox" id="checkbox-Segmentations">
-            <label class="checkbox-label" for="checkbox-Segmentations">Segmentations</label>
-          </li>
-
-          <li>
-            <input class="filter" data-filter="Models" type="checkbox" id="checkbox-Models">
-            <label class="checkbox-label" for="checkbox-Models">Models</label>
-          </li>
-
-          <li>
-            <input class="filter" data-filter="Meshes" type="checkbox" id="checkbox-Meshes">
-            <label class="checkbox-label" for="checkbox-Meshes">Meshes</label>
-          </li>
-
-          <li>
-            <input class="filter" data-filter="Simulations" type="checkbox" id="checkbox-Simulations">
-            <label class="checkbox-label" for="checkbox-Simulations">Simulations</label>
-          </li>
-        </ul> <!-- cd-filter-content -->
-      </div> <!-- cd-filter-block -->
-
-      <!-- These buttons are mutually exclusive -->
-      <!-- <div class="cd-filter-block">
-      <h4>Radio buttons</h4>
-
-      <ul class="cd-filter-content cd-filters list">
-      <li>
-      <input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
-      <label class="radio-label" for="radio1">All</label>
-    </li>
-
-    <li>
-    <input class="filter" data-filter=".radio2" type="radio" name="radioButton" id="radio2">
-    <label class="radio-label" for="radio2">Choice 2</label>
-  </li>
-
-  <li>
-  <input class="filter" data-filter=".radio3" type="radio" name="radioButton" id="radio3">
-  <label class="radio-label" for="radio3">Choice 3</label>
-</li>
-</ul> <!-- cd-filter-content -->
-<!-- </div> -->
-</form>
-
-<a href="#0" class="cd-close">Close</a>
+  <a href="#0" class="cd-close">Close</a>
 </div> <!-- cd-filter -->
 
 <a href="#0" class="cd-filter-trigger">Filters</a>
@@ -276,12 +182,14 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<script src="js/globalVar.js"></script>
 <script src="js/jquery-2.1.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
 <!-- <script src="js/jquery-2.1.1.js"></script> -->
 <script src="js/jquery.mixitup.min.js"></script>
-<script src="js/main.js?v=1.0.1"></script> <!-- Resource jQuery -->
+<script src="js/main.js?v=1.0.1"></script>
+<script src="js/filters.js"></script>
 </body>
 </html>
