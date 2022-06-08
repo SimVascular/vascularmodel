@@ -247,18 +247,7 @@ function getNTimes()
 function getNTimesPerCategory(categoryName)
 {
   var nTimesRepeat = 0;
-
-  var categoryNames = []
-  var allCategoryNames = []
-
-  for (const [key, value] of Object.entries(data[0])) {
-    allCategoryNames.push(key);
-  }
-    
-  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
-  {
-    categoryNames.push(allCategoryNames[i])
-  }
+  var categoryNames = getMustContainFilterTitles();
   
   if (categoryName == "Age")
   {

@@ -6,6 +6,7 @@ var smallScreen = false
 var lastFapplied = 0;
 var lastFdata = [];
 
+//returns the keys of *all* the categories
 function getAllCategories()
 {
   var allCategories = []
@@ -17,6 +18,7 @@ function getAllCategories()
   return allCategories;
 }
 
+//returns the keys of all the categories except "Size" and "Name"
 function getFilterTitles()
 {
   var allCategories = getAllCategories()
@@ -33,6 +35,7 @@ function getFilterTitles()
   return onlyFilterTitles;
 }
 
+//returns the keys of the categories skipping "Name" and ending before the MustContain categories
 function getCategoryName()
 {
   var allCategories = getAllCategories()
@@ -48,22 +51,16 @@ function getCategoryName()
   return onlyTheAttributes;
 }
 
-function getCheckboxName()
+//returns the keys of the categories starting at "Images" and ending at "Size"
+function getMustContainFilterTitles()
 {
-  var allCategories = []
-  var notDropDownNames = []
+  var allCategoryNames = getAllCategories()
+  var returnCategories = []
 
-  for (const [key, value] of Object.entries(data[0])) {
-    allCategories.push(key);
-  }
-
-  for (var i = 0; i < allCategories.length; i++)
+  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
   {
-    if (getNTimesPerCategory(allCategories[i]) != 2 && allCategories[i] != "Name" && allCategories[i] != "Size")
-    {
-      notDropDownNames.push(allCategories[i]);
-    }
+    returnCategories.push(allCategoryNames[i])
   }
 
-  return notDropDownNames;
+  return returnCategories;
 }
