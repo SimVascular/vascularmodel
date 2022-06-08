@@ -192,7 +192,6 @@ function getFilterMenu()
   {
     addHooks(allHooks[i]);
   }
-
 }
 
 function addHooks(hooks) {
@@ -212,11 +211,13 @@ function generateDropDownMenu(categoryName)
   var select = document.createElement("select")
   select.classList.add("filter")
   select.setAttribute("id", "select-" + categoryName)
+  //select.classList.add("dropbtn");
 
   var option = document.createElement("option")
   option.value = "none";
   option.textContent = "Select One";
   select.appendChild(option);
+  option.classList.add("dropdown-content");
 
   var hooks = ["select-" + categoryName];
 
@@ -253,7 +254,6 @@ function generateOptions(optionName)
   var option = document.createElement("option")
   option.value = optionName;
 
-  var a 
   option.textContent = optionName;
   option.classList.add("dropdown-content");
   return option;
@@ -751,7 +751,6 @@ $("#checkbox-Segmentations").change(function () {applyFilters();});
 $("#checkbox-Models").change(function () {applyFilters();});
 $("#checkbox-Meshes").change(function () {applyFilters();});
 $("#checkbox-Simulations").change(function () {applyFilters();});
-
 
 $(window).load(function(){
   /************************************
