@@ -7,36 +7,35 @@ JavaScript for Filter Bar
 function getFilterMenu()
 {
   var filterCheckboxes = document.getElementById("filterCheckboxes")
-  var categoryName = getCategoryName();
+  var categoryName = getFilterTitles();
 
   var allHooks = []
-
+  var categoryWith1s = []
+  
   for(var i = 0; i < categoryName.length; i++)
   {
-    var div = document.createElement('div');
-    div.classList.add("cd-filter-block")
-
-    var h4 = document.createElement('h4');
-    h4.classList.add("closed");
-    h4.textContent = categoryName[i];
-
-    if (getNTimesPerCategory(categoryName[i]) == 2)
+    if (getNTimesPerCategory(categoryName[i]) == 1)
     {
-      var output = generateDropDownMenu(categoryName[i]);
+      categoryWith1s.push(categoryName[i])
     }
     else
     {
-      var output = generateCheckboxUl(categoryName[i]);
+      var output = createHeaders(categoryName[i]);
+      var div = output[0];
+      var hooks = output[1];
+
+      filterCheckboxes.appendChild(div);
+      allHooks.push(hooks);
     }
-
-    var insideContent = output[0]
-    var hooks = output[1]
-
-    div.appendChild(h4);
-    div.appendChild(insideContent);
-    filterCheckboxes.appendChild(div);
-    allHooks.push(hooks);
   }
+
+  //create MustContainFilter Section
+  output = mustContainHeader(categoryWith1s);
+  div = output[0];
+  hooks = output[1];
+
+  filterCheckboxes.appendChild(div);
+  allHooks.push(hooks);
 
   for (var i = 0; i < allHooks.length; i++)
   {
@@ -44,10 +43,59 @@ function getFilterMenu()
   }
 }
 
+function createHeaders(categoryName)
+{
+  var div = createDivWithH4(categoryName);
+  if (getNTimesPerCategory(categoryName) == 2)
+  {
+    var output = generateDropDownMenu(categoryName);
+  }
+  else
+  {
+    //categoryName is the name of the category "Age i.e."
+    var output = generateCheckboxUl(categoryName, true);
+  }
+  
+  var insideHeader = output[0]
+  var hooks = output[1]
+
+  div.appendChild(insideHeader);
+
+  return [div, hooks];
+}
+
+function createDivWithH4(categoryName)
+{
+  var div = document.createElement('div');
+  div.classList.add("cd-filter-block")
+
+  var h4 = document.createElement('h4');
+  h4.classList.add("closed");
+  h4.textContent = categoryName;
+  
+  div.appendChild(h4);
+
+  return div;
+}
+
 function addHooks(hooks) {
   for (var i = 0; i < hooks.length; i++) {
     $("#" + hooks[i]).change(function() {applyFilters();});
   }
+}
+
+function generateMustContainLi(categoryName)
+{
+  var ul = document.createElement("ul")
+  ul.classList.add("cd-filter-content");
+  ul.classList.add("cd-filters");
+  ul.classList.add("list");
+
+  var newLi = generateCheckboxLi(categoryName);
+  ul.appendChild(newLi);
+  var hooks = ["checkbox-" + categoryName];
+
+  return [ul, hooks];
 }
 
 function generateDropDownMenu(categoryName)
@@ -109,29 +157,48 @@ function generateOptions(optionName)
   return option;
 }
 
-function generateCheckboxUl(categoryName)
+function mustContainHeader(categoryName)
 {
+  var div = createDivWithH4("Project Must Contain");
+
+  //categoryName is a list with the categoriesWith1
+  var output = generateCheckboxUl(categoryName, false);
+  var insideHeader = output[0]
+  var hooks = output[1]
+
+  div.appendChild(insideHeader);
+
+  return [div, hooks];
+}
+
+function generateCheckboxUl(categoryName, needsNameArray)
+{
+  //needs name if categoryName is not a categoryWith1
+
   var ul = document.createElement("ul")
   ul.classList.add("cd-filter-content");
   ul.classList.add("cd-filters");
   ul.classList.add("list");
-  
-  var checkboxNameSet = new Set();
-  
-  for(var i = 0; i < data.length; i++)
+
+  if(needsNameArray)
   {
-    checkboxNameSet.add(data[i][categoryName])
+    var checkboxNameSet = new Set();
+  
+    for(var i = 0; i < data.length; i++)
+    {
+      checkboxNameSet.add(data[i][categoryName])
+    }
+
+    categoryName = Array.from(checkboxNameSet);
+    categoryName.sort();
   }
 
-  var checkboxNameArray = Array.from(checkboxNameSet);
-  checkboxNameArray.sort();
-
   var hooks = []
-  
-  for (var i = 0; i < checkboxNameArray.length; i++) {
-      var newLi = generateCheckboxLi(checkboxNameArray[i]);
+
+  for (var i = 0; i < categoryName.length; i++) {
+      var newLi = generateCheckboxLi(categoryName[i]);
       ul.appendChild(newLi);
-      hooks.push("checkbox-" + checkboxNameArray[i])
+      hooks.push("checkbox-" + categoryName[i])
   }
 
   return [ul, hooks];
