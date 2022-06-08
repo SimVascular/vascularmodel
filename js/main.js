@@ -252,7 +252,10 @@ function generateOptions(optionName)
 {
   var option = document.createElement("option")
   option.value = optionName;
+
+  var a 
   option.textContent = optionName;
+  option.classList.add("dropdown-content");
   return option;
 }
 
