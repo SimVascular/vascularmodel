@@ -1,6 +1,6 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
-var selectedModel = ''
+
 function addClickListener(data) {
   $('#' + data['Name']).click(function() {
     selectedModel = data['Name']
@@ -68,8 +68,6 @@ function removeContent() {
     modelList.removeChild(modelList.firstChild);
   }
 }
-
-var curIndex = 0;
 
 function populate(dataArray, num_images = 24) {
   var modelList = document.getElementById("model-gallery")
@@ -147,12 +145,6 @@ function getCheckboxName()
 
   return notDropDownNames;
 }
-
-/*function getUorIButton()
-{
-  var UorIButton = document.getElementById("UorIButton")
-  UorIButton.classList.add("cd-UorIButton")
-}*/
 
 function getFilterMenu()
 {
@@ -307,9 +299,6 @@ function generateCheckboxLi(checkboxName) {
   return li;
 }
 
-var data;
-var filteredData;
-
 $(document).ready(function($){
   $.ajax({
     type: "GET",
@@ -394,8 +383,6 @@ $('.download-button-modal').click(function() {
   });
 });
 
-var smallScreen = false
-
 function checkWidth() {
     if (screen.width >= 769 && (document.documentElement.clientWidth >= 769)) {
         if (smallScreen) {
@@ -413,8 +400,6 @@ function checkWidth() {
 $(window).ready(checkWidth);
 $(window).resize(checkWidth);
 
-var lastFapplied = 0;
-var lastFdata = [];
 function updateCounter(fApplied, fData) {
   lastFdata = fData;
   lastFapplied = fApplied;
