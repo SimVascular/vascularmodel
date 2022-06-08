@@ -11,15 +11,14 @@ function addClickListener(data) {
     // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
     $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+    
+    var details = []
+    var categoryName = getCategoryName();
 
-    var details = ''
-    details = details + 'Name: ' + data['Name'] + '\n'
-    details = details + 'Sex: ' + data['Sex'] + '\n'
-    details = details + 'Age: ' + data['Age'] + '\n'
-    details = details + 'Species: ' + data['Species'] + '\n'
-    details = details + 'Anatomy: ' + data['Anatomy'] + '\n'
-    details = details + 'Disease: ' + data['Disease'] + '\n'
-    details = details + 'Procedure: ' + data['Procedure'] + '\n'
+    for(var i = 0; i < categoryName.length; i++)
+    {
+      details += categoryName[i] + ": " + data[categoryName[i]] + '\n'
+    }
 
     var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
     for (var i = 0; i < fdrs.length; i++) {
@@ -87,6 +86,227 @@ function populate(dataArray, num_images = 24) {
   curIndex = ubound;
 }
 
+function getAllCategories()
+{
+  var allCategories = []
+
+  for (const [key, value] of Object.entries(data[0])) {
+    allCategories.push(key);
+  }
+
+  return allCategories;
+}
+
+function getFilterTitles()
+{
+  var allCategories = getAllCategories()
+  var onlyFilterTitles = []
+
+  for(var i = 0; i < allCategories.length; i++)
+  {
+    if(allCategories[i] != "Size" && allCategories[i] != "Name")
+    {
+      onlyFilterTitles.push(allCategories[i])
+    }
+  }
+
+  return onlyFilterTitles;
+}
+
+function getCategoryName()
+{
+  var allCategories = getAllCategories()
+  var onlyTheAttributes = []
+
+  //skips Name
+  //ends before start of MustContain filters
+  for (var i = 1; i < allCategories.indexOf("Images"); i++)
+  {
+    onlyTheAttributes.push(allCategories[i]);
+  }
+
+  return onlyTheAttributes;
+}
+
+function getCheckboxName()
+{
+  var allCategories = []
+  var notDropDownNames = []
+
+  for (const [key, value] of Object.entries(data[0])) {
+    allCategories.push(key);
+  }
+
+  for (var i = 0; i < allCategories.length; i++)
+  {
+    if (getNTimesPerCategory(allCategories[i]) != 2 && allCategories[i] != "Name" && allCategories[i] != "Size")
+    {
+      notDropDownNames.push(allCategories[i]);
+    }
+  }
+
+  return notDropDownNames;
+}
+
+/*function getUorIButton()
+{
+  var UorIButton = document.getElementById("UorIButton")
+  UorIButton.classList.add("cd-UorIButton")
+}*/
+
+function getFilterMenu()
+{
+  var filterCheckboxes = document.getElementById("filterCheckboxes")
+  var categoryName = getCategoryName();
+
+  var allHooks = []
+
+  for(var i = 0; i < categoryName.length; i++)
+  {
+    var div = document.createElement('div');
+    div.classList.add("cd-filter-block")
+
+    var h4 = document.createElement('h4');
+    h4.classList.add("closed");
+    h4.textContent = categoryName[i];
+
+    if (getNTimesPerCategory(categoryName[i]) == 2)
+    {
+      var output = generateDropDownMenu(categoryName[i]);
+    }
+    else
+    {
+      var output = generateCheckboxUl(categoryName[i]);
+    }
+
+    var insideContent = output[0]
+    var hooks = output[1]
+
+    div.appendChild(h4);
+    div.appendChild(insideContent);
+    filterCheckboxes.appendChild(div);
+    allHooks.push(hooks);
+  }
+
+  for (var i = 0; i < allHooks.length; i++)
+  {
+    addHooks(allHooks[i]);
+  }
+}
+
+function addHooks(hooks) {
+  for (var i = 0; i < hooks.length; i++) {
+    $("#" + hooks[i]).change(function() {applyFilters();});
+  }
+}
+
+function generateDropDownMenu(categoryName)
+{
+  var div = document.createElement("div")
+  div.classList.add("cd-filter-content");
+  div.classList.add("cd-select");
+  div.classList.add("cd-filters");
+  div.classList.add("list");
+
+  var select = document.createElement("select")
+  select.classList.add("filter")
+  select.setAttribute("id", "select-" + categoryName)
+  //select.classList.add("dropbtn");
+
+  var option = document.createElement("option")
+  option.value = "none";
+  option.textContent = "Select One";
+  select.appendChild(option);
+  option.classList.add("dropdown-content");
+
+  var hooks = ["select-" + categoryName];
+
+  //separate for Age
+  if(categoryName == "Age")
+  {
+    var checkboxNameArray = ["Adult", "Pediatric"]
+  }
+  else{
+    var checkboxNameSet = new Set();
+  
+    for(var i = 0; i < data.length; i++)
+    {
+      checkboxNameSet.add(data[i][categoryName])
+    }
+
+    var checkboxNameArray = Array.from(checkboxNameSet);
+    checkboxNameArray.sort();
+  }
+
+  //checkboxNameArray.length should = 2
+  for (var i = 0; i < checkboxNameArray.length; i++) {
+      var newOption = generateOptions(checkboxNameArray[i]);
+      select.appendChild(newOption);
+  }
+  
+  div.appendChild(select);
+
+  return [div, hooks]
+}
+
+function generateOptions(optionName)
+{
+  var option = document.createElement("option")
+  option.value = optionName;
+
+  option.textContent = optionName;
+  option.classList.add("dropdown-content");
+  return option;
+}
+
+function generateCheckboxUl(categoryName)
+{
+  var ul = document.createElement("ul")
+  ul.classList.add("cd-filter-content");
+  ul.classList.add("cd-filters");
+  ul.classList.add("list");
+  
+  var checkboxNameSet = new Set();
+  
+  for(var i = 0; i < data.length; i++)
+  {
+    checkboxNameSet.add(data[i][categoryName])
+  }
+
+  var checkboxNameArray = Array.from(checkboxNameSet);
+  checkboxNameArray.sort();
+
+  var hooks = []
+  
+  for (var i = 0; i < checkboxNameArray.length; i++) {
+      var newLi = generateCheckboxLi(checkboxNameArray[i]);
+      ul.appendChild(newLi);
+      hooks.push("checkbox-" + checkboxNameArray[i])
+  }
+
+  return [ul, hooks];
+}
+
+function generateCheckboxLi(checkboxName) {
+  let li = document.createElement('li');
+  
+  let input = document.createElement('input');
+  input.classList.add("filter");
+  input.setAttribute("data-filter", checkboxName);
+  input.type = "checkbox";
+  input.setAttribute("id", "checkbox-" + checkboxName);
+
+  let label = document.createElement('label');
+  label.classList.add("checkbox-label");
+  label.setAttribute("for", "checkbox-" + checkboxName)
+  label.textContent = checkboxName;
+
+  li.appendChild(input);
+  li.appendChild(label);
+
+  return li;
+}
+
 var data;
 var filteredData;
 
@@ -104,10 +324,11 @@ $(document).ready(function($){
   });
 
   checkWidth();
-
+  
   // create copy of data
   filteredData = data;
   updateCounter(false, data)
+  getFilterMenu();
   populate(data);
 
   //open/close lateral filter
@@ -215,43 +436,117 @@ function updateCounter(fApplied, fData) {
   }
 }
 
+function getNTimesPerCategory(categoryName)
+{
+  var nTimesRepeat = 0;
+
+  var categoryNames = []
+  var allCategoryNames = []
+
+  for (const [key, value] of Object.entries(data[0])) {
+    allCategoryNames.push(key);
+  }
+    
+  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
+  {
+    categoryNames.push(allCategoryNames[i])
+  }
+  
+  if (categoryName == "Age")
+  {
+    nTimesRepeat = 2;
+  }
+  else if (categoryNames.includes(categoryName))
+  {
+    nTimesRepeat = 1;
+  }
+  else
+  {
+    var noRepeatArray = new Set();
+    for(var dI = 0; dI < data.length; dI++)
+    {
+      noRepeatArray.add(data[dI][categoryName])
+    }
+    nTimesRepeat = noRepeatArray.size;
+  }
+
+  return nTimesRepeat;
+}
+
+function getNTimes()
+{
+  var nTimesRepeat = []
+  var listOfNames = getAllCategories();
+
+  //skips Name and Size
+  for(var i = 1; i < listOfNames.length - 1; i ++)
+  {
+    nTimesRepeat.push(getNTimesPerCategory(listOfNames[i]));
+  }
+  
+  return nTimesRepeat;
+}
+
 function applyFilters(){
   var filterApplied = false
   curIndex = 0;
-  var filteredData = data
-
-  var checkboxID = ['Male', "Female", 
-  "Pediatric", "Adult", 
-  "Animal", "Human", 
-  "Aorta", "Aortofemoral", "Cerebrovascular", "Coronary", "Pulmonary", 
-  "Healthy", "AS", "Aneurysm", "APOD", "CTEPH", "CoA", "congenital_heart_disease","CAD", "HLHS", "KD", "MS", "PH", "Stenosis", "ToF", "WS", 
-  "Anastomosis", "BT_Shunt", "CABG", "Fontan", "Glenn", "Norwood", "PA_plasty", "Sano_Shunt", "Subclavian_flap_repair"] 
+  var filteredData = data;
+  /*
+  var IDs = fillIDs();
+  var keys = fillKeys();
   
-  var keys = []
-  for(var i = 0; i < checkboxID.length; i++)
-  {
-    keys.push(checkboxID[i]);
-  }
-
-  keys.push("1", "1", "1", "1", "1", "1");
-  checkboxID.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
-  
+  var categoryName = getCheckboxName();*/
+  var nTimes = getNTimes();/*
   var category = []
-  var categoryName = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"]
-  var nTimes = [2, 2, 2, 5, 15, 9]
+
   for(var i = 0; i < categoryName.length; i++)
   {
-    category = generateCategory(category, nTimes[i], categoryName[i]);
+    category = fillCategory(category, nTimes[i], categoryName[i]);
+  }*/
 
-  }
-  
-  category.push('Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations');
+  var filterOutput;
 
-  for(var i = 0; i < checkboxID.length; i++){
-    var filterOutput = genericFilter("checkbox-" + checkboxID[i], category[i], keys[i], filteredData)
-    filteredData = filterOutput[0]
-    filterApplied = filterApplied || filterOutput[1]
+  var titles = getFilterTitles();
+
+  for(var t = 0; t < titles.length; t++){
+    
+    if (getNTimesPerCategory(titles[t]) == 2)
+    {
+      filterOutput = dropDownFilter(titles[t], filteredData)
+      filteredData = filterOutput[0]
+      filterApplied = filterApplied || filterOutput[1]
+    }
+    else {
+      var whichToKeep = []
+      //if a box is checked in the category
+      if (isChecked(titles[t]))
+      {    
+        for (var i = 0;  i < filteredData.length; i++) {
+          whichToKeep.push(false);
+        }
+
+        for(var i = 0; i < nTimes[t]; i++)
+        {
+          IDs = checkboxNamesPerCategory(titles[t], false)
+          keys = checkboxNamesPerCategory(titles[t], true)
+          filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData, whichToKeep)
+          whichToKeep = filterOutput[0]
+          filterApplied = filterApplied || filterOutput[1]
+        }
+      }
+      else{
+        for (var i = 0;  i < filteredData.length; i++) {
+          whichToKeep.push(true);
+        }
+      }
+      //whichToKeep and filteredData should have the same length
+      filteredData = updatedFilteredData(whichToKeep, filteredData);
+    }
   }
+
+  filterOutput = applySearchFilter(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]
 
   removeContent();
   scrollToTop();
@@ -267,7 +562,54 @@ function applyFilters(){
   }
 }
 
-function generateCategory(category, n, categoryName)
+function updatedFilteredData(whichToKeep, filteredData)
+{
+  var updatedFilteredData = []
+
+  for (var i = 0 ; i < filteredData.length; i++)
+  {
+    if (whichToKeep[i])
+    {
+      updatedFilteredData.push(filteredData[i]);
+    }
+  }
+
+  return updatedFilteredData;
+}
+
+function isChecked(title)
+{
+  IDs = checkboxNamesPerCategory(title, false)
+
+  for(var i = 0; i < IDs.length; i++)
+  {
+    if (document.getElementById("checkbox-" + IDs[i]).checked)
+    {
+      return true;
+    }
+  }  
+}
+
+function checkboxNamesPerCategory(categoryName, isKey)
+{
+  var checkboxNames = []
+  var checkboxNameSet = new Set();
+          
+  for(var dI = 0; dI < data.length; dI++)
+  {
+    checkboxNameSet.add(data[dI][categoryName])
+  }
+
+  var checkboxNames = Array.from(checkboxNameSet);
+
+  if (!isKey && checkboxNames.includes("1"))
+  {
+    checkboxNames = [categoryName]
+  }
+  return checkboxNames;
+}
+
+function fillCategory(category, n, categoryName)
 {
   for(var i = 0; i < n; i++)
   {
@@ -277,58 +619,134 @@ function generateCategory(category, n, categoryName)
   return category;
 }
 
-function genericFilter(checkboxID, category, keys, partialData){
-  var tempFilterApp = false
-  var filteredData = []
+function dropDownFilter(categoryName, partialData){
 
-  var arrayLength = partialData.length;
-  
-  //automatically returns everything if nothing selected
-  var filter = []
-  for (var i = 0;  i < arrayLength; i++) {
-    filter.push(true);
+  var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
+
+  if(valueToSearch == 'none')
+  {
+    return [partialData, false];
   }
+  else
+  {
+    var filteredData = []
+    var arrayLength = partialData.length;
+
+    for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var category = key.toLowerCase();
+        var option = value.toLowerCase();
+        
+        if (category == categoryName.toLowerCase()) {
+          var pushValue = false;
+
+          if (option == valueToSearch) 
+          {
+            pushValue = true; 
+          }
+
+          //different for Age
+          if(category.toLowerCase() == "age")
+          {
+            if (valueToSearch == "pediatric" && parseInt(option) < 18) {
+              pushValue = true;
+            }
+            else if (valueToSearch == "adult" && parseInt(option) >= 18){
+              pushValue = true;
+            }
+          }
+
+          if (pushValue)
+            filteredData.push(partialData[i]);
+        }
+      }
+    }
+
+    return [filteredData, true];
+  }
+}
+
+function checkboxFilter(checkboxID, category, key, partialData, whichToKeep){
   
   if (document.getElementById(checkboxID).checked)
   {
-    tempFilterApp = true
+    var arrayLength = partialData.length;
+  
+    for (var i = 0; i < arrayLength; i++) {
+      if (partialData[i][category] == key) {
+        whichToKeep[i] = true;
+      }
+    }
+  
+    return [whichToKeep, true];
+  }
 
-    //because the sorting for Age is more complicated
-    if (category == "Age")
+  //nothing checked; returns same array as input
+  return [whichToKeep, false]
+}
+
+function applySearchFilter(partialData){
+  var valueToSearch = document.getElementById('search-field').value.toLowerCase()
+
+  if (valueToSearch == '')
+  {
+    return [partialData, false]
+  }
+  else
+  {
+    var filteredData = new Set()
+    var arrayLength = partialData.length;
+    var allCategories = getAllCategories();
+    var categoriesWith1s = []
+
+    for(var i = 0; i < allCategories.length; i++)
     {
-      if (checkboxID == 'checkbox-Pediatric')
+      if (getNTimesPerCategory(allCategories[i]) == 1)
       {
-        for (var i = 0; i < arrayLength; i++) {
-          if (partialData[i][category] >= 18) {
-            filter[i] = false;
+        categoriesWith1s.push(allCategories[i])
+      }
+    }
+    
+
+    for (var i = 0; i < arrayLength; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var category = key.toLowerCase();
+        var input = value.toLowerCase();
+
+        if (!categoriesWith1s.includes(category))
+        {
+          if (input.includes(valueToSearch)) {
+            filteredData.add(partialData[i])
           }
         }
-      }
-      else if (checkboxID == 'checkbox-Adult')
-      {
-        for (var i = 0; i < arrayLength; i++) {
-          if (partialData[i][category] < 18) {
-            filter[i] = false;
+        else
+        {
+          if (category == valueToSearch && input == '1') {
+            filteredData.add(partialData[i])
           }
         }
+
       }
     }
-    else {
-      for (var i = 0; i < arrayLength; i++) {
-        if (partialData[i][category] != keys) {
-          filter[i] = false;
-        }
-      }
-    }
+
+    filteredData = Array.from(filteredData);
+
+    return [filteredData, true];
+  }
+}
+
+function getOptionsUnderCategory(categoryName)
+{
+  var optionsSet = new Set();
+          
+  for(var dI = 0; dI < data.length; dI++)
+  {
+    optionsSet.add(data[dI][categoryName])
   }
 
-  for (var i = 0;  i < arrayLength; i++) {
-    if (filter[i]) {
-      filteredData.push(partialData[i]);
-    }
-  }
+  var options = Array.from(optionsSet);
 
-  return [filteredData, tempFilterApp];
+  return options;
 }
 
 window.addEventListener('scroll', () => {
@@ -340,50 +758,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-
 $("#search-field").change(function () {applyFilters();});
-
-$("#checkbox-Male").change(function () {applyFilters();});
-$("#checkbox-Female").change(function () {applyFilters();});
-
-$("#checkbox-Pediatric").change(function () {applyFilters();});
-$("#checkbox-Adult").change(function () {applyFilters();});
-
-$("#checkbox-Animal").change(function () {applyFilters();});
-$("#checkbox-Human").change(function () {applyFilters();});
-
-$("#checkbox-Aorta").change(function () {applyFilters();});
-$("#checkbox-Aortofemoral").change(function () {applyFilters();});
-$("#checkbox-Cerebrovascular").change(function () {applyFilters();});
-$("#checkbox-Coronary").change(function () {applyFilters();});
-$("#checkbox-Pulmonary").change(function () {applyFilters();});
-
-$("#checkbox-Healthy").change(function () {applyFilters();});
-$("#checkbox-AS").change(function () {applyFilters();});
-$("#checkbox-Aneurysm").change(function () {applyFilters();});
-$("#checkbox-APOD").change(function () {applyFilters();});
-$("#checkbox-CTEPH").change(function () {applyFilters();});
-$("#checkbox-CoA").change(function () {applyFilters();});
-$("#checkbox-congenital_heart_disease").change(function () {applyFilters();});
-$("#checkbox-CAD").change(function () {applyFilters();});
-$("#checkbox-HLHS").change(function () {applyFilters();});
-$("#checkbox-KD").change(function () {applyFilters();});
-$("#checkbox-MS").change(function () {applyFilters();});
-$("#checkbox-PH").change(function () {applyFilters();});
-$("#checkbox-Stenosis").change(function () {applyFilters();});
-$("#checkbox-ToF").change(function () {applyFilters();});
-$("#checkbox-WS").change(function () {applyFilters();});
-
-$("#checkbox-Anastomosis").change(function () {applyFilters();});
-$("#checkbox-BT_Shunt").change(function () {applyFilters();});
-$("#checkbox-CABG").change(function () {applyFilters();});
-$("#checkbox-Fontan").change(function () {applyFilters();});
-$("#checkbox-Glenn").change(function () {applyFilters();});
-$("#checkbox-Norwood").change(function () {applyFilters();});
-$("#checkbox-PA_plasty").change(function () {applyFilters();});
-$("#checkbox-Sano_Shunt").change(function () {applyFilters();});
-$("#checkbox-Subclavian_flap_repair").change(function () {applyFilters();});
-
 $("#checkbox-Images").change(function () {applyFilters();});
 $("#checkbox-Paths").change(function () {applyFilters();});
 $("#checkbox-Segmentations").change(function () {applyFilters();});
@@ -392,6 +767,7 @@ $("#checkbox-Meshes").change(function () {applyFilters();});
 $("#checkbox-Simulations").change(function () {applyFilters();});
 
 $(window).load(function(){
+  
   /************************************
     MitItUp filter settings
     More details:
