@@ -476,11 +476,12 @@ function getNTimesPerCategory(categoryName)
 function getNTimes()
 {
   var nTimesRepeat = []
-  var listOfNames = getCheckboxName();
+  var listOfNames = getAllCategories();
 
-  for(var i = 0; i < listOfNames.length; i ++)
+  //skips Name and Size
+  for(var i = 1; i < listOfNames.length - 1; i ++)
   {
-    nTimesRepeat[i] = getNTimesPerCategory(listOfNames[i]);
+    nTimesRepeat.push(getNTimesPerCategory(listOfNames[i]));
   }
   
   return nTimesRepeat;
@@ -490,18 +491,18 @@ function applyFilters(){
   var filterApplied = false
   curIndex = 0;
   var filteredData = data
-
+  /*
   var IDs = fillIDs();
   var keys = fillKeys();
   
-  var categoryName = getCheckboxName();
-  var nTimes = getNTimes();
+  var categoryName = getCheckboxName();*/
+  var nTimes = getNTimes();/*
   var category = []
 
   for(var i = 0; i < categoryName.length; i++)
   {
     category = fillCategory(category, nTimes[i], categoryName[i]);
-  }
+  }*/
 
   var filterOutput;
 
@@ -516,12 +517,17 @@ function applyFilters(){
       filterApplied = filterApplied || filterOutput[1]
     }
     else {
-      for(var cbFI = 0; cbFI < category.length; cbFI++)
+      for(var i = 0; i < nTimes[t]; i++)
       {
-        filterOutput = checkboxFilter("checkbox-" + IDs[cbFI], category[cbFI], keys[cbFI], filteredData)
+        IDs = checkboxNamesPerCategory(titles[t], false)
+        keys = checkboxNamesPerCategory(titles[t], true)
+        filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData)
         //filterOutput[0] = whichToKeep array of booleans
-        newSelections = filterOutput[0]
-        filteredData = unionFilteredData(filteredData, newSelections)
+
+        var newSelections = filterOutput[0]
+        var filteredData = unionFilteredData(filteredData, newSelections)
+        /*var pastToKeep = newSelections*/
+        console.log("filteredData at checkbox-" + IDs[i])
         filterApplied = filterApplied || filterOutput[1]
       }
     }
@@ -558,7 +564,7 @@ function unionFilteredData(partialData, newSelections)
 
   return filteredData;
 }
-
+/*
 function fillWithCheckboxNames()
 {
   var checkboxNames = []
@@ -583,8 +589,28 @@ function fillWithCheckboxNames()
     }
   }
   return checkboxNames;
+}*/
+
+function checkboxNamesPerCategory(categoryName, isKey)
+{
+  var checkboxNames = []
+  var checkboxNameSet = new Set();
+          
+  for(var dI = 0; dI < data.length; dI++)
+  {
+    checkboxNameSet.add(data[dI][categoryName])
+  }
+
+  var checkboxNames = Array.from(checkboxNameSet);
+
+  if (!isKey && checkboxNames.includes("1"))
+  {
+    checkboxNames = [categoryName]
+  }
+  return checkboxNames;
 }
 
+/*
 function fillIDs(){
   var IDs = fillWithCheckboxNames();
   IDs.push("Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations")
@@ -597,7 +623,7 @@ function fillKeys()
   keys.push("1", "1", "1", "1", "1", "1");
   return keys;
 }
-
+*/
 function fillCategory(category, n, categoryName)
 {
   for(var i = 0; i < n; i++)
