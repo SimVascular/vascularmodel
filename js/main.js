@@ -139,7 +139,10 @@ $(document).ready(function($){
   initializeSelectedModels();
   updateFilterAppliedCounter(false, data)
   updateSelectedCounter()
+  getViewSelected();
   getFilterMenu();
+  errorMessage();
+
   populate(data);
 
   //open/close lateral filter
@@ -264,6 +267,11 @@ function updateSelectedCounter()
   }
 }
 
+function getViewSelected()
+{
+  var placeinHTML = document.getElementById('view-selected');
+  placeinHTML.textContent = "View Selected";
+}
 
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
@@ -360,4 +368,56 @@ var buttonFilter = {
         self.$container.mixItUp('filter', self.outputString);
     }
     }
+}
+
+$("#view-selected").click(function() {
+  
+  var display = []
+  for(var i = 0; i < data.length; i++)
+  {
+    if(selectedModels[i])
+    {
+      display.push(data[i])
+    }
+  }
+  
+  removeContent();
+  scrollToTop();
+  curIndex = 0;
+  populate(display);
+
+  if (display.length == 0) {
+    errorMessage(true, false)
+  }
+  else {
+    errorMessage(false, false)
+  }
+});
+
+function errorMessage(isOn, isFilter)
+{
+  var errorMsg = document.getElementById('error-msg');
+  
+  //determines which message is showing
+  if(isFilter)
+  {
+    errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
+  }
+  else
+  {
+    errorMsg.textContent = "It looks like no models were selected!";
+  }
+
+  //whether or not the error message is visible/displayed
+  if(isOn)
+  {
+    errorMsg.style.transitionDuration = '0.3s';
+    errorMsg.style.opacity = 1;
+  }
+  else
+  {
+    errorMsg.style.transitionDuration = '0s';
+    errorMsg.style.opacity = 0;
+  }
+
 }

@@ -285,12 +285,10 @@ function applyFilters()
   populate(filteredData);
   updateFilterAppliedCounter(filterApplied, filteredData);
   if (filteredData.length == 0) {
-    document.getElementById('error-msg').style.transitionDuration = '0.3s';
-    document.getElementById('error-msg').style.opacity = 1;
+    errorMessage(true, true);
   }
   else {
-    document.getElementById('error-msg').style.transitionDuration = '0s';
-    document.getElementById('error-msg').style.opacity = 0;
+    errorMessage(false, true)
   }
 }
 

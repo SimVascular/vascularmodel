@@ -197,7 +197,17 @@ xtab-filter
   opacity: .4;
 }
 #model-counter {
-  margin-right: 10px !important;
+  margin-right: 20px !important;
+  float: center;
+}
+#selected-counter {
+  margin-right: 20px !important;
+  float: center;
+}
+#view-selected {
+  float: right;
+  margin-right: 15px;
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 768px) {
@@ -360,13 +370,13 @@ gallery
 
 /*HOVER FORMAT*/
 .model-image img:hover {
-  box-shadow: inset 0px 0px 50px 10px var(--grey);
+  box-shadow: inset 0px 0px 35px 10px var(--grey);
   box-sizing: border-box;
   transition: 0.3s;
 }
 
 .model-image.selected img {
-  /* box-shadow: inset 0px 0px 50px 10px var(--grey); */
+  /* box-shadow: inset 0px 0px 50px 10px var(--select); */
   box-sizing: border-box;
   transition: 0.3s;
   border-width: inset;
@@ -938,4 +948,13 @@ error msg block behavior
   color: white;
   transition: 0.3s;
   text-decoration: underline !important;
+}
+
+.view-selected {
+  float: right;
+}
+
+.descriptions
+{
+  float: center;
 }

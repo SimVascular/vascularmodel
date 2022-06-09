@@ -66,8 +66,11 @@
     <main class="cd-main-content">
       <div class="cd-tab-filter-wrapper">
         <div class="cd-tab-filter">
-          <span id="model-counter"></span>
-          <span id="selected-counter"></span>
+          <div> 
+            <span id="model-counter"></span>
+            <span id="selected-counter"></span>
+            <span id="view-selected"></span>
+          </div>
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
 
@@ -75,14 +78,16 @@
   <!-- <img src="img/loading_image.jpg" style="width:0px; height:0px"> -->
 
   <section class="gallery">
-    <div class="error-msg-block"><span id="error-msg">It looks like there are no results matching the filters! Please consider using less restrictive rules.</span></div>
+    <div class="error-msg-block">
+      <span id="error-msg"></span>
+    </div>
     <div class="container-fluid">
       <div class="row" id="model-gallery">
       </div>
     </div>
   </section> <!-- cd-gallery -->
 
-  <div class="cd-filter">
+  <section class="cd-filter">
     <form>
       <!-- <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div> -->
 
@@ -98,7 +103,7 @@
   </form>
 
   <a href="#0" class="cd-close">Close</a>
-</div> <!-- cd-filter -->
+</section> <!-- cd-filter -->
 
 <a href="#0" class="cd-filter-trigger">Filters</a>
 
