@@ -357,10 +357,19 @@ gallery
   background-color: white;
 }
 
+/*HOVER FORMAT*/
 .model-image img:hover {
   box-shadow: inset 0px 0px 50px 10px #e6e6e6;
   box-sizing: border-box;
   transition: 0.3s;
+}
+
+.model-image.selected img:hover{
+  box-shadow: inset 0px 0px 50px 10px #e6e6e6;
+  box-sizing: border-box;
+  transition: 0.3s;
+  border-color: pink;
+  border-style: solid;
 }
 
 .animate {

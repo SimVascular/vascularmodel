@@ -45,6 +45,9 @@ function generateContent(modelData) {
   var divModelImage = document.createElement("div");
   divModelImage.classList.add("model-image");
   divModelImage.classList.add("animate");
+  
+  //generated with class "selected"
+  divModelImage.classList.add("selected");
 
   let aWrap = document.createElement("a");
   aWrap.classList.add("a-img")
