@@ -7,6 +7,7 @@ var lastFapplied = 0;
 var lastFdata = [];
 var lastSelectedData = [];
 var selectedModels = [];
+var viewingSelectedModels;
 
 //returns the keys of *all* the categories
 function getAllCategories()

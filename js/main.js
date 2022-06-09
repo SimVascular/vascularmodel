@@ -371,27 +371,42 @@ var buttonFilter = {
 }
 
 $("#view-selected").click(function() {
+  viewingSelectedModels = !viewingSelectedModels;
   
-  var display = []
-  for(var i = 0; i < data.length; i++)
+  if(viewingSelectedModels)
   {
-    if(selectedModels[i])
+    var display = []
+  
+    for(var i = 0; i < data.length; i++)
     {
-      display.push(data[i])
+      if(selectedModels[i])
+      {
+        display.push(data[i])
+      }
+    }
+    
+    removeContent();
+    scrollToTop();
+    curIndex = 0;
+    populate(display);
+
+    if (display.length == 0) {
+      errorMessage(true, false)
+    }
+    else {
+      errorMessage(false, false)
     }
   }
+  else
+  {
+    removeContent();
+    scrollToTop();
+    curIndex = 0;
+    populate(data);
+    
+    errorMessage(false, false);
+  }
   
-  removeContent();
-  scrollToTop();
-  curIndex = 0;
-  populate(display);
-
-  if (display.length == 0) {
-    errorMessage(true, false)
-  }
-  else {
-    errorMessage(false, false)
-  }
 });
 
 function errorMessage(isOn, isFilter)
