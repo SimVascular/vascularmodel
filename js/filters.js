@@ -502,13 +502,11 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
       {
         if (subCategory.includes(valueToSearch))
         {
-          if (valueToSearch != "male")
+          filter[i] = true;
+          
+          if (valueToSearch == "male" && subCategory == "female")
           {
-            filter[i] = true;
-          }
-          else if (valueToSearch == "male" && subCategory != "female")
-          {
-            filter[i] = true;
+            filter[i] = false;
           }
         }
         //separate case for age since subCategory is in numbers and search bar input is a string
