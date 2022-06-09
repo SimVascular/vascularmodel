@@ -1,11 +1,12 @@
 var data;
 var filteredData;
-var selectedModel = ''
+var viewingModel = ''
 var curIndex = 0;
 var smallScreen = false
 var lastFapplied = 0;
 var lastFdata = [];
 var lastSelectedData = [];
+var selectedModels = [];
 
 //returns the keys of *all* the categories
 function getAllCategories()

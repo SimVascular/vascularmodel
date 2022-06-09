@@ -1,66 +1,97 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
-function addClickListener(data) {
-  $('#' + data['Name']).click(function() {greetingText(data);});
+function addClickListener(model) {
+  $('#' + model['Name']  + "_details").click(function() {greetingText(model);});
+  $('#' + model['Name']).click(function() {updatedSelectedList(model);});
+}
+
+function updatedSelectedList(model)
+{
+  selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
+  if(selectedModels[data.indexOf(model)])
+  {
+    var element = document.getElementById(model['Name'] + "_isSelected");
+    element.classList.add("selected")
+  }
+  else
+  {
+    var element = document.getElementById(model['Name'] + "_isSelected");
+    element.classList.remove("selected")
+  }
+
+  updateSelectedCounter();
 }
 
 function greetingText(data)
 {
-  selectedModel = data['Name']
-    $('.details-text').scrollTop(0);
-    $('#modal-greeting')[0].innerText = 'You have selected ' + data['Name'] + '.\nHere are the details:'
-    $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-    // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
-    // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
-    $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-    $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+  viewingModel = data['Name']
+  $('.details-text').scrollTop(0);
+  $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
+  $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
+  // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
+  // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
+  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     
-    var details = []
-    var categoryName = getCategoryName();
+  var details = []
+  var categoryName = getCategoryName();
 
-    for(var i = 0; i < categoryName.length; i++)
-    {
-      details += categoryName[i] + ": " + data[categoryName[i]] + '\n'
-    }
+  for(var i = 0; i < categoryName.length; i++)
+  {
+    details += categoryName[i] + ": " + data[categoryName[i]] + '\n'
+  }
 
-    var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
-    for (var i = 0; i < fdrs.length; i++) {
-      if (data[fdrs[i]] == '1') {
-        details = details + fdrs[i] + ' available: yes'
-      }
-      else {
-        if (data[fdrs[i]] == '0') {
-          details = details + fdrs[i] + ' available: no'
-        }
-      }
-      if (i != fdrs.length-1)
-        details = details + '\n'
+  var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
+  for (var i = 0; i < fdrs.length; i++) {
+    if (data[fdrs[i]] == '1') {
+      details = details + fdrs[i] + ' available: yes'
     }
-    var size = parseInt(data['Size']) / 1000000
-    $('.details-text')[0].value = details
-    $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+    else {
+      if (data[fdrs[i]] == '0') {
+        details = details + fdrs[i] + ' available: no'
+      }
+    }
+    if (i != fdrs.length-1)
+      details = details + '\n'
+  }
+  var size = parseInt(data['Size']) / 1000000
+  $('.details-text')[0].value = details
+  $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
 }
 
 function generateContent(modelData) {
   var div = document.createElement("div");
   div.classList.add("col-md-3");
   div.classList.add("col-sm-12");
+
   var divModelImage = document.createElement("div");
   divModelImage.classList.add("model-image");
   divModelImage.classList.add("animate");
+  divModelImage.setAttribute("id",modelData['Name'] + "_isSelected");
 
-  //generated with class "selected"
-  divModelImage.classList.add("selected");
+  if(selectedModels[data.indexOf(modelData)])
+  {
+    divModelImage.classList.add("selected");
+  }
 
   let aWrap = document.createElement("a");
   aWrap.classList.add("a-img")
-  aWrap.setAttribute("id",modelData['Name']);
+  // aWrap.setAttribute("id",modelData['Name']);
+
+  let detailsImg = document.createElement("i");
+  detailsImg.classList.add("fa-solid");
+  detailsImg.classList.add("fa-pink");
+  detailsImg.classList.add("fa-magnifying-glass");
+  detailsImg.classList.add("top-left");
+  detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
+  innerImg.setAttribute("id",modelData['Name']);
 
   aWrap.appendChild(innerImg)
+  aWrap.appendChild(detailsImg)
   divModelImage.appendChild(aWrap);
   div.appendChild(divModelImage);
 
@@ -103,11 +134,11 @@ $(document).ready(function($){
   });
 
   checkWidth();
-  
   // create copy of data
   filteredData = data;
+  initializeSelectedModels();
   updateFilterAppliedCounter(false, data)
-  updateDownloadCounter(data)
+  updateSelectedCounter()
   getFilterMenu();
   populate(data);
 
@@ -164,9 +195,9 @@ $('.download-button-modal').click(function() {
   $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
   // download tracking
   console.log(data['Name']);
-  window.open('svprojects/' + selectedModel + '.zip')
-  console.log('svprojects/' + selectedModel + '.zip')
-  gtag('event', 'download_' + selectedModel, {
+  window.open('svprojects/' + viewingModel + '.zip')
+  console.log('svprojects/' + viewingModel + '.zip')
+  gtag('event', 'download_' + viewingModel, {
       'send_to': 'G-YVVR1546XJ',
       'event_category': 'Model download',
       'event_label': 'test',
@@ -179,17 +210,24 @@ function checkWidth() {
         if (smallScreen) {
           smallScreen = false;
           updateFilterAppliedCounter(lastFapplied, lastFdata);
-          updateDownloadCounter(lastSelectedData);
+          updateSelectedCounter();
         }
     }
     else {
       if (!smallScreen) {
         smallScreen = true;
         updateFilterAppliedCounter(lastFapplied, lastFdata);
-        updateDownloadCounter(lastSelectedData);
+        updateSelectedCounter();
       }
     }
 }
+
+function initializeSelectedModels()
+{
+  selectedModels = new Array(data.length);
+  selectedModels.fill(false);
+}
+
 $(window).ready(checkWidth);
 $(window).resize(checkWidth);
 
@@ -214,15 +252,15 @@ function updateFilterAppliedCounter(fApplied, fData) {
   }
 }
 
-function updateDownloadCounter(selectedData)
+function updateSelectedCounter()
 {
-  lastSelectedData = selectedData;
+  var count = selectedModels.filter(value => value === true).length;
 
   if (smallScreen) {
-    document.getElementById('selected-counter').textContent = selectedData.length + " selected";
+    document.getElementById('selected-counter').textContent = count + " selected";
   }
   else {
-    document.getElementById('selected-counter').textContent = selectedData.length + " models selected";
+    document.getElementById('selected-counter').textContent = count + " models selected";
   }
 }
 

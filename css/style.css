@@ -7,7 +7,9 @@
   --dark3: #6195b8;
   --light1: #5db0e8;
   --light2: #f05d62;
+  --grey: #e6e6e6;
   --white: #ffffff;
+  --select: pink;
 }
 
 body, html {

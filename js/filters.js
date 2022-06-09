@@ -283,7 +283,7 @@ function applyFilters()
   removeContent();
   scrollToTop();
   populate(filteredData);
-  updateCounter(filterApplied, filteredData);
+  updateFilterAppliedCounter(filterApplied, filteredData);
   if (filteredData.length == 0) {
     document.getElementById('error-msg').style.transitionDuration = '0.3s';
     document.getElementById('error-msg').style.opacity = 1;
