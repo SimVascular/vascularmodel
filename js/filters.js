@@ -45,14 +45,15 @@ function getFilterMenu()
 
 function createHeaders(categoryName)
 {
-  var div = createDivWithH4(categoryName);
   if (getNTimesPerCategory(categoryName) == 2)
   {
+    var div = createDivWithH4DropDown(categoryName);
     var output = generateDropDownMenu(categoryName);
   }
   else
   {
     //categoryName is the name of the category, e.g., "Age"
+    var div = createDivWithH4CheckboxUl(categoryName);
     var output = generateCheckboxUl(categoryName, true);
   }
   
@@ -64,13 +65,26 @@ function createHeaders(categoryName)
   return [div, hooks];
 }
 
-function createDivWithH4(categoryName)
+function createDivWithH4CheckboxUl(categoryName)
 {
   var div = document.createElement('div');
   div.classList.add("cd-filter-block")
 
   var h4 = document.createElement('h4');
   h4.classList.add("closed");
+  h4.textContent = categoryName;
+  
+  div.appendChild(h4);
+
+  return div;
+}
+
+function createDivWithH4DropDown(categoryName)
+{
+  var div = document.createElement('div');
+  div.classList.add("cd-filter-block")
+
+  var h4 = document.createElement('h4');
   h4.textContent = categoryName;
   
   div.appendChild(h4);
@@ -91,6 +105,7 @@ function generateDropDownMenu(categoryName)
   div.classList.add("cd-select");
   div.classList.add("cd-filters");
   div.classList.add("list");
+  div.setAttribute("style", "display: block");
 
   var select = document.createElement("select")
   select.classList.add("filter")
@@ -145,7 +160,7 @@ function generateOptions(optionName)
 
 function mustContainHeader(categoryName)
 {
-  var div = createDivWithH4("Project Must Contain");
+  var div = createDivWithH4CheckboxUl("Project Must Contain");
 
   //categoryName is a list with the categoriesWith1
   var output = generateCheckboxUl(categoryName, false);

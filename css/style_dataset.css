@@ -583,9 +583,21 @@ xcustom form elements
   background-color: #ffffff;
   border: 2px solid #e6e6e6;
 }
-.cd-filter-block input[type='search'],
-.cd-filter-block input[type='text'],
+
 .cd-filter-block select {
+  width: 80%;
+  padding: .8em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  margin-left: 1.2em;
+}
+
+.cd-filter-block input[type='search'],
+.cd-filter-block input[type='text']{
   width: 100%;
   padding: .8em;
   -webkit-appearance: none;
@@ -595,6 +607,7 @@ xcustom form elements
   appearance: none;
   box-shadow: none;
 }
+
 .cd-filter-block input[type='search']:focus,
 .cd-filter-block input[type='text']:focus,
 .cd-filter-block select:focus {
@@ -621,7 +634,7 @@ xcustom form elements
   content: '';
   position: absolute;
   z-index: 1;
-  right: 14px;
+  left: 75%;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
