@@ -52,7 +52,7 @@ function createHeaders(categoryName)
   }
   else
   {
-    //categoryName is the name of the category "Age i.e."
+    //categoryName is the name of the category, e.g., "Age"
     var output = generateCheckboxUl(categoryName, true);
   }
   
@@ -82,20 +82,6 @@ function addHooks(hooks) {
   for (var i = 0; i < hooks.length; i++) {
     $("#" + hooks[i]).change(function() {applyFilters();});
   }
-}
-
-function generateMustContainLi(categoryName)
-{
-  var ul = document.createElement("ul")
-  ul.classList.add("cd-filter-content");
-  ul.classList.add("cd-filters");
-  ul.classList.add("list");
-
-  var newLi = generateCheckboxLi(categoryName);
-  ul.appendChild(newLi);
-  var hooks = ["checkbox-" + categoryName];
-
-  return [ul, hooks];
 }
 
 function generateDropDownMenu(categoryName)
@@ -252,13 +238,11 @@ function applyFilters()
       filterApplied = filterApplied || filterOutput[1]
     }
     else {
-      var whichToKeep = []
+      var whichToKeep = new Array(filteredData.length)
       //if a box is checked in the category
       if (isChecked(titles[t]))
       {    
-        for (var i = 0;  i < filteredData.length; i++) {
-          whichToKeep.push(false);
-        }
+        whichToKeep.fill(false);
 
         for(var i = 0; i < nTimes[t]; i++)
         {
@@ -270,9 +254,7 @@ function applyFilters()
         }
       }
       else{
-        for (var i = 0;  i < filteredData.length; i++) {
-          whichToKeep.push(true);
-        }
+        whichToKeep.fill(true);
       }
       //whichToKeep and filteredData should have the same length
       filteredData = updatedFilteredData(whichToKeep, filteredData);
@@ -393,7 +375,6 @@ JavaScript for Filter Bar:
 
 function dropDownFilter(categoryName, partialData)
 {
-
   var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
 
   if(valueToSearch == 'none')
@@ -497,12 +478,8 @@ function searchBarFilter(partialData)
 function searchBarFilterOneEntry(partialData, valueToSearch)
 {
   //set up variables
-  var filter = []
-
-  for(var i = 0; i < partialData.length; i++)
-  {
-    filter.push(false);
-  }
+  var filter = new Array(partialData.length);
+  filter.fill(false);
 
   var allCategories = getAllCategories();
   var categoriesWith1s = []
@@ -560,23 +537,8 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
 function searchBarFilterMultipleEntries(partialData, valueToSearch)
 {
   var valuesToSearch = valueToSearchInArrayForm(valueToSearch);
-
-  //set up variables
-  var filteredData = []
   var filter = []
   
-  var allCategories = getAllCategories();
-  var categoriesWith1s = []
-  
-  for(var i = 0; i < allCategories.length; i++)
-  {
-    if (getNTimesPerCategory(allCategories[i]) == 1)
-    {
-      categoriesWith1s.push(allCategories[i])
-    }
-  }
-  
-  //searching
   for(var v = 0; v < valuesToSearch.length; v++)
   {
     var output = searchBarFilterOneEntry(partialData, valuesToSearch[v])
@@ -591,16 +553,12 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
     {
       for(var f = 0; f < filter.length; f++)
       {
-        if(!tempFilter[f])
-        {
-          filter[f] = false;
-        }
+        filter[f] = tempFilter[f] && filter[f];
       }
     }
   }
     
   return [filter, true];
-
 }
 
 function valueToSearchInArrayForm(valueToSearch)
