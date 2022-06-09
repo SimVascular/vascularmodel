@@ -1,8 +1,12 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
 function addClickListener(data) {
-  $('#' + data['Name']).click(function() {
-    selectedModel = data['Name']
+  $('#' + data['Name']).click(function() {greetingText(data);});
+}
+
+function greetingText(data)
+{
+  selectedModel = data['Name']
     $('.details-text').scrollTop(0);
     $('#modal-greeting')[0].innerText = 'You have selected ' + data['Name'] + '.\nHere are the details:'
     $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
@@ -35,7 +39,6 @@ function addClickListener(data) {
     var size = parseInt(data['Size']) / 1000000
     $('.details-text')[0].value = details
     $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
-  });
 }
 
 function generateContent(modelData) {
@@ -45,7 +48,7 @@ function generateContent(modelData) {
   var divModelImage = document.createElement("div");
   divModelImage.classList.add("model-image");
   divModelImage.classList.add("animate");
-  
+
   //generated with class "selected"
   divModelImage.classList.add("selected");
 
