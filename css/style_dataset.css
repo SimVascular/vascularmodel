@@ -199,6 +199,7 @@ xtab-filter
 #model-counter {
   margin-right: 10px !important;
 }
+
 @media only screen and (min-width: 768px) {
   .cd-tab-filter {
     /* tabbed navigation style on medium devices */

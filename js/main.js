@@ -76,9 +76,9 @@ function populate(dataArray, num_images = 24) {
     ubound = curIndex + num_images
   }
   for (var i = curIndex; i < ubound; i++) {
-      var newContent = generateContent(dataArray[i]);
-      modelList.appendChild(newContent);
-      addClickListener(dataArray[i])
+    var newContent = generateContent(dataArray[i]);
+    modelList.appendChild(newContent);
+    addClickListener(dataArray[i])
   }
   curIndex = ubound;
 }
@@ -100,7 +100,8 @@ $(document).ready(function($){
   
   // create copy of data
   filteredData = data;
-  updateCounter(false, data)
+  updateFilterAppliedCounter(false, data)
+  updateDownloadCounter(data)
   getFilterMenu();
   populate(data);
 
@@ -171,20 +172,22 @@ function checkWidth() {
     if (screen.width >= 769 && (document.documentElement.clientWidth >= 769)) {
         if (smallScreen) {
           smallScreen = false;
-          updateCounter(lastFapplied, lastFdata);
+          updateFilterAppliedCounter(lastFapplied, lastFdata);
+          updateDownloadCounter(lastSelectedData);
         }
     }
     else {
       if (!smallScreen) {
         smallScreen = true;
-        updateCounter(lastFapplied, lastFdata);
+        updateFilterAppliedCounter(lastFapplied, lastFdata);
+        updateDownloadCounter(lastSelectedData);
       }
     }
 }
 $(window).ready(checkWidth);
 $(window).resize(checkWidth);
 
-function updateCounter(fApplied, fData) {
+function updateFilterAppliedCounter(fApplied, fData) {
   lastFdata = fData;
   lastFapplied = fApplied;
   if (smallScreen) {
@@ -202,6 +205,18 @@ function updateCounter(fApplied, fData) {
     else {
       document.getElementById('model-counter').textContent = "Filters not applied: " + fData.length + '/' + data.length + ' models'
     }
+  }
+}
+
+function updateDownloadCounter(selectedData)
+{
+  lastSelectedData = selectedData;
+
+  if (smallScreen) {
+    document.getElementById('selected-counter').textContent = selectedData.length + " selected";
+  }
+  else {
+    document.getElementById('selected-counter').textContent = selectedData.length + " models selected";
   }
 }
 

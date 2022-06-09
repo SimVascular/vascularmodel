@@ -5,6 +5,7 @@ var curIndex = 0;
 var smallScreen = false
 var lastFapplied = 0;
 var lastFdata = [];
+var lastSelectedData = [];
 
 //returns the keys of *all* the categories
 function getAllCategories()
