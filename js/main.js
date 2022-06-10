@@ -9,7 +9,7 @@ function updatedSelectedList(model)
 {
   selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
   var bucket = document.getElementById("bucket");
-
+  
   if(selectedModels[data.indexOf(model)])
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
@@ -19,7 +19,7 @@ function updatedSelectedList(model)
   else
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.remove("selected")
+    element.classList.remove("selected");
     bucket.classList.remove("selected");
   }
 

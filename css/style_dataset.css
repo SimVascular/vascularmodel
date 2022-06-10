@@ -364,7 +364,7 @@ gallery
   width: 100%;
   /* aspect-ratio: 16/9; */
   background-color: white;
-  border: 2px solid;
+  border: 3px solid;
   border-color: var(--grey);
 }
 
@@ -380,7 +380,7 @@ gallery
   box-sizing: border-box;
   transition: 0.3s;
   border-width: inset;
-  border: 2px solid;
+  border: 3px solid;
   border-color: var(--select);
 }
 
@@ -962,7 +962,7 @@ error msg block behavior
 /* FORMAT FOR FEATURES BOX */
 
 .features {
-  bottom: 15px;
+  top: 130px;
   right: 15px;
   width: 100px;
   height: 240px;
@@ -977,7 +977,6 @@ error msg block behavior
   width: 100%;
   padding: 15px;
   float: right;
-  background-color: pink;
 }
 
 .featuresIcons {
@@ -992,15 +991,16 @@ error msg block behavior
 } */
 
 @-webkit-keyframes animateBucket {  
-  0% { color: var(--select); }
-  50% { color: transparent; }
-  /*51% { color: var(--select); }
-  100% { color: transparent; } */
+  0% { color: black; }
+  25% { color: var(--select); }
+  50% { color: black; }
+  75% { color: var(--select); }
+  100% { color: black; }
 }
 
-.fa-bucket.selected {
+.fa-box-archive.selected {
   /* color: var(--select); */
   -webkit-animation-name: animateBucket;
   -webkit-animation-iteration-count: 1;  
-  -webkit-animation-duration: 1s; 
+  -webkit-animation-duration: 2s; 
 }
