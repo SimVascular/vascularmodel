@@ -9,7 +9,8 @@
   --light2: #f05d62;
   --grey: #e6e6e6;
   --white: #ffffff;
-  --select: pink;
+  --select: purple;
+  --lighterselect: #e0dddd;
 }
 
 body, html {

@@ -370,7 +370,7 @@ gallery
 
 /*HOVER FORMAT*/
 .model-image img:hover {
-  box-shadow: inset 0px 0px 35px 10px var(--grey);
+  box-shadow: inset 0px 0px 35px 10px var(--lighterselect);
   box-sizing: border-box;
   transition: 0.3s;
 }
