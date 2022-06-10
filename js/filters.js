@@ -361,32 +361,6 @@ function checkboxNamesPerCategory(categoryName, isKey)
   return checkboxNames;
 }
 
-function namesOfValuesPerKey(categoryName)
-{
-  var checkboxNameSet = new Set();
-  
-  for(var d = 0; d < data.length; d++)
-  {
-    if(data[d][categoryName].indexOf("_") != -1)
-    {
-      var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
-      for(var a = 0; a < toAdd.length; a++)
-      {
-        checkboxNameSet.add(toAdd[a]);
-      }
-    }
-    else
-    {
-      checkboxNameSet.add(data[d][categoryName]);
-    }
-  }
-
-  categoryName = Array.from(checkboxNameSet);
-  categoryName.sort();
-
-  return categoryName;
-}
-
 function checkboxNameInArrayForm(checkboxNameArr)
 {
   var array = []
