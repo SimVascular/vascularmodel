@@ -236,7 +236,6 @@ function applyFilters()
 {
   var filterApplied = false
   curIndex = 0;
-  var filteredData = data;
 
   var nTimes = getNTimes();
 
