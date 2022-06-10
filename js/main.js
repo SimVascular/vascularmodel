@@ -20,10 +20,11 @@ function updatedSelectedList(model)
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.remove("selected");
-    bucket.classList.remove("selected");
   }
 
   updateSelectedCounter();
+
+  setTimeout(() => {bucket.classList.remove("selected");}, 3000);
 }
 
 function greetingText(data)
