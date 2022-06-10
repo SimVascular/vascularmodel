@@ -242,6 +242,7 @@ body, html {
   background-color: var(--dark1);
   color: var(--white);
   padding: 25px 0 10px;
+  z-index: 2;
 }
 #contact-section h4 {
 	font-weight: 400;

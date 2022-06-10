@@ -958,3 +958,23 @@ error msg block behavior
 {
   float: center;
 }
+
+/* FORMAT FOR FEATURES BOX */
+
+.features {
+  bottom: 15px;
+  right: 15px;
+  width: 200px;
+  height: 200px;
+  box-shadow: 4px 4px 20px transparent;
+  z-index: 1;
+  font-size: 17px;
+  position: fixed;
+}
+
+.features form {
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+}
