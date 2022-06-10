@@ -172,9 +172,9 @@ function mustContainHeader(categoryName)
   return [div, hooks];
 }
 
-function generateCheckboxUl(categoryName, needsNameArray)
+function generateCheckboxUl(checkboxName, needsNameArray)
 {
-  //needs name if categoryName is not a categoryWith1
+  //needs name if checkboxName is not a categoryWith1
 
   var ul = document.createElement("ul")
   ul.classList.add("cd-filter-content");
@@ -183,23 +183,15 @@ function generateCheckboxUl(categoryName, needsNameArray)
 
   if(needsNameArray)
   {
-    var checkboxNameSet = new Set();
-  
-    for(var i = 0; i < data.length; i++)
-    {
-      checkboxNameSet.add(data[i][categoryName])
-    }
-
-    categoryName = Array.from(checkboxNameSet);
-    categoryName.sort();
+    checkboxName = namesOfValuesPerKey(checkboxName);
   }
 
   var hooks = []
 
-  for (var i = 0; i < categoryName.length; i++) {
-      var newLi = generateCheckboxLi(categoryName[i]);
+  for (var i = 0; i < checkboxName.length; i++) {
+      var newLi = generateCheckboxLi(checkboxName[i]);
       ul.appendChild(newLi);
-      hooks.push("checkbox-" + categoryName[i])
+      hooks.push("checkbox-" + checkboxName[i])
   }
 
   return [ul, hooks];
@@ -321,12 +313,8 @@ function getNTimesPerCategory(categoryName)
   }
   else
   {
-    var noRepeatArray = new Set();
-    for(var dI = 0; dI < data.length; dI++)
-    {
-      noRepeatArray.add(data[dI][categoryName])
-    }
-    nTimesRepeat = noRepeatArray.size;
+    var noRepeatArray = namesOfValuesPerKey(categoryName);
+    nTimesRepeat = noRepeatArray.length;
   }
 
   return nTimesRepeat;
@@ -363,20 +351,57 @@ function updatedFilteredData(whichToKeep, filteredData)
 function checkboxNamesPerCategory(categoryName, isKey)
 {
   var checkboxNames = []
-  var checkboxNameSet = new Set();
-          
-  for(var dI = 0; dI < data.length; dI++)
-  {
-    checkboxNameSet.add(data[dI][categoryName])
-  }
 
-  var checkboxNames = Array.from(checkboxNameSet);
-
+  var checkboxNames = namesOfValuesPerKey(categoryName);
+  
   if (!isKey && checkboxNames.includes("1"))
   {
     checkboxNames = [categoryName]
   }
   return checkboxNames;
+}
+
+function namesOfValuesPerKey(categoryName)
+{
+  var checkboxNameSet = new Set();
+  
+  for(var d = 0; d < data.length; d++)
+  {
+    if(data[d][categoryName].indexOf("_") != -1)
+    {
+      var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
+      for(var a = 0; a < toAdd.length; a++)
+      {
+        checkboxNameSet.add(toAdd[a]);
+      }
+    }
+    else
+    {
+      checkboxNameSet.add(data[d][categoryName]);
+    }
+  }
+
+  categoryName = Array.from(checkboxNameSet);
+  categoryName.sort();
+
+  return categoryName;
+}
+
+function checkboxNameInArrayForm(checkboxNameArr)
+{
+  var array = []
+  var indexOfSpace = checkboxNameArr.indexOf("_");
+
+  while(indexOfSpace != -1)
+  {
+    array.push(checkboxNameArr.substring(0, indexOfSpace));
+    checkboxNameArr = checkboxNameArr.substring(indexOfSpace + 1);
+    indexOfSpace = checkboxNameArr.indexOf("_")
+  }
+
+  array.push(checkboxNameArr);
+
+  return array;
 }
 
 /*----------------------------
