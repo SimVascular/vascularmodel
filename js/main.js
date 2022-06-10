@@ -8,7 +8,7 @@ function addClickListener(model) {
 function updatedSelectedList(model)
 {
   selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
-  var bucket = document.getElementById("bucket");
+  var bucket = document.getElementById("view-selected");
   
   if(selectedModels[data.indexOf(model)])
   {
@@ -23,8 +23,14 @@ function updatedSelectedList(model)
   }
 
   updateSelectedCounter();
+  countBucket++;
+  var tempCounter = countBucket;
 
-  setTimeout(() => {bucket.classList.remove("selected");}, 3000);
+  setTimeout(() => {
+    if(tempCounter == countBucket) {
+      bucket.classList.remove("selected");
+    }
+  }, 2000);
 }
 
 function greetingText(data)
@@ -144,7 +150,6 @@ $(document).ready(function($){
   initializeSelectedModels();
   updateFilterAppliedCounter(false, data)
   updateSelectedCounter()
-  getViewSelected();
   getFilterMenu();
   errorMessage();
 
@@ -270,12 +275,6 @@ function updateSelectedCounter()
   else {
     document.getElementById('selected-counter').textContent = count + " models selected";
   }
-}
-
-function getViewSelected()
-{
-  var placeinHTML = document.getElementById('view-selected');
-  placeinHTML.textContent = "View Selected";
 }
 
 window.addEventListener('scroll', () => {

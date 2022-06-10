@@ -204,11 +204,6 @@ xtab-filter
   margin-right: 20px !important;
   float: center;
 }
-#view-selected {
-  float: right;
-  margin-right: 15px;
-  cursor: pointer;
-}
 
 @media only screen and (min-width: 768px) {
   .cd-tab-filter {
@@ -983,12 +978,8 @@ error msg block behavior
   font-size: 60px;
   padding: 5px;
   color: black;
+  cursor: pointer;
 }
-
-/* .fa-bucket.selected {
-  color: linear-gradient(to right, #ffffff 4%, var(--select) 25%, #ffffff 36%);
-  /* color: pink; * /
-} */
 
 @-webkit-keyframes animateBucket {  
   0% { color: black; }
