@@ -7,13 +7,16 @@
   --dark3: #6195b8;
   --light1: #5db0e8;
   --light2: #f05d62;
+  --grey: #e6e6e6;
   --white: #ffffff;
+  --select: pink;
+  --lighterselect: #e0dddd;
 }
 
 body, html {
-    height: 100%;
-    font-family: "Poppins", sans-serif;
-    font-size: 17px;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
 }
 
 .link {
@@ -239,6 +242,7 @@ body, html {
   background-color: var(--dark1);
   color: var(--white);
   padding: 25px 0 10px;
+  z-index: 2;
 }
 #contact-section h4 {
 	font-weight: 400;

@@ -197,8 +197,14 @@ xtab-filter
   opacity: .4;
 }
 #model-counter {
-  margin-right: 10px !important;
+  margin-right: 20px !important;
+  float: center;
 }
+#selected-counter {
+  margin-right: 20px !important;
+  float: center;
+}
+
 @media only screen and (min-width: 768px) {
   .cd-tab-filter {
     /* tabbed navigation style on medium devices */
@@ -346,7 +352,6 @@ gallery
   background-position: center;
   aspect-ratio: 1432 / 859;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border: 2px solid #e6e6e6;
 }
 
 .model-image img {
@@ -354,12 +359,45 @@ gallery
   width: 100%;
   /* aspect-ratio: 16/9; */
   background-color: white;
+  border: 3px solid;
+  border-color: var(--grey);
 }
 
+/*HOVER FORMAT*/
 .model-image img:hover {
-  box-shadow: inset 0px 0px 50px 10px #e6e6e6;
+  box-shadow: inset 0px 0px 35px 10px var(--lighterselect);
   box-sizing: border-box;
   transition: 0.3s;
+}
+
+.model-image.selected img {
+  /* box-shadow: inset 0px 0px 50px 10px var(--select); */
+  box-sizing: border-box;
+  transition: 0.3s;
+  border-width: inset;
+  border: 3px solid;
+  border-color: var(--select);
+}
+
+/* FORMATING TEXT OVER GALLERY IMAGES */
+.a-img {
+  text-align: center;
+  color: white;
+  cursor: pointer;
+}
+
+/* top left image */
+.top-left {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  object-fit: cover;
+  font-size: 150%;
+  padding: 5px;
+}
+
+.top-left:hover {
+  color: var(--select);
 }
 
 .animate {
@@ -368,9 +406,9 @@ gallery
   background-size: 1000px 100%;
 }
 
-.a-img {
+/* .a-img {
   cursor: pointer;
-}
+} */
 
 @keyframes shimmer {
   0% {
@@ -581,11 +619,23 @@ xcustom form elements
   font-family: "Open Sans", sans-serif;
   border-radius: 0;
   background-color: #ffffff;
-  border: 2px solid #e6e6e6;
+  border: 2px solid var(--grey);
 }
-.cd-filter-block input[type='search'],
-.cd-filter-block input[type='text'],
+
 .cd-filter-block select {
+  width: 80%;
+  padding: .8em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  margin-left: 1.2em;
+}
+
+.cd-filter-block input[type='search'],
+.cd-filter-block input[type='text']{
   width: 100%;
   padding: .8em;
   -webkit-appearance: none;
@@ -595,6 +645,7 @@ xcustom form elements
   appearance: none;
   box-shadow: none;
 }
+
 .cd-filter-block input[type='search']:focus,
 .cd-filter-block input[type='text']:focus,
 .cd-filter-block select:focus {
@@ -605,7 +656,7 @@ xcustom form elements
 .cd-filter-block input[type='search'] {
   /* custom style for the search element */
   border-color: transparent;
-  background-color: #e6e6e6;
+  background-color: var(--grey);
   /* prevent jump - ios devices */
   font-size: 1rem !important;
 }
@@ -621,7 +672,7 @@ xcustom form elements
   content: '';
   position: absolute;
   z-index: 1;
-  right: 14px;
+  left: 75%;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
@@ -892,4 +943,64 @@ error msg block behavior
   color: white;
   transition: 0.3s;
   text-decoration: underline !important;
+}
+
+.view-selected {
+  float: right;
+}
+
+.descriptions
+{
+  float: center;
+}
+
+/* FORMAT FOR FEATURES BOX */
+
+.features {
+  top: 130px;
+  right: 15px;
+  width: 100px;
+  height: 240px;
+  box-shadow: 4px 4px 20px transparent;
+  z-index: 1;
+  font-size: 17px;
+  position: fixed;
+}
+
+.features form {
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  float: right;
+}
+
+.featuresIcons {
+  font-size: 60px;
+  padding: 5px;
+  color: black;
+  cursor: pointer;
+  float: right;
+}
+
+.featuresIcons:hover {
+  font-size: 60px;
+  padding: 5px;
+  color: var(--select);
+  cursor: pointer;
+  float: right;
+}
+
+@-webkit-keyframes animateBucket {  
+  0% { color: black; }
+  25% { color: var(--select); }
+  50% { color: black; }
+  75% { color: var(--select); }
+  100% { color: black; }
+}
+
+.fa-box-archive.selected {
+  /* color: var(--select); */
+  -webkit-animation-name: animateBucket;
+  -webkit-animation-iteration-count: 1;  
+  -webkit-animation-duration: 2s; 
 }
