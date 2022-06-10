@@ -87,10 +87,41 @@ function greetingText(data)
   var details = []
   var categoryName = getCategoryName();
 
-  for(var i = 0; i < categoryName.length; i++)
+  for(var d = 0; d < categoryName.length; d++)
   {
-    details += categoryName[i] + ": " + data[categoryName[i]] + '\n'
-  }
+    var valInCat = data[categoryName[d]];
+
+    if(valInCat.indexOf("_") == -1)
+    {
+      details += categoryName[d] + ": " + valInCat;
+    }
+    else
+    {
+      details += categoryName[d] + "s: ";
+
+      valInCat = checkboxNameInArrayForm(valInCat);
+
+      var numOfDetails = valInCat.length;
+
+      //grammar with commas and ands for lists
+      if(numOfDetails == 2)
+      {
+        details += valInCat[0] + " and " + valInCat[1];
+      }
+      else
+      {
+        for(var v = 0; v < numOfDetails - 1; v++)
+        {
+          details += valInCat[v] + ", ";
+        }
+        details += "and " + valInCat[numOfDetails - 1];
+      }
+
+    } //end else if more than one detail
+
+    details += '\n';
+
+  } //end for-loop through categoryName
 
   var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
   for (var i = 0; i < fdrs.length; i++) {

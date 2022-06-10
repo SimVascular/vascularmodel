@@ -361,23 +361,6 @@ function checkboxNamesPerCategory(categoryName, isKey)
   return checkboxNames;
 }
 
-function checkboxNameInArrayForm(checkboxNameArr)
-{
-  var array = []
-  var indexOfSpace = checkboxNameArr.indexOf("_");
-
-  while(indexOfSpace != -1)
-  {
-    array.push(checkboxNameArr.substring(0, indexOfSpace));
-    checkboxNameArr = checkboxNameArr.substring(indexOfSpace + 1);
-    indexOfSpace = checkboxNameArr.indexOf("_")
-  }
-
-  array.push(checkboxNameArr);
-
-  return array;
-}
-
 /*----------------------------
 
 JavaScript for Filter Bar:

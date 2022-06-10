@@ -96,3 +96,22 @@ function namesOfValuesPerKey(categoryName)
 
   return categoryName;
 }
+
+//returns an array taking in a string
+//delimiter = "_"
+function checkboxNameInArrayForm(checkboxNameArr)
+{
+  var array = []
+  var indexOfSpace = checkboxNameArr.indexOf("_");
+
+  while(indexOfSpace != -1)
+  {
+    array.push(checkboxNameArr.substring(0, indexOfSpace));
+    checkboxNameArr = checkboxNameArr.substring(indexOfSpace + 1);
+    indexOfSpace = checkboxNameArr.indexOf("_")
+  }
+
+  array.push(checkboxNameArr);
+
+  return array;
+}
