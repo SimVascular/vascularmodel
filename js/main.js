@@ -5,6 +5,46 @@ function addClickListener(model) {
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
 
+$("#select-all").click(function() {selectAllFilteredData();});
+
+function selectAllFilteredData()
+{
+  wantsToSelectAll = !wantsToSelectAll;
+
+  if(wantsToSelectAll)
+  {
+    for (var i = 0; i < filteredData.length; i++)
+    {
+      selectModel(filteredData[i]);
+    }
+  }
+  else
+  {
+    for (var i = 0; i < filteredData.length; i++)
+    {
+      deselectModel(filteredData[i]);
+    }
+    
+  }
+  updateSelectedCounter();
+}
+
+function deselectModel(model)
+{
+  selectedModels[data.indexOf(model)] = false;
+  var element = document.getElementById(model['Name'] + "_isSelected");
+  if (element)
+    element.classList.remove("selected");
+}
+
+function selectModel(model)
+{
+  selectedModels[data.indexOf(model)] = true;
+  var element = document.getElementById(model['Name'] + "_isSelected");
+  if (element)
+    element.classList.add("selected");
+}
+
 function updatedSelectedList(model)
 {
   selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
@@ -13,7 +53,7 @@ function updatedSelectedList(model)
   if(selectedModels[data.indexOf(model)])
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.add("selected")
+    element.classList.add("selected");
     bucket.classList.add("selected");
   }
   else
@@ -406,7 +446,7 @@ $("#view-selected").click(function() {
     removeContent();
     scrollToTop();
     curIndex = 0;
-    populate(data);
+    populate(filteredData);
     
     errorMessage(false, false);
   }

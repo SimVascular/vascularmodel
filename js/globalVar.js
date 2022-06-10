@@ -9,6 +9,7 @@ var lastSelectedData = [];
 var selectedModels = [];
 var viewingSelectedModels;
 var countBucket = 0;
+var wantsToSelectAll = false;
 
 //returns the keys of *all* the categories
 function getAllCategories()

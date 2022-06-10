@@ -979,6 +979,15 @@ error msg block behavior
   padding: 5px;
   color: black;
   cursor: pointer;
+  float: right;
+}
+
+.featuresIcons:hover {
+  font-size: 60px;
+  padding: 5px;
+  color: var(--select);
+  cursor: pointer;
+  float: right;
 }
 
 @-webkit-keyframes animateBucket {  
