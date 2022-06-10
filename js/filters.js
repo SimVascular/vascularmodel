@@ -466,7 +466,7 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
     var arrayLength = partialData.length;
   
     for (var i = 0; i < arrayLength; i++) {
-      if (partialData[i][category] == key) {
+      if (partialData[i][category].includes(key)) {
         whichToKeep[i] = true;
       }
     }
