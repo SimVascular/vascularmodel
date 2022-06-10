@@ -157,6 +157,7 @@ function removeContent() {
 }
 
 function populate(dataArray, num_images = 24) {
+  
   var modelList = document.getElementById("model-gallery")
   var arrayLength = dataArray.length;
   var ubound = arrayLength;
@@ -191,8 +192,6 @@ $(document).ready(function($){
   updateFilterAppliedCounter(false, data)
   updateSelectedCounter()
   getFilterMenu();
-  errorMessage();
-
   populate(data);
 
   //open/close lateral filter
@@ -448,7 +447,12 @@ $("#view-selected").click(function() {
     curIndex = 0;
     populate(filteredData);
     
-    errorMessage(false, false);
+    if (filteredData.length == 0) {
+      errorMessage(true, true)
+    }
+    else {
+      errorMessage(false, true)
+    }
   }
   
 });
