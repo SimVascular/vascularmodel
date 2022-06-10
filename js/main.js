@@ -8,15 +8,19 @@ function addClickListener(model) {
 function updatedSelectedList(model)
 {
   selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
+  var bucket = document.getElementById("bucket");
+
   if(selectedModels[data.indexOf(model)])
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.add("selected")
+    bucket.classList.add("selected");
   }
   else
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.remove("selected")
+    bucket.classList.remove("selected");
   }
 
   updateSelectedCounter();

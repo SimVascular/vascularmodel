@@ -964,8 +964,8 @@ error msg block behavior
 .features {
   bottom: 15px;
   right: 15px;
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 240px;
   box-shadow: 4px 4px 20px transparent;
   z-index: 1;
   font-size: 17px;
@@ -973,8 +973,34 @@ error msg block behavior
 }
 
 .features form {
-  background-color: #000;
   height: 100%;
   width: 100%;
   padding: 15px;
+  float: right;
+  background-color: pink;
+}
+
+.featuresIcons {
+  font-size: 60px;
+  padding: 5px;
+  color: black;
+}
+
+/* .fa-bucket.selected {
+  color: linear-gradient(to right, #ffffff 4%, var(--select) 25%, #ffffff 36%);
+  /* color: pink; * /
+} */
+
+@-webkit-keyframes animateBucket {  
+  0% { color: var(--select); }
+  50% { color: transparent; }
+  /*51% { color: var(--select); }
+  100% { color: transparent; } */
+}
+
+.fa-bucket.selected {
+  /* color: var(--select); */
+  -webkit-animation-name: animateBucket;
+  -webkit-animation-iteration-count: 1;  
+  -webkit-animation-duration: 1s; 
 }
