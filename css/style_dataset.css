@@ -993,14 +993,27 @@ error msg block behavior
 .featuresIcons {
   font-size: 40px;
   padding: 20px;
-  background-color: var(--grey);
   border-radius: 50%;
-  margin: 5px;
   color: var(--light1);
   cursor: pointer;
   float: right;
-  /* border: 2px solid var(--grey); */
+  /* border: 2px solid black; */
 }
+
+.spanForIcons {
+  background-color: var(--grey);
+  border-radius: 50%;
+  color: var(--light1);
+  cursor: pointer;
+  float: right;
+  margin: 5px;
+  z-index: 1;
+}
+/* 
+.spanForIcons p {
+  overflow: overlay;
+  z-index: 2;
+} */
 
 .featuresIcons:hover {
   color: var(--select);
