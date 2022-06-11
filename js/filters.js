@@ -82,7 +82,7 @@ function createDivWithH4CheckboxUl(categoryName)
 function createDivWithH4DropDown(categoryName)
 {
   var div = document.createElement('div');
-  div.classList.add("cd-filter-block")
+  div.classList.add("cd-filter-block");
 
   var h4 = document.createElement('h4');
   h4.textContent = categoryName;
