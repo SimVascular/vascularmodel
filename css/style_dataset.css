@@ -1045,12 +1045,16 @@ error msg block behavior
   -webkit-animation-duration: 2s; 
 }
 
-.allButton {
+.closeAllButton {
   border: 2px solid var(--grey);
   float: right;
   padding: 10px;
   margin-left: 10px;
   cursor: pointer;
+}
+
+.closeAllButton:hover {
+  background-color: #ebebeb;
 }
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
