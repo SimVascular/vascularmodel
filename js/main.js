@@ -17,7 +17,7 @@ $("#closeAllButton").click(function() {
 
 
 function addClickListener(model) {
-  $('#' + model['Name']  + "_details").click(function() {greetingText(model);});
+  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
 
@@ -91,14 +91,9 @@ function updatedSelectedList(model)
 
 function greetingText(data)
 {
-  viewingModel = data['Name']
+  viewingModel = data['Name'];
   $('.details-text').scrollTop(0);
   $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
-  $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-  // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
-  // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
-  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     
   var details = []
   var categoryName = getCategoryName();
@@ -156,6 +151,40 @@ function greetingText(data)
   $('.details-text')[0].value = details
   $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
 }
+
+function overlayOn(){
+  document.getElementById("overlay").style.display = "block";
+
+  $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
+  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+
+}
+function overlayOff(){
+  document.getElementById("overlay").style.display = "none";
+
+  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
+  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+
+}
+
+function checkOverlay(){
+  //enters when magnifying glass is clicked on
+  //enters when clicks outside of details panel
+
+  isOverlayOn = !isOverlayOn;
+  if(isOverlayOn)
+  {
+    overlayOn();
+  }
+  else{
+    overlayOff();
+  }
+}
+
+$('#overlay').click(function() {checkOverlay(); console.log("enters");});
+
 
 function generateContent(modelData) {
   var div = document.createElement("div");

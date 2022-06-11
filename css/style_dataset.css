@@ -845,7 +845,7 @@ error msg block behavior
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.8);
+  /* background: rgba(0, 0, 0, 0.8); */
   z-index: 99999;
   opacity:0;
   -webkit-transition: opacity 0ms ease-in;
@@ -935,7 +935,9 @@ error msg block behavior
 .close-button-modal:hover {
   color: white;
   transition: 0.3s;
-  text-decoration: underline !important;
+  font-weight: bold;
+  border: 2px solid black;
+  /* text-decoration: underline !important; */
 }
 
 .download-button-modal {
@@ -958,7 +960,9 @@ error msg block behavior
 .download-button-modal:hover {
   color: white;
   transition: 0.3s;
-  text-decoration: underline !important;
+  font-weight: bold;
+  border: 2px solid black;
+  /* text-decoration: underline !important; */
 }
 
 .view-selected {
@@ -1044,5 +1048,21 @@ error msg block behavior
   float: right;
   padding: 10px;
   margin-left: 10px;
+  cursor: pointer;
+}
+
+/* ATTEMPT AT OVERLAY FOR DETAILS  */
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
   cursor: pointer;
 }
