@@ -99,21 +99,21 @@
           </div> <!-- cd-filter-block -->
            
           <div class="cd-filter-block">
-              <h4>Age</h4>
-              
-              <div class="cd-filter-content">
-                <label class = "ageSearch" for="search">Minimum</label>
-                <input class = "ageSearch" type="search" placeholder="Enter minimum age" id="min-age">
-              </div> <!-- cd-filter-content -->
+              <h4 class = "closed">Age</h4>
+              <div class="cd-filter-content" style = "display: none;">
+                <div>
+                  <label class = "ageSearch" for="quantity">Minimum</label>
+                  <input class = "ageSearch" type="number" id="min-age" min="0" max="120">
+                </div> <!-- end min block -->
 
-              <div class="cd-filter-content">
-                <label class = "ageSearch" for="search">Maximum</label>
-                <input class = "ageSearch" type="search" placeholder="Enter maximum age"" id="max-age">
+                <div>
+                  <label class = "ageSearch" for="quantity">Maximum</label>
+                  <input class = "ageSearch" type="number" id="max-age" min="0" max="120">
+                </div> <!-- end max block -->
               </div> <!-- cd-filter-content -->
-
             </div>  <!-- cd-filter-block -->
 
-          <div id = "filterCheckboxes"></div> 
+          <div id = "filterCheckboxes"></div>
       </form>
 
       <a href="#0" class="cd-close">Close</a>

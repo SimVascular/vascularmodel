@@ -646,8 +646,8 @@ xcustom form elements
   box-shadow: none;
 }
 
-.cd-filter-block input[type='search'].ageSearch,  label.ageSearch {
-  width: 80%;
+.cd-filter-block input[type='quantity'].ageSearch,  label.ageSearch, input.ageSearch {
+  /* width: 80%; */
   margin-left: 1.2em;
   margin-bottom: 10px;
 }

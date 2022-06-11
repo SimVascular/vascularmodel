@@ -264,6 +264,26 @@ $(document).ready(function($){
     }
   });
 
+  $('#min-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters();
+      triggerFilter(false);
+      return true;
+    }
+  });
+
+  $('#max-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters()
+      triggerFilter(false);
+      return true;
+    }
+  });
+
 });
 
 $('.close-button-modal').click(function() {
