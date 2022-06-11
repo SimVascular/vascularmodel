@@ -47,6 +47,8 @@ function selectAllFilteredData()
     {
       selectModel(filteredData[i]);
     }
+    selectIcon = document.getElementById("select-all");
+    selectIcon.classList.add("applied");
   }
   else
   {
@@ -54,7 +56,9 @@ function selectAllFilteredData()
     {
       deselectModel(filteredData[i]);
     }
-    
+
+    selectIcon = document.getElementById("select-all");
+    selectIcon.classList.remove("applied");
   }
   updateSelectedCounter();
 }
@@ -96,6 +100,7 @@ function updatedSelectedList(model)
   countBucket++;
   var tempCounter = countBucket;
 
+  //remove class that allows for animation of bucket
   setTimeout(() => {
     if(tempCounter == countBucket) {
       bucket.classList.remove("selected");
@@ -347,9 +352,7 @@ $(document).ready(function($){
 });
 
 $('.download-button-modal').click(function() {
-  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  overlayOff();
   // download tracking
   console.log(data['Name']);
   window.open('svprojects/' + viewingModel + '.zip')
@@ -544,6 +547,8 @@ $("#view-selected").click(function() {
     else {
       errorMessage(false, false)
     }
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.add("applied");
   }
   else
   {
@@ -558,6 +563,9 @@ $("#view-selected").click(function() {
     else {
       errorMessage(false, true)
     }
+
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.remove("applied");
   }
   
 });

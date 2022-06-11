@@ -1005,29 +1005,31 @@ error msg block behavior
   font-size: 40px;
   padding: 20px;
   border-radius: 50%;
-  color: var(--light1);
   cursor: pointer;
   float: right;
   /* border: 2px solid black; */
 }
 
 .spanForIcons {
-  background-color: var(--grey);
+  background-color: var(--select);
   border-radius: 50%;
-  color: var(--light1);
+  color: black;
   cursor: pointer;
   float: right;
   margin: 5px;
   z-index: 1;
 }
-/* 
-.spanForIcons p {
-  overflow: overlay;
-  z-index: 2;
-} */
 
-.featuresIcons:hover {
-  color: var(--select);
+@media only screen and (min-width: 400px) {
+  .featuresIcons:hover {
+    color: var(--select);
+    background-color: black;
+  }
+}
+
+.applied {
+    color: var(--select);
+    background-color: black;
 }
 
 .fa-square-check {
@@ -1036,11 +1038,25 @@ error msg block behavior
 }
 
 @-webkit-keyframes animateBucket {  
-  0% { color: var(--light1); }
-  25% { color: var(--select); }
-  50% { color: var(--light1); }
-  75% { color: var(--select); }
-  100% { color: var(--light1); }
+  0% { 
+    background-color: var(--select);
+    color: black;
+  }
+  25% {
+    background-color: black;
+    color: var(--select);
+  }
+  50% {
+    background-color: var(--select);
+    color: black;}
+  75% {
+    background-color: black;
+    color: var(--select);
+  }
+  100% {
+    background-color: var(--select);
+    color: black;
+  }
 }
 
 .fa-box-archive.selected {
