@@ -866,7 +866,7 @@ error msg block behavior
   width: 300px;
   position: relative;
   margin: 10% auto;
-  padding: 20px 20px 13px 20px;
+  /* padding: 20px 20px 13px 20px; */
   border-radius: 8px !important;
   background: #fff;
   /* background: -moz-linear-gradient(#fff, #999);
@@ -935,9 +935,7 @@ error msg block behavior
 .close-button-modal:hover {
   color: white;
   transition: 0.3s;
-  font-weight: bold;
-  border: 2px solid black;
-  /* text-decoration: underline !important; */
+  background-color: var(--dark2shade);
 }
 
 .download-button-modal {
@@ -953,15 +951,14 @@ error msg block behavior
   border-collapse: separate;
   font-weight: 400;
   cursor: pointer;
-  margin-top:10px;
+  margin-top: 10px;
   margin-bottom:10px;
 }
 
 .download-button-modal:hover {
   color: white;
   transition: 0.3s;
-  font-weight: bold;
-  border: 2px solid black;
+  background-color: var(--light1shade); 
   /* text-decoration: underline !important; */
 }
 
@@ -1065,4 +1062,9 @@ error msg block behavior
   background-color: rgba(0,0,0,0.5);
   z-index: 2;
   cursor: pointer;
+}
+
+#safeOfOverlayClick {
+  padding: 20px 20px 20px 20px;
+  cursor: default;
 }
