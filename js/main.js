@@ -17,11 +17,25 @@ $("#closeAllButton").click(function() {
 
 
 function addClickListener(model) {
-  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
+  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay(); console.log("through magnif");});
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
 
 $("#select-all").click(function() {selectAllFilteredData();});
+$("#safeOfOverlayClick").click(function() {isSafeSelected = true; console.log("safe true")});
+
+$('#overlay').click(function() {
+  checkOverlay(); 
+  isSafeSelected = !isSafeSelected;
+
+  console.log("through overlay; safe now: " + isSafeSelected);
+});
+
+$('.close-button-modal').click(function() {
+  overlayOff();
+  console.log("through close");
+});
+
 
 function selectAllFilteredData()
 {
@@ -154,6 +168,7 @@ function greetingText(data)
 
 function overlayOn(){
   document.getElementById("overlay").style.display = "block";
+  isOverlayOn = true;
 
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
   $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
@@ -162,6 +177,8 @@ function overlayOn(){
 }
 function overlayOff(){
   document.getElementById("overlay").style.display = "none";
+  isSafeSelected = true;
+  isOverlayOn = false;
 
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
   $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
@@ -172,19 +189,18 @@ function overlayOff(){
 function checkOverlay(){
   //enters when magnifying glass is clicked on
   //enters when clicks outside of details panel
-
-  isOverlayOn = !isOverlayOn;
-  if(isOverlayOn)
+  if(!isSafeSelected)
   {
-    overlayOn();
-  }
-  else{
-    overlayOff();
+    isOverlayOn = !isOverlayOn;
+    if(isOverlayOn)
+    {
+      overlayOn();
+    }
+    else{
+      overlayOff();
+    }
   }
 }
-
-$('#overlay').click(function() {checkOverlay(); console.log("enters");});
-
 
 function generateContent(modelData) {
   var div = document.createElement("div");
@@ -328,12 +344,6 @@ $(document).ready(function($){
       return true;
     }
   });
-});
-
-$('.close-button-modal').click(function() {
-  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
 });
 
 $('.download-button-modal').click(function() {
