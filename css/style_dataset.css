@@ -1010,7 +1010,9 @@ error msg block behavior
   -webkit-animation-iteration-count: 1;  
   -webkit-animation-duration: 2s; 
 }
-/* 
-.cd-filter-content.closed {
-  display: none;
-} */
+
+.closeAllButton {
+  border: 2px solid var(--grey);
+  float: right;
+  padding: 10px;
+}
