@@ -662,6 +662,10 @@ xcustom form elements
   margin-bottom: 10px;
 }
 
+.minSearch {
+  padding-right: 4.57px;
+}
+
 .cd-filter-block input[type='search']:focus,
 .cd-filter-block input[type='text']:focus,
 .cd-filter-block select:focus {
@@ -741,6 +745,7 @@ xcustom form elements
   -ms-user-select: none;
   user-select: none;
   vertical-align: middle;
+  cursor: pointer;
 }
 .cd-filter-block .checkbox-label::before, .cd-filter-block .checkbox-label::after,
 .cd-filter-block .radio-label::before,
