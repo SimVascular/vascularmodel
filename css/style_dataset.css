@@ -1016,4 +1016,5 @@ error msg block behavior
   float: right;
   padding: 10px;
   margin-left: 10px;
+  cursor: pointer;
 }
