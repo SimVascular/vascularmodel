@@ -646,6 +646,12 @@ xcustom form elements
   box-shadow: none;
 }
 
+.cd-filter-block input[type='quantity'].ageSearch,  label.ageSearch, input.ageSearch {
+  /* width: 80%; */
+  margin-left: 1.2em;
+  margin-bottom: 10px;
+}
+
 .cd-filter-block input[type='search']:focus,
 .cd-filter-block input[type='text']:focus,
 .cd-filter-block select:focus {
@@ -1004,3 +1010,7 @@ error msg block behavior
   -webkit-animation-iteration-count: 1;  
   -webkit-animation-duration: 2s; 
 }
+/* 
+.cd-filter-content.closed {
+  display: none;
+} */

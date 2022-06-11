@@ -1,5 +1,21 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
+$("#closeAllButton").click(function() {
+  var h4Elements = document.getElementsByTagName("h4");
+  var changeClass = []
+  for(var i = 0; i < h4Elements.length; i++)
+  {
+    if(!h4Elements[i].classList.contains('closed'))
+    {
+      changeClass.push(h4Elements[i]);
+    }
+  }
+  $(changeClass).addClass('closed').siblings(".cd-filter-content").slideToggle(300);
+  var contentH4 = document.getElementsByClassName(".cd-filter-content");
+  $(contentH4).css({ "display": "none" });
+});
+
+
 function addClickListener(model) {
   $('#' + model['Name']  + "_details").click(function() {greetingText(model);});
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
@@ -264,6 +280,25 @@ $(document).ready(function($){
     }
   });
 
+  $('#min-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters();
+      triggerFilter(false);
+      return true;
+    }
+  });
+
+  $('#max-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters()
+      triggerFilter(false);
+      return true;
+    }
+  });
 });
 
 $('.close-button-modal').click(function() {

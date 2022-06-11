@@ -18,7 +18,7 @@ function getFilterMenu()
     {
       categoryWith1s.push(categoryName[i])
     }
-    else
+    else if(categoryName[i] != "Age")
     {
       var output = createHeaders(categoryName[i]);
       var div = output[0];
@@ -82,7 +82,7 @@ function createDivWithH4CheckboxUl(categoryName)
 function createDivWithH4DropDown(categoryName)
 {
   var div = document.createElement('div');
-  div.classList.add("cd-filter-block")
+  div.classList.add("cd-filter-block");
 
   var h4 = document.createElement('h4');
   h4.textContent = categoryName;
@@ -92,7 +92,7 @@ function createDivWithH4DropDown(categoryName)
   return div;
 }
 
-function addHooks(hooks) {
+function addHooks(hooks) {  
   for (var i = 0; i < hooks.length; i++) {
     $("#" + hooks[i]).change(function() {applyFilters();});
   }
@@ -189,12 +189,35 @@ function generateCheckboxUl(checkboxName, needsNameArray)
   var hooks = []
 
   for (var i = 0; i < checkboxName.length; i++) {
-      var newLi = generateCheckboxLi(checkboxName[i]);
-      ul.appendChild(newLi);
-      hooks.push("checkbox-" + checkboxName[i])
+    var codifyCBN = codifyHookandID(checkboxName[i])
+    var newLi = generateCheckboxLi(codifyCBN);
+    ul.appendChild(newLi);
+    hooks.push("checkbox-" + codifyCBN)
   }
 
   return [ul, hooks];
+}
+
+function codifyHookandID(checkboxName)
+{
+  if(checkboxName.indexOf(" ") == -1)
+  {
+    return checkboxName;
+  }
+  else{
+    var codifiedName = "";
+
+    var indexOfSpace = codifiedName.indexOf(" ");
+
+    while(indexOfSpace != -1)
+    {
+      codifiedName += checkboxName.substring(0, indexOfSpace) + "-";
+      checkboxName = checkboxName.substring(indexOfSpace + 1);
+      indexOfSpace = checkboxName.indexOf(" ");
+    }
+
+    return codifiedName;
+  }
 }
 
 function generateCheckboxLi(checkboxName) 
@@ -238,7 +261,13 @@ function applyFilters()
 
   for(var t = 0; t < titles.length; t++){
     
-    if (getNTimesPerCategory(titles[t]) == 2)
+    if(titles[t] == "Age")
+    {
+      filterOutput = ageFilter(filteredData)
+      filteredData = filterOutput[0]
+      filterApplied = filterApplied || filterOutput[1]
+    }
+    else if (getNTimesPerCategory(titles[t]) == 2)
     {
       filterOutput = dropDownFilter(titles[t], filteredData)
       filteredData = filterOutput[0]
@@ -350,14 +379,25 @@ function updatedFilteredData(whichToKeep, filteredData)
 
 function checkboxNamesPerCategory(categoryName, isKey)
 {
-  var checkboxNames = []
-
   var checkboxNames = namesOfValuesPerKey(categoryName);
   
-  if (!isKey && checkboxNames.includes("1"))
+  //if ID
+  if(!isKey)
   {
-    checkboxNames = [categoryName]
+    if(!isKey && checkboxNames.includes("1"))
+    {
+      checkboxNames = [categoryName];
+    }
+    else
+    {
+      for(var i = 0; i < checkboxNames.length; i++)
+      {
+        checkboxNames[i] = codifyHookandID(checkboxNames[i]);
+      }
+    }
   }
+
+  //if key, fill with "english names" && not codified names for ID
   return checkboxNames;
 }
 
@@ -470,6 +510,50 @@ function searchBarFilter(partialData)
   }
 }
 
+function ageFilter(partialData)
+{
+  var minVal = parseInt(document.getElementById("min-age").value);
+  var maxVal = parseInt(document.getElementById("max-age").value);
+
+  if(isNaN(minVal) && isNaN(maxVal))
+  {
+    return [partialData, false] 
+  }
+  else
+  {
+    var filteredData = [];
+
+    for (var i = 0; i < partialData.length; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var category = key.toLowerCase();
+        var subCategory = value.toLowerCase();
+        var push = false;
+        if(category == "age")
+        {
+          if(isNaN(minVal) && parseInt(subCategory) <= maxVal)
+          {
+            push = true;
+          }
+          else if (isNaN(maxVal) && parseInt(subCategory) >= minVal)
+          {
+            push = true;
+          }
+          else if(parseInt(subCategory) >= minVal && parseInt(subCategory) <= maxVal)
+          {
+            push = true;
+          }
+          if(push)
+          {
+            filteredData.push(partialData[i]);
+          }
+        }
+      }
+    }
+    
+    return [filteredData, true];
+  }
+}
+
 function searchBarFilterOneEntry(partialData, valueToSearch)
 {
   //set up variables
@@ -505,15 +589,15 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
           }
         }
         //separate case for age since subCategory is in numbers and search bar input is a string
-        else if(category.toLowerCase() == "age")
-        {
-          if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
-            filter[i] = true;
-          }
-          else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
-            filter[i] = true;
-          }
-        }
+        // else if(category.toLowerCase() == "age")
+        // {
+        //   if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
+        //     filter[i] = true;
+        //   }
+        //   else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
+        //     filter[i] = true;
+        //   }
+        // }
       }
       else
       {
