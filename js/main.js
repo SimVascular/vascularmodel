@@ -416,12 +416,7 @@ function updateSelectedCounter()
 {
   var count = selectedModels.filter(value => value === true).length;
 
-  if (smallScreen) {
-    document.getElementById('selected-counter').textContent = count + " selected";
-  }
-  else {
-    document.getElementById('selected-counter').textContent = count + " models selected";
-  }
+  document.getElementById('selected-counter').textContent = count;
 }
 
 window.addEventListener('scroll', () => {

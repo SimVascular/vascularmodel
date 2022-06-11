@@ -200,10 +200,6 @@ xtab-filter
   margin-right: 20px !important;
   float: center;
 }
-#selected-counter {
-  margin-right: 20px !important;
-  float: center;
-}
 
 @media only screen and (min-width: 768px) {
   .cd-tab-filter {
@@ -972,10 +968,6 @@ error msg block behavior
   /* text-decoration: underline !important; */
 }
 
-.view-selected {
-  float: right;
-}
-
 .descriptions
 {
   float: center;
@@ -1018,6 +1010,8 @@ error msg block behavior
   float: right;
   margin: 5px;
   z-index: 1;
+  height: 80px;
+  width: 80px;
 }
 
 @media only screen and (min-width: 400px) {
@@ -1037,7 +1031,16 @@ error msg block behavior
   padding-right: 22.5px;
 }
 
-@-webkit-keyframes animateBucket {  
+#selected-counter {
+  float: right;
+  right: 0px;
+  margin-left: 28px;
+  color: white;
+  z-index: 2;
+  text-shadow: 1px 1px var(--grey);
+}
+
+/* @-webkit-keyframes animateBucket {  
   0% { 
     background-color: var(--select);
     color: black;
@@ -1059,11 +1062,17 @@ error msg block behavior
   }
 }
 
-.fa-box-archive.selected {
-  /* color: var(--select); */
+.spanForIcons.selected {
+  /* color: var(--select); * /
   -webkit-animation-name: animateBucket;
   -webkit-animation-iteration-count: 1;  
   -webkit-animation-duration: 2s; 
+} */
+
+#view-selected {
+  float: right;
+  height: 80px;
+  width: 80px;
 }
 
 .closeAllButton {
