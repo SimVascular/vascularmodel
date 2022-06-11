@@ -190,7 +190,7 @@ function generateCheckboxUl(checkboxName, needsNameArray)
 
   for (var i = 0; i < checkboxName.length; i++) {
     var codifyCBN = codifyHookandID(checkboxName[i])
-    var newLi = generateCheckboxLi(codifyCBN);
+    var newLi = generateCheckboxLi(checkboxName[i]);
     ul.appendChild(newLi);
     hooks.push("checkbox-" + codifyCBN)
   }
@@ -207,7 +207,7 @@ function codifyHookandID(checkboxName)
   else{
     var codifiedName = "";
 
-    var indexOfSpace = codifiedName.indexOf(" ");
+    var indexOfSpace = checkboxName.indexOf(" ");
 
     while(indexOfSpace != -1)
     {
@@ -215,6 +215,8 @@ function codifyHookandID(checkboxName)
       checkboxName = checkboxName.substring(indexOfSpace + 1);
       indexOfSpace = checkboxName.indexOf(" ");
     }
+
+    codifiedName += checkboxName;
 
     return codifiedName;
   }
@@ -224,15 +226,17 @@ function generateCheckboxLi(checkboxName)
 {
   let li = document.createElement('li');
   
+  let codifiedName = codifyHookandID(checkboxName);
+
   let input = document.createElement('input');
   input.classList.add("filter");
-  input.setAttribute("data-filter", checkboxName);
+  input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
-  input.setAttribute("id", "checkbox-" + checkboxName);
+  input.setAttribute("id", "checkbox-" + codifiedName);
 
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
-  label.setAttribute("for", "checkbox-" + checkboxName)
+  label.setAttribute("for", "checkbox-" + codifiedName);
   label.textContent = checkboxName;
 
   li.appendChild(input);
@@ -390,6 +394,7 @@ function checkboxNamesPerCategory(categoryName, isKey)
     }
     else
     {
+      //IDs use the codified version of the name
       for(var i = 0; i < checkboxNames.length; i++)
       {
         checkboxNames[i] = codifyHookandID(checkboxNames[i]);
@@ -397,7 +402,7 @@ function checkboxNamesPerCategory(categoryName, isKey)
     }
   }
 
-  //if key, fill with "english names" && not codified names for ID
+  //if key, fill with "english names" && not codified names
   return checkboxNames;
 }
 
