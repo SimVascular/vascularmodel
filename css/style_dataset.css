@@ -616,7 +616,7 @@ xcustom form elements
 .cd-filter-block .radio-label::before,
 .cd-filter-block .checkbox-label::before {
   /* shared style for input elements */
-  font-family: "Open Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
   border-radius: 0;
   background-color: #ffffff;
   border: 2px solid var(--grey);
@@ -1010,7 +1010,10 @@ error msg block behavior
   -webkit-animation-iteration-count: 1;  
   -webkit-animation-duration: 2s; 
 }
-/* 
-.cd-filter-content.closed {
-  display: none;
-} */
+
+.allButton {
+  border: 2px solid var(--grey);
+  float: right;
+  padding: 10px;
+  margin-left: 10px;
+}
