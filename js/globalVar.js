@@ -10,6 +10,9 @@ var selectedModels = [];
 var viewingSelectedModels;
 var countBucket = 0;
 var wantsToSelectAll = false;
+var isOverlayOn = false;
+var isSafeSelected = false;
+
 
 //returns the keys of *all* the categories
 function getAllCategories()

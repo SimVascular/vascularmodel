@@ -17,11 +17,25 @@ $("#closeAllButton").click(function() {
 
 
 function addClickListener(model) {
-  $('#' + model['Name']  + "_details").click(function() {greetingText(model);});
+  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay(); console.log("through magnif");});
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
 
 $("#select-all").click(function() {selectAllFilteredData();});
+$("#safeOfOverlayClick").click(function() {isSafeSelected = true; console.log("safe true")});
+
+$('#overlay').click(function() {
+  checkOverlay(); 
+  isSafeSelected = !isSafeSelected;
+
+  console.log("through overlay; safe now: " + isSafeSelected);
+});
+
+$('.close-button-modal').click(function() {
+  overlayOff();
+  console.log("through close");
+});
+
 
 function selectAllFilteredData()
 {
@@ -33,6 +47,8 @@ function selectAllFilteredData()
     {
       selectModel(filteredData[i]);
     }
+    selectIcon = document.getElementById("select-all");
+    selectIcon.classList.add("applied");
   }
   else
   {
@@ -40,7 +56,9 @@ function selectAllFilteredData()
     {
       deselectModel(filteredData[i]);
     }
-    
+
+    selectIcon = document.getElementById("select-all");
+    selectIcon.classList.remove("applied");
   }
   updateSelectedCounter();
 }
@@ -82,6 +100,7 @@ function updatedSelectedList(model)
   countBucket++;
   var tempCounter = countBucket;
 
+  //remove class that allows for animation of bucket
   setTimeout(() => {
     if(tempCounter == countBucket) {
       bucket.classList.remove("selected");
@@ -91,14 +110,9 @@ function updatedSelectedList(model)
 
 function greetingText(data)
 {
-  viewingModel = data['Name']
+  viewingModel = data['Name'];
   $('.details-text').scrollTop(0);
   $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
-  $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-  // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
-  // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
-  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
     
   var details = []
   var categoryName = getCategoryName();
@@ -155,6 +169,42 @@ function greetingText(data)
   var size = parseInt(data['Size']) / 1000000
   $('.details-text')[0].value = details
   $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+}
+
+function overlayOn(){
+  document.getElementById("overlay").style.display = "block";
+  isOverlayOn = true;
+
+  $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
+  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+
+}
+function overlayOff(){
+  document.getElementById("overlay").style.display = "none";
+  isSafeSelected = true;
+  isOverlayOn = false;
+
+  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
+  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+
+}
+
+function checkOverlay(){
+  //enters when magnifying glass is clicked on
+  //enters when clicks outside of details panel
+  if(!isSafeSelected)
+  {
+    isOverlayOn = !isOverlayOn;
+    if(isOverlayOn)
+    {
+      overlayOn();
+    }
+    else{
+      overlayOff();
+    }
+  }
 }
 
 function generateContent(modelData) {
@@ -301,16 +351,8 @@ $(document).ready(function($){
   });
 });
 
-$('.close-button-modal').click(function() {
-  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-});
-
 $('.download-button-modal').click(function() {
-  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  overlayOff();
   // download tracking
   console.log(data['Name']);
   window.open('svprojects/' + viewingModel + '.zip')
@@ -505,6 +547,8 @@ $("#view-selected").click(function() {
     else {
       errorMessage(false, false)
     }
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.add("applied");
   }
   else
   {
@@ -519,6 +563,9 @@ $("#view-selected").click(function() {
     else {
       errorMessage(false, true)
     }
+
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.remove("applied");
   }
   
 });

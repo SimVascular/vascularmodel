@@ -396,6 +396,16 @@ gallery
   padding: 5px;
 }
 
+/* center text */
+/* .center {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  object-fit: cover;
+  font-size: 150%;
+  padding: 5px;
+} */
+
 .top-left:hover {
   color: var(--select);
 }
@@ -481,6 +491,11 @@ xfilter
   -moz-transition: opacity 0.3s;
   transition: opacity 0.3s;
   z-index: 3;
+}
+
+.cd-filter .cd-close:hover {
+  text-decoration: none;
+  background: var(--dark3shade);
 }
 
 .cd-filter .cd-UorIButton {
@@ -652,6 +667,10 @@ xcustom form elements
   margin-bottom: 10px;
 }
 
+.minSearch {
+  padding-right: 4.57px;
+}
+
 .cd-filter-block input[type='search']:focus,
 .cd-filter-block input[type='text']:focus,
 .cd-filter-block select:focus {
@@ -731,6 +750,7 @@ xcustom form elements
   -ms-user-select: none;
   user-select: none;
   vertical-align: middle;
+  cursor: pointer;
 }
 .cd-filter-block .checkbox-label::before, .cd-filter-block .checkbox-label::after,
 .cd-filter-block .radio-label::before,
@@ -835,7 +855,7 @@ error msg block behavior
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.8);
+  /* background: rgba(0, 0, 0, 0.8); */
   z-index: 99999;
   opacity:0;
   -webkit-transition: opacity 0ms ease-in;
@@ -856,7 +876,7 @@ error msg block behavior
   width: 300px;
   position: relative;
   margin: 10% auto;
-  padding: 20px 20px 13px 20px;
+  /* padding: 20px 20px 13px 20px; */
   border-radius: 8px !important;
   background: #fff;
   /* background: -moz-linear-gradient(#fff, #999);
@@ -925,7 +945,7 @@ error msg block behavior
 .close-button-modal:hover {
   color: white;
   transition: 0.3s;
-  text-decoration: underline !important;
+  background-color: var(--dark2shade);
 }
 
 .download-button-modal {
@@ -941,14 +961,15 @@ error msg block behavior
   border-collapse: separate;
   font-weight: 400;
   cursor: pointer;
-  margin-top:10px;
+  margin-top: 10px;
   margin-bottom:10px;
 }
 
 .download-button-modal:hover {
   color: white;
   transition: 0.3s;
-  text-decoration: underline !important;
+  background-color: var(--light1shade); 
+  /* text-decoration: underline !important; */
 }
 
 .view-selected {
@@ -965,12 +986,12 @@ error msg block behavior
 .features {
   top: 130px;
   right: 15px;
-  width: 100px;
-  height: 240px;
+  width: 135px;
+  height: 300px;
   box-shadow: 4px 4px 20px transparent;
   z-index: 1;
-  font-size: 17px;
   position: fixed;
+  /* background-color:rgba(0, 0, 0, 0.1); */
 }
 
 .features form {
@@ -981,27 +1002,61 @@ error msg block behavior
 }
 
 .featuresIcons {
-  font-size: 60px;
-  padding: 5px;
+  font-size: 40px;
+  padding: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  float: right;
+  /* border: 2px solid black; */
+}
+
+.spanForIcons {
+  background-color: var(--select);
+  border-radius: 50%;
   color: black;
   cursor: pointer;
   float: right;
+  margin: 5px;
+  z-index: 1;
 }
 
-.featuresIcons:hover {
-  font-size: 60px;
-  padding: 5px;
-  color: var(--select);
-  cursor: pointer;
-  float: right;
+@media only screen and (min-width: 400px) {
+  .featuresIcons:hover {
+    color: var(--select);
+    background-color: black;
+  }
+}
+
+.applied {
+    color: var(--select);
+    background-color: black;
+}
+
+.fa-square-check {
+  padding-left: 22.5px;
+  padding-right: 22.5px;
 }
 
 @-webkit-keyframes animateBucket {  
-  0% { color: black; }
-  25% { color: var(--select); }
-  50% { color: black; }
-  75% { color: var(--select); }
-  100% { color: black; }
+  0% { 
+    background-color: var(--select);
+    color: black;
+  }
+  25% {
+    background-color: black;
+    color: var(--select);
+  }
+  50% {
+    background-color: var(--select);
+    color: black;}
+  75% {
+    background-color: black;
+    color: var(--select);
+  }
+  100% {
+    background-color: var(--select);
+    color: black;
+  }
 }
 
 .fa-box-archive.selected {
@@ -1011,10 +1066,35 @@ error msg block behavior
   -webkit-animation-duration: 2s; 
 }
 
-.allButton {
+.closeAllButton {
   border: 2px solid var(--grey);
   float: right;
   padding: 10px;
   margin-left: 10px;
   cursor: pointer;
+}
+
+.closeAllButton:hover {
+  background-color: #ebebeb;
+}
+
+/* ATTEMPT AT OVERLAY FOR DETAILS  */
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#safeOfOverlayClick {
+  padding: 20px 20px 20px 20px;
+  cursor: default;
 }
