@@ -493,6 +493,11 @@ xfilter
   z-index: 3;
 }
 
+.cd-filter .cd-close:hover {
+  text-decoration: none;
+  background: var(--dark3shade);
+}
+
 .cd-filter .cd-UorIButton {
   font-size: 1rem;
   text-align: center;
