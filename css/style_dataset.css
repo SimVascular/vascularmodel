@@ -646,6 +646,12 @@ xcustom form elements
   box-shadow: none;
 }
 
+.cd-filter-block input[type='search'].ageSearch,  label.ageSearch {
+  width: 80%;
+  margin-left: 1.2em;
+  margin-bottom: 10px;
+}
+
 .cd-filter-block input[type='search']:focus,
 .cd-filter-block input[type='text']:focus,
 .cd-filter-block select:focus {

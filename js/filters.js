@@ -238,7 +238,13 @@ function applyFilters()
 
   for(var t = 0; t < titles.length; t++){
     
-    if (getNTimesPerCategory(titles[t]) == 2)
+    if(titles[t] == "Age")
+    {
+      filterOutput = ageFilter(filteredData)
+      filteredData = filterOutput[0]
+      filterApplied = filterApplied || filterOutput[1]
+    }
+    else if (getNTimesPerCategory(titles[t]) == 2)
     {
       filterOutput = dropDownFilter(titles[t], filteredData)
       filteredData = filterOutput[0]
@@ -469,6 +475,17 @@ function searchBarFilter(partialData)
       return [filteredData, output[1]];
   }
 }
+
+function ageFilter(filteredData)
+{
+  var minVal = document.getElementById("min-age").value.toLowerCase();
+  var minVal = document.getElementById("max-age").value.toLowerCase();
+
+  // if(minVal == 0 && 
+  
+  return [filteredData, true];
+}
+
 
 function searchBarFilterOneEntry(partialData, valueToSearch)
 {
