@@ -396,6 +396,16 @@ gallery
   padding: 5px;
 }
 
+/* center text */
+/* .center {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  object-fit: cover;
+  font-size: 150%;
+  padding: 5px;
+} */
+
 .top-left:hover {
   color: var(--select);
 }
@@ -965,12 +975,12 @@ error msg block behavior
 .features {
   top: 130px;
   right: 15px;
-  width: 100px;
-  height: 240px;
+  width: 135px;
+  height: 300px;
   box-shadow: 4px 4px 20px transparent;
   z-index: 1;
-  font-size: 17px;
   position: fixed;
+  /* background-color:rgba(0, 0, 0, 0.1); */
 }
 
 .features form {
@@ -981,27 +991,32 @@ error msg block behavior
 }
 
 .featuresIcons {
-  font-size: 60px;
-  padding: 5px;
-  color: black;
+  font-size: 40px;
+  padding: 20px;
+  background-color: var(--grey);
+  border-radius: 50%;
+  margin: 5px;
+  color: var(--light1);
   cursor: pointer;
   float: right;
+  /* border: 2px solid var(--grey); */
 }
 
 .featuresIcons:hover {
-  font-size: 60px;
-  padding: 5px;
   color: var(--select);
-  cursor: pointer;
-  float: right;
+}
+
+.fa-square-check {
+  padding-left: 22.5px;
+  padding-right: 22.5px;
 }
 
 @-webkit-keyframes animateBucket {  
-  0% { color: black; }
+  0% { color: var(--light1); }
   25% { color: var(--select); }
-  50% { color: black; }
+  50% { color: var(--light1); }
   75% { color: var(--select); }
-  100% { color: black; }
+  100% { color: var(--light1); }
 }
 
 .fa-box-archive.selected {
