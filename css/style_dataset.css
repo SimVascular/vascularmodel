@@ -200,6 +200,14 @@ xtab-filter
   margin-right: 20px !important;
   float: center;
 }
+#selected-counter-display {
+  margin-right: 20px !important;
+  float: center;
+}
+#counterPanel {
+  margin-right: 20px !important;
+  float: center;
+}
 
 @media only screen and (min-width: 768px) {
   .cd-tab-filter {
@@ -404,7 +412,7 @@ gallery
 } */
 
 .top-left:hover {
-  color: var(--select);
+  color: var(--midpointSelectApplied);
 }
 
 .animate {
@@ -1014,7 +1022,6 @@ error msg block behavior
   /* border: 2px solid black; */
 }
 
-
 @media only screen and (min-width: 400px) {
   .spanForIcons:hover {
     color: var(--select);
@@ -1099,4 +1106,42 @@ error msg block behavior
 #safeOfOverlayClick {
   padding: 20px 20px 20px 20px;
   cursor: default;
+}
+
+/* styling for confirm box */
+
+#confirmBox
+{
+  display: none;
+  background-color: #eee;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  position: fixed;
+  width: 300px;
+  top: 300px;
+  left: 50%;
+  margin-left: -150px;
+  padding: 8px 10px 10px;
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 2;
+}
+#confirmBox .button {
+  background-color: #ccc;
+  display: inline-block;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+  padding: 2px;
+  text-align: center;
+  width: 80px;
+  cursor: pointer;
+}
+#confirmBox .button:hover
+{
+  background-color: #ddd;
+}
+#confirmBox .message
+{
+  text-align: center;
+  margin-bottom: 8px;
 }

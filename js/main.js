@@ -21,7 +21,17 @@ function addClickListener(model) {
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
 
-$("#select-all").click(function() {selectAllFilteredData();});
+$("#select-all").click(function() {
+  if(viewingSelectedModels)
+  {
+    deselectAll();
+  }
+  if(!viewingSelectedModels)
+  {
+    selectAllFilteredData();
+  }
+});
+
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true; console.log("safe true")});
 
 $('#overlay').click(function() {
@@ -36,12 +46,36 @@ $('.close-button-modal').click(function() {
   console.log("through close");
 });
 
+function deselectAll()
+{
+  //if at least one model has been selected
+  if(selectedModels.filter(value => value === true).length > 0){
+    //sends a "confirm action" notification
+    doConfirm("Are you sure you want to deselect all selected models?", function yes() {
+      selectedModels.fill(false);
+      removeContent();
+      updateCounters(lastFapplied, filteredData);
+      errorMessage(true, false);
+    });
+  }
+}
+
+function doConfirm(msg, yesFn, noFn) {
+  var confirmBox = $("#confirmBox");
+  confirmBox.find(".message").text(msg);
+  confirmBox.find(".yes,.no").unbind().click(function () {
+      confirmBox.hide();
+  });
+  confirmBox.find(".yes").click(yesFn);
+  confirmBox.find(".no").click(noFn);
+  confirmBox.show();
+}
 
 function selectAllFilteredData()
 {
-  wantsToSelectAll = !wantsToSelectAll;
+  wantsToSelectAllInFiltered = !wantsToSelectAllInFiltered;
 
-  if(wantsToSelectAll)
+  if(wantsToSelectAllInFiltered)
   {
     for (var i = 0; i < filteredData.length; i++)
     {
@@ -60,7 +94,8 @@ function selectAllFilteredData()
     selectIcon = document.getElementById("select-all");
     selectIcon.classList.remove("applied");
   }
-  updateSelectedCounter();
+  //parameters should not have an impact
+  updateCounters(lastFapplied, filteredData);
 }
 
 function deselectModel(model)
@@ -96,7 +131,7 @@ function updatedSelectedList(model)
     element.classList.remove("selected");
   }
 
-  updateSelectedCounter();
+  updateCounters(lastFapplied, filteredData);
   countBucket++;
   var tempCounter = countBucket;
 
@@ -254,7 +289,6 @@ function removeContent() {
 }
 
 function populate(dataArray, num_images = 24) {
-  
   var modelList = document.getElementById("model-gallery")
   var arrayLength = dataArray.length;
   var ubound = arrayLength;
@@ -286,8 +320,7 @@ $(document).ready(function($){
   // create copy of data
   filteredData = data;
   initializeSelectedModels();
-  updateFilterAppliedCounter(false, data)
-  updateSelectedCounter()
+  updateCounters(false, data);
   getFilterMenu();
   populate(data);
 
@@ -369,15 +402,13 @@ function checkWidth() {
     if (screen.width >= 769 && (document.documentElement.clientWidth >= 769)) {
         if (smallScreen) {
           smallScreen = false;
-          updateFilterAppliedCounter(lastFapplied, lastFdata);
-          updateSelectedCounter();
+          updateCounters(lastFapplied, filteredData);
         }
     }
     else {
       if (!smallScreen) {
         smallScreen = true;
-        updateFilterAppliedCounter(lastFapplied, lastFdata);
-        updateSelectedCounter();
+        updateCounters(lastFapplied, filteredData);
       }
     }
 }
@@ -391,33 +422,54 @@ function initializeSelectedModels()
 $(window).ready(checkWidth);
 $(window).resize(checkWidth);
 
-function updateFilterAppliedCounter(fApplied, fData) {
-  lastFdata = fData;
-  lastFapplied = fApplied;
-  if (smallScreen) {
-    if (fApplied) {
-      document.getElementById('model-counter').textContent = fData.length + '/' + data.length + ' models'
-    }
-    else {
-      document.getElementById('model-counter').textContent = + fData.length + '/' + data.length + ' models'
-    }
-  }
-  else {
-    if (fApplied) {
-      document.getElementById('model-counter').textContent = "Filters applied: " + fData.length + '/' + data.length + ' models'
-    }
-    else {
-      document.getElementById('model-counter').textContent = "Filters not applied: " + fData.length + '/' + data.length + ' models'
-    }
-  }
-}
-
-function updateSelectedCounter()
+function updateCounters(fApplied, fData)
 {
+  //update counter of selected models on bucket
   var count = selectedModels.filter(value => value === true).length;
-
   document.getElementById('selected-counter').textContent = count;
+  
+  var counterPanel = document.getElementById("counterPanel");
+
+  if(viewingSelectedModels)
+  {
+    if (smallScreen) {
+      counterPanel.textContent = count + " selected";
+    }
+    else {
+      counterPanel.textContent = count + " models selected";
+    }
+
+    //updates icon status
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.add("applied");
+  }
+  if(!viewingSelectedModels)
+  {
+    // lastFdata = fData;
+    lastFapplied = fApplied;
+    if (smallScreen) {
+      if (fApplied) {
+        counterPanel.textContent = fData.length + '/' + data.length + ' models'
+      }
+      else {
+        counterPanel.textContent = + fData.length + '/' + data.length + ' models'
+      }
+    }
+    else {
+      if (fApplied) {
+        counterPanel.textContent = "Filters applied: " + fData.length + '/' + data.length + ' models'
+      }
+      else {
+        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + data.length + ' models'
+      }
+    }
+    //updates icon status
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.remove("applied");
+  }
 }
+
+
 
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
@@ -542,8 +594,9 @@ $("#view-selected").click(function() {
     else {
       errorMessage(false, false)
     }
-    viewSelectedIcon = document.getElementById("view-selected");
-    viewSelectedIcon.classList.add("applied");
+
+    //parameters should not have an impact
+    updateCounters(lastFapplied, filteredData);
   }
   else
   {
@@ -551,6 +604,7 @@ $("#view-selected").click(function() {
     scrollToTop();
     curIndex = 0;
     populate(filteredData);
+    updateCounters(lastFapplied, filteredData);
     
     if (filteredData.length == 0) {
       errorMessage(true, true)
@@ -558,9 +612,6 @@ $("#view-selected").click(function() {
     else {
       errorMessage(false, true)
     }
-
-    viewSelectedIcon = document.getElementById("view-selected");
-    viewSelectedIcon.classList.remove("applied");
   }
   
 });

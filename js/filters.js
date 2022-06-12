@@ -305,16 +305,26 @@ function applyFilters()
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
 
+  lastFapplied = filterApplied;
+
   removeContent();
   scrollToTop();
   populate(filteredData);
-  updateFilterAppliedCounter(filterApplied, filteredData);
+
   if (filteredData.length == 0) {
     errorMessage(true, true);
   }
   else {
     errorMessage(false, true)
   }
+
+  //if filter is applied, clear viewing selected models view
+
+  //updates viewingSelectedModels
+  viewingSelectedModels = false;
+
+  //updates counters --> displays filtered models counter
+  updateCounters(filterApplied, filteredData);
 }
 
 function getNTimes()

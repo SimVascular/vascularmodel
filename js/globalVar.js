@@ -9,7 +9,8 @@ var lastSelectedData = [];
 var selectedModels = [];
 var viewingSelectedModels;
 var countBucket = 0;
-var wantsToSelectAll = false;
+var wantsToSelectAllInFiltered = false;
+var wantsToSelectAllInBucket = false;
 var isOverlayOn = false;
 var isSafeSelected = false;
 
