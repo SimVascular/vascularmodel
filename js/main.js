@@ -590,7 +590,7 @@ $("#view-selected").click(function() {
         display.push(data[i])
       }
     }
-    
+
     removeContent();
     scrollToTop();
     curIndex = 0;
@@ -605,9 +605,22 @@ $("#view-selected").click(function() {
 
     //parameters should not have an impact
     updateCounters(lastFapplied, filteredData);
+    
+    //update select all icon
+    if(display.length > 0)
+    {
+      document.getElementById("select-all").classList.add("applied");
+    }
+    else
+    {
+      document.getElementById("select-all").classList.add("cannotSelect");
+    }
   }
   else
   {
+    //update select all icon
+    document.getElementById("select-all").classList.remove("applied");
+
     removeContent();
     scrollToTop();
     curIndex = 0;
@@ -635,7 +648,7 @@ function errorMessage(isOn, isFilter)
   }
   else
   {
-    errorMsg.textContent = "It looks like no models were selected!";
+    errorMsg.textContent = "It looks like no models are currently selected!";
   }
 
   //whether or not the error message is visible/displayed
