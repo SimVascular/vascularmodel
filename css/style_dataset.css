@@ -354,14 +354,14 @@ gallery
   /* background-image: url('../img/loading_image.png'); */
   width: 100%;
   /* aspect-ratio: 16/9; */
-  background-color: white;
+  background-color: var(--lightgrey);
   border: 3px solid;
   border-color: var(--grey);
 }
 
 /*HOVER FORMAT*/
 .model-image img:hover {
-  box-shadow: inset 0px 0px 35px 10px var(--lighterselect);
+  box-shadow: inset 0px 0px 35px 10px var(--white);
   box-sizing: border-box;
   transition: 0.3s;
 }
@@ -372,7 +372,8 @@ gallery
   transition: 0.3s;
   border-width: inset;
   border: 3px solid;
-  border-color: var(--select);
+  background-color: white;
+  border-color: var(--applied);
 }
 
 /* FORMATING TEXT OVER GALLERY IMAGES */
@@ -1043,15 +1044,15 @@ error msg block behavior
 @-webkit-keyframes animateBucket {  
   0% { 
     background-color: var(--select);
-    color: black;
+    color: var(--applied);
   }
   50% {
-    background-color: black;
+    background-color: var(--applied);
     color: var(--select);
   }
   100% {
     background-color: var(--select);
-    color: black;
+    color: var(--applied);
   }
 }
 
