@@ -105,7 +105,7 @@ function updatedSelectedList(model)
     if(tempCounter == countBucket) {
       bucket.classList.remove("selected");
     }
-  }, 2000);
+  }, 750);
 }
 
 function greetingText(data)

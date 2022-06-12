@@ -992,6 +992,17 @@ error msg block behavior
   padding: 15px;
   float: right;
 }
+.spanForIcons {
+  background-color: var(--select);
+  border-radius: 50%;
+  color: var(--applied);
+  cursor: pointer;
+  float: right;
+  margin: 5px;
+  z-index: 1;
+  height: 80px;
+  width: 80px;
+}
 
 .featuresIcons {
   font-size: 40px;
@@ -1002,28 +1013,17 @@ error msg block behavior
   /* border: 2px solid black; */
 }
 
-.spanForIcons {
-  background-color: var(--select);
-  border-radius: 50%;
-  color: black;
-  cursor: pointer;
-  float: right;
-  margin: 5px;
-  z-index: 1;
-  height: 80px;
-  width: 80px;
-}
 
 @media only screen and (min-width: 400px) {
-  .featuresIcons:hover {
+  .spanForIcons:hover {
     color: var(--select);
-    background-color: black;
+    background-color: var(--applied);
   }
 }
 
 .applied {
     color: var(--select);
-    background-color: black;
+    background-color: var(--applied);
 }
 
 .fa-square-check {
@@ -1037,22 +1037,15 @@ error msg block behavior
   margin-left: 28px;
   color: white;
   z-index: 2;
-  text-shadow: 1px 1px var(--grey);
+  text-shadow: 0px 2px black;
 }
 
-/* @-webkit-keyframes animateBucket {  
+@-webkit-keyframes animateBucket {  
   0% { 
     background-color: var(--select);
     color: black;
   }
-  25% {
-    background-color: black;
-    color: var(--select);
-  }
   50% {
-    background-color: var(--select);
-    color: black;}
-  75% {
     background-color: black;
     color: var(--select);
   }
@@ -1063,16 +1056,15 @@ error msg block behavior
 }
 
 .spanForIcons.selected {
-  /* color: var(--select); * /
+  /* color: var(--select); */
   -webkit-animation-name: animateBucket;
   -webkit-animation-iteration-count: 1;  
-  -webkit-animation-duration: 2s; 
-} */
+  -webkit-animation-duration: 0.75s; 
+} 
 
-#view-selected {
-  float: right;
-  height: 80px;
-  width: 80px;
+.fa-box-archive {
+  height: 84px;
+  width: 84px;
 }
 
 .closeAllButton {

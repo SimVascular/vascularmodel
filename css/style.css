@@ -12,7 +12,9 @@
   --light2: #f05d62;
   --grey: #e6e6e6;
   --white: #ffffff;
-  --select: #bfd4e2;
+  /* --select: #bfd4e2; */
+  --select: pink;
+  --applied: black;
   --lighterselect: #e0dddd;
 }
 
