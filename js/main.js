@@ -345,15 +345,7 @@ $(document).ready(function($){
     triggerFilter(false);
   });
 
-  // this function is called whenever "Filters" is pressed. It applies the
-  // "filter-is-visible" class to all elements in elementsToTrigger. The behavior
-  // filter-is-visible is determined in style_dataset.css
-  function triggerFilter($bool) {
-    var elementsToTrigger = $([$('.cd-filter-trigger'), $('.cd-filter'), $('.cd-tab-filter'), $('.cd-gallery')]);
-    elementsToTrigger.each(function(){
-      $(this).toggleClass('filter-is-visible', $bool);
-    });
-  }
+  
 
   //close filter dropdown inside lateral .cd-filter
 	$('.cd-filter-block h4').on('click', function(){
@@ -391,6 +383,16 @@ $(document).ready(function($){
     }
   });
 });
+
+// this function is called whenever "Filters" is pressed. It applies the
+// "filter-is-visible" class to all elements in elementsToTrigger. The behavior
+// filter-is-visible is determined in style_dataset.css
+function triggerFilter($bool) {
+  var elementsToTrigger = $([$('.cd-filter-trigger'), $('.cd-filter'), $('.cd-tab-filter'), $('.cd-gallery')]);
+  elementsToTrigger.each(function(){
+    $(this).toggleClass('filter-is-visible', $bool);
+  });
+}
 
 $('.download-button-modal').click(function() {
   overlayOff();
@@ -581,6 +583,8 @@ $("#view-selected").click(function() {
   
   if(viewingSelectedModels)
   {
+    triggerFilter(false);
+
     var display = []
   
     for(var i = 0; i < data.length; i++)
