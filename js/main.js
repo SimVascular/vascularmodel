@@ -28,6 +28,7 @@ $("#select-all").click(function() {
   }
   if(!viewingSelectedModels)
   {
+    document.getElementById("select-all").classList.remove("cannotSelect");
     selectAllFilteredData();
   }
 });
@@ -56,6 +57,7 @@ function deselectAll()
       removeContent();
       updateCounters(lastFapplied, filteredData);
       errorMessage(true, false);
+      document.getElementById("select-all").classList.add("cannotSelect");
     });
   }
 }
@@ -289,6 +291,12 @@ function removeContent() {
 }
 
 function populate(dataArray, num_images = 24) {
+  //clears not-allowed function when data is repopulated on select all icon
+  document.getElementById("select-all").classList.remove("cannotSelect");
+
+  //clears confirm message if data repopulated
+  $("#confirmBox").hide();
+
   var modelList = document.getElementById("model-gallery")
   var arrayLength = dataArray.length;
   var ubound = arrayLength;
@@ -316,9 +324,9 @@ $(document).ready(function($){
     }
   });
 
+  filteredData = data;
   checkWidth();
   // create copy of data
-  filteredData = data;
   initializeSelectedModels();
   updateCounters(false, data);
   getFilterMenu();
@@ -452,7 +460,7 @@ function updateCounters(fApplied, fData)
         counterPanel.textContent = fData.length + '/' + data.length + ' models'
       }
       else {
-        counterPanel.textContent = + fData.length + '/' + data.length + ' models'
+        counterPanel.textContent = fData.length + '/' + data.length + ' models'
       }
     }
     else {

@@ -1145,3 +1145,10 @@ error msg block behavior
   text-align: center;
   margin-bottom: 8px;
 }
+
+.cannotSelect
+{
+  cursor: not-allowed;
+  color: var(--applied);
+  background-color: var(--select)
+}
