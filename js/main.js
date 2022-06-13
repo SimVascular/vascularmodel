@@ -400,6 +400,22 @@ $('.download-button-modal').click(function() {
   overlayOff();
   // download tracking
   console.log(data['Name']);
+  downloadModel();
+});
+
+
+$('#download-all').click(function() {
+  
+  // for the test download
+  namesOfSelectedModels = ["0166_0001", "0107_0001"]
+  for(var i = 0; i < namesOfSelectedModels.length; i++)
+  {
+    viewingModel = namesOfSelectedModels[i];
+    downloadModel();
+  }
+});
+
+function downloadModel(){
   window.open('svprojects/' + viewingModel + '.zip')
   console.log('svprojects/' + viewingModel + '.zip')
   gtag('event', 'download_' + viewingModel, {
@@ -408,7 +424,7 @@ $('.download-button-modal').click(function() {
       'event_label': 'test',
       'value': '1'
   });
-});
+}
 
 function checkWidth() {
     if (screen.width >= 769 && (document.documentElement.clientWidth >= 769)) {
