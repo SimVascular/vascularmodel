@@ -4,12 +4,18 @@
 :root {
   --dark1: #172229;
   --dark2: #3a596e;
+    --dark2shade: #2E4758;
   --dark3: #6195b8;
+    --dark3shade: #5786a5;
   --light1: #5db0e8;
+    --light1shade: #4a8cb9;
   --light2: #f05d62;
   --grey: #e6e6e6;
+  --lightgrey: #f7f7f7;
   --white: #ffffff;
-  --select: pink;
+  --select: #c1dbde;
+  --applied: #07575b;
+  --midpointSelectApplied: #64999D;
   --lighterselect: #e0dddd;
 }
 
