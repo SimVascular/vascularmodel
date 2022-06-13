@@ -294,6 +294,7 @@ function removeContent() {
 function populate(dataArray, num_images = 24) {
   //clears not-allowed function when data is repopulated on select all icon
   document.getElementById("select-all").classList.remove("cannotSelect");
+  document.getElementById("select-all").classList.remove("applied");
 
   //clears confirm message if data repopulated
   $("#confirmBox").hide();
