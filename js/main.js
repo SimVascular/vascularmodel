@@ -268,6 +268,7 @@ function generateContent(modelData) {
   detailsImg.classList.add("fa-pink");
   detailsImg.classList.add("fa-magnifying-glass");
   detailsImg.classList.add("top-left");
+  detailsImg.setAttribute("title", "View Details");
   detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
   let innerImg = document.createElement("img");
