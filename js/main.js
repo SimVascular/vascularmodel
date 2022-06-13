@@ -403,6 +403,7 @@ $('.download-button-modal').click(function() {
   downloadModel();
 });
 
+var isPaused = false;
 
 $('#download-all').click(function() {
   
@@ -411,19 +412,52 @@ $('#download-all').click(function() {
   for(var i = 0; i < namesOfSelectedModels.length; i++)
   {
     viewingModel = namesOfSelectedModels[i];
-    downloadModel();
+    var fileUrl = 'svprojects/' + viewingModel + '.zip';
+    downloadModel(fileUrl, viewingModel);
+    downloadProgress(fileUrl);
+    while(isPaused){
+      sleep(300);
+    }
   }
 });
 
-function downloadModel(){
-  window.open('svprojects/' + viewingModel + '.zip')
-  console.log('svprojects/' + viewingModel + '.zip')
-  gtag('event', 'download_' + viewingModel, {
-      'send_to': 'G-YVVR1546XJ',
-      'event_category': 'Model download',
-      'event_label': 'test',
-      'value': '1'
-  });
+async function downloadProgress(fileUrl) {
+  isPaused = true;
+
+  // instead of response.json() and other methods
+  let response = await fetch(fileUrl);
+
+  const reader = response.body.getReader();
+
+  // infinite loop while the body is downloading
+  while(true) {
+    // done is true for the last chunk
+    // value is Uint8Array of the chunk bytes
+    const {done, value} = await reader.read();
+
+    if (done) {
+      isPaused = false;
+      console.log("done download")
+      return true;
+    }
+  }
+}
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now(); console.log("running loop")
+  } while (currentDate - date < milliseconds || !isPaused);
+  console.log("end loop")
+}
+
+function downloadModel(fileUrl){
+  // window.open('svprojects/' + viewingModel + '.zip');
+  var a = document.createElement("a");
+  a.href = fileUrl;
+  a.setAttribute("download", viewingModel);
+  a.click();
 }
 
 function checkWidth() {
