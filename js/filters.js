@@ -113,7 +113,7 @@ function generateDropDownMenu(categoryName)
   //select.classList.add("dropbtn");
 
   var option = document.createElement("option")
-  option.value = "none";
+  option.value = "all";
   option.textContent = "Select One";
   select.appendChild(option);
   option.classList.add("dropdown-content");
@@ -431,7 +431,7 @@ function dropDownFilter(categoryName, partialData)
 {
   var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
 
-  if(valueToSearch == 'none')
+  if(valueToSearch == 'all')
   {
     return [partialData, false];
   }
