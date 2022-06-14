@@ -157,34 +157,38 @@ function greetingText(data)
   for(var d = 0; d < categoryName.length; d++)
   {
     var valInCat = data[categoryName[d]];
-
-    if(valInCat.indexOf("_") == -1)
+    if(valInCat == "-")
     {
-      details += categoryName[d] + ": " + valInCat;
+      details += categoryName[d] + ": N/A";
     }
-    else
-    {
-      details += categoryName[d] + "s: ";
-
-      valInCat = checkboxNameInArrayForm(valInCat);
-
-      var numOfDetails = valInCat.length;
-
-      //grammar with commas and ands for lists
-      if(numOfDetails == 2)
+    else{
+      if(valInCat.indexOf("_") == -1)
       {
-        details += valInCat[0] + " and " + valInCat[1];
+        details += categoryName[d] + ": " + valInCat;
       }
       else
       {
-        for(var v = 0; v < numOfDetails - 1; v++)
-        {
-          details += valInCat[v] + ", ";
-        }
-        details += "and " + valInCat[numOfDetails - 1];
-      }
+        details += categoryName[d] + "s: ";
 
-    } //end else if more than one detail
+        valInCat = checkboxNameInArrayForm(valInCat);
+
+        var numOfDetails = valInCat.length;
+
+        //grammar with commas and ands for lists
+        if(numOfDetails == 2)
+        {
+          details += valInCat[0] + " and " + valInCat[1];
+        }
+        else
+        {
+          for(var v = 0; v < numOfDetails - 1; v++)
+          {
+            details += valInCat[v] + ", ";
+          }
+          details += "and " + valInCat[numOfDetails - 1];
+        }
+      } //end else if more than one detail
+    }
 
     details += '\n';
 
