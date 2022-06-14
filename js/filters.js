@@ -398,21 +398,25 @@ function checkboxNamesPerCategory(categoryName, isKey)
   //if ID
   if(!isKey)
   {
-    if(!isKey && checkboxNames.includes("1"))
+    //IDs use the codified version of the name
+    for(var i = 0; i < checkboxNames.length; i++)
+    {
+      checkboxNames[i] = codifyHookandID(checkboxNames[i]);
+    }
+  }
+  if (checkboxNames.includes("1"))
+  {
+    if (!isKey)
     {
       checkboxNames = [categoryName];
     }
     else
     {
-      //IDs use the codified version of the name
-      for(var i = 0; i < checkboxNames.length; i++)
-      {
-        checkboxNames[i] = codifyHookandID(checkboxNames[i]);
-      }
+      checkboxNames = [1];
     }
   }
 
-  //if key, fill with "english names" && not codified names
+  //if key and not , fill with "english names" && not codified names
   return checkboxNames;
 }
 
@@ -449,16 +453,16 @@ function dropDownFilter(categoryName, partialData)
             pushValue = true; 
           }
 
-          //different for Age
-          if(category.toLowerCase() == "age")
-          {
-            if (valueToSearch == "pediatric" && parseInt(option) < 18) {
-              pushValue = true;
-            }
-            else if (valueToSearch == "adult" && parseInt(option) >= 18){
-              pushValue = true;
-            }
-          }
+          // //different for Age
+          // if(category.toLowerCase() == "age")
+          // {
+          //   if (valueToSearch == "pediatric" && parseInt(option) < 18) {
+          //     pushValue = true;
+          //   }
+          //   else if (valueToSearch == "adult" && parseInt(option) >= 18){
+          //     pushValue = true;
+          //   }
+          // }
 
           if (pushValue)
             filteredData.push(partialData[i]);
@@ -602,17 +606,24 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
           {
             filter[i] = false;
           }
+
+          if(category == "age")
+          {
+            if (parseInt(valueToSearch) == parseInt(subCategory))
+            {
+              filter[i] = true;
+            }
+            else if (parseInt(valueToSearch) != parseInt(subCategory)) {
+              filter[i] = false;
+            }
+            else if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
+              filter[i] = true;
+            }
+            else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
+              filter[i] = true;
+            }
+          }
         }
-        //separate case for age since subCategory is in numbers and search bar input is a string
-        // else if(category.toLowerCase() == "age")
-        // {
-        //   if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
-        //     filter[i] = true;
-        //   }
-        //   else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
-        //     filter[i] = true;
-        //   }
-        // }
       }
       else
       {
