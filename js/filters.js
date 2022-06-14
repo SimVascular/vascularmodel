@@ -120,23 +120,17 @@ function generateDropDownMenu(categoryName)
 
   var hooks = ["select-" + categoryName];
 
-  //separate for Age
-  if(categoryName == "Age")
-  {
-    var checkboxNameArray = ["Adult", "Pediatric"]
-  }
-  else{
-    var checkboxNameSet = new Set();
+  var checkboxNameSet = new Set();
   
-    for(var i = 0; i < data.length; i++)
-    {
+  for(var i = 0; i < data.length; i++)
+  {
+    if (data[i][categoryName] != "-")
       checkboxNameSet.add(data[i][categoryName])
-    }
-
-    var checkboxNameArray = Array.from(checkboxNameSet);
-    checkboxNameArray.sort();
   }
 
+  var checkboxNameArray = Array.from(checkboxNameSet);
+  checkboxNameArray.sort();
+  
   //checkboxNameArray.length should = 2
   for (var i = 0; i < checkboxNameArray.length; i++) {
       var newOption = generateOptions(checkboxNameArray[i]);
@@ -452,18 +446,10 @@ function dropDownFilter(categoryName, partialData)
           {
             pushValue = true; 
           }
-
-          // //different for Age
-          // if(category.toLowerCase() == "age")
-          // {
-          //   if (valueToSearch == "pediatric" && parseInt(option) < 18) {
-          //     pushValue = true;
-          //   }
-          //   else if (valueToSearch == "adult" && parseInt(option) >= 18){
-          //     pushValue = true;
-          //   }
-          // }
-
+          if (option == "-")
+          {
+            pushValue = true;
+          }
           if (pushValue)
             filteredData.push(partialData[i]);
         }
@@ -483,6 +469,9 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
   
     for (var i = 0; i < arrayLength; i++) {
       if (partialData[i][category].includes(key)) {
+        whichToKeep[i] = true;
+      }
+      else if (partialData[i][category] == "-"){
         whichToKeep[i] = true;
       }
     }
@@ -558,6 +547,10 @@ function ageFilter(partialData)
             push = true;
           }
           else if(parseInt(subCategory) >= minVal && parseInt(subCategory) <= maxVal)
+          {
+            push = true;
+          }
+          if (subCategory == "-")
           {
             push = true;
           }

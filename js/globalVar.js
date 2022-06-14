@@ -86,12 +86,14 @@ function namesOfValuesPerKey(categoryName)
       var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
       for(var a = 0; a < toAdd.length; a++)
       {
-        checkboxNameSet.add(toAdd[a]);
+        if (toAdd[a] != "-")
+          checkboxNameSet.add(toAdd[a]);
       }
     }
     else
     {
-      checkboxNameSet.add(data[d][categoryName]);
+      if (data[d][categoryName] != "-")
+        checkboxNameSet.add(data[d][categoryName]);
     }
   }
 

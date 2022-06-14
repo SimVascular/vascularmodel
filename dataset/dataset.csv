@@ -1,5 +1,5 @@
 Name,Sex,Age,Species,Anatomy,Disease,Procedure,Images,Paths,Segmentations,Models,Meshes,Simulations,Size
-0063_1001,Female,1,Human,Aorta,Healthy,Anastomosis,1,1,1,1,1,1,150270871
+0063_1001,-,-,-,-,-,-,1,1,1,1,1,1,150270871
 0064_1001,Female,2,Human,Aorta,Healthy,Anastomosis,1,1,1,1,1,1,143917312
 0065_1001,Female,3,Human,Aorta,Healthy,Anastomosis,1,1,1,1,1,1,238865981
 0075_1001,Female,4,Human,Aorta,Healthy,Anastomosis,1,1,1,1,1,1,117513893
