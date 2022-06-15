@@ -147,14 +147,14 @@ $(document).ready(function($){
 
 $('.close-button-modal').click(function() {
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
 });
 
 $('.download-button-modal').click(function() {
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
   // download tracking
   console.log(data['Name']);
   window.open('svprojects/' + selectedModel + '.zip')
@@ -332,8 +332,13 @@ function applyMustContainFilter(partialData){
   return [filteredData, filterApplied];
 }
 
-window.addEventListener('scroll', () => {
+window.addEventListener('wheel', () => {
   var footerHeight = $('#contact-section').height();
+  console.log('wheel')
+  console.log(window.scrollY)
+  console.log(window.innerHeight)
+  console.log(footerHeight)
+  console.log(document.documentElement.scrollHeight)
   // var footerHeight = document.getElementById("contact-section").height()
   var padding = 50;
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
