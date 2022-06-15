@@ -94,7 +94,7 @@ function createDivWithH4DropDown(categoryName)
 
 function addHooks(hooks) {  
   for (var i = 0; i < hooks.length; i++) {
-    $("#" + hooks[i]).change(function() {applyFilters();});
+    $("#" + hooks[i]).change(function() {applyFilters(); console.log("#" + hooks[i] + " apply filters")});
   }
 }
 
@@ -579,7 +579,7 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
   {
     if (getNTimesPerCategory(allCategories[i]) == 1)
     {
-      categoriesWith1s.push(allCategories[i])
+      categoriesWith1s.push(allCategories[i].toLowerCase())
     }
   }
       
@@ -593,28 +593,30 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
       {
         if (subCategory.includes(valueToSearch))
         {
-          filter[i] = true;
-          
-          if (valueToSearch == "male" && subCategory == "female")
-          {
-            filter[i] = false;
-          }
-
-          if(category == "age")
-          {
-            if (parseInt(valueToSearch) == parseInt(subCategory))
+          //if subCategory is a number
+          if(!isNaN(parseInt(subCategory)) || subCategory.includes("su0")){
+            //check if the numbers are identical
+            if (parseInt(valueToSearch) == parseInt(subCategory) && !subCategory.includes("_"))
             {
               filter[i] = true;
             }
-            else if (parseInt(valueToSearch) != parseInt(subCategory)) {
+          }
+          else{
+            filter[i] = true;
+            
+            if (valueToSearch == "male" && subCategory == "female")
+            {
               filter[i] = false;
-            }
-            else if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
-              filter[i] = true;
-            }
-            else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
-              filter[i] = true;
-            }
+            }  
+          } 
+        }
+        
+        if(category == "age"){
+          if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
+            filter[i] = true;
+          }
+          else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
+            filter[i] = true;
           }
         }
       }
@@ -673,6 +675,3 @@ function valueToSearchInArrayForm(valueToSearch)
 
   return array;
 }
-
-//listener for the search bar
-$("#search-field").change(function () {applyFilters();});

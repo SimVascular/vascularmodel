@@ -363,6 +363,7 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
+      console.log("#search-field2 apply filters")
       applyFilters()
       triggerFilter(false);
       return true;
@@ -373,6 +374,7 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
+      console.log("#min-age apply filters")
       applyFilters();
       triggerFilter(false);
       return true;
@@ -383,6 +385,7 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
+      console.log("#max-age apply filters")
       applyFilters()
       triggerFilter(false);
       return true;
