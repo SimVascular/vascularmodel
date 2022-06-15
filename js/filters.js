@@ -50,142 +50,6 @@ function generateCheckboxUl(category, ul)
   return hooks;
 }
 
-function generateDropDownMenu(categoryName, select)
-{
-  var option = document.createElement("option")
-  option.value = "all";
-  option.textContent = "Select One";
-  select.appendChild(option);
-  option.classList.add("dropdown-content");
-
-  var checkboxNameSet = new Set();
-  
-  for(var i = 0; i < data.length; i++)
-  {
-    if (data[i][categoryName] != "-")
-      checkboxNameSet.add(data[i][categoryName])
-  }
-
-  var checkboxNameArray = Array.from(checkboxNameSet);
-  checkboxNameArray.sort();
-  
-  //checkboxNameArray.length should = 2
-  for (var i = 0; i < checkboxNameArray.length; i++) {
-      var newOption = generateOptions(checkboxNameArray[i]);
-      select.appendChild(newOption);
-  }
-}
-
-
-// function createHeaders(categoryName)
-// {
-//   if (getNTimesPerCategory(categoryName) == 2)
-//   {
-//     var div = createDivWithH4DropDown(categoryName);
-//     var output = generateDropDownMenu(categoryName);
-//   }
-//   else
-//   {
-//     //categoryName is the name of the category, e.g., "Age"
-//     var div = createDivWithH4CheckboxUl(categoryName);
-//     var output = generateCheckboxUl(categoryName, true);
-//   }
-  
-//   var insideHeader = output[0]
-//   var hooks = output[1]
-
-//   div.appendChild(insideHeader);
-
-//   return [div, hooks];
-// }
-
-function createDivWithH4CheckboxUl(categoryName)
-{
-  var div = document.createElement('div');
-  div.classList.add("cd-filter-block")
-
-  var h4 = document.createElement('h4');
-  h4.classList.add("closed");
-  h4.textContent = categoryName;
-  
-  div.appendChild(h4);
-
-  return div;
-}
-
-function createDivWithH4DropDown(categoryName)
-{
-  var div = document.createElement('div');
-  div.classList.add("cd-filter-block");
-
-  var h4 = document.createElement('h4');
-  h4.textContent = categoryName;
-  
-  div.appendChild(h4);
-
-  return div;
-}
-
-function addHooks(hooks) {  
-  for (var i = 0; i < hooks.length; i++) {
-    $("#" + hooks[i]).change(function() {applyFilters(); console.log("#" + hooks[i] + " apply filters")});
-  }
-}
-
-// function generateDropDownMenu(categoryName)
-// {
-//   var div = document.createElement("div")
-//   div.classList.add("cd-filter-content");
-//   div.classList.add("cd-select");
-//   div.classList.add("cd-filters");
-//   div.classList.add("list");
-//   div.setAttribute("style", "display: block");
-
-//   var select = document.createElement("select")
-//   select.classList.add("filter")
-//   select.setAttribute("id", "select-" + categoryName)
-//   //select.classList.add("dropbtn");
-
-//   var option = document.createElement("option")
-//   option.value = "all";
-//   option.textContent = "Select One";
-//   select.appendChild(option);
-//   option.classList.add("dropdown-content");
-
-//   var hooks = ["select-" + categoryName];
-
-//   var checkboxNameSet = new Set();
-  
-//   for(var i = 0; i < data.length; i++)
-//   {
-//     if (data[i][categoryName] != "-")
-//       checkboxNameSet.add(data[i][categoryName])
-//   }
-
-//   var checkboxNameArray = Array.from(checkboxNameSet);
-//   checkboxNameArray.sort();
-  
-//   //checkboxNameArray.length should = 2
-//   for (var i = 0; i < checkboxNameArray.length; i++) {
-//       var newOption = generateOptions(checkboxNameArray[i]);
-//       select.appendChild(newOption);
-//   }
-  
-//   div.appendChild(select);
-
-//   return [div, hooks]
-// }
-
-function generateOptions(optionName)
-{
-  var option = document.createElement("option")
-  option.value = optionName;
-
-  option.textContent = optionName;
-  option.classList.add("dropdown-content");
-  return option;
-}
-
 function codifyHookandID(checkboxName)
 {
   if(checkboxName.indexOf(" ") == -1)
@@ -233,6 +97,48 @@ function generateCheckboxLi(checkboxName)
   return li;
 }
 
+function generateDropDownMenu(categoryName, select)
+{
+  var option = document.createElement("option")
+  option.value = "all";
+  option.textContent = "Select One";
+  select.appendChild(option);
+  option.classList.add("dropdown-content");
+
+  var checkboxNameSet = new Set();
+  
+  for(var i = 0; i < data.length; i++)
+  {
+    if (data[i][categoryName] != "-")
+      checkboxNameSet.add(data[i][categoryName])
+  }
+
+  var checkboxNameArray = Array.from(checkboxNameSet);
+  checkboxNameArray.sort();
+  
+  //checkboxNameArray.length should = 2
+  for (var i = 0; i < checkboxNameArray.length; i++) {
+      var newOption = generateOptions(checkboxNameArray[i]);
+      select.appendChild(newOption);
+  }
+}
+
+function generateOptions(optionName)
+{
+  var option = document.createElement("option")
+  option.value = optionName;
+
+  option.textContent = optionName;
+  option.classList.add("dropdown-content");
+  return option;
+}
+
+function addHooks(hooks) {  
+  for (var i = 0; i < hooks.length; i++) {
+    $("#" + hooks[i]).change(function() {applyFilters(); console.log("#" + hooks[i] + " apply filters")});
+  }
+}
+
 /*----------------------------
 
 JavaScript to Apply Filters
@@ -259,7 +165,7 @@ function applyFilters()
       filteredData = filterOutput[0]
       filterApplied = filterApplied || filterOutput[1]
     }
-    else if (getNTimesPerCategory(titles[t]) == 2)
+    else if (titles[t] == "Sex" || titles[t] == "Species")
     {
       filterOutput = dropDownFilter(titles[t], filteredData)
       filteredData = filterOutput[0]
@@ -440,10 +346,6 @@ function dropDownFilter(categoryName, partialData)
           {
             pushValue = true; 
           }
-          if (option == "-")
-          {
-            pushValue = true;
-          }
           if (pushValue)
             filteredData.push(partialData[i]);
         }
@@ -463,9 +365,6 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
   
     for (var i = 0; i < arrayLength; i++) {
       if (partialData[i][category].includes(key)) {
-        whichToKeep[i] = true;
-      }
-      else if (partialData[i][category] == "-"){
         whichToKeep[i] = true;
       }
     }
@@ -587,22 +486,12 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
       {
         if (subCategory.includes(valueToSearch))
         {
-          //if subCategory is a number
-          if(!isNaN(parseInt(subCategory)) || subCategory.includes("su0")){
-            //check if the numbers are identical
-            if (parseInt(valueToSearch) == parseInt(subCategory) && !subCategory.includes("_"))
-            {
-              filter[i] = true;
-            }
-          }
-          else{
-            filter[i] = true;
+          filter[i] = true;
             
-            if (valueToSearch == "male" && subCategory == "female")
-            {
-              filter[i] = false;
-            }  
-          } 
+          if (valueToSearch == "male" && subCategory == "female")
+          {
+            filter[i] = false;
+          }
         }
         
         if(category == "age"){
