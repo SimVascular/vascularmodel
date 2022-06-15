@@ -7,20 +7,47 @@ JavaScript for Filter Bar
 function getFilterMenu()
 {
   var allHooks = []
+
   var sexSelect = document.getElementById("select-Sex");
-  allHooks.push(["select-Sex"])
   generateDropDownMenu("Sex", sexSelect)
+  allHooks.push(["select-Sex"])
 
   var speciesSelect = document.getElementById("select-Species");
-  allHooks.push(["select-Species"])
   generateDropDownMenu("Species", speciesSelect)
+  allHooks.push(["select-Species"])
 
-  // var 
+  var anatomyUl = document.getElementById("AnatomyUl");
+  var hooks = generateCheckboxUl("Anatomy", anatomyUl)
+  allHooks.push(hooks)
+
+  var diseaseUl = document.getElementById("DiseaseUl");
+  var hooks = generateCheckboxUl("Disease", diseaseUl)
+  allHooks.push(hooks)
+
+  var procedureUl = document.getElementById("ProcedureUl");
+  var hooks = generateCheckboxUl("Procedure", procedureUl)
+  allHooks.push(hooks)
 
   for (var i = 0; i < allHooks.length; i++)
   {
     addHooks(allHooks[i]);
   }
+}
+
+function generateCheckboxUl(category, ul)
+{
+  checkboxName = namesOfValuesPerKey(category);
+
+  var hooks = []
+
+  for (var i = 0; i < checkboxName.length; i++) {
+    var codifyCBN = codifyHookandID(checkboxName[i])
+    var newLi = generateCheckboxLi(checkboxName[i]);
+    ul.appendChild(newLi);
+    hooks.push("checkbox-" + codifyCBN)
+  }
+
+  return hooks;
 }
 
 function generateDropDownMenu(categoryName, select)
@@ -49,7 +76,6 @@ function generateDropDownMenu(categoryName, select)
   }
 }
 
-function generateCheckboxUl(categoryName)
 
 // function createHeaders(categoryName)
 // {
@@ -158,27 +184,6 @@ function generateOptions(optionName)
   option.textContent = optionName;
   option.classList.add("dropdown-content");
   return option;
-}
-
-function generateCheckboxUl(checkboxName)
-{
-  //needs name if checkboxName is not a categoryWith1
-
-  var ul = document.createElement("ul")
-  ul.classList.add("cd-filter-content");
-  ul.classList.add("cd-filters");
-  ul.classList.add("list");
-
-  var hooks = []
-
-  for (var i = 0; i < checkboxName.length; i++) {
-    var codifyCBN = codifyHookandID(checkboxName[i])
-    var newLi = generateCheckboxLi(checkboxName[i]);
-    ul.appendChild(newLi);
-    hooks.push("checkbox-" + codifyCBN)
-  }
-
-  return [ul, hooks];
 }
 
 function codifyHookandID(checkboxName)
