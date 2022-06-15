@@ -35,7 +35,7 @@ function getFilterTitles()
 
   for(var i = 0; i < allCategories.length; i++)
   {
-    if(allCategories[i] != "Size" && allCategories[i] != "Name")
+    if(allCategories[i] != "Name" && allCategories[i] != "Animal" && allCategories[i] != "Notes" && allCategories[i] != "Size" && allCategories[i] != "DOI")
     {
       onlyFilterTitles.push(allCategories[i])
     }
