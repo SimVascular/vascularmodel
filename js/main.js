@@ -217,8 +217,19 @@ function overlayOn(){
   isOverlayOn = true;
 
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+  
+  var prevBodyY = window.scrollY
+  if (smallScreen) {
+    // padding is not necessary on mobile
+    $('.html').css({"height": "auto", "overflow-y": "hidden"})
+    $('.body').css({"height": "auto", "overflow-y": "hidden"})
+  }
+  else {
+    $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+    $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+  }
+  document.body.style.position = '';
+  document.body.style.top = `-${prevBodyY}px`;
 
 }
 function overlayOff(){
@@ -227,9 +238,13 @@ function overlayOff(){
   isOverlayOn = false;
 
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
 
+  const scrollY = document.body.style.top;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  window.scrollTo(0, parseInt(scrollY || '0') * -1);
 }
 
 function checkOverlay(){
