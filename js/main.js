@@ -9,8 +9,11 @@ function addClickListener(data) {
     $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
     // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
     // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
-    $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-    $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+    var prevBodyY = window.scrollY
+    $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+    $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+    document.body.style.position = '';
+    document.body.style.top = `-${prevBodyY}px`;
 
     var details = ''
     details = details + 'Name: ' + data['Name'] + '\n'
@@ -145,16 +148,22 @@ $(document).ready(function($){
 
 });
 
-$('.close-button-modal').click(function() {
+function closeModalMenu() {
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
   $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
   $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+  const scrollY = document.body.style.top;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  window.scrollTo(0, parseInt(scrollY || '0') * -1);
+}
+
+$('.close-button-modal').click(function() {
+  closeModalMenu()
 });
 
 $('.download-button-modal').click(function() {
-  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+  closeModalMenu()
   // download tracking
   console.log(data['Name']);
   window.open('svprojects/' + selectedModel + '.zip')
@@ -334,11 +343,6 @@ function applyMustContainFilter(partialData){
 
 window.addEventListener('wheel', () => {
   var footerHeight = $('#contact-section').height();
-  console.log('wheel')
-  console.log(window.scrollY)
-  console.log(window.innerHeight)
-  console.log(footerHeight)
-  console.log(document.documentElement.scrollHeight)
   // var footerHeight = document.getElementById("contact-section").height()
   var padding = 50;
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
