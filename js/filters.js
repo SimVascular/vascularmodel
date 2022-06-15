@@ -320,6 +320,49 @@ JavaScript for Filter Bar:
   The Three Different Types of Filters
 
 ----------------------------*/
+function ageFilter(partialData)
+{
+  var minVal = parseInt(document.getElementById("min-age").value);
+  var maxVal = parseInt(document.getElementById("max-age").value);
+
+  if(isNaN(minVal) && isNaN(maxVal))
+  {
+    return [partialData, false] 
+  }
+  else
+  {
+    var filteredData = [];
+
+    for (var i = 0; i < partialData.length; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var category = key.toLowerCase();
+        var subCategory = value.toLowerCase();
+        var push = false;
+        if(category == "age")
+        {
+          if(isNaN(minVal) && parseInt(subCategory) <= maxVal)
+          {
+            push = true;
+          }
+          else if (isNaN(maxVal) && parseInt(subCategory) >= minVal)
+          {
+            push = true;
+          }
+          else if(parseInt(subCategory) >= minVal && parseInt(subCategory) <= maxVal)
+          {
+            push = true;
+          }
+          if(push)
+          {
+            filteredData.push(partialData[i]);
+          }
+        }
+      }
+    }
+    
+    return [filteredData, true];
+  }
+}
 
 function dropDownFilter(categoryName, partialData)
 {
@@ -408,54 +451,6 @@ function searchBarFilter(partialData)
         }
       }
       return [filteredData, output[1]];
-  }
-}
-
-function ageFilter(partialData)
-{
-  var minVal = parseInt(document.getElementById("min-age").value);
-  var maxVal = parseInt(document.getElementById("max-age").value);
-
-  if(isNaN(minVal) && isNaN(maxVal))
-  {
-    return [partialData, false] 
-  }
-  else
-  {
-    var filteredData = [];
-
-    for (var i = 0; i < partialData.length; i++) {
-      for (const [key, value] of Object.entries(partialData[i])) {
-        var category = key.toLowerCase();
-        var subCategory = value.toLowerCase();
-        var push = false;
-        if(category == "age")
-        {
-          if(isNaN(minVal) && parseInt(subCategory) <= maxVal)
-          {
-            push = true;
-          }
-          else if (isNaN(maxVal) && parseInt(subCategory) >= minVal)
-          {
-            push = true;
-          }
-          else if(parseInt(subCategory) >= minVal && parseInt(subCategory) <= maxVal)
-          {
-            push = true;
-          }
-          if (subCategory == "-")
-          {
-            push = true;
-          }
-          if(push)
-          {
-            filteredData.push(partialData[i]);
-          }
-        }
-      }
-    }
-    
-    return [filteredData, true];
   }
 }
 
