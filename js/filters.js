@@ -6,36 +6,27 @@ JavaScript for Filter Bar
 
 function getFilterMenu()
 {
-  var filterCheckboxes = document.getElementById("filterCheckboxes")
-  var categoryName = getFilterTitles();
-
   var allHooks = []
-  var categoryWith1s = []
-  
-  for(var i = 0; i < categoryName.length; i++)
-  {
-    if (getNTimesPerCategory(categoryName[i]) == 1)
-    {
-      categoryWith1s.push(categoryName[i])
-    }
-    else if(categoryName[i] != "Age")
-    {
-      var output = createHeaders(categoryName[i]);
-      var div = output[0];
-      var hooks = output[1];
 
-      filterCheckboxes.appendChild(div);
-      allHooks.push(hooks);
-    }
-  }
+  var sexSelect = document.getElementById("select-Sex");
+  generateDropDownMenu("Sex", sexSelect)
+  allHooks.push(["select-Sex"])
 
-  //create MustContainFilter Section
-  output = mustContainHeader(categoryWith1s);
-  div = output[0];
-  hooks = output[1];
+  var speciesSelect = document.getElementById("select-Species");
+  generateDropDownMenu("Species", speciesSelect)
+  allHooks.push(["select-Species"])
 
-  filterCheckboxes.appendChild(div);
-  allHooks.push(hooks);
+  var anatomyUl = document.getElementById("AnatomyUl");
+  var hooks = generateCheckboxUl("Anatomy", anatomyUl)
+  allHooks.push(hooks)
+
+  var diseaseUl = document.getElementById("DiseaseUl");
+  var hooks = generateCheckboxUl("Disease", diseaseUl)
+  allHooks.push(hooks)
+
+  var procedureUl = document.getElementById("ProcedureUl");
+  var hooks = generateCheckboxUl("Procedure", procedureUl)
+  allHooks.push(hooks)
 
   for (var i = 0; i < allHooks.length; i++)
   {
@@ -43,27 +34,70 @@ function getFilterMenu()
   }
 }
 
-function createHeaders(categoryName)
+function generateCheckboxUl(category, ul)
 {
-  if (getNTimesPerCategory(categoryName) == 2)
-  {
-    var div = createDivWithH4DropDown(categoryName);
-    var output = generateDropDownMenu(categoryName);
-  }
-  else
-  {
-    //categoryName is the name of the category, e.g., "Age"
-    var div = createDivWithH4CheckboxUl(categoryName);
-    var output = generateCheckboxUl(categoryName, true);
-  }
-  
-  var insideHeader = output[0]
-  var hooks = output[1]
+  checkboxName = namesOfValuesPerKey(category);
 
-  div.appendChild(insideHeader);
+  var hooks = []
 
-  return [div, hooks];
+  for (var i = 0; i < checkboxName.length; i++) {
+    var codifyCBN = codifyHookandID(checkboxName[i])
+    var newLi = generateCheckboxLi(checkboxName[i]);
+    ul.appendChild(newLi);
+    hooks.push("checkbox-" + codifyCBN)
+  }
+
+  return hooks;
 }
+
+function generateDropDownMenu(categoryName, select)
+{
+  var option = document.createElement("option")
+  option.value = "all";
+  option.textContent = "Select One";
+  select.appendChild(option);
+  option.classList.add("dropdown-content");
+
+  var checkboxNameSet = new Set();
+  
+  for(var i = 0; i < data.length; i++)
+  {
+    if (data[i][categoryName] != "-")
+      checkboxNameSet.add(data[i][categoryName])
+  }
+
+  var checkboxNameArray = Array.from(checkboxNameSet);
+  checkboxNameArray.sort();
+  
+  //checkboxNameArray.length should = 2
+  for (var i = 0; i < checkboxNameArray.length; i++) {
+      var newOption = generateOptions(checkboxNameArray[i]);
+      select.appendChild(newOption);
+  }
+}
+
+
+// function createHeaders(categoryName)
+// {
+//   if (getNTimesPerCategory(categoryName) == 2)
+//   {
+//     var div = createDivWithH4DropDown(categoryName);
+//     var output = generateDropDownMenu(categoryName);
+//   }
+//   else
+//   {
+//     //categoryName is the name of the category, e.g., "Age"
+//     var div = createDivWithH4CheckboxUl(categoryName);
+//     var output = generateCheckboxUl(categoryName, true);
+//   }
+  
+//   var insideHeader = output[0]
+//   var hooks = output[1]
+
+//   div.appendChild(insideHeader);
+
+//   return [div, hooks];
+// }
 
 function createDivWithH4CheckboxUl(categoryName)
 {
@@ -98,49 +132,49 @@ function addHooks(hooks) {
   }
 }
 
-function generateDropDownMenu(categoryName)
-{
-  var div = document.createElement("div")
-  div.classList.add("cd-filter-content");
-  div.classList.add("cd-select");
-  div.classList.add("cd-filters");
-  div.classList.add("list");
-  div.setAttribute("style", "display: block");
+// function generateDropDownMenu(categoryName)
+// {
+//   var div = document.createElement("div")
+//   div.classList.add("cd-filter-content");
+//   div.classList.add("cd-select");
+//   div.classList.add("cd-filters");
+//   div.classList.add("list");
+//   div.setAttribute("style", "display: block");
 
-  var select = document.createElement("select")
-  select.classList.add("filter")
-  select.setAttribute("id", "select-" + categoryName)
-  //select.classList.add("dropbtn");
+//   var select = document.createElement("select")
+//   select.classList.add("filter")
+//   select.setAttribute("id", "select-" + categoryName)
+//   //select.classList.add("dropbtn");
 
-  var option = document.createElement("option")
-  option.value = "all";
-  option.textContent = "Select One";
-  select.appendChild(option);
-  option.classList.add("dropdown-content");
+//   var option = document.createElement("option")
+//   option.value = "all";
+//   option.textContent = "Select One";
+//   select.appendChild(option);
+//   option.classList.add("dropdown-content");
 
-  var hooks = ["select-" + categoryName];
+//   var hooks = ["select-" + categoryName];
 
-  var checkboxNameSet = new Set();
+//   var checkboxNameSet = new Set();
   
-  for(var i = 0; i < data.length; i++)
-  {
-    if (data[i][categoryName] != "-")
-      checkboxNameSet.add(data[i][categoryName])
-  }
+//   for(var i = 0; i < data.length; i++)
+//   {
+//     if (data[i][categoryName] != "-")
+//       checkboxNameSet.add(data[i][categoryName])
+//   }
 
-  var checkboxNameArray = Array.from(checkboxNameSet);
-  checkboxNameArray.sort();
+//   var checkboxNameArray = Array.from(checkboxNameSet);
+//   checkboxNameArray.sort();
   
-  //checkboxNameArray.length should = 2
-  for (var i = 0; i < checkboxNameArray.length; i++) {
-      var newOption = generateOptions(checkboxNameArray[i]);
-      select.appendChild(newOption);
-  }
+//   //checkboxNameArray.length should = 2
+//   for (var i = 0; i < checkboxNameArray.length; i++) {
+//       var newOption = generateOptions(checkboxNameArray[i]);
+//       select.appendChild(newOption);
+//   }
   
-  div.appendChild(select);
+//   div.appendChild(select);
 
-  return [div, hooks]
-}
+//   return [div, hooks]
+// }
 
 function generateOptions(optionName)
 {
@@ -150,46 +184,6 @@ function generateOptions(optionName)
   option.textContent = optionName;
   option.classList.add("dropdown-content");
   return option;
-}
-
-function mustContainHeader(categoryName)
-{
-  var div = createDivWithH4CheckboxUl("Project Must Contain");
-
-  //categoryName is a list with the categoriesWith1
-  var output = generateCheckboxUl(categoryName, false);
-  var insideHeader = output[0]
-  var hooks = output[1]
-
-  div.appendChild(insideHeader);
-
-  return [div, hooks];
-}
-
-function generateCheckboxUl(checkboxName, needsNameArray)
-{
-  //needs name if checkboxName is not a categoryWith1
-
-  var ul = document.createElement("ul")
-  ul.classList.add("cd-filter-content");
-  ul.classList.add("cd-filters");
-  ul.classList.add("list");
-
-  if(needsNameArray)
-  {
-    checkboxName = namesOfValuesPerKey(checkboxName);
-  }
-
-  var hooks = []
-
-  for (var i = 0; i < checkboxName.length; i++) {
-    var codifyCBN = codifyHookandID(checkboxName[i])
-    var newLi = generateCheckboxLi(checkboxName[i]);
-    ul.appendChild(newLi);
-    hooks.push("checkbox-" + codifyCBN)
-  }
-
-  return [ul, hooks];
 }
 
 function codifyHookandID(checkboxName)
