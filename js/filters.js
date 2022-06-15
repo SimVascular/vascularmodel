@@ -6,36 +6,27 @@ JavaScript for Filter Bar
 
 function getFilterMenu()
 {
-  var filterCheckboxes = document.getElementById("filterCheckboxes")
-  var categoryName = getFilterTitles();
-
   var allHooks = []
-  var categoryWith1s = []
-  
-  for(var i = 0; i < categoryName.length; i++)
-  {
-    if (getNTimesPerCategory(categoryName[i]) == 1)
-    {
-      categoryWith1s.push(categoryName[i])
-    }
-    else
-    {
-      var output = createHeaders(categoryName[i]);
-      var div = output[0];
-      var hooks = output[1];
 
-      filterCheckboxes.appendChild(div);
-      allHooks.push(hooks);
-    }
-  }
+  var sexSelect = document.getElementById("select-Sex");
+  generateDropDownMenu("Sex", sexSelect)
+  allHooks.push(["select-Sex"])
 
-  //create MustContainFilter Section
-  output = mustContainHeader(categoryWith1s);
-  div = output[0];
-  hooks = output[1];
+  var speciesSelect = document.getElementById("select-Species");
+  generateDropDownMenu("Species", speciesSelect)
+  allHooks.push(["select-Species"])
 
-  filterCheckboxes.appendChild(div);
-  allHooks.push(hooks);
+  var anatomyUl = document.getElementById("AnatomyUl");
+  var hooks = generateCheckboxUl("Anatomy", anatomyUl)
+  allHooks.push(hooks)
+
+  var diseaseUl = document.getElementById("DiseaseUl");
+  var hooks = generateCheckboxUl("Disease", diseaseUl)
+  allHooks.push(hooks)
+
+  var procedureUl = document.getElementById("ProcedureUl");
+  var hooks = generateCheckboxUl("Procedure", procedureUl)
+  allHooks.push(hooks)
 
   for (var i = 0; i < allHooks.length; i++)
   {
@@ -43,109 +34,93 @@ function getFilterMenu()
   }
 }
 
-function createHeaders(categoryName)
+function generateCheckboxUl(category, ul)
 {
-  if (getNTimesPerCategory(categoryName) == 2)
+  checkboxName = namesOfValuesPerKey(category);
+
+  var hooks = []
+
+  for (var i = 0; i < checkboxName.length; i++) {
+    var codifyCBN = codifyHookandID(checkboxName[i])
+    var newLi = generateCheckboxLi(checkboxName[i]);
+    ul.appendChild(newLi);
+    hooks.push("checkbox-" + codifyCBN)
+  }
+
+  return hooks;
+}
+
+function codifyHookandID(checkboxName)
+{
+  if(checkboxName.indexOf(" ") == -1)
   {
-    var div = createDivWithH4DropDown(categoryName);
-    var output = generateDropDownMenu(categoryName);
+    return checkboxName;
   }
-  else
-  {
-    //categoryName is the name of the category, e.g., "Age"
-    var div = createDivWithH4CheckboxUl(categoryName);
-    var output = generateCheckboxUl(categoryName, true);
-  }
-  
-  var insideHeader = output[0]
-  var hooks = output[1]
+  else{
+    var codifiedName = "";
 
-  div.appendChild(insideHeader);
+    var indexOfSpace = checkboxName.indexOf(" ");
 
-  return [div, hooks];
-}
+    while(indexOfSpace != -1)
+    {
+      codifiedName += checkboxName.substring(0, indexOfSpace) + "-";
+      checkboxName = checkboxName.substring(indexOfSpace + 1);
+      indexOfSpace = checkboxName.indexOf(" ");
+    }
 
-function createDivWithH4CheckboxUl(categoryName)
-{
-  var div = document.createElement('div');
-  div.classList.add("cd-filter-block")
+    codifiedName += checkboxName;
 
-  var h4 = document.createElement('h4');
-  h4.classList.add("closed");
-  h4.textContent = categoryName;
-  
-  div.appendChild(h4);
-
-  return div;
-}
-
-function createDivWithH4DropDown(categoryName)
-{
-  var div = document.createElement('div');
-  div.classList.add("cd-filter-block")
-
-  var h4 = document.createElement('h4');
-  h4.textContent = categoryName;
-  
-  div.appendChild(h4);
-
-  return div;
-}
-
-function addHooks(hooks) {
-  for (var i = 0; i < hooks.length; i++) {
-    $("#" + hooks[i]).change(function() {applyFilters();});
+    return codifiedName;
   }
 }
 
-function generateDropDownMenu(categoryName)
+function generateCheckboxLi(checkboxName) 
 {
-  var div = document.createElement("div")
-  div.classList.add("cd-filter-content");
-  div.classList.add("cd-select");
-  div.classList.add("cd-filters");
-  div.classList.add("list");
-  div.setAttribute("style", "display: block");
+  let li = document.createElement('li');
+  
+  let codifiedName = codifyHookandID(checkboxName);
 
-  var select = document.createElement("select")
-  select.classList.add("filter")
-  select.setAttribute("id", "select-" + categoryName)
-  //select.classList.add("dropbtn");
+  let input = document.createElement('input');
+  input.classList.add("filter");
+  input.setAttribute("data-filter", codifiedName);
+  input.type = "checkbox";
+  input.setAttribute("id", "checkbox-" + codifiedName);
 
+  let label = document.createElement('label');
+  label.classList.add("checkbox-label");
+  label.setAttribute("for", "checkbox-" + codifiedName);
+  label.textContent = checkboxName;
+
+  li.appendChild(input);
+  li.appendChild(label);
+
+  return li;
+}
+
+function generateDropDownMenu(categoryName, select)
+{
   var option = document.createElement("option")
-  option.value = "none";
+  option.value = "all";
   option.textContent = "Select One";
   select.appendChild(option);
   option.classList.add("dropdown-content");
 
-  var hooks = ["select-" + categoryName];
-
-  //separate for Age
-  if(categoryName == "Age")
-  {
-    var checkboxNameArray = ["Adult", "Pediatric"]
-  }
-  else{
-    var checkboxNameSet = new Set();
+  var checkboxNameSet = new Set();
   
-    for(var i = 0; i < data.length; i++)
-    {
+  for(var i = 0; i < data.length; i++)
+  {
+    if (data[i][categoryName] != "-")
       checkboxNameSet.add(data[i][categoryName])
-    }
-
-    var checkboxNameArray = Array.from(checkboxNameSet);
-    checkboxNameArray.sort();
   }
 
+  var checkboxNameArray = Array.from(checkboxNameSet);
+  checkboxNameArray.sort();
+  
   //checkboxNameArray.length should = 2
   for (var i = 0; i < checkboxNameArray.length; i++) {
       var newOption = generateOptions(checkboxNameArray[i]);
       select.appendChild(newOption);
   }
-  
-  div.appendChild(select);
-
-  return [div, hooks]
 }
 
 function generateOptions(optionName)
@@ -158,72 +133,10 @@ function generateOptions(optionName)
   return option;
 }
 
-function mustContainHeader(categoryName)
-{
-  var div = createDivWithH4CheckboxUl("Project Must Contain");
-
-  //categoryName is a list with the categoriesWith1
-  var output = generateCheckboxUl(categoryName, false);
-  var insideHeader = output[0]
-  var hooks = output[1]
-
-  div.appendChild(insideHeader);
-
-  return [div, hooks];
-}
-
-function generateCheckboxUl(categoryName, needsNameArray)
-{
-  //needs name if categoryName is not a categoryWith1
-
-  var ul = document.createElement("ul")
-  ul.classList.add("cd-filter-content");
-  ul.classList.add("cd-filters");
-  ul.classList.add("list");
-
-  if(needsNameArray)
-  {
-    var checkboxNameSet = new Set();
-  
-    for(var i = 0; i < data.length; i++)
-    {
-      checkboxNameSet.add(data[i][categoryName])
-    }
-
-    categoryName = Array.from(checkboxNameSet);
-    categoryName.sort();
+function addHooks(hooks) {  
+  for (var i = 0; i < hooks.length; i++) {
+    $("#" + hooks[i]).change(function() {applyFilters(); console.log("#" + hooks[i] + " apply filters")});
   }
-
-  var hooks = []
-
-  for (var i = 0; i < categoryName.length; i++) {
-      var newLi = generateCheckboxLi(categoryName[i]);
-      ul.appendChild(newLi);
-      hooks.push("checkbox-" + categoryName[i])
-  }
-
-  return [ul, hooks];
-}
-
-function generateCheckboxLi(checkboxName) 
-{
-  let li = document.createElement('li');
-  
-  let input = document.createElement('input');
-  input.classList.add("filter");
-  input.setAttribute("data-filter", checkboxName);
-  input.type = "checkbox";
-  input.setAttribute("id", "checkbox-" + checkboxName);
-
-  let label = document.createElement('label');
-  label.classList.add("checkbox-label");
-  label.setAttribute("for", "checkbox-" + checkboxName)
-  label.textContent = checkboxName;
-
-  li.appendChild(input);
-  li.appendChild(label);
-
-  return li;
 }
 
 /*----------------------------
@@ -236,8 +149,8 @@ function applyFilters()
 {
   var filterApplied = false
   curIndex = 0;
-  var filteredData = data;
-
+  filteredData = data;
+  
   var nTimes = getNTimes();
 
   var filterOutput;
@@ -246,7 +159,13 @@ function applyFilters()
 
   for(var t = 0; t < titles.length; t++){
     
-    if (getNTimesPerCategory(titles[t]) == 2)
+    if(titles[t] == "Age")
+    {
+      filterOutput = ageFilter(filteredData)
+      filteredData = filterOutput[0]
+      filterApplied = filterApplied || filterOutput[1]
+    }
+    else if (titles[t] == "Sex" || titles[t] == "Species")
     {
       filterOutput = dropDownFilter(titles[t], filteredData)
       filteredData = filterOutput[0]
@@ -280,18 +199,26 @@ function applyFilters()
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
 
+  lastFapplied = filterApplied;
+
   removeContent();
   scrollToTop();
   populate(filteredData);
-  updateCounter(filterApplied, filteredData);
+
   if (filteredData.length == 0) {
-    document.getElementById('error-msg').style.transitionDuration = '0.3s';
-    document.getElementById('error-msg').style.opacity = 1;
+    errorMessage(true, true);
   }
   else {
-    document.getElementById('error-msg').style.transitionDuration = '0s';
-    document.getElementById('error-msg').style.opacity = 0;
+    errorMessage(false, true)
   }
+
+  //if filter is applied, clear viewing selected models view
+
+  //updates viewingSelectedModels
+  viewingSelectedModels = false;
+
+  //updates counters --> displays filtered models counter
+  updateCounters(filterApplied, filteredData);
 }
 
 function getNTimes()
@@ -323,12 +250,8 @@ function getNTimesPerCategory(categoryName)
   }
   else
   {
-    var noRepeatArray = new Set();
-    for(var dI = 0; dI < data.length; dI++)
-    {
-      noRepeatArray.add(data[dI][categoryName])
-    }
-    nTimesRepeat = noRepeatArray.size;
+    var noRepeatArray = namesOfValuesPerKey(categoryName);
+    nTimesRepeat = noRepeatArray.length;
   }
 
   return nTimesRepeat;
@@ -364,20 +287,30 @@ function updatedFilteredData(whichToKeep, filteredData)
 
 function checkboxNamesPerCategory(categoryName, isKey)
 {
-  var checkboxNames = []
-  var checkboxNameSet = new Set();
-          
-  for(var dI = 0; dI < data.length; dI++)
+  var checkboxNames = namesOfValuesPerKey(categoryName);
+  
+  //if ID
+  if(!isKey)
   {
-    checkboxNameSet.add(data[dI][categoryName])
+    //IDs use the codified version of the name
+    for(var i = 0; i < checkboxNames.length; i++)
+    {
+      checkboxNames[i] = codifyHookandID(checkboxNames[i]);
+    }
+  }
+  if (checkboxNames.includes("1"))
+  {
+    if (!isKey)
+    {
+      checkboxNames = [categoryName];
+    }
+    else
+    {
+      checkboxNames = [1];
+    }
   }
 
-  var checkboxNames = Array.from(checkboxNameSet);
-
-  if (!isKey && checkboxNames.includes("1"))
-  {
-    checkboxNames = [categoryName]
-  }
+  //if key and not , fill with "english names" && not codified names
   return checkboxNames;
 }
 
@@ -387,12 +320,55 @@ JavaScript for Filter Bar:
   The Three Different Types of Filters
 
 ----------------------------*/
+function ageFilter(partialData)
+{
+  var minVal = parseInt(document.getElementById("min-age").value);
+  var maxVal = parseInt(document.getElementById("max-age").value);
+
+  if(isNaN(minVal) && isNaN(maxVal))
+  {
+    return [partialData, false] 
+  }
+  else
+  {
+    var filteredData = [];
+
+    for (var i = 0; i < partialData.length; i++) {
+      for (const [key, value] of Object.entries(partialData[i])) {
+        var category = key.toLowerCase();
+        var subCategory = value.toLowerCase();
+        var push = false;
+        if(category == "age")
+        {
+          if(isNaN(minVal) && parseInt(subCategory) <= maxVal)
+          {
+            push = true;
+          }
+          else if (isNaN(maxVal) && parseInt(subCategory) >= minVal)
+          {
+            push = true;
+          }
+          else if(parseInt(subCategory) >= minVal && parseInt(subCategory) <= maxVal)
+          {
+            push = true;
+          }
+          if(push)
+          {
+            filteredData.push(partialData[i]);
+          }
+        }
+      }
+    }
+    
+    return [filteredData, true];
+  }
+}
 
 function dropDownFilter(categoryName, partialData)
 {
   var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
 
-  if(valueToSearch == 'none')
+  if(valueToSearch == 'all')
   {
     return [partialData, false];
   }
@@ -413,18 +389,6 @@ function dropDownFilter(categoryName, partialData)
           {
             pushValue = true; 
           }
-
-          //different for Age
-          if(category.toLowerCase() == "age")
-          {
-            if (valueToSearch == "pediatric" && parseInt(option) < 18) {
-              pushValue = true;
-            }
-            else if (valueToSearch == "adult" && parseInt(option) >= 18){
-              pushValue = true;
-            }
-          }
-
           if (pushValue)
             filteredData.push(partialData[i]);
         }
@@ -443,7 +407,7 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
     var arrayLength = partialData.length;
   
     for (var i = 0; i < arrayLength; i++) {
-      if (partialData[i][category] == key) {
+      if (partialData[i][category].includes(key)) {
         whichToKeep[i] = true;
       }
     }
@@ -503,7 +467,7 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
   {
     if (getNTimesPerCategory(allCategories[i]) == 1)
     {
-      categoriesWith1s.push(allCategories[i])
+      categoriesWith1s.push(allCategories[i].toLowerCase())
     }
   }
       
@@ -518,15 +482,14 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
         if (subCategory.includes(valueToSearch))
         {
           filter[i] = true;
-          
+            
           if (valueToSearch == "male" && subCategory == "female")
           {
             filter[i] = false;
           }
         }
-        //separate case for age since subCategory is in numbers and search bar input is a string
-        else if(category.toLowerCase() == "age")
-        {
+        
+        if(category == "age"){
           if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
             filter[i] = true;
           }
@@ -590,6 +553,3 @@ function valueToSearchInArrayForm(valueToSearch)
 
   return array;
 }
-
-//listener for the search bar
-$("#search-field").change(function () {applyFilters();});

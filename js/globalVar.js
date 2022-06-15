@@ -1,10 +1,19 @@
 var data;
 var filteredData;
-var selectedModel = ''
+var viewingModel = ''
 var curIndex = 0;
 var smallScreen = false
 var lastFapplied = 0;
 var lastFdata = [];
+var lastSelectedData = [];
+var selectedModels = [];
+var viewingSelectedModels;
+var countBucket = 0;
+var wantsToSelectAllInFiltered = false;
+var wantsToSelectAllInBucket = false;
+var isOverlayOn = false;
+var isSafeSelected = false;
+
 
 //returns the keys of *all* the categories
 function getAllCategories()
@@ -63,4 +72,52 @@ function getMustContainFilterTitles()
   }
 
   return returnCategories;
+}
+
+//returns the actual amount of possibilities of values under key 
+function namesOfValuesPerKey(categoryName)
+{
+  var checkboxNameSet = new Set();
+  
+  for(var d = 0; d < data.length; d++)
+  {
+    if(data[d][categoryName].indexOf("_") != -1)
+    {
+      var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
+      for(var a = 0; a < toAdd.length; a++)
+      {
+        if (toAdd[a] != "-")
+          checkboxNameSet.add(toAdd[a]);
+      }
+    }
+    else
+    {
+      if (data[d][categoryName] != "-")
+        checkboxNameSet.add(data[d][categoryName]);
+    }
+  }
+
+  categoryName = Array.from(checkboxNameSet);
+  categoryName.sort();
+
+  return categoryName;
+}
+
+//returns an array taking in a string
+//delimiter = "_"
+function checkboxNameInArrayForm(checkboxNameArr)
+{
+  var array = []
+  var indexOfSpace = checkboxNameArr.indexOf("_");
+
+  while(indexOfSpace != -1)
+  {
+    array.push(checkboxNameArr.substring(0, indexOfSpace));
+    checkboxNameArr = checkboxNameArr.substring(indexOfSpace + 1);
+    indexOfSpace = checkboxNameArr.indexOf("_")
+  }
+
+  array.push(checkboxNameArr);
+
+  return array;
 }

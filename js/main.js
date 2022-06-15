@@ -1,60 +1,287 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
-function addClickListener(data) {
-  $('#' + data['Name']).click(function() {
-    selectedModel = data['Name']
-    $('.details-text').scrollTop(0);
-    $('#modal-greeting')[0].innerText = 'You have selected ' + data['Name'] + '.\nHere are the details:'
-    $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-    // $('.cd-main-content').css({"overflow-y":"hidden", "height": "%100", "padding-right": "15px"});
-    // $('.html').css({"margin": "0", "height": "100%", "overflow-y": "hidden", "padding-right": "15px"})
-    $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-    $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-    
-    var details = []
-    var categoryName = getCategoryName();
-
-    for(var i = 0; i < categoryName.length; i++)
+$("#closeAllButton").click(function() {
+  var h4Elements = document.getElementsByTagName("h4");
+  var changeClass = []
+  for(var i = 0; i < h4Elements.length; i++)
+  {
+    if(!h4Elements[i].classList.contains('closed'))
     {
-      details += categoryName[i] + ": " + data[categoryName[i]] + '\n'
+      changeClass.push(h4Elements[i]);
+    }
+  }
+  $(changeClass).addClass('closed').siblings(".cd-filter-content").slideToggle(300);
+  var contentH4 = document.getElementsByClassName(".cd-filter-content");
+  $(contentH4).css({ "display": "none" });
+});
+
+
+function addClickListener(model) {
+  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay(); console.log("through magnif");});
+  $('#' + model['Name']).click(function() {updatedSelectedList(model);});
+}
+
+$("#select-all").click(function() {
+  if(viewingSelectedModels)
+  {
+    deselectAll();
+  }
+  if(!viewingSelectedModels)
+  {
+    document.getElementById("select-all").classList.remove("cannotSelect");
+    selectAllFilteredData();
+  }
+});
+
+$("#safeOfOverlayClick").click(function() {isSafeSelected = true; console.log("safe true")});
+
+$('#overlay').click(function() {
+  checkOverlay(); 
+  isSafeSelected = !isSafeSelected;
+
+  console.log("through overlay; safe now: " + isSafeSelected);
+});
+
+$('.close-button-modal').click(function() {
+  overlayOff();
+  console.log("through close");
+});
+
+function deselectAll()
+{
+  //if at least one model has been selected
+  if(selectedModels.filter(value => value === true).length > 0){
+    //sends a "confirm action" notification
+    doConfirm("Are you sure you want to deselect all selected models?", function yes() {
+      selectedModels.fill(false);
+      removeContent();
+      updateCounters(lastFapplied, filteredData);
+      errorMessage(true, false);
+      document.getElementById("select-all").classList.add("cannotSelect");
+    });
+  }
+}
+
+function doConfirm(msg, yesFn, noFn) {
+  var confirmBox = $("#confirmBox");
+  confirmBox.find(".message").text(msg);
+  confirmBox.find(".yes,.no").unbind().click(function () {
+      confirmBox.hide();
+  });
+  confirmBox.find(".yes").click(yesFn);
+  confirmBox.find(".no").click(noFn);
+  confirmBox.show();
+}
+
+function selectAllFilteredData()
+{
+  wantsToSelectAllInFiltered = !wantsToSelectAllInFiltered;
+
+  if(wantsToSelectAllInFiltered)
+  {
+    for (var i = 0; i < filteredData.length; i++)
+    {
+      selectModel(filteredData[i]);
+    }
+    selectIcon = document.getElementById("select-all");
+    selectIcon.classList.add("applied");
+  }
+  else
+  {
+    for (var i = 0; i < filteredData.length; i++)
+    {
+      deselectModel(filteredData[i]);
     }
 
-    var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
-    for (var i = 0; i < fdrs.length; i++) {
-      if (data[fdrs[i]] == '1') {
-        details = details + fdrs[i] + ' available: yes'
-      }
-      else {
-        if (data[fdrs[i]] == '0') {
-          details = details + fdrs[i] + ' available: no'
-        }
-      }
-      if (i != fdrs.length-1)
-        details = details + '\n'
+    selectIcon = document.getElementById("select-all");
+    selectIcon.classList.remove("applied");
+  }
+  //parameters should not have an impact
+  updateCounters(lastFapplied, filteredData);
+}
+
+function deselectModel(model)
+{
+  selectedModels[data.indexOf(model)] = false;
+  var element = document.getElementById(model['Name'] + "_isSelected");
+  if (element)
+    element.classList.remove("selected");
+}
+
+function selectModel(model)
+{
+  selectedModels[data.indexOf(model)] = true;
+  var element = document.getElementById(model['Name'] + "_isSelected");
+  if (element)
+    element.classList.add("selected");
+}
+
+function updatedSelectedList(model)
+{
+  selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
+  var bucket = document.getElementById("view-selected");
+  
+  if(selectedModels[data.indexOf(model)])
+  {
+    var element = document.getElementById(model['Name'] + "_isSelected");
+    element.classList.add("selected");
+    bucket.classList.add("selected");
+  }
+  else
+  {
+    var element = document.getElementById(model['Name'] + "_isSelected");
+    element.classList.remove("selected");
+  }
+
+  updateCounters(lastFapplied, filteredData);
+  countBucket++;
+  var tempCounter = countBucket;
+
+  //remove class that allows for animation of bucket
+  setTimeout(() => {
+    if(tempCounter == countBucket) {
+      bucket.classList.remove("selected");
     }
-    var size = parseInt(data['Size']) / 1000000
-    $('.details-text')[0].value = details
-    $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
-  });
+  }, 750);
+}
+
+function greetingText(data)
+{
+  viewingModel = data['Name'];
+  $('.details-text').scrollTop(0);
+  $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
+    
+  var details = []
+  var categoryName = getCategoryName();
+
+  for(var d = 0; d < categoryName.length; d++)
+  {
+    var valInCat = data[categoryName[d]];
+    if(valInCat == "-")
+    {
+      details += categoryName[d] + ": N/A";
+    }
+    else{
+      if(valInCat.indexOf("_") == -1)
+      {
+        details += categoryName[d] + ": " + valInCat;
+      }
+      else
+      {
+        details += categoryName[d] + "s: ";
+
+        valInCat = checkboxNameInArrayForm(valInCat);
+
+        var numOfDetails = valInCat.length;
+
+        //grammar with commas and ands for lists
+        if(numOfDetails == 2)
+        {
+          details += valInCat[0] + " and " + valInCat[1];
+        }
+        else
+        {
+          for(var v = 0; v < numOfDetails - 1; v++)
+          {
+            details += valInCat[v] + ", ";
+          }
+          details += "and " + valInCat[numOfDetails - 1];
+        }
+      } //end else if more than one detail
+    }
+
+    details += '\n';
+
+  } //end for-loop through categoryName
+
+  var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
+  for (var i = 0; i < fdrs.length; i++) {
+    if (data[fdrs[i]] == '1') {
+      details = details + fdrs[i] + ' available: yes'
+    }
+    else {
+      if (data[fdrs[i]] == '0') {
+        details = details + fdrs[i] + ' available: no'
+      }
+    }
+    if (i != fdrs.length-1)
+      details = details + '\n'
+  }
+  var size = parseInt(data['Size']) / 1000000
+  $('.details-text')[0].value = details
+  $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+}
+
+function overlayOn(){
+  document.getElementById("overlay").style.display = "block";
+  isOverlayOn = true;
+
+  $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
+  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+
+}
+function overlayOff(){
+  document.getElementById("overlay").style.display = "none";
+  isSafeSelected = true;
+  isOverlayOn = false;
+
+  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
+  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+
+}
+
+function checkOverlay(){
+  //enters when magnifying glass is clicked on
+  //enters when clicks outside of details panel
+  if(!isSafeSelected)
+  {
+    isOverlayOn = !isOverlayOn;
+    if(isOverlayOn)
+    {
+      overlayOn();
+    }
+    else{
+      overlayOff();
+    }
+  }
 }
 
 function generateContent(modelData) {
   var div = document.createElement("div");
   div.classList.add("col-md-3");
   div.classList.add("col-sm-12");
+
   var divModelImage = document.createElement("div");
   divModelImage.classList.add("model-image");
   divModelImage.classList.add("animate");
+  divModelImage.setAttribute("id",modelData['Name'] + "_isSelected");
+
+  if(selectedModels[data.indexOf(modelData)])
+  {
+    divModelImage.classList.add("selected");
+  }
 
   let aWrap = document.createElement("a");
   aWrap.classList.add("a-img")
-  aWrap.setAttribute("id",modelData['Name']);
+  // aWrap.setAttribute("id",modelData['Name']);
+
+  let detailsImg = document.createElement("i");
+  detailsImg.classList.add("fa-solid");
+  detailsImg.classList.add("fa-pink");
+  detailsImg.classList.add("fa-magnifying-glass");
+  detailsImg.classList.add("top-left");
+  detailsImg.setAttribute("title", "View Details");
+  detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
+  innerImg.setAttribute("id",modelData['Name']);
 
   aWrap.appendChild(innerImg)
+  aWrap.appendChild(detailsImg)
   divModelImage.appendChild(aWrap);
   div.appendChild(divModelImage);
 
@@ -69,6 +296,13 @@ function removeContent() {
 }
 
 function populate(dataArray, num_images = 24) {
+  //clears not-allowed function when data is repopulated on select all icon
+  document.getElementById("select-all").classList.remove("cannotSelect");
+  document.getElementById("select-all").classList.remove("applied");
+
+  //clears confirm message if data repopulated
+  $("#confirmBox").hide();
+
   var modelList = document.getElementById("model-gallery")
   var arrayLength = dataArray.length;
   var ubound = arrayLength;
@@ -76,9 +310,9 @@ function populate(dataArray, num_images = 24) {
     ubound = curIndex + num_images
   }
   for (var i = curIndex; i < ubound; i++) {
-      var newContent = generateContent(dataArray[i]);
-      modelList.appendChild(newContent);
-      addClickListener(dataArray[i])
+    var newContent = generateContent(dataArray[i]);
+    modelList.appendChild(newContent);
+    addClickListener(dataArray[i])
   }
   curIndex = ubound;
 }
@@ -96,11 +330,11 @@ $(document).ready(function($){
     }
   });
 
-  checkWidth();
-  
-  // create copy of data
   filteredData = data;
-  updateCounter(false, data)
+  checkWidth();
+  // create copy of data
+  initializeSelectedModels();
+  updateCounters(false, data);
   getFilterMenu();
   populate(data);
 
@@ -117,15 +351,7 @@ $(document).ready(function($){
     triggerFilter(false);
   });
 
-  // this function is called whenever "Filters" is pressed. It applies the
-  // "filter-is-visible" class to all elements in elementsToTrigger. The behavior
-  // filter-is-visible is determined in style_dataset.css
-  function triggerFilter($bool) {
-    var elementsToTrigger = $([$('.cd-filter-trigger'), $('.cd-filter'), $('.cd-tab-filter'), $('.cd-gallery')]);
-    elementsToTrigger.each(function(){
-      $(this).toggleClass('filter-is-visible', $bool);
-    });
-  }
+  
 
   //close filter dropdown inside lateral .cd-filter
 	$('.cd-filter-block h4').on('click', function(){
@@ -137,29 +363,53 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
+      console.log("#search-field2 apply filters")
       applyFilters()
       triggerFilter(false);
       return true;
     }
   });
 
+  $('#min-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      console.log("#min-age apply filters")
+      applyFilters();
+      triggerFilter(false);
+      return true;
+    }
+  });
+
+  $('#max-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      console.log("#max-age apply filters")
+      applyFilters()
+      triggerFilter(false);
+      return true;
+    }
+  });
 });
 
-$('.close-button-modal').click(function() {
-  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-});
+// this function is called whenever "Filters" is pressed. It applies the
+// "filter-is-visible" class to all elements in elementsToTrigger. The behavior
+// filter-is-visible is determined in style_dataset.css
+function triggerFilter($bool) {
+  var elementsToTrigger = $([$('.cd-filter-trigger'), $('.cd-filter'), $('.cd-tab-filter'), $('.cd-gallery')]);
+  elementsToTrigger.each(function(){
+    $(this).toggleClass('filter-is-visible', $bool);
+  });
+}
 
 $('.download-button-modal').click(function() {
-  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  overlayOff();
   // download tracking
   console.log(data['Name']);
-  window.open('svprojects/' + selectedModel + '.zip')
-  console.log('svprojects/' + selectedModel + '.zip')
-  gtag('event', 'download_' + selectedModel, {
+  window.open('svprojects/' + viewingModel + '.zip')
+  console.log('svprojects/' + viewingModel + '.zip')
+  gtag('event', 'download_' + viewingModel, {
       'send_to': 'G-YVVR1546XJ',
       'event_category': 'Model download',
       'event_label': 'test',
@@ -171,39 +421,73 @@ function checkWidth() {
     if (screen.width >= 769 && (document.documentElement.clientWidth >= 769)) {
         if (smallScreen) {
           smallScreen = false;
-          updateCounter(lastFapplied, lastFdata);
+          updateCounters(lastFapplied, filteredData);
         }
     }
     else {
       if (!smallScreen) {
         smallScreen = true;
-        updateCounter(lastFapplied, lastFdata);
+        updateCounters(lastFapplied, filteredData);
       }
     }
 }
+
+function initializeSelectedModels()
+{
+  selectedModels = new Array(data.length);
+  selectedModels.fill(false);
+}
+
 $(window).ready(checkWidth);
 $(window).resize(checkWidth);
 
-function updateCounter(fApplied, fData) {
-  lastFdata = fData;
-  lastFapplied = fApplied;
-  if (smallScreen) {
-    if (fApplied) {
-      document.getElementById('model-counter').textContent = fData.length + '/' + data.length + ' models'
+function updateCounters(fApplied, fData)
+{
+  //update counter of selected models on bucket
+  var count = selectedModels.filter(value => value === true).length;
+  document.getElementById('selected-counter').textContent = count;
+  
+  var counterPanel = document.getElementById("counterPanel");
+
+  if(viewingSelectedModels)
+  {
+    if (smallScreen) {
+      counterPanel.textContent = count + " selected";
     }
     else {
-      document.getElementById('model-counter').textContent = + fData.length + '/' + data.length + ' models'
+      counterPanel.textContent = count + " models selected";
     }
+
+    //updates icon status
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.add("applied");
   }
-  else {
-    if (fApplied) {
-      document.getElementById('model-counter').textContent = "Filters applied: " + fData.length + '/' + data.length + ' models'
+  if(!viewingSelectedModels)
+  {
+    // lastFdata = fData;
+    lastFapplied = fApplied;
+    if (smallScreen) {
+      if (fApplied) {
+        counterPanel.textContent = fData.length + '/' + data.length + ' models'
+      }
+      else {
+        counterPanel.textContent = fData.length + '/' + data.length + ' models'
+      }
     }
     else {
-      document.getElementById('model-counter').textContent = "Filters not applied: " + fData.length + '/' + data.length + ' models'
+      if (fApplied) {
+        counterPanel.textContent = "Filters applied: " + fData.length + '/' + data.length + ' models'
+      }
+      else {
+        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + data.length + ' models'
+      }
     }
+    //updates icon status
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.remove("applied");
   }
 }
+
 
 
 window.addEventListener('scroll', () => {
@@ -301,4 +585,95 @@ var buttonFilter = {
         self.$container.mixItUp('filter', self.outputString);
     }
     }
+}
+
+$("#view-selected").click(function() {
+  viewingSelectedModels = !viewingSelectedModels;
+  
+  if(viewingSelectedModels)
+  {
+    triggerFilter(false);
+
+    var display = []
+  
+    for(var i = 0; i < data.length; i++)
+    {
+      if(selectedModels[i])
+      {
+        display.push(data[i])
+      }
+    }
+
+    removeContent();
+    scrollToTop();
+    curIndex = 0;
+    populate(display);
+
+    if (display.length == 0) {
+      errorMessage(true, false)
+    }
+    else {
+      errorMessage(false, false)
+    }
+
+    //parameters should not have an impact
+    updateCounters(lastFapplied, filteredData);
+    
+    //update select all icon
+    if(display.length > 0)
+    {
+      document.getElementById("select-all").classList.add("applied");
+    }
+    else
+    {
+      document.getElementById("select-all").classList.add("cannotSelect");
+    }
+  }
+  else
+  {
+    //update select all icon
+    document.getElementById("select-all").classList.remove("applied");
+
+    removeContent();
+    scrollToTop();
+    curIndex = 0;
+    populate(filteredData);
+    updateCounters(lastFapplied, filteredData);
+    
+    if (filteredData.length == 0) {
+      errorMessage(true, true)
+    }
+    else {
+      errorMessage(false, true)
+    }
+  }
+  
+});
+
+function errorMessage(isOn, isFilter)
+{
+  var errorMsg = document.getElementById('error-msg');
+  
+  //determines which message is showing
+  if(isFilter)
+  {
+    errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
+  }
+  else
+  {
+    errorMsg.textContent = "It looks like no models are currently selected!";
+  }
+
+  //whether or not the error message is visible/displayed
+  if(isOn)
+  {
+    errorMsg.style.transitionDuration = '0.3s';
+    errorMsg.style.opacity = 1;
+  }
+  else
+  {
+    errorMsg.style.transitionDuration = '0s';
+    errorMsg.style.opacity = 0;
+  }
+
 }
