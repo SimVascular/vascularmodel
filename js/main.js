@@ -853,38 +853,33 @@ $("#view-selected").click(function() {
 function errorMessage(isOn, whichToDisplay)
 {
   var errorMsg = document.getElementById('error-msg');
-  
+  var button = document.getElementById("returnToGalleryButton");
+ 
   //determines which message is showing
   if(whichToDisplay == "filter")
   {
     errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
   }
   else if(whichToDisplay == "viewingselected")
   {
     errorMsg.textContent = "It looks like no models are currently selected!";
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
   }
   else if(whichToDisplay == "justdownloaded")
   {
     errorMsg.textContent = "Thank you for downloading!";
-    var block = document.getElementById("errorBlock");
-    var div = document.createElement("div")
-    var button = document.createElement("button");
-    button.setAttribute("class", "returnToGalleryButton");
-    button.setAttribute("id", "returnToGalleryButton");
-    console.log("id: returnToGalleryButton")
-    button.textContent = "Return to Gallery"
-    div.appendChild(button)
-    block.appendChild(div);
+    button.style.transitionDuration = '0.3s';
+    button.style.opacity = 1;
   }
 
-  var button = document.getElementById("returnToGalleryButton");
   //whether or not the error message is visible/displayed
   if(isOn)
   {
     errorMsg.style.transitionDuration = '0.3s';
     errorMsg.style.opacity = 1;
-    button.style.transitionDuration = '0.3s';
-    button.style.opacity = 1;
   }
   else
   {
