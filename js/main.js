@@ -325,13 +325,14 @@ function generateContent(modelData) {
 
   let aWrap = document.createElement("a");
   aWrap.classList.add("a-img")
-  // aWrap.setAttribute("id",modelData['Name']);
+  aWrap.setAttribute("id",modelData['Name'] + "_hover");
 
   let detailsImg = document.createElement("i");
   detailsImg.classList.add("fa-solid");
   detailsImg.classList.add("fa-pink");
   detailsImg.classList.add("fa-magnifying-glass");
   detailsImg.classList.add("top-left");
+  detailsImg.setAttribute("style", "opacity: 0");
   detailsImg.setAttribute("title", "View Details");
   detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
@@ -345,7 +346,23 @@ function generateContent(modelData) {
   divModelImage.appendChild(aWrap);
   div.appendChild(divModelImage);
 
-  return div
+  var hook = modelData['Name'];
+
+  return [div, hook]
+}
+
+function addHoverListeners(id)
+{
+  $("#" + id + "_hover").hover(function() {
+
+    var detailsImg = document.getElementById(id + "_details");
+    detailsImg.setAttribute("style", "opacity: 1");
+
+  }, function(){
+
+    var detailsImg = document.getElementById(id + "_details");
+    detailsImg.setAttribute("style", "opacity: 0");
+  });
 }
 
 function removeContent() {
@@ -371,8 +388,9 @@ function populate(dataArray, num_images = 24) {
   }
   for (var i = curIndex; i < ubound; i++) {
     var newContent = generateContent(dataArray[i]);
-    modelList.appendChild(newContent);
+    modelList.appendChild(newContent[0]);
     addClickListener(dataArray[i])
+    addHoverListeners(newContent[1])
   }
   curIndex = ubound;
 }
