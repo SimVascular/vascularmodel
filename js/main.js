@@ -1,5 +1,12 @@
 // <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
 
+function preventScroll(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    return false;
+}
+
 var selectedModel = ''
 function addClickListener(data) {
   $('#' + data['Name']).click(function() {
@@ -20,6 +27,7 @@ function addClickListener(data) {
       $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
       $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
     }
+    document.querySelector('.body').addEventListener('wheel', preventScroll, {passive: false});
 
     document.body.style.position = '';
     document.body.style.top = `-${prevBodyY}px`;
@@ -165,6 +173,7 @@ function closeModalMenu() {
   document.body.style.position = '';
   document.body.style.top = '';
   window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  document.querySelector('.body').removeEventListener('wheel', preventScroll);
 }
 
 $('.close-button-modal').click(function() {
