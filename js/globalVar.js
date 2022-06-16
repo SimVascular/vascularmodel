@@ -36,7 +36,7 @@ function getFilterTitles()
 
   for(var i = 0; i < allCategories.length; i++)
   {
-    if(allCategories[i] != "Size" && allCategories[i] != "Name")
+    if(allCategories[i] != "Name" && allCategories[i] != "Animal" && allCategories[i] != "Notes" && allCategories[i] != "Size" && allCategories[i] != "DOI")
     {
       onlyFilterTitles.push(allCategories[i])
     }
@@ -55,7 +55,8 @@ function getCategoryName()
   //ends before start of MustContain filters
   for (var i = 1; i < allCategories.indexOf("Images"); i++)
   {
-    onlyTheAttributes.push(allCategories[i]);
+    if(allCategories[i] != "Animal")
+      onlyTheAttributes.push(allCategories[i]);
   }
 
   return onlyTheAttributes;
@@ -87,12 +88,14 @@ function namesOfValuesPerKey(categoryName)
       var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
       for(var a = 0; a < toAdd.length; a++)
       {
-        checkboxNameSet.add(toAdd[a]);
+        if (toAdd[a] != "-")
+          checkboxNameSet.add(toAdd[a]);
       }
     }
     else
     {
-      checkboxNameSet.add(data[d][categoryName]);
+      if (data[d][categoryName] != "-")
+        checkboxNameSet.add(data[d][categoryName]);
     }
   }
 

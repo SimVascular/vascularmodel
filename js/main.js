@@ -56,7 +56,7 @@ function deselectAll()
       selectedModels.fill(false);
       removeContent();
       updateCounters(lastFapplied, filteredData);
-      errorMessage(true, false);
+      errorMessage(true, "viewingselected");
       document.getElementById("select-all").classList.add("cannotSelect");
     });
   }
@@ -157,34 +157,33 @@ function greetingText(data)
   for(var d = 0; d < categoryName.length; d++)
   {
     var valInCat = data[categoryName[d]];
-
-    if(valInCat.indexOf("_") == -1)
+    if(valInCat == "-")
     {
-      details += categoryName[d] + ": " + valInCat;
+      details += categoryName[d] + ": N/A";
     }
-    else
-    {
-      details += categoryName[d] + "s: ";
-
-      valInCat = checkboxNameInArrayForm(valInCat);
-
-      var numOfDetails = valInCat.length;
-
-      //grammar with commas and ands for lists
-      if(numOfDetails == 2)
+    else{
+      if(categoryName[d] == "Age")
       {
-        details += valInCat[0] + " and " + valInCat[1];
+        details += categoryName[d] + ": " + ageCalculator(valInCat);
+      }
+      else if(categoryName[d] == "Species" && valInCat == "Animal")
+      {
+        details += categoryName[d] + ": " + data["Animal"];
       }
       else
       {
-        for(var v = 0; v < numOfDetails - 1; v++)
+        if(valInCat.indexOf("_") == -1)
         {
-          details += valInCat[v] + ", ";
+          details += categoryName[d] + ": " + valInCat;
         }
-        details += "and " + valInCat[numOfDetails - 1];
-      }
+        else
+        {
+          details += categoryName[d] + "s: ";
 
-    } //end else if more than one detail
+          details += listFormater(valInCat)
+        }
+      } //end else if more than one detail
+    }
 
     details += '\n';
 
@@ -208,13 +207,74 @@ function greetingText(data)
   $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
 }
 
+//grammar for commas and ands
+function listFormater(string)
+{
+  var output = ""
+  valInCat = checkboxNameInArrayForm(string);
+
+  var numOfDetails = valInCat.length;
+
+  if(numOfDetails == 2)
+  {
+    output = valInCat[0] + " and " + valInCat[1];
+  }
+  else
+  {
+    for(var v = 0; v < numOfDetails - 1; v++)
+    {
+      output = valInCat[v] + ", ";
+    }
+
+    output += "and " + valInCat[numOfDetails - 1];
+  }
+
+  return output;
+}
+
+function ageCalculator(value)
+{
+  if(value > 1)
+  {
+    return value + " years"
+  }
+  else
+  {
+    var months = value * 12;
+    var weeks = value * 52;
+    var days = value * 365;
+    if (months > 1)
+    {
+      return Math.round(months*100)/100 + " months"
+    }
+    else if (weeks > 1)
+    {
+      return Math.round(weeks*100)/100 + " weeks"
+    }
+    else {
+      return Math.round(days*100)/100 + " days"
+    }
+  }
+}
+
 function overlayOn(){
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-  $('.html').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
-  $('.body').css({"height": "100%", "overflow-y": "hidden", "padding-right": "7px"})
+  
+  var prevBodyY = window.scrollY
+  if (smallScreen) {
+    // padding is not necessary on mobile
+    $('.html').css({"height": "auto", "overflow-y": "hidden"})
+    $('.body').css({"height": "auto", "overflow-y": "hidden"})
+  }
+  else {
+    $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+    $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+  }
+  document.body.style.position = '';
+  document.body.style.top = `-${prevBodyY}px`;
 
 }
 function overlayOff(){
@@ -223,9 +283,13 @@ function overlayOff(){
   isOverlayOn = false;
 
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
-  $('.html').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "", "padding-right": "0px"})
+  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
 
+  const scrollY = document.body.style.top;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  window.scrollTo(0, parseInt(scrollY || '0') * -1);
 }
 
 function checkOverlay(){
@@ -359,6 +423,7 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
+      console.log("#search-field2 apply filters")
       applyFilters()
       triggerFilter(false);
       return true;
@@ -369,6 +434,7 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
+      console.log("#min-age apply filters")
       applyFilters();
       triggerFilter(false);
       return true;
@@ -379,6 +445,7 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
+      console.log("#max-age apply filters")
       applyFilters()
       triggerFilter(false);
       return true;
@@ -399,8 +466,98 @@ function triggerFilter($bool) {
 $('.download-button-modal').click(function() {
   overlayOff();
   // download tracking
-  console.log(data['Name']);
-  downloadModel();
+  window.open('svprojects/' + viewingModel + '.zip')
+});
+
+$("#download-all").click(function () {
+  if (selectedModels.filter(value => value === true).length > 0)
+  {
+    downloadAllSelectedModels();
+  }
+});
+
+function downloadModel(modelToDownloadName)
+{
+  var fileUrl = 'svprojects/' + modelToDownloadName + '.zip';
+  var a = document.createElement("a");
+  a.href = fileUrl;
+  a.setAttribute("download", modelToDownloadName);
+  a.click();
+  
+  gtag('event', 'download_' + modelToDownloadName, {
+    'send_to': 'G-YVVR1546XJ',
+    'event_category': 'Model download',
+    'event_label': 'test',
+    'value': '1'
+});
+}
+
+function downloadAllSelectedModels(){
+  
+  listOfNames = []
+  
+  for(var i = 0; i < selectedModels.length; i++)
+  {
+    if(selectedModels[i])
+    {
+      listOfNames.push(data[i]["Name"])
+    }
+  }
+
+  for(var i = 0; i < listOfNames.length; i++)
+  {
+    downloadModel(listOfNames[i]);
+  }
+
+  selectedModels.fill(false);
+  removeContent();
+  populate([]);
+  errorMessage(true, "justdownloaded")
+  viewingSelectedModels = true;
+  updateCounters();
+}
+
+$("#returnToGalleryButton").change(function () {
+  //update select all icon
+  document.getElementById("select-all").classList.remove("applied");
+  document.getElementById("view-selected").classList.remove("applied");
+
+  removeContent();
+  scrollToTop();
+  curIndex = 0;
+  populate(filteredData);
+  updateCounters(lastFapplied, filteredData);
+  
+  if (filteredData.length == 0) {
+    errorMessage(true, "filter")
+  }
+  else {
+    errorMessage(false, "filter")
+  }
+});
+
+$("#checkbox-Images").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Paths").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Segmentations").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Models").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Meshes").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Simulations").change(function () {
+  applyFilters();
 });
 
 var isPaused = false;
@@ -653,10 +810,10 @@ $("#view-selected").click(function() {
     populate(display);
 
     if (display.length == 0) {
-      errorMessage(true, false)
+      errorMessage(true, "viewingselected")
     }
     else {
-      errorMessage(false, false)
+      errorMessage(false, "viewingselected")
     }
 
     //parameters should not have an impact
@@ -684,39 +841,57 @@ $("#view-selected").click(function() {
     updateCounters(lastFapplied, filteredData);
     
     if (filteredData.length == 0) {
-      errorMessage(true, true)
+      errorMessage(true, "filter")
     }
     else {
-      errorMessage(false, true)
+      errorMessage(false, "filter")
     }
   }
   
 });
 
-function errorMessage(isOn, isFilter)
+function errorMessage(isOn, whichToDisplay)
 {
   var errorMsg = document.getElementById('error-msg');
   
   //determines which message is showing
-  if(isFilter)
+  if(whichToDisplay == "filter")
   {
     errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
   }
-  else
+  else if(whichToDisplay == "viewingselected")
   {
     errorMsg.textContent = "It looks like no models are currently selected!";
   }
+  else if(whichToDisplay == "justdownloaded")
+  {
+    errorMsg.textContent = "Thank you for downloading!";
+    var block = document.getElementById("errorBlock");
+    var div = document.createElement("div")
+    var button = document.createElement("button");
+    button.setAttribute("class", "returnToGalleryButton");
+    button.setAttribute("id", "returnToGalleryButton");
+    console.log("id: returnToGalleryButton")
+    button.textContent = "Return to Gallery"
+    div.appendChild(button)
+    block.appendChild(div);
+  }
 
+  var button = document.getElementById("returnToGalleryButton");
   //whether or not the error message is visible/displayed
   if(isOn)
   {
     errorMsg.style.transitionDuration = '0.3s';
     errorMsg.style.opacity = 1;
+    button.style.transitionDuration = '0.3s';
+    button.style.opacity = 1;
   }
   else
   {
     errorMsg.style.transitionDuration = '0s';
     errorMsg.style.opacity = 0;
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
   }
 
 }
