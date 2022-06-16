@@ -514,20 +514,21 @@ function downloadAllSelectedModels(){
   populate([]);
   errorMessage(true, "justdownloaded")
   viewingSelectedModels = true;
-  updateCounters();
+  updateCounters(lastFapplied, filteredData, "justdownloaded");
 }
 
-$("#returnToGalleryButton").change(function () {
+$("#returnToGalleryButton").click(function () {
   //update select all icon
   document.getElementById("select-all").classList.remove("applied");
   document.getElementById("view-selected").classList.remove("applied");
 
+  viewingSelectedModels = false;
   removeContent();
   scrollToTop();
   curIndex = 0;
   populate(filteredData);
   updateCounters(lastFapplied, filteredData);
-  
+
   if (filteredData.length == 0) {
     errorMessage(true, "filter")
   }
@@ -584,15 +585,18 @@ function initializeSelectedModels()
 $(window).ready(checkWidth);
 $(window).resize(checkWidth);
 
-function updateCounters(fApplied, fData)
+function updateCounters(fApplied, fData, string)
 {
   //update counter of selected models on bucket
   var count = selectedModels.filter(value => value === true).length;
   document.getElementById('selected-counter').textContent = count;
   
   var counterPanel = document.getElementById("counterPanel");
-
-  if(viewingSelectedModels)
+  if(string == "justdownloaded")
+  {
+    counterPanel.textContent = "";
+  }
+  else if (viewingSelectedModels)
   {
     if (smallScreen) {
       counterPanel.textContent = count + " selected";
@@ -605,7 +609,7 @@ function updateCounters(fApplied, fData)
     viewSelectedIcon = document.getElementById("view-selected");
     viewSelectedIcon.classList.add("applied");
   }
-  if(!viewingSelectedModels)
+  else if (!viewingSelectedModels)
   {
     // lastFdata = fData;
     lastFapplied = fApplied;
@@ -796,38 +800,33 @@ $("#view-selected").click(function() {
 function errorMessage(isOn, whichToDisplay)
 {
   var errorMsg = document.getElementById('error-msg');
-  
+  var button = document.getElementById("returnToGalleryButton");
+
   //determines which message is showing
   if(whichToDisplay == "filter")
   {
     errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
   }
   else if(whichToDisplay == "viewingselected")
   {
     errorMsg.textContent = "It looks like no models are currently selected!";
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
   }
   else if(whichToDisplay == "justdownloaded")
   {
     errorMsg.textContent = "Thank you for downloading!";
-    var block = document.getElementById("errorBlock");
-    var div = document.createElement("div")
-    var button = document.createElement("button");
-    button.setAttribute("class", "returnToGalleryButton");
-    button.setAttribute("id", "returnToGalleryButton");
-    console.log("id: returnToGalleryButton")
-    button.textContent = "Return to Gallery"
-    div.appendChild(button)
-    block.appendChild(div);
+    button.style.transitionDuration = '0.3s';
+    button.style.opacity = 1;
   }
 
-  var button = document.getElementById("returnToGalleryButton");
   //whether or not the error message is visible/displayed
   if(isOn)
   {
     errorMsg.style.transitionDuration = '0.3s';
     errorMsg.style.opacity = 1;
-    button.style.transitionDuration = '0.3s';
-    button.style.opacity = 1;
   }
   else
   {
