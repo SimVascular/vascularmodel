@@ -165,14 +165,6 @@ function greetingText(data)
       if(categoryName[d] == "Age")
       {
         details += categoryName[d] + ": " + ageCalculator(valInCat);
-        // if(valInCat < 1)
-        // {
-        //   var ageInDays = valInCat*365;
-        //   details += Math.round(ageInDays*100)/100 + " days";
-        // }
-        // else{
-        //   details += Math.round(valInCat*100)/100 + " years";
-        // }
       }
       else if(categoryName[d] == "Species" && valInCat == "Animal")
       {
@@ -188,23 +180,7 @@ function greetingText(data)
         {
           details += categoryName[d] + "s: ";
 
-          valInCat = checkboxNameInArrayForm(valInCat);
-
-          var numOfDetails = valInCat.length;
-
-          //grammar with commas and ands for lists
-          if(numOfDetails == 2)
-          {
-            details += valInCat[0] + " and " + valInCat[1];
-          }
-          else
-          {
-            for(var v = 0; v < numOfDetails - 1; v++)
-            {
-              details += valInCat[v] + ", ";
-            }
-            details += "and " + valInCat[numOfDetails - 1];
-          }
+          details += listFormater(valInCat)
         }
       } //end else if more than one detail
     }
@@ -229,6 +205,31 @@ function greetingText(data)
   var size = parseInt(data['Size']) / 1000000
   $('.details-text')[0].value = details
   $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+}
+
+//grammar for commas and ands
+function listFormater(string)
+{
+  var output = ""
+  valInCat = checkboxNameInArrayForm(string);
+
+  var numOfDetails = valInCat.length;
+
+  if(numOfDetails == 2)
+  {
+    output = valInCat[0] + " and " + valInCat[1];
+  }
+  else
+  {
+    for(var v = 0; v < numOfDetails - 1; v++)
+    {
+      output = valInCat[v] + ", ";
+    }
+
+    output += "and " + valInCat[numOfDetails - 1];
+  }
+
+  return output;
 }
 
 function ageCalculator(value)
@@ -474,6 +475,30 @@ $('.download-button-modal').click(function() {
       'event_label': 'test',
       'value': '1'
   });
+});
+
+$("#checkbox-Images").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Paths").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Segmentations").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Models").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Meshes").change(function () {
+  applyFilters();
+});
+
+$("#checkbox-Simulations").change(function () {
+  applyFilters();
 });
 
 function checkWidth() {

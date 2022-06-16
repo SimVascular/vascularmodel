@@ -136,6 +136,7 @@ function generateOptions(optionName)
 function addHooks(hooks) {  
   for (var i = 0; i < hooks.length; i++) {
     $("#" + hooks[i]).change(function() {applyFilters(); console.log("#" + hooks[i] + " apply filters")});
+    console.log("#" + hooks[i] + " hook created")
   }
 }
 
@@ -224,10 +225,9 @@ function applyFilters()
 function getNTimes()
 {
   var nTimesRepeat = []
-  var listOfNames = getAllCategories();
+  var listOfNames = getFilterTitles();
 
-  //skips Name and Size
-  for(var i = 1; i < listOfNames.length - 1; i ++)
+  for(var i = 0; i < listOfNames.length; i ++)
   {
     nTimesRepeat.push(getNTimesPerCategory(listOfNames[i]));
   }
