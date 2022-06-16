@@ -162,30 +162,49 @@ function greetingText(data)
       details += categoryName[d] + ": N/A";
     }
     else{
-      if(valInCat.indexOf("_") == -1)
+      if(categoryName[d] == "Age")
       {
-        details += categoryName[d] + ": " + valInCat;
+        details += categoryName[d] + ": " + ageCalculator(valInCat);
+        // if(valInCat < 1)
+        // {
+        //   var ageInDays = valInCat*365;
+        //   details += Math.round(ageInDays*100)/100 + " days";
+        // }
+        // else{
+        //   details += Math.round(valInCat*100)/100 + " years";
+        // }
+      }
+      else if(categoryName[d] == "Species" && valInCat == "Animal")
+      {
+        details += categoryName[d] + ": " + data["Animal"];
       }
       else
       {
-        details += categoryName[d] + "s: ";
-
-        valInCat = checkboxNameInArrayForm(valInCat);
-
-        var numOfDetails = valInCat.length;
-
-        //grammar with commas and ands for lists
-        if(numOfDetails == 2)
+        if(valInCat.indexOf("_") == -1)
         {
-          details += valInCat[0] + " and " + valInCat[1];
+          details += categoryName[d] + ": " + valInCat;
         }
         else
         {
-          for(var v = 0; v < numOfDetails - 1; v++)
+          details += categoryName[d] + "s: ";
+
+          valInCat = checkboxNameInArrayForm(valInCat);
+
+          var numOfDetails = valInCat.length;
+
+          //grammar with commas and ands for lists
+          if(numOfDetails == 2)
           {
-            details += valInCat[v] + ", ";
+            details += valInCat[0] + " and " + valInCat[1];
           }
-          details += "and " + valInCat[numOfDetails - 1];
+          else
+          {
+            for(var v = 0; v < numOfDetails - 1; v++)
+            {
+              details += valInCat[v] + ", ";
+            }
+            details += "and " + valInCat[numOfDetails - 1];
+          }
         }
       } //end else if more than one detail
     }
@@ -210,6 +229,31 @@ function greetingText(data)
   var size = parseInt(data['Size']) / 1000000
   $('.details-text')[0].value = details
   $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+}
+
+function ageCalculator(value)
+{
+  if(value > 1)
+  {
+    return value + " years"
+  }
+  else
+  {
+    var months = value * 12;
+    var weeks = value * 52;
+    var days = value * 365;
+    if (months > 1)
+    {
+      return Math.round(months*100)/100 + " months"
+    }
+    else if (weeks > 1)
+    {
+      return Math.round(weeks*100)/100 + " weeks"
+    }
+    else {
+      return Math.round(days*100)/100 + " days"
+    }
+  }
 }
 
 function overlayOn(){

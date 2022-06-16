@@ -54,7 +54,8 @@ function getCategoryName()
   //ends before start of MustContain filters
   for (var i = 1; i < allCategories.indexOf("Images"); i++)
   {
-    onlyTheAttributes.push(allCategories[i]);
+    if(allCategories[i] != "Animal")
+      onlyTheAttributes.push(allCategories[i]);
   }
 
   return onlyTheAttributes;
