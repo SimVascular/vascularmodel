@@ -56,7 +56,7 @@ function deselectAll()
       selectedModels.fill(false);
       removeContent();
       updateCounters(lastFapplied, filteredData);
-      errorMessage(true, false);
+      errorMessage(true, "viewingselected");
       document.getElementById("select-all").classList.add("cannotSelect");
     });
   }
@@ -466,15 +466,74 @@ function triggerFilter($bool) {
 $('.download-button-modal').click(function() {
   overlayOff();
   // download tracking
-  console.log(data['Name']);
   window.open('svprojects/' + viewingModel + '.zip')
-  console.log('svprojects/' + viewingModel + '.zip')
-  gtag('event', 'download_' + viewingModel, {
-      'send_to': 'G-YVVR1546XJ',
-      'event_category': 'Model download',
-      'event_label': 'test',
-      'value': '1'
-  });
+});
+
+$("#download-all").click(function () {
+  if (selectedModels.filter(value => value === true).length > 0)
+  {
+    downloadAllSelectedModels();
+  }
+});
+
+function downloadModel(modelToDownloadName)
+{
+  var fileUrl = 'svprojects/' + modelToDownloadName + '.zip';
+  var a = document.createElement("a");
+  a.href = fileUrl;
+  a.setAttribute("download", modelToDownloadName);
+  a.click();
+  
+  gtag('event', 'download_' + modelToDownloadName, {
+    'send_to': 'G-YVVR1546XJ',
+    'event_category': 'Model download',
+    'event_label': 'test',
+    'value': '1'
+});
+}
+
+function downloadAllSelectedModels(){
+  
+  listOfNames = []
+  
+  for(var i = 0; i < selectedModels.length; i++)
+  {
+    if(selectedModels[i])
+    {
+      listOfNames.push(data[i]["Name"])
+    }
+  }
+
+  for(var i = 0; i < listOfNames.length; i++)
+  {
+    downloadModel(listOfNames[i]);
+  }
+
+  selectedModels.fill(false);
+  removeContent();
+  populate([]);
+  errorMessage(true, "justdownloaded")
+  viewingSelectedModels = true;
+  updateCounters();
+}
+
+$("#returnToGalleryButton").change(function () {
+  //update select all icon
+  document.getElementById("select-all").classList.remove("applied");
+  document.getElementById("view-selected").classList.remove("applied");
+
+  removeContent();
+  scrollToTop();
+  curIndex = 0;
+  populate(filteredData);
+  updateCounters(lastFapplied, filteredData);
+  
+  if (filteredData.length == 0) {
+    errorMessage(true, "filter")
+  }
+  else {
+    errorMessage(false, "filter")
+  }
 });
 
 $("#checkbox-Images").change(function () {
@@ -694,10 +753,10 @@ $("#view-selected").click(function() {
     populate(display);
 
     if (display.length == 0) {
-      errorMessage(true, false)
+      errorMessage(true, "viewingselected")
     }
     else {
-      errorMessage(false, false)
+      errorMessage(false, "viewingselected")
     }
 
     //parameters should not have an impact
@@ -725,39 +784,57 @@ $("#view-selected").click(function() {
     updateCounters(lastFapplied, filteredData);
     
     if (filteredData.length == 0) {
-      errorMessage(true, true)
+      errorMessage(true, "filter")
     }
     else {
-      errorMessage(false, true)
+      errorMessage(false, "filter")
     }
   }
   
 });
 
-function errorMessage(isOn, isFilter)
+function errorMessage(isOn, whichToDisplay)
 {
   var errorMsg = document.getElementById('error-msg');
   
   //determines which message is showing
-  if(isFilter)
+  if(whichToDisplay == "filter")
   {
     errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
   }
-  else
+  else if(whichToDisplay == "viewingselected")
   {
     errorMsg.textContent = "It looks like no models are currently selected!";
   }
+  else if(whichToDisplay == "justdownloaded")
+  {
+    errorMsg.textContent = "Thank you for downloading!";
+    var block = document.getElementById("errorBlock");
+    var div = document.createElement("div")
+    var button = document.createElement("button");
+    button.setAttribute("class", "returnToGalleryButton");
+    button.setAttribute("id", "returnToGalleryButton");
+    console.log("id: returnToGalleryButton")
+    button.textContent = "Return to Gallery"
+    div.appendChild(button)
+    block.appendChild(div);
+  }
 
+  var button = document.getElementById("returnToGalleryButton");
   //whether or not the error message is visible/displayed
   if(isOn)
   {
     errorMsg.style.transitionDuration = '0.3s';
     errorMsg.style.opacity = 1;
+    button.style.transitionDuration = '0.3s';
+    button.style.opacity = 1;
   }
   else
   {
     errorMsg.style.transitionDuration = '0s';
     errorMsg.style.opacity = 0;
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
   }
 
 }

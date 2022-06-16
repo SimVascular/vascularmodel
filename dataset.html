@@ -85,7 +85,7 @@
       <!-- <img src="img/loading_image.jpg" style="width:0px; height:0px"> -->
 
       <section class="gallery">
-        <div class="error-msg-block">
+        <div id = "errorBlock" class="error-msg-block">
           <span id="error-msg"></span>
         </div>
         <div class="container-fluid">
@@ -148,21 +148,21 @@
             <div class="cd-filter-block">
               <h4 class="closed">Anatomy</h4>
               <ul id = "AnatomyUl" class="cd-filter-content cd-filters list" style="display: none;">
-                <!-- li -->
+                <!-- generated in js -->
               </ul>
             </div>
 
             <div class="cd-filter-block">
               <h4 class="closed">Disease</h4>
               <ul id = "DiseaseUl" class="cd-filter-content cd-filters list" style="display: none;">
-                <!-- li -->
+                <!-- generated in js -->
               </ul>
             </div>
             
             <div class="cd-filter-block">
               <h4 class="closed">Procedure</h4>
               <ul id = "ProcedureUl" class="cd-filter-content cd-filters list" style="display: none;">
-                <!-- li -->
+                <!-- generated in js -->
               </ul>
             </div>
 
@@ -212,12 +212,12 @@
           </div>
           <div title="View Selected" id = "view-selected" class = "spanForIcons">
             <span class="fa-stack fa-lg">
-              <i class="fa fa-stack-1x" id = "selected-counter"></i>
+              <i id = "selected-counter" class="fa fa-stack-1x"></i>
               <i class="fa fa-solid fa-box-archive fa-stack-2x featuresIcons"></i>
             </span>
           </div>
           <div title="Download Selected" class = "spanForIcons">
-            <i class="fa-solid fa-download featuresIcons"></i>
+            <i id = "download-all" class="fa-solid fa-download featuresIcons"></i>
           </div>
         </form>
       </section> <!-- features -->

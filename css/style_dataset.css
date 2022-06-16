@@ -530,8 +530,15 @@ error msg block behavior
   cursor: pointer;
 }
 
-.closeAllButton:hover {
+.closeAllButton:hover .returnToGalleryButton:hover{
   background-color: #ebebeb;
+}
+
+.returnToGalleryButton {
+  border: 2px solid grey;
+  padding: 10px;
+  margin-top: 15px;
+  cursor: pointer;
 }
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
