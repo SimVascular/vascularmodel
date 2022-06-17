@@ -242,16 +242,6 @@ gallery
   padding: 5px;
 }
 
-/* center text */
-/* .center {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  object-fit: cover;
-  font-size: 150%;
-  padding: 5px;
-} */
-
 .top-left:hover {
   color: var(--midpointSelectApplied);
 }

@@ -207,10 +207,10 @@ function applyFilters()
   populate(filteredData);
 
   if (filteredData.length == 0) {
-    errorMessage(true, true);
+    errorMessage(true, "filter");
   }
   else {
-    errorMessage(false, true)
+    errorMessage(false, "filter")
   }
 
   //if filter is applied, clear viewing selected models view
