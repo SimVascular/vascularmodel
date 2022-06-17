@@ -204,16 +204,37 @@ function greetingText(data)
   }
   var size = parseInt(data['Size']) / 1000000
   $('.details-text')[0].value = details
-  
+
   if(data["Notes"] != '-')
   {
-    $('#modal-closure')[0].innerText = "Additional Notes: " + data["Notes"];
-    $('#modal-closure')[0].innerText += '\n\nThe size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+    notes = data["Notes"];
+    if(notes.includes("\\url"))
+    {
+      indexOfStartOfTag = notes.indexOf("\\url");
+
+      indexOfStartOfLink = notes.indexOf("(\"");
+      indexOfEndOfLink = notes.indexOf("\",", indexOfStartOfLink);
+      url = notes.substring(indexOfStartOfLink + 2, indexOfEndOfLink);
+
+      indexOfStartOfWord = notes.indexOf(" \"", indexOfEndOfLink);
+      indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
+      word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
+
+      $('#modal-closure')[0].innerText = notes.substring(0, indexOfStartOfTag);
+
+      var a = document.createElement("a")
+      a.setAttribute("href", url);
+      a.classList.add("link");
+      a.textContent = word;
+      $('#modal-closure')[0].appendChild(a);
+      $('#modal-closure')[0].innerText += notes.substring(indexOfEndOfWord + 2);
+      $('#modal-closure')[0].innerText += '\n\nThe size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+    }
   }
   else
   {
     $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
-  } 
+  }  
 }
 
 //grammar for commas and ands
