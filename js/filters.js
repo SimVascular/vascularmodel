@@ -479,7 +479,7 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
   
       if (!categoriesWith1s.includes(category))
       {
-        if (subCategory.includes(valueToSearch))
+        if (subCategory.includes(valueToSearch) && category != "size" && category != "age")
         {
           filter[i] = true;
             
