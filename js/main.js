@@ -250,6 +250,18 @@ function greetingText(data)
       sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
       modalclosure.appendChild(sizeText);
     }
+    else
+    {
+      var text = document.createElement("span");
+      text.classList.add("newParagraph");
+      text.textContent = data["Notes"];
+      modalclosure.appendChild(text);
+      
+      var sizeText = document.createElement("div");
+      sizeText.classList.add("newParagraph");
+      sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
+      modalclosure.appendChild(sizeText);
+    }
   }
   else
   {
