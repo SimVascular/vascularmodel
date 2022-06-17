@@ -323,9 +323,9 @@ function overlayOn(){
     $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
     $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
   }
+
   document.body.style.position = '';
   document.body.style.top = `-${prevBodyY}px`;
-
 }
 function overlayOff(){
   document.getElementById("overlay").style.display = "none";
@@ -691,8 +691,11 @@ window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
   var padding = 50;
-  if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
-    populate(filteredData, 8);
+  if(!viewingSelectedModels)
+  {
+    if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
+      populate(filteredData, 8);
+    }
   }
 });
 
@@ -792,7 +795,7 @@ $("#view-selected").click(function() {
     triggerFilter(false);
 
     var display = []
-  
+
     for(var i = 0; i < data.length; i++)
     {
       if(selectedModels[i])
