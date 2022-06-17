@@ -171,7 +171,7 @@ xfilter
     height: 100%;
     background: #ffffff;
     box-shadow: 4px 4px 20px transparent;
-    z-index: 2;
+    z-index: 3;
     /* Force Hardware Acceleration in WebKit */
     -webkit-transform: translateZ(0);
     -moz-transform: translateZ(0);
