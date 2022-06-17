@@ -568,6 +568,7 @@ function downloadAllSelectedModels(){
   }
 
   selectedModels.fill(false);
+  scrollToTop();
   removeContent();
   populate([]);
   errorMessage(true, "justdownloaded")
