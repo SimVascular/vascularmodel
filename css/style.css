@@ -4,16 +4,25 @@
 :root {
   --dark1: #172229;
   --dark2: #3a596e;
+    --dark2shade: #2E4758;
   --dark3: #6195b8;
+    --dark3shade: #5786a5;
   --light1: #5db0e8;
+    --light1shade: #4a8cb9;
   --light2: #f05d62;
+  --grey: #e6e6e6;
+  --lightgrey: #f7f7f7;
   --white: #ffffff;
+  --select: #c1dbde;
+  --applied: #07575b;
+  --midpointSelectApplied: #64999D;
+  --lighterselect: #e0dddd;
 }
 
 body, html {
-    height: 100%;
-    font-family: "Poppins", sans-serif;
-    font-size: 17px;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
 }
 
 .link {
@@ -239,6 +248,7 @@ body, html {
   background-color: var(--dark1);
   color: var(--white);
   padding: 25px 0 10px;
+  z-index: 2;
 }
 #contact-section h4 {
 	font-weight: 400;
