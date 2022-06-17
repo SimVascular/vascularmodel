@@ -317,6 +317,10 @@ error msg block behavior
   margin-bottom: 0px !important;
 }
 
+.newParagraph {
+  margin-top: 15px;
+}
+
 .modalDialog:target {
   opacity:1;
   pointer-events: auto;

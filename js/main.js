@@ -205,11 +205,15 @@ function greetingText(data)
   var size = parseInt(data['Size']) / 1000000
   $('.details-text')[0].value = details
 
+  var modalclosure = document.getElementById("modal-closure");
+  modalclosure.innerHTML = "";
+
   if(data["Notes"] != '-')
   {
     notes = data["Notes"];
     if(notes.includes("\\url"))
     {
+      modalclosure.innerHTML = "";
       indexOfStartOfTag = notes.indexOf("\\url");
 
       indexOfStartOfLink = notes.indexOf("(\"");
@@ -220,20 +224,36 @@ function greetingText(data)
       indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
       word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
 
-      $('#modal-closure')[0].innerText = notes.substring(0, indexOfStartOfTag);
+      var pBefore = document.createElement("span");
+      pBefore.textContent = notes.substring(0, indexOfStartOfTag);
+      modalclosure.appendChild(pBefore);
 
       var a = document.createElement("a")
       a.setAttribute("href", url);
+      a.setAttribute("target", "_blank");
       a.classList.add("link");
       a.textContent = word;
-      $('#modal-closure')[0].appendChild(a);
-      $('#modal-closure')[0].innerText += notes.substring(indexOfEndOfWord + 2);
-      $('#modal-closure')[0].innerText += '\n\nThe size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+
+      if(url.includes(".zip"))
+      {
+        a.setAttribute("download", "");
+      }
+
+      modalclosure.appendChild(a);
+
+      var pAfter = document.createElement("span");
+      pAfter.textContent = notes.substring(indexOfEndOfWord + 2);
+      modalclosure.appendChild(pAfter);
+
+      var sizeText = document.createElement("div");
+      sizeText.classList.add("newParagraph");
+      sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
+      modalclosure.appendChild(sizeText);
     }
   }
   else
   {
-    $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+    modalclosure.innerText = 'The size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
   }  
 }
 
