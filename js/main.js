@@ -204,7 +204,16 @@ function greetingText(data)
   }
   var size = parseInt(data['Size']) / 1000000
   $('.details-text')[0].value = details
-  $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+  
+  if(data["Notes"] != '-')
+  {
+    $('#modal-closure')[0].innerText = "Additional Notes: " + data["Notes"];
+    $('#modal-closure')[0].innerText += '\n\nThe size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+  }
+  else
+  {
+    $('#modal-closure')[0].innerText = 'The size of this project is ' + size.toFixed(2) + ' Mb (' + (size/1000).toFixed(2) + ' Gb).'
+  } 
 }
 
 //grammar for commas and ands
