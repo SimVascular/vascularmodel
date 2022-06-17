@@ -353,16 +353,24 @@ function generateContent(modelData) {
 
 function addHoverListeners(id)
 {
-  $("#" + id + "_hover").hover(function() {
+  if(!smallScreen)
+  {
+    $("#" + id + "_hover").hover(function() {
 
     var detailsImg = document.getElementById(id + "_details");
     detailsImg.setAttribute("style", "opacity: 1");
 
-  }, function(){
+    }, function(){
 
+      var detailsImg = document.getElementById(id + "_details");
+      detailsImg.setAttribute("style", "opacity: 0");
+    });
+  }
+  else
+  {
     var detailsImg = document.getElementById(id + "_details");
-    detailsImg.setAttribute("style", "opacity: 0");
-  });
+    detailsImg.setAttribute("style", "opacity: 1");
+  }
 }
 
 function removeContent() {
