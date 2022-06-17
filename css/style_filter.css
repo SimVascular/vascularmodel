@@ -67,6 +67,7 @@ xtab-filter
     font-style: italic;
     float: right;
     margin-right: 20px;
+    margin-bottom: 0px !important;
   }
   .cd-tab-filter a {
     display: block;
