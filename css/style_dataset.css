@@ -242,16 +242,6 @@ gallery
   padding: 5px;
 }
 
-/* center text */
-/* .center {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  object-fit: cover;
-  font-size: 150%;
-  padding: 5px;
-} */
-
 .top-left:hover {
   color: var(--midpointSelectApplied);
 }
@@ -557,7 +547,7 @@ error msg block behavior
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.5);
-  z-index: 2;
+  z-index: 99998;
   cursor: pointer;
 }
 

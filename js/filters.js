@@ -207,10 +207,10 @@ function applyFilters()
   populate(filteredData);
 
   if (filteredData.length == 0) {
-    errorMessage(true, true);
+    errorMessage(true, "filter");
   }
   else {
-    errorMessage(false, true)
+    errorMessage(false, "filter")
   }
 
   //if filter is applied, clear viewing selected models view
@@ -322,8 +322,8 @@ JavaScript for Filter Bar:
 ----------------------------*/
 function ageFilter(partialData)
 {
-  var minVal = parseInt(document.getElementById("min-age").value);
-  var maxVal = parseInt(document.getElementById("max-age").value);
+  var minVal = parseFloat(document.getElementById("min-age").value);
+  var maxVal = parseFloat(document.getElementById("max-age").value);
 
   if(isNaN(minVal) && isNaN(maxVal))
   {
@@ -340,15 +340,15 @@ function ageFilter(partialData)
         var push = false;
         if(category == "age")
         {
-          if(isNaN(minVal) && parseInt(subCategory) <= maxVal)
+          if(isNaN(minVal) && parseFloat(subCategory) <= maxVal)
           {
             push = true;
           }
-          else if (isNaN(maxVal) && parseInt(subCategory) >= minVal)
+          else if (isNaN(maxVal) && parseFloat(subCategory) >= minVal)
           {
             push = true;
           }
-          else if(parseInt(subCategory) >= minVal && parseInt(subCategory) <= maxVal)
+          else if(parseFloat(subCategory) >= minVal && parseFloat(subCategory) <= maxVal)
           {
             push = true;
           }
@@ -479,7 +479,7 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
   
       if (!categoriesWith1s.includes(category))
       {
-        if (subCategory.includes(valueToSearch))
+        if (subCategory.includes(valueToSearch) && category != "size" && category != "age")
         {
           filter[i] = true;
             

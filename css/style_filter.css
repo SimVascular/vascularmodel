@@ -67,6 +67,7 @@ xtab-filter
     font-style: italic;
     float: right;
     margin-right: 20px;
+    margin-bottom: 0px !important;
   }
   .cd-tab-filter a {
     display: block;
@@ -312,7 +313,8 @@ xcustom form elements
 
 -------------------------------- */
 .cd-filter-block {
-    margin-bottom: 1em;
+    margin-bottom: 0.75em;
+    overflow: auto;
   }
   .cd-filter-block h4 {
     /* filter block title */
