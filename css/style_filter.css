@@ -312,7 +312,8 @@ xcustom form elements
 
 -------------------------------- */
 .cd-filter-block {
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+    overflow: auto;
   }
   .cd-filter-block h4 {
     /* filter block title */
