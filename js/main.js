@@ -36,7 +36,7 @@ $("#select-all").click(function() {
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true; console.log("safe true")});
 
 $('#overlay').click(function() {
-  checkOverlay(); 
+  checkOverlay();
   isSafeSelected = !isSafeSelected;
 
   console.log("through overlay; safe now: " + isSafeSelected);
@@ -120,7 +120,7 @@ function updatedSelectedList(model)
 {
   selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
   var bucket = document.getElementById("view-selected");
-  
+
   if(selectedModels[data.indexOf(model)])
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
@@ -150,7 +150,7 @@ function greetingText(data)
   viewingModel = data['Name'];
   $('.details-text').scrollTop(0);
   $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
-    
+
   var details = []
   var categoryName = getCategoryName();
 
@@ -254,7 +254,7 @@ function greetingText(data)
   else
   {
     modalclosure.innerText = 'The size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
-  }  
+  }
 }
 
 //grammar for commas and ands
@@ -307,12 +307,19 @@ function ageCalculator(value)
   }
 }
 
+function preventScroll(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    return false;
+}
+
 function overlayOn(){
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
-  
+
   var prevBodyY = window.scrollY
   if (smallScreen) {
     // padding is not necessary on mobile
@@ -323,7 +330,7 @@ function overlayOn(){
     $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
     $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
   }
-
+  document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
   document.body.style.position = '';
   document.body.style.top = `-${prevBodyY}px`;
 }
@@ -340,6 +347,7 @@ function overlayOff(){
   document.body.style.position = '';
   document.body.style.top = '';
   window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  document.querySelector('.body').removeEventListener('scroll', preventScroll);
 }
 
 function checkOverlay(){
@@ -461,7 +469,7 @@ $(document).ready(function($){
     triggerFilter(false);
   });
 
-  
+
 
   //close filter dropdown inside lateral .cd-filter
 	$('.cd-filter-block h4').on('click', function(){
@@ -533,7 +541,7 @@ function downloadModel(modelToDownloadName)
   a.href = fileUrl;
   a.setAttribute("download", modelToDownloadName);
   a.click();
-  
+
   gtag('event', 'download_' + modelToDownloadName, {
     'send_to': 'G-YVVR1546XJ',
     'event_category': 'Model download',
@@ -543,9 +551,9 @@ function downloadModel(modelToDownloadName)
 }
 
 function downloadAllSelectedModels(){
-  
+
   listOfNames = []
-  
+
   for(var i = 0; i < selectedModels.length; i++)
   {
     if(selectedModels[i])
@@ -640,7 +648,7 @@ function updateCounters(fApplied, fData, string)
   //update counter of selected models on bucket
   var count = selectedModels.filter(value => value === true).length;
   document.getElementById('selected-counter').textContent = count;
-  
+
   var counterPanel = document.getElementById("counterPanel");
   if(string == "justdownloaded")
   {
@@ -789,7 +797,7 @@ var buttonFilter = {
 
 $("#view-selected").click(function() {
   viewingSelectedModels = !viewingSelectedModels;
-  
+
   if(viewingSelectedModels)
   {
     triggerFilter(false);
@@ -818,7 +826,7 @@ $("#view-selected").click(function() {
 
     //parameters should not have an impact
     updateCounters(lastFapplied, filteredData);
-    
+
     //update select all icon
     if(display.length > 0)
     {
@@ -839,7 +847,7 @@ $("#view-selected").click(function() {
     curIndex = 0;
     populate(filteredData);
     updateCounters(lastFapplied, filteredData);
-    
+
     if (filteredData.length == 0) {
       errorMessage(true, "filter")
     }
@@ -847,7 +855,7 @@ $("#view-selected").click(function() {
       errorMessage(false, "filter")
     }
   }
-  
+
 });
 
 function errorMessage(isOn, whichToDisplay)
