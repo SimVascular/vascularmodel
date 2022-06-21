@@ -131,10 +131,6 @@ function updatedSelectedList(model)
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.remove("selected");
-    // we update the gallery view if we are viewing only selected models
-    if (viewingSelectedModels) {
-      viewSelected(false);
-    }
   }
 
   updateCounters(lastFapplied, filteredData);
@@ -722,11 +718,15 @@ window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
   var padding = 50;
-  if(!viewingSelectedModels)
-  {
-    if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
-      populate(filteredData, 8);
-    }
+  var dataToPopulate;
+  if(!viewingSelectedModels) {
+    dataToPopulate = filteredData;
+  }
+  else {
+    dataToPopulate = displayedData;
+  }
+  if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
+    populate(dataToPopulate, 8);
   }
 });
 
@@ -818,7 +818,7 @@ var buttonFilter = {
     }
 }
 
-function viewSelected(flipViewingSelectedModels) {
+function viewSelected(flipViewingSelectedModels, moveToTop = true) {
   if (flipViewingSelectedModels)
     viewingSelectedModels = !viewingSelectedModels;
 
@@ -826,22 +826,23 @@ function viewSelected(flipViewingSelectedModels) {
   {
     triggerFilter(false);
 
-    var display = []
+    displayedData = []
 
     for(var i = 0; i < data.length; i++)
     {
       if(selectedModels[i])
       {
-        display.push(data[i])
+        displayedData.push(data[i])
       }
     }
 
     removeContent();
-    scrollToTop();
+    if (moveToTop)
+      scrollToTop();
     curIndex = 0;
-    populate(display);
+    populate(displayedData);
 
-    if (display.length == 0) {
+    if (displayedData.length == 0) {
       errorMessage(true, "viewingselected")
     }
     else {
@@ -852,7 +853,7 @@ function viewSelected(flipViewingSelectedModels) {
     updateCounters(lastFapplied, filteredData);
 
     //update select all icon
-    if(display.length > 0)
+    if(displayedData.length > 0)
     {
       document.getElementById("select-all").classList.add("applied");
     }
