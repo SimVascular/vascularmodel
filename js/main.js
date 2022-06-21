@@ -540,9 +540,22 @@ $('.download-button-modal').click(function() {
 });
 
 $("#download-all").click(function () {
-  if (selectedModels.filter(value => value === true).length > 0)
+  var count = selectedModels.filter(value => value === true).length;
+  var message = "";
+  if (count > 0)
   {
-    downloadAllSelectedModels();
+    if(count == 1)
+    {
+      message = "Are you sure you want to download 1 model?"
+    }
+    else
+    {
+      message = "Are you sure you want to download " + count + " models?"
+    }
+    
+    doConfirm(message, function yes() {
+      downloadAllSelectedModels();
+    });
   }
 });
 
