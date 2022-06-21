@@ -131,6 +131,10 @@ function updatedSelectedList(model)
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.remove("selected");
+    // we update the gallery view if we are viewing only selected models
+    if (viewingSelectedModels) {
+      viewSelected(false);
+    }
   }
 
   updateCounters(lastFapplied, filteredData);
@@ -674,7 +678,12 @@ function updateCounters(fApplied, fData, string)
       counterPanel.textContent = count + " selected";
     }
     else {
-      counterPanel.textContent = count + " models selected";
+      if (count == 1) {
+        counterPanel.textContent = count + " model selected";
+      }
+      else {
+        counterPanel.textContent = count + " models selected";
+      }
     }
 
     //updates icon status
@@ -809,8 +818,9 @@ var buttonFilter = {
     }
 }
 
-$("#view-selected").click(function() {
-  viewingSelectedModels = !viewingSelectedModels;
+function viewSelected(flipViewingSelectedModels) {
+  if (flipViewingSelectedModels)
+    viewingSelectedModels = !viewingSelectedModels;
 
   if(viewingSelectedModels)
   {
@@ -869,7 +879,10 @@ $("#view-selected").click(function() {
       errorMessage(false, "filter")
     }
   }
+}
 
+$("#view-selected").click(function() {
+  viewSelected(true);
 });
 
 function errorMessage(isOn, whichToDisplay)
