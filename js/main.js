@@ -256,7 +256,7 @@ function greetingText(data)
       text.classList.add("newParagraph");
       text.textContent = data["Notes"];
       modalclosure.appendChild(text);
-      
+
       var sizeText = document.createElement("div");
       sizeText.classList.add("newParagraph");
       sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
@@ -575,7 +575,7 @@ function downloadModel(modelToDownloadName)
 });
 }
 
-function downloadAllSelectedModels(){
+async function downloadAllSelectedModels(){
 
   listOfNames = []
 
@@ -590,6 +590,7 @@ function downloadAllSelectedModels(){
   for(var i = 0; i < listOfNames.length; i++)
   {
     downloadModel(listOfNames[i]);
+    await new Promise(r => setTimeout(r, 3));
   }
 
   selectedModels.fill(false);
@@ -686,7 +687,12 @@ function updateCounters(fApplied, fData, string)
       counterPanel.textContent = count + " selected";
     }
     else {
-      counterPanel.textContent = count + " models selected";
+      if (count == 1) {
+        counterPanel.textContent = count + " model selected";
+      }
+      else {
+        counterPanel.textContent = count + " models selected";
+      }
     }
 
     //updates icon status
@@ -725,11 +731,15 @@ window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
   var padding = 50;
-  if(!viewingSelectedModels)
-  {
-    if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
-      populate(filteredData, 8);
-    }
+  var dataToPopulate;
+  if(!viewingSelectedModels) {
+    dataToPopulate = filteredData;
+  }
+  else {
+    dataToPopulate = displayedData;
+  }
+  if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
+    populate(dataToPopulate, 8);
   }
 });
 
@@ -821,29 +831,31 @@ var buttonFilter = {
     }
 }
 
-$("#view-selected").click(function() {
-  viewingSelectedModels = !viewingSelectedModels;
+function viewSelected(flipViewingSelectedModels, moveToTop = true) {
+  if (flipViewingSelectedModels)
+    viewingSelectedModels = !viewingSelectedModels;
 
   if(viewingSelectedModels)
   {
     triggerFilter(false);
 
-    var display = []
+    displayedData = []
 
     for(var i = 0; i < data.length; i++)
     {
       if(selectedModels[i])
       {
-        display.push(data[i])
+        displayedData.push(data[i])
       }
     }
 
     removeContent();
-    scrollToTop();
+    if (moveToTop)
+      scrollToTop();
     curIndex = 0;
-    populate(display);
+    populate(displayedData);
 
-    if (display.length == 0) {
+    if (displayedData.length == 0) {
       errorMessage(true, "viewingselected")
     }
     else {
@@ -854,7 +866,7 @@ $("#view-selected").click(function() {
     updateCounters(lastFapplied, filteredData);
 
     //update select all icon
-    if(display.length > 0)
+    if(displayedData.length > 0)
     {
       document.getElementById("select-all").classList.add("applied");
     }
@@ -881,7 +893,10 @@ $("#view-selected").click(function() {
       errorMessage(false, "filter")
     }
   }
+}
 
+$("#view-selected").click(function() {
+  viewSelected(true);
 });
 
 function errorMessage(isOn, whichToDisplay)

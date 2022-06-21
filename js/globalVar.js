@@ -1,5 +1,6 @@
 var data;
 var filteredData;
+var displayedData;
 var viewingModel = ''
 var curIndex = 0;
 var smallScreen = false
@@ -7,7 +8,7 @@ var lastFapplied = 0;
 var lastFdata = [];
 var lastSelectedData = [];
 var selectedModels = [];
-var viewingSelectedModels;
+var viewingSelectedModels = false;
 var countBucket = 0;
 var wantsToSelectAllInFiltered = false;
 var wantsToSelectAllInBucket = false;
@@ -75,11 +76,11 @@ function getMustContainFilterTitles()
   return returnCategories;
 }
 
-//returns the actual amount of possibilities of values under key 
+//returns the actual amount of possibilities of values under key
 function namesOfValuesPerKey(categoryName)
 {
   var checkboxNameSet = new Set();
-  
+
   for(var d = 0; d < data.length; d++)
   {
     if(data[d][categoryName].indexOf("_") != -1)
