@@ -123,3 +123,53 @@ function checkboxNameInArrayForm(checkboxNameArr)
 
   return array;
 }
+
+//grammar for commas and ands
+function listFormater(string)
+{
+  var output = ""
+  valInCat = checkboxNameInArrayForm(string);
+
+  var numOfDetails = valInCat.length;
+
+  if(numOfDetails == 2)
+  {
+    output = valInCat[0] + " and " + valInCat[1];
+  }
+  else
+  {
+    for(var v = 0; v < numOfDetails - 1; v++)
+    {
+      output = valInCat[v] + ", ";
+    }
+
+    output += "and " + valInCat[numOfDetails - 1];
+  }
+
+  return output;
+}
+
+function ageCalculator(value)
+{
+  if(value > 1)
+  {
+    return value + " years"
+  }
+  else
+  {
+    var months = value * 12;
+    var weeks = value * 52;
+    var days = value * 365;
+    if (months > 1)
+    {
+      return Math.round(months*100)/100 + " months"
+    }
+    else if (weeks > 1)
+    {
+      return Math.round(weeks*100)/100 + " weeks"
+    }
+    else {
+      return Math.round(days*100)/100 + " days"
+    }
+  }
+}

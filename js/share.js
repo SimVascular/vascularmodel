@@ -67,9 +67,58 @@ function displayModel(model)
     img.alt = model['Name'];
     img.classList.add("imgContainer");
 
-    var desc = document.createElement("div");
+    var desc = getDescription(model);
 
     div.appendChild(title);
     div.appendChild(img);
     div.appendChild(desc);
+}
+
+function getDescription(model)
+{
+    var ul = document.createElement("ul");
+    var categoryName = getCategoryName();
+
+    for(var d = 0; d < categoryName.length; d++)
+    {
+        var li = document.createElement("li");
+        
+        var details = "";   
+        
+        var valInCat = model[categoryName[d]];
+        
+        if(valInCat == "-")
+        {
+            details = categoryName[d] + ": N/A";
+        }
+        
+        else{
+            if(categoryName[d] == "Age")
+            {
+                details += categoryName[d] + ": " + ageCalculator(valInCat);
+            }
+            else if(categoryName[d] == "Species" && valInCat == "Animal")
+            {
+                details += categoryName[d] + ": " + model["Animal"];
+            }
+            else
+            {
+                if(valInCat.indexOf("_") == -1)
+                {
+                details += categoryName[d] + ": " + valInCat;
+                }
+                else
+                {
+                details += categoryName[d] + "s: ";
+
+                details += listFormater(valInCat)
+                }
+            } //end else if more than one detail
+        } //end else
+
+        li.textContent = details;
+        ul.appendChild(li)
+  }
+
+  return ul;
 }
