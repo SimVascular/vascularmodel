@@ -1,0 +1,32 @@
+.share-main {
+    position: relative;
+    min-height: 75vh;
+}
+
+#displayedModel {
+    box-shadow: 0px 0px 2px black;
+    background-color: white;
+    position: fixed;
+    width: 95%;
+    height: 60%;
+    top: 100px;
+    left: 2.5%;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+  
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.imgContainer {
+    height: 50%;
+    width: 50%;
+    object-fit: contain;
+}

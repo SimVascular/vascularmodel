@@ -58,7 +58,7 @@ Main Components
 
 .cd-main-content {
   position: relative;
-  min-height: 100vh;
+  min-height: 75vh;
 }
 .cd-main-content:after {
   content: "";
@@ -76,11 +76,11 @@ Main Components
 }
 .cd-main-content.is-fixed .cd-filter {
   position: fixed;
-  height: 100vh;
+  height: 75vh;
   overflow: hidden;
 }
 .cd-main-content.is-fixed .cd-filter form {
-  height: 100vh;
+  height: 75vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
