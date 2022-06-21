@@ -256,7 +256,7 @@ function greetingText(data)
       text.classList.add("newParagraph");
       text.textContent = data["Notes"];
       modalclosure.appendChild(text);
-      
+
       var sizeText = document.createElement("div");
       sizeText.classList.add("newParagraph");
       sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
@@ -562,7 +562,7 @@ function downloadModel(modelToDownloadName)
 });
 }
 
-function downloadAllSelectedModels(){
+async function downloadAllSelectedModels(){
 
   listOfNames = []
 
@@ -577,6 +577,7 @@ function downloadAllSelectedModels(){
   for(var i = 0; i < listOfNames.length; i++)
   {
     downloadModel(listOfNames[i]);
+    await new Promise(r => setTimeout(r, 3));
   }
 
   selectedModels.fill(false);
