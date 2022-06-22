@@ -214,36 +214,12 @@ function greetingText(data)
     if(notes.includes("\\url"))
     {
       modalclosure.innerHTML = "";
-      indexOfStartOfTag = notes.indexOf("\\url");
+      
+      var output = URLMaker(notes);
 
-      indexOfStartOfLink = notes.indexOf("(\"");
-      indexOfEndOfLink = notes.indexOf("\",", indexOfStartOfLink);
-      url = notes.substring(indexOfStartOfLink + 2, indexOfEndOfLink);
-
-      indexOfStartOfWord = notes.indexOf(" \"", indexOfEndOfLink);
-      indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
-      word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
-
-      var pBefore = document.createElement("span");
-      pBefore.textContent = notes.substring(0, indexOfStartOfTag);
-      modalclosure.appendChild(pBefore);
-
-      var a = document.createElement("a")
-      a.setAttribute("href", url);
-      a.setAttribute("target", "_blank");
-      a.classList.add("link");
-      a.textContent = word;
-
-      if(url.includes(".zip"))
-      {
-        a.setAttribute("download", "");
-      }
-
-      modalclosure.appendChild(a);
-
-      var pAfter = document.createElement("span");
-      pAfter.textContent = notes.substring(indexOfEndOfWord + 2);
-      modalclosure.appendChild(pAfter);
+      modalclosure.appendChild(output[0]);
+      modalclosure.appendChild(output[1]);
+      modalclosure.appendChild(output[2]);
 
       var sizeText = document.createElement("div");
       sizeText.classList.add("newParagraph");
@@ -266,56 +242,6 @@ function greetingText(data)
   else
   {
     modalclosure.innerText = 'The size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
-  }
-}
-
-//grammar for commas and ands
-function listFormater(string)
-{
-  var output = ""
-  valInCat = checkboxNameInArrayForm(string);
-
-  var numOfDetails = valInCat.length;
-
-  if(numOfDetails == 2)
-  {
-    output = valInCat[0] + " and " + valInCat[1];
-  }
-  else
-  {
-    for(var v = 0; v < numOfDetails - 1; v++)
-    {
-      output = valInCat[v] + ", ";
-    }
-
-    output += "and " + valInCat[numOfDetails - 1];
-  }
-
-  return output;
-}
-
-function ageCalculator(value)
-{
-  if(value > 1)
-  {
-    return value + " years"
-  }
-  else
-  {
-    var months = value * 12;
-    var weeks = value * 52;
-    var days = value * 365;
-    if (months > 1)
-    {
-      return Math.round(months*100)/100 + " months"
-    }
-    else if (weeks > 1)
-    {
-      return Math.round(weeks*100)/100 + " weeks"
-    }
-    else {
-      return Math.round(days*100)/100 + " days"
-    }
   }
 }
 
@@ -534,10 +460,26 @@ function triggerFilter($bool) {
 }
 
 $('.download-button-modal').click(function() {
-  overlayOff();
+  // overlayOff();
   // download tracking
-  window.open('svprojects/' + viewingModel + '.zip')
+  downloadModel(viewingModel);
 });
+
+$('.shareableLink-button-modal').click(function() {
+  copyText("https://www.vascularmodel.com/share.html?" + viewingModel);
+  informUser("Link copied")
+});
+
+function informUser(msg) {
+  var informUser = $("#informUser");
+  informUser.find(".message").text(msg);
+  informUser.show();
+  var div = document.getElementById("informUser");
+  div.style.opacity = 1;
+  setTimeout(() => {
+    informUser.hide();
+  }, 1500);
+}
 
 $("#download-all").click(function () {
   var count = selectedModels.filter(value => value === true).length;

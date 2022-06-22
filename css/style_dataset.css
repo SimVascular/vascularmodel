@@ -58,7 +58,7 @@ Main Components
 
 .cd-main-content {
   position: relative;
-  min-height: 100vh;
+  min-height: 75vh;
 }
 .cd-main-content:after {
   content: "";
@@ -76,11 +76,11 @@ Main Components
 }
 .cd-main-content.is-fixed .cd-filter {
   position: fixed;
-  height: 100vh;
+  height: 75vh;
   overflow: hidden;
 }
 .cd-main-content.is-fixed .cd-filter form {
-  height: 100vh;
+  height: 75vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -246,6 +246,14 @@ gallery
   color: var(--midpointSelectApplied);
 }
 
+.top-right {
+  position: absolute;
+  top: 0px;
+  right: 34px;
+  width: 0px;
+  padding: 0px;
+}
+
 .animate {
   animation : shimmer 2s infinite linear;
   background: linear-gradient(to right, #ffffff 4%, #e2e2e2 25%, #ffffff 36%);
@@ -295,12 +303,13 @@ error msg block behavior
   bottom: 0;
   left: 0;
   /* background: rgba(0, 0, 0, 0.8); */
-  z-index: 99999;
+  z-index: 99998;
   opacity:0;
   -webkit-transition: opacity 0ms ease-in;
   -moz-transition: opacity 0ms ease-in;
   transition: opacity 0ms ease-in;
   pointer-events: none;
+  overflow: auto;
 }
 
 #modal-greeting {
@@ -319,6 +328,7 @@ error msg block behavior
   width: 300px;
   position: relative;
   margin-top: 125px;
+  margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
   /* padding: 20px 20px 13px 20px; */
@@ -366,6 +376,7 @@ error msg block behavior
   -webkit-box-shadow: 1px 1px 3px #000;
   box-shadow: 1px 1px 3px #000;
 }
+
 .close:hover {
   background: #00d9ff;
 }
@@ -374,7 +385,8 @@ error msg block behavior
   background-color: var(--dark2);
   border: none;
   color: white !important;
-  padding: 10px 10px;
+  padding-left: 7px;
+  padding-right: 7px;
   text-align: center;
   text-decoration: none !important;
   display: inline-block;
@@ -393,21 +405,35 @@ error msg block behavior
   background-color: var(--dark2shade);
 }
 
-.download-button-modal {
-  background-color: var(--light1);
+.button-modal {
   border: none;
   color: white !important;
-  padding: 10px 10px;
+  padding: 6px 10px;
   text-align: center;
   text-decoration: none !important;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 5px !important;
   border-collapse: separate;
   font-weight: 400;
-  cursor: pointer;
-  margin-top: 10px;
+  margin-top:10px;
   margin-bottom:10px;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.shareableLink-button-modal {
+  background-color: var(--dark2);
+}
+
+.shareableLink-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--dark2shade);
+}
+
+.download-button-modal {
+  background-color: var(--light1);
 }
 
 .download-button-modal:hover {
@@ -547,7 +573,7 @@ error msg block behavior
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.5);
-  z-index: 99998;
+  z-index: 99997;
   cursor: pointer;
 }
 
@@ -592,6 +618,27 @@ error msg block behavior
 {
   text-align: center;
   margin-bottom: 8px;
+}
+
+/* styling for inform user box */
+
+#informUser
+{
+  display: none;
+  background-color: var(--grey);
+  border-radius: 5px;
+  border: 2px solid var(--darkgrey);
+  position: fixed;
+  top: 30px;
+  padding: 8px 10px 10px;
+  box-sizing: border-box;
+  z-index: 99999;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#informUser .message
+{
+  text-align: center;
 }
 
 .cannotSelect

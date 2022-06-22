@@ -28,6 +28,26 @@ function getAllCategories()
   return allCategories;
 }
 
+function getDetailsTitles()
+{
+  var allCategories = getAllCategories();
+  var mustContainTitles = getMustContainFilterTitles()
+  var output = []
+
+  for(var i = 0; i < allCategories.length; i++)
+  {
+    if(allCategories[i] != "Name" && allCategories[i] != "Animal" && allCategories[i] != "DOI")
+    {
+      if(!mustContainTitles.includes(allCategories[i]))
+      {
+        output.push(allCategories[i]);
+      }
+    }
+  }
+
+  return output;
+}
+
 //returns the keys of all the categories except "Size" and "Name"
 function getFilterTitles()
 {
@@ -68,7 +88,7 @@ function getMustContainFilterTitles()
   var allCategoryNames = getAllCategories()
   var returnCategories = []
 
-  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
+  for(var i = allCategoryNames.indexOf("Images"); i <= allCategoryNames.indexOf("Simulations"); i++)
   {
     returnCategories.push(allCategoryNames[i])
   }
@@ -122,4 +142,94 @@ function checkboxNameInArrayForm(checkboxNameArr)
   array.push(checkboxNameArr);
 
   return array;
+}
+
+//grammar for commas and ands
+function listFormater(string)
+{
+  var output = ""
+  valInCat = checkboxNameInArrayForm(string);
+
+  var numOfDetails = valInCat.length;
+
+  if(numOfDetails == 2)
+  {
+    output = valInCat[0] + " and " + valInCat[1];
+  }
+  else
+  {
+    for(var v = 0; v < numOfDetails - 1; v++)
+    {
+      output = valInCat[v] + ", ";
+    }
+
+    output += "and " + valInCat[numOfDetails - 1];
+  }
+
+  return output;
+}
+
+function ageCalculator(value)
+{
+  if(value > 1)
+  {
+    return value + " years"
+  }
+  else
+  {
+    var months = value * 12;
+    var weeks = value * 52;
+    var days = value * 365;
+    if (months > 1)
+    {
+      return Math.round(months*100)/100 + " months"
+    }
+    else if (weeks > 1)
+    {
+      return Math.round(weeks*100)/100 + " weeks"
+    }
+    else {
+      return Math.round(days*100)/100 + " days"
+    }
+  }
+}
+
+function URLMaker(notes)
+{ 
+  indexOfStartOfTag = notes.indexOf("\\url");
+
+  indexOfStartOfLink = notes.indexOf("(\"");
+  indexOfEndOfLink = notes.indexOf("\",", indexOfStartOfLink);
+  url = notes.substring(indexOfStartOfLink + 2, indexOfEndOfLink);
+
+  indexOfStartOfWord = notes.indexOf(" \"", indexOfEndOfLink);
+  indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
+  word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
+
+  var pBefore = document.createElement("span");
+  pBefore.textContent = notes.substring(0, indexOfStartOfTag);
+  // modalclosure.appendChild(pBefore);
+
+  var a = document.createElement("a")
+  a.setAttribute("href", url);
+  a.setAttribute("target", "_blank");
+  a.classList.add("link");
+  a.textContent = word;
+
+  if(url.includes(".zip"))
+  {
+    a.setAttribute("download", "");
+  }
+
+  // modalclosure.appendChild(a);
+
+  var pAfter = document.createElement("span");
+  pAfter.textContent = notes.substring(indexOfEndOfWord + 2);
+  // modalclosure.appendChild(pAfter);
+  
+  return [pBefore, a, pAfter];
+}
+
+function copyText(message) {
+  navigator.clipboard.writeText(message);
 }
