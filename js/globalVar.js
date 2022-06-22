@@ -229,3 +229,7 @@ function URLMaker(notes)
   
   return [pBefore, a, pAfter];
 }
+
+function copyText(message) {
+  navigator.clipboard.writeText(message);
+}
