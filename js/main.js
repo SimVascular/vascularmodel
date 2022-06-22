@@ -17,7 +17,7 @@ $("#closeAllButton").click(function() {
 
 
 function addClickListener(model) {
-  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay(); console.log("through magnif");});
+  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
 
@@ -33,18 +33,15 @@ $("#select-all").click(function() {
   }
 });
 
-$("#safeOfOverlayClick").click(function() {isSafeSelected = true; console.log("safe true")});
+$("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
 $('#overlay').click(function() {
   checkOverlay();
   isSafeSelected = !isSafeSelected;
-
-  console.log("through overlay; safe now: " + isSafeSelected);
 });
 
 $('.close-button-modal').click(function() {
   overlayOff();
-  console.log("through close");
 });
 
 function deselectAll()
@@ -419,7 +416,6 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
-      console.log("#search-field2 apply filters")
       applyFilters()
       triggerFilter(false);
       return true;
@@ -430,7 +426,6 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
-      console.log("#min-age apply filters")
       applyFilters();
       triggerFilter(false);
       return true;
@@ -441,7 +436,6 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
-      console.log("#max-age apply filters")
       applyFilters()
       triggerFilter(false);
       return true;
