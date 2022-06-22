@@ -89,13 +89,13 @@ function getDescription()
         newHeader.textContent = categoryName[d];
         
         var newColumn = document.createElement("td");
-        var details = "" 
+        var details = "";
         
         var valInCat = model[categoryName[d]];
         
         if(valInCat == "-")
         {
-            details = "N/A";
+            details += "N/A";
         }
         
         else{
@@ -106,6 +106,29 @@ function getDescription()
             else if(categoryName[d] == "Species" && valInCat == "Animal")
             {
                 details += model["Animal"];
+            }
+            else if(categoryName[d] == "Notes")
+            {
+                if(model["Notes"] != '-')
+                {
+                    notes = model["Notes"];
+                    if(notes.includes("\\url"))
+                    {                    
+                        var output = URLMaker(notes);
+                        newColumn.appendChild(output[0]);
+                        newColumn.appendChild(output[1]);
+                        newColumn.appendChild(output[2]);
+                    }
+                    else
+                    {
+                        details = notes;
+                    }
+                }
+            }
+            else if(categoryName[d] == "Size")
+            {
+                var size = parseInt(model['Size']) / 1000000
+                details += size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB)';
             }
             else
             {
@@ -120,8 +143,11 @@ function getDescription()
             } //end else if more than one detail
         } //end else
 
-        newColumn.textContent = details;
-
+        if(details != "")
+        {
+            newColumn.textContent = details;
+        }
+    
         newTR.appendChild(newHeader);
         newTR.appendChild(newColumn);
         table.appendChild(newTR)
