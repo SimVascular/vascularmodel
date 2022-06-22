@@ -460,9 +460,9 @@ function triggerFilter($bool) {
 }
 
 $('.download-button-modal').click(function() {
-  overlayOff();
+  // overlayOff();
   // download tracking
-  window.open('svprojects/' + viewingModel + '.zip')
+  downloadModel(viewingModel);
 });
 
 $("#download-all").click(function () {

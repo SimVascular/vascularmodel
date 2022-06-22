@@ -246,6 +246,14 @@ gallery
   color: var(--midpointSelectApplied);
 }
 
+.top-right {
+  position: absolute;
+  top: 0px;
+  right: 34px;
+  width: 0px;
+  padding: 0px;
+}
+
 .animate {
   animation : shimmer 2s infinite linear;
   background: linear-gradient(to right, #ffffff 4%, #e2e2e2 25%, #ffffff 36%);
@@ -301,6 +309,7 @@ error msg block behavior
   -moz-transition: opacity 0ms ease-in;
   transition: opacity 0ms ease-in;
   pointer-events: none;
+  overflow: auto;
 }
 
 #modal-greeting {
@@ -319,6 +328,7 @@ error msg block behavior
   width: 300px;
   position: relative;
   margin-top: 125px;
+  margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
   /* padding: 20px 20px 13px 20px; */
@@ -375,7 +385,8 @@ error msg block behavior
   background-color: var(--dark2);
   border: none;
   color: white !important;
-  padding: 10px 10px;
+  padding-left: 7px;
+  padding-right: 7px;
   text-align: center;
   text-decoration: none !important;
   display: inline-block;
@@ -394,8 +405,7 @@ error msg block behavior
   background-color: var(--dark2shade);
 }
 
-.download-button-modal {
-  background-color: var(--light1);
+.button-modal {
   border: none;
   color: white !important;
   padding: 10px 10px;
@@ -406,9 +416,24 @@ error msg block behavior
   border-radius: 5px !important;
   border-collapse: separate;
   font-weight: 400;
-  cursor: pointer;
-  margin-top: 10px;
+  margin-top:10px;
   margin-bottom:10px;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.shareableLink-button-modal {
+  background-color: var(--dark2);
+}
+
+.shareableLink-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--dark2shade);
+}
+
+.download-button-modal {
+  background-color: var(--light1);
 }
 
 .download-button-modal:hover {
