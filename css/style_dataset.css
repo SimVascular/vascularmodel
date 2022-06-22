@@ -303,7 +303,7 @@ error msg block behavior
   bottom: 0;
   left: 0;
   /* background: rgba(0, 0, 0, 0.8); */
-  z-index: 99999;
+  z-index: 99998;
   opacity:0;
   -webkit-transition: opacity 0ms ease-in;
   -moz-transition: opacity 0ms ease-in;
@@ -408,11 +408,11 @@ error msg block behavior
 .button-modal {
   border: none;
   color: white !important;
-  padding: 10px 10px;
+  padding: 6px 10px;
   text-align: center;
   text-decoration: none !important;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 5px !important;
   border-collapse: separate;
   font-weight: 400;
@@ -573,7 +573,7 @@ error msg block behavior
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.5);
-  z-index: 99998;
+  z-index: 99997;
   cursor: pointer;
 }
 
@@ -618,6 +618,27 @@ error msg block behavior
 {
   text-align: center;
   margin-bottom: 8px;
+}
+
+/* styling for inform user box */
+
+#informUser
+{
+  display: none;
+  background-color: var(--grey);
+  border-radius: 5px;
+  border: 2px solid var(--darkgrey);
+  position: fixed;
+  top: 30px;
+  padding: 8px 10px 10px;
+  box-sizing: border-box;
+  z-index: 99999;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#informUser .message
+{
+  text-align: center;
 }
 
 .cannotSelect

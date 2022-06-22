@@ -81,6 +81,10 @@
         <span class="button no">No</span>
       </div>
 
+      <div id="informUser" style = "opacity: 0;">
+        <div class="message"></div>
+      </div>
+
       <!-- As a trick, we load the loading_image first but keep it 0px to not display it -->
       <!-- <img src="img/loading_image.jpg" style="width:0px; height:0px"> -->
 
@@ -239,13 +243,13 @@
           <div id="modal-closure" style="margin-bottom:10px;">Placeholder</div>
           <div class="row">
             <div class="col-xs-12 col-sm-6 text-center">
-              <a class="button shareableLink-button-modal button-modal"><i class="fa-solid fa-share"></i></a>
+              <a title = "Get Shareable Link" class="button button-modal shareableLink-button-modal"><i class="fa-solid fa-share"></i></a>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
-              <a class="button download-button-modal button-modal"><i class="fa-solid fa-download"></i></a>
+              <a title = "Download Model" class="button button-modal download-button-modal"><i class="fa-solid fa-download"></i></a>
             </div>
             <div class="col-xs-12 col-sm-6 top-right">
-              <a class="button close-button-modal"><i class="fa-solid fa-xmark"></i></a>
+              <a title = "Close" class="button close-button-modal"><i class="fa-solid fa-xmark"></i></a>
             </div>
             <!-- 6LedB9gdAAAAANK8mQLhxsR7-mpeDlxzPdm9fQkV secret key -->
           </div>

@@ -465,6 +465,22 @@ $('.download-button-modal').click(function() {
   downloadModel(viewingModel);
 });
 
+$('.shareableLink-button-modal').click(function() {
+  copyText("http://127.0.0.1:5500/share.html?" + viewingModel);
+  informUser("Link copied")
+});
+
+function informUser(msg) {
+  var informUser = $("#informUser");
+  informUser.find(".message").text(msg);
+  informUser.show();
+  var div = document.getElementById("informUser");
+  div.style.opacity = 1;
+  setTimeout(() => {
+    informUser.hide();
+  }, 1500);
+}
+
 $("#download-all").click(function () {
   var count = selectedModels.filter(value => value === true).length;
   var message = "";
