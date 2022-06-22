@@ -66,6 +66,7 @@ function displayModel(model)
     img.src = 'img/vmr-images/' + model['Name'] + '.png'
     img.alt = model['Name'];
     img.classList.add("imgContainer");
+    img.classList.add("center");
 
     var desc = getDescription(model);
 
@@ -76,49 +77,54 @@ function displayModel(model)
 
 function getDescription(model)
 {
-    var ul = document.createElement("ul");
+    var table = document.createElement("table");
     var categoryName = getCategoryName();
 
     for(var d = 0; d < categoryName.length; d++)
     {
-        var li = document.createElement("li");
+        var newTR = document.createElement("tr");
+
+        var newHeader = document.createElement("th");
+        newHeader.textContent = categoryName[d];
         
-        var details = "";   
+        var newColumn = document.createElement("td");
+        var details = "" 
         
         var valInCat = model[categoryName[d]];
         
         if(valInCat == "-")
         {
-            details = categoryName[d] + ": N/A";
+            details = "N/A";
         }
         
         else{
             if(categoryName[d] == "Age")
             {
-                details += categoryName[d] + ": " + ageCalculator(valInCat);
+                details += ageCalculator(valInCat);
             }
             else if(categoryName[d] == "Species" && valInCat == "Animal")
             {
-                details += categoryName[d] + ": " + model["Animal"];
+                details += model["Animal"];
             }
             else
             {
                 if(valInCat.indexOf("_") == -1)
                 {
-                details += categoryName[d] + ": " + valInCat;
+                    details += valInCat;
                 }
                 else
                 {
-                details += categoryName[d] + "s: ";
-
-                details += listFormater(valInCat)
+                    details += listFormater(valInCat)
                 }
             } //end else if more than one detail
         } //end else
 
-        li.textContent = details;
-        ul.appendChild(li)
+        newColumn.textContent = details;
+
+        newTR.appendChild(newHeader);
+        newTR.appendChild(newColumn);
+        table.appendChild(newTR)
   }
 
-  return ul;
+  return table;
 }
