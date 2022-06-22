@@ -43,17 +43,17 @@ function getVariable()
 function displayErrorMessage(isOn) {
     var errorMsg = document.getElementById('error-msg');
     errorMsg.textContent = "It looks like there are no models to exhibit!";
-    var displayingModel = document.getElementById('displayedModel');
+    var whenModelSelected = document.getElementById('whenModelSelected');
 
     if(isOn)
     {
         errorMsg.style.opacity = 1;
-        displayingModel.style.opacity = 0;
+        whenModelSelected.style.opacity = 0;
     }
     else
     {
         errorMsg.style.opacity = 0;
-        displayingModel.style.opacity = 1;
+        whenModelSelected.style.opacity = 1;
     }
 }
 
