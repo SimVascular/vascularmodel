@@ -214,36 +214,12 @@ function greetingText(data)
     if(notes.includes("\\url"))
     {
       modalclosure.innerHTML = "";
-      indexOfStartOfTag = notes.indexOf("\\url");
+      
+      var output = URLMaker(notes);
 
-      indexOfStartOfLink = notes.indexOf("(\"");
-      indexOfEndOfLink = notes.indexOf("\",", indexOfStartOfLink);
-      url = notes.substring(indexOfStartOfLink + 2, indexOfEndOfLink);
-
-      indexOfStartOfWord = notes.indexOf(" \"", indexOfEndOfLink);
-      indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
-      word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
-
-      var pBefore = document.createElement("span");
-      pBefore.textContent = notes.substring(0, indexOfStartOfTag);
-      modalclosure.appendChild(pBefore);
-
-      var a = document.createElement("a")
-      a.setAttribute("href", url);
-      a.setAttribute("target", "_blank");
-      a.classList.add("link");
-      a.textContent = word;
-
-      if(url.includes(".zip"))
-      {
-        a.setAttribute("download", "");
-      }
-
-      modalclosure.appendChild(a);
-
-      var pAfter = document.createElement("span");
-      pAfter.textContent = notes.substring(indexOfEndOfWord + 2);
-      modalclosure.appendChild(pAfter);
+      modalclosure.appendChild(output[0]);
+      modalclosure.appendChild(output[1]);
+      modalclosure.appendChild(output[2]);
 
       var sizeText = document.createElement("div");
       sizeText.classList.add("newParagraph");

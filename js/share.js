@@ -61,7 +61,7 @@ function displayModel()
 {
     var div = document.getElementById("displayedModel");
     var title = document.createElement("h1");
-    title.textContent = "You are viewing model: " + model["Name"] + ".";
+    title.textContent = "You are viewing " + model["Name"] + ".";
 
     let img = document.createElement("img");
     img.src = 'img/vmr-images/' + model['Name'] + '.png'
@@ -79,7 +79,7 @@ function displayModel()
 function getDescription()
 {
     var table = document.createElement("table");
-    var categoryName = getCategoryName();
+    var categoryName = getDetailsTitles();
 
     for(var d = 0; d < categoryName.length; d++)
     {
@@ -151,4 +151,14 @@ function downloadModel()
     'event_label': 'test',
     'value': '1'
 });
+}
+
+$("#goToGallery").click(function () {
+    goToGallery();
+});
+
+function goToGallery() {
+    var a = document.createElement("a");
+    a.href = "dataset.html";
+    a.click();
 }

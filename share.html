@@ -34,10 +34,9 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css?v=1.0.0" />
-    <link rel="stylesheet" href="css/style_share.css" />
     <link rel="stylesheet" href="css/style_dataset.css?v=1.0.0" />
     <link rel="stylesheet" href="css/style_filter.css" />
-
+    <link rel="stylesheet" href="css/style_share.css" />
     <title>Vascular Model Repository</title>
     <script
       async
@@ -111,12 +110,26 @@
 
     <section class="share-main">
       <div class="centerBox">
-        <div id="displayedModel"></div>
-        <div>
-          <button id="goToGallery" class="button">
-            <a class="noStyle" href="dataset.html">View Gallery</a>
-          </button>
-          <button id="downloadModel" class="button">Download Model</button>
+        <div id="displayedModel">
+          <section class="features">
+            <form>
+              <div
+                title="Download Model"
+                id="downloadModel"
+                class="spanForIcons centerIcon"
+              >
+                <i class="fa-solid fa-download featuresIcons"></i>
+              </div>
+              <div
+                title="View Gallery"
+                id="goToGallery"
+                class="spanForIcons centerIcon"
+              >
+                <i class="fa-solid fa-image featuresIcons"></i>
+              </div>
+            </form>
+          </section><!-- features -->
+          </div>
         </div>
       </div>
 

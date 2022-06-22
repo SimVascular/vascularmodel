@@ -28,6 +28,26 @@ function getAllCategories()
   return allCategories;
 }
 
+function getDetailsTitles()
+{
+  var allCategories = getAllCategories();
+  var mustContainTitles = getMustContainFilterTitles()
+  var output = []
+
+  for(var i = 0; i < allCategories.length; i++)
+  {
+    if(allCategories[i] != "Name" && allCategories[i] != "Animal" && allCategories[i] != "DOI")
+    {
+      if(!mustContainTitles.includes(allCategories[i]))
+      {
+        output.push(allCategories[i]);
+      }
+    }
+  }
+
+  return output;
+}
+
 //returns the keys of all the categories except "Size" and "Name"
 function getFilterTitles()
 {
@@ -68,7 +88,7 @@ function getMustContainFilterTitles()
   var allCategoryNames = getAllCategories()
   var returnCategories = []
 
-  for(var i = allCategoryNames.indexOf("Images"); i < allCategoryNames.indexOf("Size"); i++)
+  for(var i = allCategoryNames.indexOf("Images"); i <= allCategoryNames.indexOf("Simulations"); i++)
   {
     returnCategories.push(allCategoryNames[i])
   }
@@ -172,4 +192,40 @@ function ageCalculator(value)
       return Math.round(days*100)/100 + " days"
     }
   }
+}
+
+function URLMaker(notes)
+{ 
+  indexOfStartOfTag = notes.indexOf("\\url");
+
+  indexOfStartOfLink = notes.indexOf("(\"");
+  indexOfEndOfLink = notes.indexOf("\",", indexOfStartOfLink);
+  url = notes.substring(indexOfStartOfLink + 2, indexOfEndOfLink);
+
+  indexOfStartOfWord = notes.indexOf(" \"", indexOfEndOfLink);
+  indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
+  word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
+
+  var pBefore = document.createElement("span");
+  pBefore.textContent = notes.substring(0, indexOfStartOfTag);
+  // modalclosure.appendChild(pBefore);
+
+  var a = document.createElement("a")
+  a.setAttribute("href", url);
+  a.setAttribute("target", "_blank");
+  a.classList.add("link");
+  a.textContent = word;
+
+  if(url.includes(".zip"))
+  {
+    a.setAttribute("download", "");
+  }
+
+  // modalclosure.appendChild(a);
+
+  var pAfter = document.createElement("span");
+  pAfter.textContent = notes.substring(indexOfEndOfWord + 2);
+  // modalclosure.appendChild(pAfter);
+  
+  return [pBefore, a, pAfter];
 }

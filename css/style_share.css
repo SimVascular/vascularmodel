@@ -71,3 +71,43 @@ table {
     text-decoration: none;
   }
   
+  .features {
+    top: 150px;
+    padding-right: 5px;
+    margin-right: 2%;
+  }
+
+  h1 {
+    font-size: 5vw;
+  }
+
+  @media screen and (min-width: 1500px) {
+    h1 {
+        font-size: 75px;
+      }
+  }
+
+  .spanForIcons {
+    border-radius: 0%;
+    background-color: var(--grey);
+    color: black;
+    border: 2px solid grey;
+  }
+
+  .spanForIcons:hover {
+    border-radius: 0%;
+    background-color: black;
+    color: var(--grey);
+    border: 2px solid grey;
+  }
+
+  .featuresIcons {
+    padding: 0px;
+    float: none;
+  }
+
+  .centerIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
