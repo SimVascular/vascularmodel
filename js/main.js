@@ -466,7 +466,7 @@ $('.download-button-modal').click(function() {
 });
 
 $('.shareableLink-button-modal').click(function() {
-  copyText("http://127.0.0.1:5500/share.html?" + viewingModel);
+  copyText("https://www.vascularmodel.com/share.html?" + viewingModel);
   informUser("Link copied")
 });
 
