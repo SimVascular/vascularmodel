@@ -4,7 +4,7 @@
     height: auto;
 }
 
-#displayedModel {
+.centerBox {
     box-shadow: 0px 0px 2px black;
     background-color: white;
     position: relative;
@@ -50,3 +50,24 @@ table {
   tr:nth-child(even) {
     background-color: var(--grey);
   }
+
+  .button:hover{
+    background-color: #ebebeb;
+  }
+  
+  .button {
+    border: 2px solid grey;
+    padding: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+  }
+
+  .noStyle {
+    color: black;
+  }
+
+  .noStyle:hover {
+    color: black;
+    text-decoration: none;
+  }
+  

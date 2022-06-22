@@ -10,6 +10,7 @@ $(document).ready(function($){
         data.sort(() => (Math.random() > .5) ? 1 : -1);
       }
     });
+
     getVariable();
 });
 
@@ -22,7 +23,7 @@ function getVariable()
     {
         if(data[i]["Name"] == modelName)
         {
-            var model = data[i];
+            model = data[i];
             console.log(model);
             found = true;
         }
@@ -56,7 +57,7 @@ function displayErrorMessage(isOn) {
     }
 }
 
-function displayModel(model)
+function displayModel()
 {
     var div = document.getElementById("displayedModel");
     var title = document.createElement("h1");
@@ -75,7 +76,7 @@ function displayModel(model)
     div.appendChild(desc);
 }
 
-function getDescription(model)
+function getDescription()
 {
     var table = document.createElement("table");
     var categoryName = getCategoryName();
@@ -127,4 +128,27 @@ function getDescription(model)
   }
 
   return table;
+}
+
+$("#downloadModel").click(function () {
+    downloadModel();
+    console.log("download");
+});
+
+function downloadModel()
+{
+  var modelName = model["Name"];
+
+  var fileUrl = 'svprojects/' + modelName + '.zip';
+  var a = document.createElement("a");
+  a.href = fileUrl;
+  a.setAttribute("download", modelName);
+  a.click();
+
+  gtag('event', 'download_' + modelName, {
+    'send_to': 'G-YVVR1546XJ',
+    'event_category': 'Model download',
+    'event_label': 'test',
+    'value': '1'
+});
 }
