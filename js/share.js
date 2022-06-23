@@ -14,47 +14,76 @@ $(document).ready(function($){
     getVariable();
 });
 
+var models = []
+var model;
+
 function getVariable()
 {
     const queryString = window.location.search;
     var modelName = queryString.substring(1);
-    var found;
+    var found = false;
     for(var i = 0; i < data.length; i++)
     {
-        if(data[i]["Name"] == modelName)
+        if(data[i]["Name"].includes(modelName) && modelName != "")
         {
-            model = data[i];
-            console.log(model);
+            models.push(data[i]);
             found = true;
         }
     }
 
     if(!found)
     {
-        displayErrorMessage(true);
+        displayErrorMessage(1);
     }
-    else
+    else if (models.length == 1)
     {
-        displayErrorMessage(false);
+        displayErrorMessage(2);
+        model = models[0];
         displayModel(model);
+    }
+    else{
+        displayErrorMessage(3);
+        displayTableModels(models);
     }
 }
 
-function displayErrorMessage(isOn) {
-    var errorMsg = document.getElementById('error-msg');
+function displayErrorMessage(num) {
+    var errorMsg = document.getElementById("errorBlock");
     errorMsg.textContent = "It looks like there are no models to exhibit!";
+    
     var whenModelSelected = document.getElementById('whenModelSelected');
+    var whenModelsSelected = document.getElementById("whenModelsSelected");
 
-    if(isOn)
+    if(num == 1)
     {
-        errorMsg.style.opacity = 1;
-        whenModelSelected.style.opacity = 0;
+        showDiv(errorMsg);
+        hideDiv(whenModelSelected);
+        hideDiv(whenModelsSelected);
     }
-    else
+    else if (num == 2)
     {
-        errorMsg.style.opacity = 0;
-        whenModelSelected.style.opacity = 1;
+        hideDiv(errorMsg);
+        showDiv(whenModelSelected);
+        hideDiv(whenModelsSelected);
     }
+    else if (num == 3)
+    {
+        hideDiv(errorMsg);
+        hideDiv(whenModelSelected);
+        showDiv(whenModelsSelected);
+    }
+}
+
+function showDiv(div)
+{
+    div.classList.remove("hide");
+    div.classList.add("show");
+}
+
+function hideDiv(div)
+{
+    div.classList.add("hide");
+    div.classList.remove("show");
 }
 
 function displayModel()
@@ -187,4 +216,33 @@ function goToGallery() {
     var a = document.createElement("a");
     a.href = "dataset.html";
     a.click();
+}
+
+function displayTableModels(models)
+{
+    var div = document.getElementById("modelsTable");
+    var title = document.createElement("h1");
+    title.textContent = models.length + " models have been shared with you.";
+    
+    var table = document.createElement("table");
+    var categoryNames = getDetailsTitles();
+    for(var c = 0; c < categoryNames.length; c++)
+    {
+        var title = document.createElement("th");
+        title.textContent = categoryNames[c];
+        table.appendChild(title);
+
+        for(var t = 0; t < models.length; t++)
+        {                      
+            var newTR = document.createElement("tr");
+            
+            var newDetail = document.createElement("td");
+            newDetail.textContent = models[t][categoryNames[c]];
+            
+            newTR.appendChild(newDetail);
+            table.appendChild(newTR);
+        }
+    }
+
+    div.append(table);
 }

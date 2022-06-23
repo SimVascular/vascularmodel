@@ -120,3 +120,16 @@ table {
     justify-content: center;
     align-items: center;
   }
+
+  .hide {
+    opacity: 0;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+    width: 0px;
+    border: none;
+  }
+
+  .show {
+    opacity: 1;
+  }
