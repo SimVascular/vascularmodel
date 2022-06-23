@@ -72,10 +72,19 @@ table {
   }
   
   .features {
-    top: 150px;
-    padding-right: 5px;
-    margin-right: 2%;
+    position: absolute;
+    top: 9vw;
+    right: 0px;
+    width: 120px;
+    height: 200px;
   }
+
+  .features div {
+    height: auto;
+    width: auto;
+    padding: 15px;
+    float: right;
+}
 
   h1 {
     font-size: 5vw;

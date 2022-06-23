@@ -136,7 +136,6 @@ function generateOptions(optionName)
 function addHooks(hooks) {  
   for (var i = 0; i < hooks.length; i++) {
     $("#" + hooks[i]).change(function() {applyFilters(); console.log("#" + hooks[i] + " apply filters")});
-    console.log("#" + hooks[i] + " hook created")
   }
 }
 
