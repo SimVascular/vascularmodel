@@ -218,9 +218,7 @@ function URLMaker(notes)
   indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
   word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
 
-  var pBefore = document.createElement("span");
-  pBefore.textContent = notes.substring(0, indexOfStartOfTag);
-  // modalclosure.appendChild(pBefore);
+  pBefore = createpBeforeAndAfter(notes.substring(0, indexOfStartOfTag), true);
 
   var a = document.createElement("a")
   a.setAttribute("href", url);
@@ -232,14 +230,50 @@ function URLMaker(notes)
   {
     a.setAttribute("download", "");
   }
-
-  // modalclosure.appendChild(a);
-
-  var pAfter = document.createElement("span");
-  pAfter.textContent = notes.substring(indexOfEndOfWord + 2);
-  // modalclosure.appendChild(pAfter);
+  pAfter = createpBeforeAndAfter(notes.substring(indexOfEndOfWord + 2), false);
   
   return [pBefore, a, pAfter];
+}
+
+function createpBeforeAndAfter(text, isBefore)
+{
+  if(text.includes("\\n") && !text.includes("\\url"))
+  {
+    var p = document.createElement("div");
+    p.classList.add("newParagraph");
+    
+    while(text.includes("\\n"))
+    {
+      var index = text.indexOf("\\n");
+      var pDiv = document.createElement("div");
+      pDiv.classList.add("newParagraph");
+      
+      pDiv.textContent = text.substring(0, index);
+      text = text.substring(index + 2);
+      
+      p.appendChild(pDiv);
+    }
+
+    if(isBefore)
+    {
+      p.classList.add("sameLine");
+      var pDiv = document.createElement("span");
+    }
+    else
+    {
+      pDiv.classList.add("newParagraph");
+      var pDiv = document.createElement("div");
+    }
+    pDiv.textContent = text;
+    p.appendChild(pDiv);
+  }
+  else
+  {
+    var p = document.createElement("span");
+    p.textContent = text;
+  }
+  return p;
+  
 }
 
 function copyText(message) {

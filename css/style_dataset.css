@@ -318,6 +318,11 @@ error msg block behavior
 
 .newParagraph {
   margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.sameLine {
+  display: inline;
 }
 
 .modalDialog:target {

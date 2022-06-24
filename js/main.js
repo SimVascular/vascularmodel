@@ -219,7 +219,6 @@ function greetingText(data)
         modalclosure.appendChild(output[0]);
         modalclosure.appendChild(output[1]);
         string = output[2].textContent;
-        console.log("still going")
       }
       
       modalclosure.appendChild(output[2]);
