@@ -383,6 +383,7 @@ $(document).ready(function($){
     async: false,
     success: function(fdata) {
       data = $.csv.toObjects(fdata);
+      preservedOrderData = JSON.parse(JSON.stringify(data));
       // we shuffle array to make it always different
       data.sort(() => (Math.random() > .5) ? 1 : -1);
     }

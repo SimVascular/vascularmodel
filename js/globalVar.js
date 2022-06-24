@@ -1,5 +1,6 @@
 var data;
 var filteredData;
+var preservedOrderData;
 var displayedData;
 var viewingModel = ''
 var curIndex = 0;
