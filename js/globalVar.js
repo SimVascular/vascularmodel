@@ -281,13 +281,9 @@ function copyText(message) {
   navigator.clipboard.writeText(message);
 }
 
-function decodeRLE(binary) {
-  return binary.replace(/(\d+)([ \w])/g, (_, count, chr) => chr.repeat(count));
-};
-
-function encodeRLE(array) {
-  var binary = "";
-
+function boolToYN(array)
+{
+  binary = "";
   for(var i = 0; i < array.length; i++)
   {
     if(array[i])
@@ -299,7 +295,14 @@ function encodeRLE(array) {
       binary += "N"
     }
   }
+  return binary;
+}
 
+function decodeRLE(binary) {
+  return binary.replace(/(\d+)([ \w])/g, (_, count, chr) => chr.repeat(count));
+};
+
+function encodeRLE(binary) {
   return binary.replace(/([ \w])\1+/g, (group, chr) => group.length + chr );
 };
 

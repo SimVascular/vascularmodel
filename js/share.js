@@ -6,7 +6,10 @@ $(document).ready(function($){
       async: false,
       success: function(fdata) {
         data = $.csv.toObjects(fdata);
-        preservedOrderData = JSON.parse(JSON.stringify(data));
+        for(var i = 0; i < data.length; i++)
+        {
+            preservedOrderData.push(data[i]);
+        }
         // we shuffle array to make it always different
         data.sort(() => (Math.random() > .5) ? 1 : -1);
       }
@@ -279,10 +282,10 @@ function createHook(model)
 function goToModel(model){
     //creates makeshift selectedmodels array
     var array = new Array(data.length);
-    array.fill(false);
+    array.fill("N");
     var indexOfModel = preservedOrderData.indexOf(model);
     //selects the right index to make true
-    array[indexOfModel] = true;
+    array[indexOfModel] = "Y";
 
     //opens new window with encoded model
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
