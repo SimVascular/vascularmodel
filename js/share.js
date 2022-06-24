@@ -144,15 +144,18 @@ function getDescription()
                 {
                     notes = model["Notes"];
                     if(notes.includes("\\url"))
-                    {                    
-                        var output = URLMaker(notes);
-                        newColumn.appendChild(output[0]);
-                        newColumn.appendChild(output[1]);
-                        newColumn.appendChild(output[2]);
-                    }
-                    else
                     {
-                        details = notes;
+                        var string = notes;
+                        while(string.includes("\\url"))
+                        {
+                            var output = URLMaker(string);
+
+                            newColumn.appendChild(output[0]);
+                            newColumn.appendChild(output[1]);
+                            string = output[2].textContent;
+                        }
+                    
+                        newColumn.appendChild(output[2]);
                     }
                 }
             }
