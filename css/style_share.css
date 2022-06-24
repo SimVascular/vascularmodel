@@ -22,11 +22,6 @@
     margin: 15px;
 }
 
-h1 {
-    text-align: center;
-    font-family: "Poppins", sans-serif;
-}
-
 .center {
     display: block;
     margin-left: auto;
@@ -88,6 +83,12 @@ table {
 
   h1 {
     font-size: 5vw;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .titleForTableModels {
+    padding-bottom: 2%;
   }
 
   @media screen and (min-width: 1500px) {
@@ -99,15 +100,15 @@ table {
   .spanForIcons {
     border-radius: 0%;
     background-color: var(--grey);
-    color: black;
-    border: 2px solid grey;
+    color: #424651 ;
+    border: 2px solid var(--grey);
   }
 
   .spanForIcons:hover {
     border-radius: 0%;
-    background-color: black;
+    background-color: #424651 ;
     color: var(--grey);
-    border: 2px solid grey;
+    border: 2px solid var(--grey);
   }
 
   .featuresIcons {
@@ -119,4 +120,22 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .hide {
+    opacity: 0;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+    width: 0px;
+    border: none;
+  }
+
+  .show {
+    opacity: 1;
+  }
+
+  .modelRow:hover {
+    background-color: var(--darkgrey);
+    cursor: pointer;
   }

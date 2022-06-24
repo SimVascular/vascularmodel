@@ -318,6 +318,11 @@ error msg block behavior
 
 .newParagraph {
   margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.sameLine {
+  display: inline;
 }
 
 .modalDialog:target {
@@ -385,8 +390,8 @@ error msg block behavior
   background-color: var(--dark2);
   border: none;
   color: white !important;
-  padding-left: 7px;
-  padding-right: 7px;
+  padding-left: 3px;
+  padding-right: 3px;
   text-align: center;
   text-decoration: none !important;
   display: inline-block;
@@ -403,6 +408,13 @@ error msg block behavior
   color: white;
   transition: 0.3s;
   background-color: var(--dark2shade);
+}
+
+.fa-xmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
 }
 
 .button-modal {

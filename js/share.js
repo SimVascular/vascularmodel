@@ -6,55 +6,86 @@ $(document).ready(function($){
       async: false,
       success: function(fdata) {
         data = $.csv.toObjects(fdata);
-        // we shuffle array to make it always different
-        data.sort(() => (Math.random() > .5) ? 1 : -1);
       }
     });
 
     getVariable();
 });
 
+var models = []
+var model;
+
 function getVariable()
 {
     const queryString = window.location.search;
-    var modelName = queryString.substring(1);
-    var found;
-    for(var i = 0; i < data.length; i++)
+    //skips ? and starts at what is after the ?
+    var codedName = queryString.substring(1);
+
+    var encodedNames = decodeRLE(encodeATOB(codedName));
+    var found = false;
+
+    for(var i = 0; i < encodedNames.length; i++)
     {
-        if(data[i]["Name"] == modelName)
+        if(encodedNames[i] == "Y")
         {
-            model = data[i];
-            console.log(model);
+            models.push(data[i]);
             found = true;
         }
     }
 
     if(!found)
     {
-        displayErrorMessage(true);
+        displayErrorMessage(1);
     }
-    else
+    else if (models.length == 1)
     {
-        displayErrorMessage(false);
+        displayErrorMessage(2);
+        model = models[0];
         displayModel(model);
+    }
+    else{
+        displayErrorMessage(3);
+        displayTableModels(models);
     }
 }
 
-function displayErrorMessage(isOn) {
-    var errorMsg = document.getElementById('error-msg');
+function displayErrorMessage(num) {
+    var errorMsg = document.getElementById("errorBlock");
     errorMsg.textContent = "It looks like there are no models to exhibit!";
+    
     var whenModelSelected = document.getElementById('whenModelSelected');
+    var whenModelsSelected = document.getElementById("whenModelsSelected");
 
-    if(isOn)
+    if(num == 1)
     {
-        errorMsg.style.opacity = 1;
-        whenModelSelected.style.opacity = 0;
+        showDiv(errorMsg);
+        hideDiv(whenModelSelected);
+        hideDiv(whenModelsSelected);
     }
-    else
+    else if (num == 2)
     {
-        errorMsg.style.opacity = 0;
-        whenModelSelected.style.opacity = 1;
+        hideDiv(errorMsg);
+        showDiv(whenModelSelected);
+        hideDiv(whenModelsSelected);
     }
+    else if (num == 3)
+    {
+        hideDiv(errorMsg);
+        hideDiv(whenModelSelected);
+        showDiv(whenModelsSelected);
+    }
+}
+
+function showDiv(div)
+{
+    div.classList.remove("hide");
+    div.classList.add("show");
+}
+
+function hideDiv(div)
+{
+    div.classList.add("hide");
+    div.classList.remove("show");
 }
 
 function displayModel()
@@ -132,14 +163,7 @@ function getDescription()
             }
             else
             {
-                if(valInCat.indexOf("_") == -1)
-                {
-                    details += valInCat;
-                }
-                else
-                {
-                    details += listFormater(valInCat)
-                }
+                details += listFormater(valInCat);
             } //end else if more than one detail
         } //end else
 
@@ -187,4 +211,71 @@ function goToGallery() {
     var a = document.createElement("a");
     a.href = "dataset.html";
     a.click();
+}
+
+function displayTableModels(models)
+{
+    var div = document.getElementById("modelsTable");
+    var h1 = document.createElement("h1");
+    h1.classList.add("titleForTableModels")
+    h1.textContent = "You are viewing " + models.length + " models.";
+    div.appendChild(h1);
+    
+    var table = document.createElement("table");
+    var categoryNames = getBareMinimum();
+
+    var titleRow = document.createElement("tr");
+    for(var c = 0; c < categoryNames.length; c++)
+    {
+        var newTitle = document.createElement("th");
+        newTitle.textContent = categoryNames[c];
+
+        titleRow.appendChild(newTitle);
+    }
+    table.appendChild(titleRow);
+    var hooks = []
+    for(var m = 0; m < models.length; m++)
+    {
+        var modelRow = document.createElement("tr");
+        modelRow.classList.add("modelRow");
+        modelRow.setAttribute("id", models[m]["Name"] + "_row");
+
+        for(var c = 0; c < categoryNames.length; c++)
+        {   
+            var newDetail = document.createElement("td");
+            var string = models[m][categoryNames[c]];
+            if(categoryNames[c] != "Name")
+                string = listFormater(string);
+            newDetail.textContent = string;
+            
+            if(categoryNames[c] == "Species" && string == "Animal")
+            {
+                newDetail.textContent = models[m]["Animal"];
+            }
+
+            modelRow.appendChild(newDetail);
+        }
+
+        table.appendChild(modelRow);
+
+        hooks.push(models[m]);
+    }
+
+    div.appendChild(table);
+    for(var i = 0; i < hooks.length; i++)
+    {
+        createHook(hooks[i]);
+    }
+}
+
+function createHook(model)
+{
+    $('#' + model["Name"] + "_row").click(function() {goToModel(model);});
+}
+
+function goToModel(model){
+    var array = makeshiftSelectedModels(data, model)
+
+    //opens new window with encoded model
+    window.open("share.html?" + encodeBTOA(encodeRLE(array)));
 }
