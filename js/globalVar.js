@@ -302,3 +302,49 @@ function encodeRLE() {
 
   return binary.replace(/([ \w])\1+/g, (group, chr) => group.length + chr );
 };
+
+function encodeBTOA(code)
+{
+  code = btoa(code);
+
+  for(var i = 0; i < code.length; i++)
+  {
+    if(code.charAt(i) == "=")
+    {
+      code = replaceCharAt(code, i, ",");
+    }
+    if(code.charAt(i) == "/")
+    {
+      code = replaceCharAt(i, "!");
+    }
+  }
+
+  return code;
+}
+
+function encodeATOB(code)
+{
+  for(var i = 0; i < code.length; i++)
+  {
+    if(code.charAt(i) == ",")
+    {
+      code = replaceCharAt(code, i, "=");
+    }
+    if(code.charAt(i) == "!")
+    {
+      code = replaceCharAt(code, i, "/");
+    }
+  }
+  
+  code = atob(code);
+
+  return code;
+}
+
+function replaceCharAt(code, i, char)
+{
+  var newCode = code.substring(0, i);
+  newCode += char
+  newCode += code.substring(i + 1);
+  return newCode;
+}

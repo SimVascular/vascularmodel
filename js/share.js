@@ -24,7 +24,7 @@ function getVariable()
     //skips ? and starts at what is after the ?
     var codedName = queryString.substring(1);
 
-    var encodedNames = decodeRLE(atob(codedName));
+    var encodedNames = decodeRLE(encodeATOB(codedName));
     var found = false;
 
     for(var i = 0; i < encodedNames.length; i++)
