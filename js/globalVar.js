@@ -1,6 +1,6 @@
 var data;
 var filteredData;
-var preservedOrderData;
+var preservedOrderData = [];
 var displayedData;
 var viewingModel = ''
 var curIndex = 0;
@@ -280,3 +280,25 @@ function createpBeforeAndAfter(text, isBefore)
 function copyText(message) {
   navigator.clipboard.writeText(message);
 }
+
+function decodeRLE(binary) {
+  return binary.replace(/(\d+)([ \w])/g, (_, count, chr) => chr.repeat(count));
+};
+
+function encodeRLE() {
+  var binary = "";
+
+  for(var i = 0; i < selectedModels.length; i++)
+  {
+    if(selectedModels[i])
+    {
+      binary += "Y"
+    }
+    else
+    {
+      binary += "N"
+    }
+  }
+
+  return binary.replace(/([ \w])\1+/g, (group, chr) => group.length + chr );
+};

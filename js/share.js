@@ -22,13 +22,16 @@ function getVariable()
 {
     const queryString = window.location.search;
     //skips ? and starts at what is after the ?
-    var modelName = queryString.substring(1);
+    var codedName = queryString.substring(1);
+
+    var encodedNames = decodeRLE(atob(codedName));
     var found = false;
-    for(var i = 0; i < data.length; i++)
+
+    for(var i = 0; i < encodedNames.length; i++)
     {
-        if(modelName.includes(data[i]["Name"]))
+        if(encodedNames[i] == "Y")
         {
-            models.push(data[i]);
+            models.push(preservedOrderData[i]);
             found = true;
         }
     }

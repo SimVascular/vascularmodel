@@ -99,7 +99,7 @@ function selectAllFilteredData()
 
 function deselectModel(model)
 {
-  selectedModels[data.indexOf(model)] = false;
+  selectedModels[preservedOrderData.indexOf(model)] = false;
   var element = document.getElementById(model['Name'] + "_isSelected");
   if (element)
     element.classList.remove("selected");
@@ -107,7 +107,7 @@ function deselectModel(model)
 
 function selectModel(model)
 {
-  selectedModels[data.indexOf(model)] = true;
+  selectedModels[preservedOrderData.indexOf(model)] = true;
   var element = document.getElementById(model['Name'] + "_isSelected");
   if (element)
     element.classList.add("selected");
@@ -115,10 +115,10 @@ function selectModel(model)
 
 function updatedSelectedList(model)
 {
-  selectedModels[data.indexOf(model)] = !selectedModels[data.indexOf(model)];
+  selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
   var bucket = document.getElementById("view-selected");
 
-  if(selectedModels[data.indexOf(model)])
+  if(selectedModels[preservedOrderData.indexOf(model)])
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.add("selected");
@@ -316,7 +316,7 @@ function generateContent(modelData) {
   divModelImage.classList.add("animate");
   divModelImage.setAttribute("id",modelData['Name'] + "_isSelected");
 
-  if(selectedModels[data.indexOf(modelData)])
+  if(selectedModels[preservedOrderData.indexOf(modelData)])
   {
     divModelImage.classList.add("selected");
   }
@@ -383,7 +383,10 @@ $(document).ready(function($){
     async: false,
     success: function(fdata) {
       data = $.csv.toObjects(fdata);
-      preservedOrderData = JSON.parse(JSON.stringify(data));
+      for(var i = 0; i < data.length; i++)
+      {
+        preservedOrderData.push(data[i]);
+      }
       // we shuffle array to make it always different
       data.sort(() => (Math.random() > .5) ? 1 : -1);
     }
@@ -465,9 +468,14 @@ $('.download-button-modal').click(function() {
   downloadModel(viewingModel);
 });
 
+$('#sharelink-all').click(function() {
+  copyText("https://www.vascularmodel.com/share.html?" + btoa(encodeRLE()));
+  informUser("Link copied");
+});
+
 $('.shareableLink-button-modal').click(function() {
   copyText("https://www.vascularmodel.com/share.html?" + viewingModel);
-  informUser("Link copied")
+  informUser("Link copied");
 });
 
 function informUser(msg) {
@@ -525,7 +533,7 @@ async function downloadAllSelectedModels(){
   {
     if(selectedModels[i])
     {
-      listOfNames.push(data[i]["Name"])
+      listOfNames.push(preservedOrderData[i]["Name"])
     }
   }
 
@@ -787,7 +795,7 @@ function viewSelected(flipViewingSelectedModels, moveToTop = true) {
     {
       if(selectedModels[i])
       {
-        displayedData.push(data[i])
+        displayedData.push(preservedOrderData[i])
       }
     }
 
