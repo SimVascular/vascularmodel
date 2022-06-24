@@ -469,7 +469,7 @@ $('.download-button-modal').click(function() {
 });
 
 $('#sharelink-all').click(function() {
-  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE()));
+  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(selectedModels)));
   informUser("Link copied");
 });
 

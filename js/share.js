@@ -219,8 +219,10 @@ function goToGallery() {
 function displayTableModels(models)
 {
     var div = document.getElementById("modelsTable");
-    var title = document.createElement("h1");
-    title.textContent = models.length + " models have been shared with you.";
+    var h1 = document.createElement("h1");
+    h1.classList.add("titleForTableModels")
+    h1.textContent = "You are viewing " + models.length + " models.";
+    div.appendChild(h1);
     
     var table = document.createElement("table");
     var categoryNames = getBareMinimum();
@@ -234,14 +236,12 @@ function displayTableModels(models)
         titleRow.appendChild(newTitle);
     }
     table.appendChild(titleRow);
-    
-    var modelNames = []
+    var hooks = []
     for(var m = 0; m < models.length; m++)
     {
         var modelRow = document.createElement("tr");
         modelRow.classList.add("modelRow");
         modelRow.setAttribute("id", models[m]["Name"] + "_row");
-        modelNames.push(models[m]["Name"])
 
         for(var c = 0; c < categoryNames.length; c++)
         {   
@@ -260,21 +260,30 @@ function displayTableModels(models)
         }
 
         table.appendChild(modelRow);
+
+        hooks.push(models[m]);
     }
 
     div.appendChild(table);
-    createHook(modelNames);
-}
-
-function createHook(modelNames)
-{
-    for(var i = 0; i < modelNames.length; i++)
+    for(var i = 0; i < hooks.length; i++)
     {
-        var modelName = modelNames[i];
-        $('#' + modelName + "_row").click(function() {goToModel(modelName);}); 
+        createHook(hooks[i]);
     }
 }
 
-function goToModel(modelName){
-    window.open("share.html?" + modelName)
+function createHook(model)
+{
+    $('#' + model["Name"] + "_row").click(function() {goToModel(model);});
+}
+
+function goToModel(model){
+    //creates makeshift selectedmodels array
+    var array = new Array(data.length);
+    array.fill(false);
+    var indexOfModel = preservedOrderData.indexOf(model);
+    //selects the right index to make true
+    array[indexOfModel] = true;
+
+    //opens new window with encoded model
+    window.open("share.html?" + encodeBTOA(encodeRLE(array)));
 }

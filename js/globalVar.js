@@ -285,12 +285,12 @@ function decodeRLE(binary) {
   return binary.replace(/(\d+)([ \w])/g, (_, count, chr) => chr.repeat(count));
 };
 
-function encodeRLE() {
+function encodeRLE(array) {
   var binary = "";
 
-  for(var i = 0; i < selectedModels.length; i++)
+  for(var i = 0; i < array.length; i++)
   {
-    if(selectedModels[i])
+    if(array[i])
     {
       binary += "Y"
     }
