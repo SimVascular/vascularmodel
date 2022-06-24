@@ -351,3 +351,15 @@ function replaceCharAt(code, i, char)
   newCode += code.substring(i + 1);
   return newCode;
 }
+
+function makeshiftSelectedModels(preservedOrderData, model)
+{
+  //creates makeshift selectedmodels array
+  var array = new Array(preservedOrderData.length);
+  array.fill("N");
+  var indexOfModel = preservedOrderData.indexOf(model);
+  //selects the right index to make true
+  array[indexOfModel] = "Y";
+  array = array.toString().replaceAll(',', '')
+  return array;
+}

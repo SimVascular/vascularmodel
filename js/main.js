@@ -144,7 +144,7 @@ function updatedSelectedList(model)
 
 function greetingText(data)
 {
-  viewingModel = data['Name'];
+  viewingModel = data;
   $('.details-text').scrollTop(0);
   $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
 
@@ -465,17 +465,20 @@ function triggerFilter($bool) {
 $('.download-button-modal').click(function() {
   // overlayOff();
   // download tracking
-  downloadModel(viewingModel);
+  downloadModel(viewingModel["Name"]);
 });
 
 $('#sharelink-all').click(function() {
   var binary = boolToYN(selectedModels);
-  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
+  copyText("http://127.0.0.1:5500/share.html?" + encodeBTOA(encodeRLE(binary)));
+  // copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
   informUser("Link copied");
 });
 
 $('.shareableLink-button-modal').click(function() {
-  copyText("https://www.vascularmodel.com/share.html?" + viewingModel);
+  var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
+  copyText("http://127.0.0.1:5500/share.html?" + encodeBTOA(encodeRLE(array)));
+  // copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
   informUser("Link copied");
 });
 
