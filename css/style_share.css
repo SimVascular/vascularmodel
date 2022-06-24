@@ -133,3 +133,8 @@ table {
   .show {
     opacity: 1;
   }
+
+  .modelRow:hover {
+    background-color: var(--darkgrey);
+    cursor: pointer;
+  }

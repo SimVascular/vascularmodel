@@ -161,14 +161,7 @@ function getDescription()
             }
             else
             {
-                if(valInCat.indexOf("_") == -1)
-                {
-                    details += valInCat;
-                }
-                else
-                {
-                    details += listFormater(valInCat)
-                }
+                details += listFormater(valInCat);
             } //end else if more than one detail
         } //end else
 
@@ -225,24 +218,58 @@ function displayTableModels(models)
     title.textContent = models.length + " models have been shared with you.";
     
     var table = document.createElement("table");
-    var categoryNames = getDetailsTitles();
+    var categoryNames = getBareMinimum();
+
+    var titleRow = document.createElement("tr");
     for(var c = 0; c < categoryNames.length; c++)
     {
-        var title = document.createElement("th");
-        title.textContent = categoryNames[c];
-        table.appendChild(title);
+        var newTitle = document.createElement("th");
+        newTitle.textContent = categoryNames[c];
 
-        for(var t = 0; t < models.length; t++)
-        {                      
-            var newTR = document.createElement("tr");
-            
+        titleRow.appendChild(newTitle);
+    }
+    table.appendChild(titleRow);
+    
+    var modelNames = []
+    for(var m = 0; m < models.length; m++)
+    {
+        var modelRow = document.createElement("tr");
+        modelRow.classList.add("modelRow");
+        modelRow.setAttribute("id", models[m]["Name"] + "_row");
+        modelNames.push(models[m]["Name"])
+
+        for(var c = 0; c < categoryNames.length; c++)
+        {   
             var newDetail = document.createElement("td");
-            newDetail.textContent = models[t][categoryNames[c]];
+            var string = models[m][categoryNames[c]];
+            if(categoryNames[c] != "Name")
+                string = listFormater(string);
+            newDetail.textContent = string;
             
-            newTR.appendChild(newDetail);
-            table.appendChild(newTR);
+            if(categoryNames[c] == "Species" && string == "Animal")
+            {
+                newDetail.textContent = models[m]["Animal"];
+            }
+
+            modelRow.appendChild(newDetail);
         }
+
+        table.appendChild(modelRow);
     }
 
-    div.append(table);
+    div.appendChild(table);
+    createHook(modelNames);
+}
+
+function createHook(modelNames)
+{
+    for(var i = 0; i < modelNames.length; i++)
+    {
+        var modelName = modelNames[i];
+        $('#' + modelName + "_row").click(function() {goToModel(modelName);}); 
+    }
+}
+
+function goToModel(modelName){
+    window.open("share.html?" + modelName)
 }

@@ -48,6 +48,13 @@ function getDetailsTitles()
   return output;
 }
 
+function getBareMinimum()
+{
+  var output = ["Name", "Species", "Anatomy"]
+
+  return output;
+}
+
 //returns the keys of all the categories except "Size" and "Name"
 function getFilterTitles()
 {
@@ -147,6 +154,11 @@ function checkboxNameInArrayForm(checkboxNameArr)
 //grammar for commas and ands
 function listFormater(string)
 {
+  if(string.indexOf("_") == -1)
+  {
+    return string;
+  }
+
   var output = ""
   valInCat = checkboxNameInArrayForm(string);
 
