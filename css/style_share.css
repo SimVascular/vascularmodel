@@ -100,15 +100,15 @@ table {
   .spanForIcons {
     border-radius: 0%;
     background-color: var(--grey);
-    color: black;
-    border: 2px solid grey;
+    color: #424651 ;
+    border: 2px solid var(--grey);
   }
 
   .spanForIcons:hover {
     border-radius: 0%;
-    background-color: black;
+    background-color: #424651 ;
     color: var(--grey);
-    border: 2px solid grey;
+    border: 2px solid var(--grey);
   }
 
   .featuresIcons {
