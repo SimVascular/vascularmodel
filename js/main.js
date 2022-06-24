@@ -208,14 +208,20 @@ function greetingText(data)
   if(data["Notes"] != '-')
   {
     notes = data["Notes"];
+
     if(notes.includes("\\url"))
     {
-      modalclosure.innerHTML = "";
-      
-      var output = URLMaker(notes);
+      var string = notes;
+      while(string.includes("\\url"))
+      {
+        var output = URLMaker(string);
 
-      modalclosure.appendChild(output[0]);
-      modalclosure.appendChild(output[1]);
+        modalclosure.appendChild(output[0]);
+        modalclosure.appendChild(output[1]);
+        string = output[2].textContent;
+        console.log("still going")
+      }
+      
       modalclosure.appendChild(output[2]);
 
       var sizeText = document.createElement("div");
