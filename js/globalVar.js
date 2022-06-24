@@ -314,11 +314,11 @@ function encodeBTOA(code)
   {
     if(code.charAt(i) == "=")
     {
-      code = replaceCharAt(code, i, ",");
+      code = replaceCharAt(code, i, "^");
     }
     if(code.charAt(i) == "/")
     {
-      code = replaceCharAt(i, "!");
+      code = replaceCharAt(i, "~");
     }
   }
 
@@ -329,11 +329,11 @@ function encodeATOB(code)
 {
   for(var i = 0; i < code.length; i++)
   {
-    if(code.charAt(i) == ",")
+    if(code.charAt(i) == "^")
     {
       code = replaceCharAt(code, i, "=");
     }
-    if(code.charAt(i) == "!")
+    if(code.charAt(i) == "~")
     {
       code = replaceCharAt(code, i, "/");
     }
