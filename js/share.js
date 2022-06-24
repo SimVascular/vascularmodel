@@ -24,7 +24,7 @@ function getVariable()
     var found = false;
     for(var i = 0; i < data.length; i++)
     {
-        if(data[i]["Name"].includes(modelName) && modelName != "")
+        if(modelName.includes(data[i]["Name"]))
         {
             models.push(data[i]);
             found = true;
