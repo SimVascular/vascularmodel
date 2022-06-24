@@ -299,6 +299,11 @@ function boolToYN(array)
 }
 
 function decodeRLE(binary) {
+  if(binary == "invalid code")
+  {
+    return "invalid code";
+  }
+
   return binary.replace(/(\d+)([ \w])/g, (_, count, chr) => chr.repeat(count));
 };
 
@@ -339,9 +344,24 @@ function encodeATOB(code)
     }
   }
   
-  code = atob(code);
+  //checks if valid code
+  if(!isBase64(code))
+  {
+    return "invalid code";
+  }
 
+  code = atob(code);
+  
   return code;
+}
+
+function isBase64(str) {
+  if (str ==='' || str.trim() ===''){ return false; }
+  try {
+      return btoa(atob(str)) == str;
+  } catch (err) {
+      return false;
+  }
 }
 
 function replaceCharAt(code, i, char)
