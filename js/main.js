@@ -470,15 +470,13 @@ $('.download-button-modal').click(function() {
 
 $('#sharelink-all').click(function() {
   var binary = boolToYN(selectedModels);
-  copyText("http://127.0.0.1:5500/share.html?" + encodeBTOA(encodeRLE(binary)));
-  // copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
+  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
   informUser("Link copied");
 });
 
 $('.shareableLink-button-modal').click(function() {
   var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
-  copyText("http://127.0.0.1:5500/share.html?" + encodeBTOA(encodeRLE(array)));
-  // copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
+  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
   informUser("Link copied");
 });
 
