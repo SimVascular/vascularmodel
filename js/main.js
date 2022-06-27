@@ -851,6 +851,24 @@ $("#view-selected").click(function() {
   viewSelected(true);
 });
 
+$("#menu-bar").click(function() {
+  menuBarShowing = !menuBarShowing;
+  var features = document.getElementById("features");
+  var menuBar = document.getElementById("menu-bar");
+
+
+  if (menuBarShowing)
+  {
+    features.classList.add("features-is-visible");
+    menuBar.classList.add("features-is-visible");
+  }
+  else
+  {
+    features.classList.remove("features-is-visible");
+    menuBar.classList.remove("features-is-visible");
+  }
+});
+
 function errorMessage(isOn, whichToDisplay)
 {
   var errorMsg = document.getElementById('error-msg');

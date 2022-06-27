@@ -69,13 +69,6 @@
         <div class="cd-tab-filter" style = "height: auto;">
           <div>
             <span id="counterPanel"></span>
-            <div>
-              <label class="switch switch-flat">
-                <input class="switch-input" type="checkbox" />
-                <span class="switch-label" data-on="Results" data-off="Projects"></span> 
-                <span class="switch-handle"></span> 
-              </label>
-            </div>
           </div>
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
@@ -217,23 +210,49 @@
 
       <a href="#0" class="cd-filter-trigger outsideFilterBar">Filters</a>
 
-      <section class="features">
+      <section class="menu-bar" id = "menu-bar">
+        <div>Menu</div>
+      </section>
+
+      <section class="features" id = "features">
         <form>
-          <div title = "Select All" class = "spanForIcons">
-            <i id = "select-all" class="fa-regular fa-square-check featuresIcons"></i>
+          <div>
+            <label class="switch switch-flat">
+              <input class="switch-input" type="checkbox" />
+              <span class="switch-label" data-on="Results" data-off="Projects"></span> 
+              <span class="switch-handle"></span> 
+            </label>
           </div>
-          <div title="View Selected" id = "view-selected" class = "spanForIcons">
-            <span class="fa-stack fa-lg">
-              <i id = "selected-counter" class="fa fa-stack-1x"></i>
-              <i class="fa fa-solid fa-box-archive fa-stack-2x featuresIcons"></i>
-            </span>
-          </div>
-          <div title="Download Selected" class = "spanForIcons">
-            <i id = "download-all" class="fa-solid fa-download featuresIcons"></i>
-          </div>
-          <div title="Get Shareable Link" class = "spanForIcons">
-            <i id = "sharelink-all" class="fa-solid fa-share featuresIcons"></i>
-          </div>
+          <table>
+            <tr>
+              <td>
+                <div title = "Select All" class = "spanForIcons">
+                  <i id = "select-all" class="fa-regular fa-square-check featuresIcons"></i>
+                </div>
+                
+              </td>
+              <td>
+                <div title="View Selected" id = "view-selected" class = "spanForIcons">
+                  <span class="fa-stack fa-lg">
+                    <i id = "selected-counter" class="fa fa-stack-1x"></i>
+                    <i class="fa fa-solid fa-box-archive fa-stack-2x featuresIcons"></i>
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div title="Download Selected" class = "spanForIcons">
+                  <i id = "download-all" class="fa-solid fa-download featuresIcons"></i>
+                </div>
+              </td>
+              <td>
+                <div title="Get Shareable Link" class = "spanForIcons">
+                  <i id = "sharelink-all" class="fa-solid fa-share featuresIcons"></i>
+                </div>
+              </td>
+            </tr>
+          </table>
         </form>
       </section> <!-- features -->
     </main> <!-- cd-main-content -->

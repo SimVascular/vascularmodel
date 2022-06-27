@@ -462,15 +462,58 @@ error msg block behavior
 
 /* FORMAT FOR FEATURES BOX */
 
+.menu-bar {
+  position: fixed;
+  top: 236px;
+  right: calc(-252.5px/2 + 34px);
+  width: 252.5px;
+  height: auto;
+  z-index: 2;
+  transform: rotate(-90deg);
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--applied);
+  background-color: var(--select);
+  border: 2px solid var(--grey);
+
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
+.menu-bar div {
+  float: right;
+  padding: 5px;
+}
+
+.menu-bar.features-is-visible {
+  right: calc(-252.5px/2 + 34px + 214px);
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
 .features {
   top: 130px;
-  right: 15px;
-  width: 135px;
-  height: 300px;
-  box-shadow: 4px 4px 20px transparent;
+  right: -300px;
   z-index: 1;
   position: fixed;
-  /* background-color:rgba(0, 0, 0, 0.1); */
+  height: 252.5px;
+  width: 214px;
+  background: white;
+  border: 2px solid var(--grey);
+
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
+.features.features-is-visible {
+  right: 15px; 
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
 }
 
 .features form {
