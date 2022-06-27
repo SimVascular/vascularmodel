@@ -615,7 +615,7 @@ xcustom form elements
     height: inherit;
     font-size: 10px;
     text-transform: uppercase;
-    background: var(--dark2);
+    background: var(--applied);
     border-radius: inherit;
     /* box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15); */
     box-sizing:content-box;
@@ -635,7 +635,7 @@ xcustom form elements
   .switch-label:before {
     content: attr(data-off);
     right: 11px;
-    color: var(--dark2);
+    color: var(--applied);
     text-shadow: 0 1px rgba(255, 255, 255, 0.5);
   }
   .switch-label:after {
@@ -701,15 +701,15 @@ xcustom form elements
   .switch-flat .switch-label {
     background: #FFF;
     box-shadow: none;
-    border: 1px solid var(--dark2);
+    border: 1px solid var(--applied);
   }
   .switch-flat .switch-label:after {
-    color: var(--light1);
+    color: var(--midpointSelectApplied);
   }
   .switch-flat .switch-handle {
     top: 6px;
     left: 6px;
-    background: var(--dark2);
+    background: var(--applied);
     width: 22px;
     height: 22px;
     box-shadow: none;
@@ -719,10 +719,10 @@ xcustom form elements
   }
   .switch-flat .switch-input:checked ~ .switch-label {
     background: #FFF;
-    border-color: var(--light1);
+    border-color: var(--midpointSelectApplied);
   }
   .switch-flat .switch-input:checked ~ .switch-handle {
     left: 115px;
-    background: var(--light1);
+    background: var(--midpointSelectApplied);
     box-shadow: none;
   }

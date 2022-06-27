@@ -16,6 +16,7 @@ var wantsToSelectAllInBucket = false;
 var isOverlayOn = false;
 var isSafeSelected = false;
 var menuBarShowing = false;
+var modeIsResults = false;
 
 
 //returns the keys of *all* the categories

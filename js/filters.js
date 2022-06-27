@@ -199,6 +199,10 @@ function applyFilters()
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
 
+  filterOutput = hasResults(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]
+
   lastFapplied = filterApplied;
 
   removeContent();
@@ -551,4 +555,22 @@ function valueToSearchInArrayForm(valueToSearch)
   array.push(valueToSearch);
 
   return array;
+}
+
+function hasResults(partialData){
+  if(!modeIsResults)
+  {
+    return [partialData, false];
+  }
+
+  var filteredData = []
+
+  for (var i = 0; i < partialData.length; i++) {
+    if(partialData[i]["Results"] == "1")
+    {
+      filteredData.push(partialData[i]);
+    }
+  }
+
+  return [filteredData, true]
 }

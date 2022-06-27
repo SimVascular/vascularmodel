@@ -465,10 +465,24 @@ function triggerFilter($bool) {
 }
 
 $('.download-button-modal').click(function() {
-  // overlayOff();
-  // download tracking
   downloadModel(viewingModel["Name"]);
 });
+
+$('#proOrRe').click(function() {
+  var element = document.getElementById("switch-input");
+
+  if(element.checked)
+  {
+    modeIsResults = true;
+  }
+  else
+  {
+    modeIsResults = false;
+  }
+
+  applyFilters();
+});
+
 
 $('#sharelink-all').click(function() {
   var binary = boolToYN(selectedModels);
@@ -515,7 +529,14 @@ $("#download-all").click(function () {
 
 function downloadModel(modelToDownloadName)
 {
-  var fileUrl = 'svprojects/' + modelToDownloadName + '.zip';
+  if(modeIsResults)
+  {
+    var fileUrl = 'results/' + modelToDownloadName + '.zip';
+  }
+  else
+  {
+    var fileUrl = 'svprojects/' + modelToDownloadName + '.zip';
+  }
   var a = document.createElement("a");
   a.href = fileUrl;
   a.setAttribute("download", modelToDownloadName);
