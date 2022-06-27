@@ -1,5 +1,6 @@
 var data;
 var filteredData;
+var hasResultsData;
 var preservedOrderData = [];
 var displayedData;
 var viewingModel = ''

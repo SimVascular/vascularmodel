@@ -151,10 +151,14 @@ function applyFilters()
   curIndex = 0;
   filteredData = data;
   
-  var nTimes = getNTimes();
-
   var filterOutput;
 
+  // runs this function first so that hasResultsData is unaffected by other filters
+  filterOutput = hasResults(filteredData);
+  filteredData = filterOutput[0]
+  filterApplied = filterApplied || filterOutput[1]
+
+  var nTimes = getNTimes();
   var titles = getFilterTitles();
 
   for(var t = 0; t < titles.length; t++){
@@ -196,10 +200,6 @@ function applyFilters()
   }
 
   filterOutput = searchBarFilter(filteredData);
-  filteredData = filterOutput[0]
-  filterApplied = filterApplied || filterOutput[1]
-
-  filterOutput = hasResults(filteredData);
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
 
@@ -320,7 +320,7 @@ function checkboxNamesPerCategory(categoryName, isKey)
 /*----------------------------
 
 JavaScript for Filter Bar:
-  The Three Different Types of Filters
+  The Three to Four Different Types of Filters
 
 ----------------------------*/
 function ageFilter(partialData)
@@ -564,13 +564,15 @@ function hasResults(partialData){
   }
 
   var filteredData = []
+  hasResultsData = []
 
   for (var i = 0; i < partialData.length; i++) {
     if(partialData[i]["Results"] == "1")
     {
       filteredData.push(partialData[i]);
+      hasResultsData.push(partialData[i]);
     }
   }
 
-  return [filteredData, true]
+  return [filteredData, false]
 }

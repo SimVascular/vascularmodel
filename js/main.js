@@ -15,6 +15,13 @@ $("#closeAllButton").click(function() {
   $(contentH4).css({ "display": "none" });
 });
 
+// $("#clearAllButton").click(function() {
+//   clearAllFilters();
+// });
+
+// function clearAllFilters(){
+
+// }
 
 function addClickListener(model) {
   $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
@@ -652,6 +659,17 @@ function updateCounters(fApplied, fData, string)
   document.getElementById('selected-counter').textContent = count;
 
   var counterPanel = document.getElementById("counterPanel");
+
+  var totalLength;
+  if(modeIsResults)
+  {
+    totalLength = hasResultsData.length;
+  }
+  else
+  {
+    totalLength = data.length;
+  }
+
   if(string == "justdownloaded")
   {
     counterPanel.textContent = "";
@@ -680,18 +698,18 @@ function updateCounters(fApplied, fData, string)
     lastFapplied = fApplied;
     if (smallScreen) {
       if (fApplied) {
-        counterPanel.textContent = fData.length + '/' + data.length + ' models'
+        counterPanel.textContent = fData.length + '/' + totalLength + ' models'
       }
       else {
-        counterPanel.textContent = fData.length + '/' + data.length + ' models'
+        counterPanel.textContent = fData.length + '/' + totalLength + ' models'
       }
     }
     else {
       if (fApplied) {
-        counterPanel.textContent = "Filters applied: " + fData.length + '/' + data.length + ' models'
+        counterPanel.textContent = "Filters applied: " + fData.length + '/' + totalLength + ' models'
       }
       else {
-        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + data.length + ' models'
+        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
       }
     }
     //updates icon status

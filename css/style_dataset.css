@@ -578,16 +578,16 @@ error msg block behavior
 
 @-webkit-keyframes animateMenu {  
   0% { 
-    background-color: var(--applied);
-    color: var(--select);
-  }
-  50% {
     background-color: var(--select);
     color: var(--applied);
   }
-  75% {
+  50% {
     background-color: var(--applied);
     color: var(--select);
+  }
+  100% {
+    background-color: var(--select);
+    color: var(--applied);
   }
 }
 
@@ -606,12 +606,23 @@ error msg block behavior
   border: 2px solid var(--grey);
   float: right;
   padding: 10px;
-  margin-left: 10px;
   cursor: pointer;
 }
 
-.closeAllButton:hover .returnToGalleryButton:hover{
+.closeAllButton:hover, .clearAllButton:hover, .returnToGalleryButton:hover{
   background-color: #ebebeb;
+}
+
+.filterButtons {
+  margin-bottom: 20px;
+  height: 60px;
+}
+
+.clearAllButton {
+  border: 2px solid var(--grey);
+  float: left;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .returnToGalleryButton {
