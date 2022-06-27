@@ -24,9 +24,9 @@ function getAllCategories()
   var allCategories = []
 
   for (const [key, value] of Object.entries(data[0])) {
-    allCategories.push(key);
+    if(key != "Results")
+      allCategories.push(key);
   }
-
   return allCategories;
 }
 
