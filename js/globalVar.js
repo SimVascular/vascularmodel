@@ -321,7 +321,7 @@ function encodeBTOA(code)
   {
     if(code.charAt(i) == "=")
     {
-      code = replaceCharAt(code, i, "^");
+      code = replaceCharAt(code, i, "_");
     }
     if(code.charAt(i) == "/")
     {
@@ -336,7 +336,7 @@ function encodeATOB(code)
 {
   for(var i = 0; i < code.length; i++)
   {
-    if(code.charAt(i) == "^")
+    if(code.charAt(i) == "_")
     {
       code = replaceCharAt(code, i, "=");
     }
