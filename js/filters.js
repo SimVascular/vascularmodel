@@ -30,7 +30,10 @@ function getFilterMenu()
 
   for (var i = 0; i < allHooks.length; i++)
   {
-    addHooks(allHooks[i]);
+    for(var j = 0; j < allHooks[i].length; j++)
+    {
+      addHook(allHooks[i][j]);
+    }
   }
 }
 
@@ -133,10 +136,8 @@ function generateOptions(optionName)
   return option;
 }
 
-function addHooks(hooks) {  
-  for (var i = 0; i < hooks.length; i++) {
-    $("#" + hooks[i]).change(function() {applyFilters(); console.log("#" + hooks[i] + " apply filters")});
-  }
+function addHook(hook) {  
+  $("#" + hook).change(function() {applyFilters();});
 }
 
 /*----------------------------
@@ -328,7 +329,7 @@ function ageFilter(partialData)
   var minVal = parseFloat(document.getElementById("min-age").value);
   var maxVal = parseFloat(document.getElementById("max-age").value);
 
-  if(isNaN(minVal) && isNaN(maxVal))
+  if((isNaN(minVal) || minVal == 0) && (isNaN(maxVal) || maxVal == 120))
   {
     return [partialData, false] 
   }

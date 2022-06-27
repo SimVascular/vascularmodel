@@ -15,13 +15,24 @@ $("#closeAllButton").click(function() {
   $(contentH4).css({ "display": "none" });
 });
 
-// $("#clearAllButton").click(function() {
-//   clearAllFilters();
-// });
+$("#clearAllButton").click(function() {
+  clearAllFilters();
+});
 
-// function clearAllFilters(){
+function clearAllFilters(){
+  //clear all checked boxes
+  $('input:checkbox').removeAttr('checked');
+  //reset age filter
+  document.getElementById("min-age").value = 0;
+  document.getElementById("max-age").value = 120;
+  //set both dropdown menus to no value
+  document.getElementById("select-Sex").value = "all";
+  document.getElementById("select-Species").value = "all";
+  //set search bar to no value
+  document.getElementById('search-field').value = "";
 
-// }
+  applyFilters();
+}
 
 function addClickListener(model) {
   $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
