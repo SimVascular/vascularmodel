@@ -480,6 +480,8 @@ error msg block behavior
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
   transition: right 0.3s;
+
+  cursor: pointer;
 }
 
 .menu-bar div {
@@ -543,7 +545,7 @@ error msg block behavior
   /* border: 2px solid black; */
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (min-width: 767px) {
   .spanForIcons:hover {
     color: var(--select);
     background-color: var(--applied);

@@ -308,8 +308,10 @@ function checkOverlay(){
 
 function generateContent(modelData) {
   var div = document.createElement("div");
-  div.classList.add("col-md-3");
-  div.classList.add("col-sm-12");
+  div.classList.add("col-lg-3");
+  div.classList.add("col-md-4");
+  div.classList.add("col-sm-6");
+  div.classList.add("col-12");
 
   var divModelImage = document.createElement("div");
   divModelImage.classList.add("model-image");
@@ -599,7 +601,7 @@ $("#checkbox-Simulations").change(function () {
 });
 
 function checkWidth() {
-    if (screen.width >= 769 && (document.documentElement.clientWidth >= 769)) {
+    if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
         if (smallScreen) {
           smallScreen = false;
           updateCounters(lastFapplied, filteredData);
