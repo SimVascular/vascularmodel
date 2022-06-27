@@ -165,6 +165,20 @@ xtab-filter
 xfilter
 
 -------------------------------- */
+.insideFilterBar {
+  top: 0px;
+}
+
+.outsideFilterBar {
+  top: 59.5px;
+  
+}
+
+.outsideFilterBar.filter-is-visible{
+  top: 59.5px;
+  margin-left: -150px;
+}
+
 .cd-filter {
     top: 59.5px;
     left: 0;
@@ -266,8 +280,6 @@ xfilter
   
   .cd-filter-trigger {
     position: fixed;
-    top: 59.5px;
-    left: 0;
     height: 50px;
     line-height: 50px;
     width: 60px;
@@ -282,12 +294,11 @@ xfilter
   .cd-filter-trigger.filter-is-visible {
     pointer-events: none;
     position: fixed;
-    top: 59.5px;
   }
   @media only screen and (min-width: 1170px) {
     .cd-filter-trigger {
       width: auto;
-      left: 2%;
+      left: 30px;
       text-indent: 0;
       color: #9a9a9a;
       text-transform: uppercase;
