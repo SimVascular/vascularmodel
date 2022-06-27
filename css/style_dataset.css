@@ -58,7 +58,7 @@ Main Components
 
 .cd-main-content {
   position: relative;
-  min-height: 75vh;
+  min-height: 100vh;
 }
 .cd-main-content:after {
   content: "";
@@ -464,8 +464,9 @@ error msg block behavior
 
 .menu-bar {
   position: fixed;
-  top: 236px;
-  right: calc(-252.5px/2 + 34px);
+  /* position is different because of rotation */
+  top: 216px;
+  right: calc(-252.5px/2 + 27px);
   width: 252.5px;
   height: auto;
   z-index: 2;
@@ -475,7 +476,8 @@ error msg block behavior
   font-weight: 700;
   color: var(--applied);
   background-color: var(--select);
-  border: 2px solid var(--grey);
+  border: 2px solid var(--darkgrey);
+  padding-right: 5px;
 
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
@@ -487,24 +489,26 @@ error msg block behavior
 .menu-bar div {
   float: right;
   padding: 5px;
+  font-size: 25px;
 }
 
 .menu-bar.features-is-visible {
-  right: calc(-252.5px/2 + 34px + 214px);
+  right: calc(-252.5px/2 + 29px + 214px);
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
   transition: right 0.3s;
 }
 
 .features {
-  top: 130px;
+  top: 115px;
   right: -300px;
   z-index: 1;
   position: fixed;
   height: 252.5px;
   width: 214px;
   background: white;
-  border: 2px solid var(--grey);
+  border: 2px solid var(--darkgrey);
+  box-shadow:rgba(0, 0, 0, 0.1);
 
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
@@ -512,7 +516,7 @@ error msg block behavior
 }
 
 .features.features-is-visible {
-  right: 15px; 
+  right: 3px;
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
   transition: right 0.3s;
@@ -572,24 +576,23 @@ error msg block behavior
   text-shadow: 2px 2px 5px black;
 }
 
-@-webkit-keyframes animateBucket {  
+@-webkit-keyframes animateMenu {  
   0% { 
-    background-color: var(--select);
-    color: var(--applied);
-  }
-  50% {
     background-color: var(--applied);
     color: var(--select);
   }
-  100% {
+  50% {
     background-color: var(--select);
     color: var(--applied);
   }
+  75% {
+    background-color: var(--applied);
+    color: var(--select);
+  }
 }
 
-.spanForIcons.selected {
-  /* color: var(--select); */
-  -webkit-animation-name: animateBucket;
+.menu-bar.selected {
+  -webkit-animation-name: animateMenu;
   -webkit-animation-iteration-count: 1;  
   -webkit-animation-duration: 0.75s; 
 } 

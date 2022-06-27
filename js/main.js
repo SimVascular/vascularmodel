@@ -116,13 +116,13 @@ function selectModel(model)
 function updatedSelectedList(model)
 {
   selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
-  var bucket = document.getElementById("view-selected");
+  var menu = document.getElementById("menu-bar");
 
   if(selectedModels[preservedOrderData.indexOf(model)])
   {
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.add("selected");
-    bucket.classList.add("selected");
+    menu.classList.add("selected");
   }
   else
   {
@@ -137,7 +137,7 @@ function updatedSelectedList(model)
   //remove class that allows for animation of bucket
   setTimeout(() => {
     if(tempCounter == countBucket) {
-      bucket.classList.remove("selected");
+      menu.classList.remove("selected");
     }
   }, 750);
 }
