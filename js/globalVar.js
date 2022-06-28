@@ -264,47 +264,59 @@ function createpBeforeAndAfter(text, isBefore)
   //\n conflicts with \url reading
   if(text.includes("\\n") && !text.includes("\\url"))
   {
-    //creates div if \n
-    var p = document.createElement("div");
-    p.classList.add("newParagraph");
-    
-    //allows for multiple \n
-    while(text.includes("\\n"))
-    {
-      var index = text.indexOf("\\n");
-      var pDiv = document.createElement("div");
-      pDiv.classList.add("newParagraph");
-      
-      //appends textContent between each \n
-      pDiv.textContent = text.substring(0, index);
-      text = text.substring(index + 2);
-      
-      p.appendChild(pDiv);
-    }
-
-    //checks whether element is pBefore or pAfter
-    if(isBefore)
-    {
-      //if before, creates a span so that there is no line break before the URL
-      p.classList.add("sameLine");
-      var pDiv = document.createElement("span");
-    }
-    else
-    {
-      //creates div to have a line break
-      pDiv.classList.add("newParagraph");
-      var pDiv = document.createElement("div");
-    }
-
-    pDiv.textContent = text;
-    p.appendChild(pDiv);
+    //returns p as a DIV with new lines in the form of new elements
+    p = newLineNoURL(text, isBefore);
   }
   else
   {
-    //creates span if \n or if URL
+    //creates span if not \n or if URL
     var p = document.createElement("span");
     p.textContent = text;
   }
+
+  return p;
+}
+
+//works with \n in CSV to add a new line
+function newLineNoURL(text, isBefore)
+{
+  //creates div if \n
+  var p = document.createElement("div");
+  p.classList.add("newParagraph");
+  
+  //allows for multiple \n
+  while(text.includes("\\n"))
+  {
+    var index = text.indexOf("\\n");
+    var pDiv = document.createElement("div");
+    pDiv.classList.add("newParagraph");
+    
+    //appends textContent between each \n
+    pDiv.textContent = text.substring(0, index);
+    text = text.substring(index + 2);
+    
+    p.appendChild(pDiv);
+  }
+
+  //checks whether element is pBefore or pAfter
+  //doesn't want to make a line break if there is a URL later
+  if(isBefore)
+  {
+    //if before, creates a span so that there is no line break before the URL
+    p.classList.add("sameLine");
+    p.classList.remove("newParagraph");
+    var pDiv = document.createElement("span");
+  }
+  else
+  {
+    //creates div to have a line break
+    pDiv.classList.add("newParagraph");
+    var pDiv = document.createElement("div");
+  }
+
+  //appends last element to div
+  pDiv.textContent = text;
+  p.appendChild(pDiv);
 
   return p;
 }

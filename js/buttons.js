@@ -57,6 +57,27 @@ $("#select-all").click(function() {
     }
 });
 
+//deselects all models
+function deselectAll()
+{
+  //if at least one model has been selected
+  if(selectedModels.filter(value => value === true).length > 0){
+
+    //sends a "confirm action" notification
+    doConfirm("Are you sure you want to deselect all selected models?", function yes() {
+      //if user confirms, clears selectedModels array
+      selectedModels.fill(false);
+      //removes displayed models
+      removeContent();
+      updateCounters(lastFapplied, filteredData);
+      //shows that there are no models selected
+      errorMessage(true, "viewingselected");
+      //updates select-all icon to unclickable state
+      document.getElementById("select-all").classList.add("cannotSelect");
+    });
+  }
+}
+
 //deselects given model
 function deselectModel(model)
 {
@@ -267,22 +288,6 @@ $('#sharelink-all').click(function() {
   informUser("Link copied");
 });
 
-//informs user of message
-//nothing for the user to click
-function informUser(msg) {
-    var informUser = $("#informUser");
-    informUser.find(".message").text(msg);
-    informUser.show();
-
-    var div = document.getElementById("informUser");
-    div.style.opacity = 1;
-
-    //fades after 1.5 seconds
-    setTimeout(() => {
-      informUser.hide();
-    }, 1500);
-}
-
 //brings user to view-selected page
 $("#view-selected").click(function() {
   viewSelected(true);
@@ -404,6 +409,38 @@ $('#proOrRe').click(function() {
   //resets filters
   applyFilters();
 });
+
+//lets us confirm actions with users
+function doConfirm(msg, yesFn, noFn) {
+  var confirmBox = $("#confirmBox");
+  confirmBox.find(".message").text(msg);
+
+  //hides confirmation after button is clicked
+  confirmBox.find(".yes,.no").unbind().click(function () {
+      confirmBox.hide();
+  });
+
+  //deals with which function to call depending on user input
+  confirmBox.find(".yes").click(yesFn);
+  confirmBox.find(".no").click(noFn);
+  confirmBox.show();
+}
+
+//informs user of a message
+function informUser(msg) {
+  var informUser = $("#informUser");
+  informUser.find(".message").text(msg);
+  informUser.show();
+
+  //reveals the box with opacity
+  var div = document.getElementById("informUser");
+  div.style.opacity = 1;
+
+  //fades after 1.5 seconds
+  setTimeout(() => {
+    informUser.hide();
+  }, 1500);
+}
 
 // listeners for ProjectMustContain and search bar
 $("#checkbox-Images").change(function () {

@@ -15,28 +15,39 @@ $(document).ready(function($){
     }
   });
 
+  //create copy of data
   filteredData = data;
+
+  //checks width of screen for smallScreen variable
   checkWidth();
-  // create copy of data
+
+  //sets selectedModels all to false
   initializeSelectedModels();
+
+  //sets counters that defaults to "filter"
   updateCounters(false, data);
+
+  //creates html for filters
   getFilterMenu();
+
+  //populates gallery with all models
   populate(data);
 
   //open/close lateral filter
+  //sets listeners for Close button
   $('.cd-filter-trigger').on('click', function(){
     triggerFilter(true);
   });
+
   $('.cd-filter .cd-close').on('click', function(){
     triggerFilter(false);
   });
 
-  $('#apply-btn').on('click', function(){
-    applyFilters();
-    triggerFilter(false);
-  });
-
-
+  // code for button that no longer exists
+  // $('#apply-btn').on('click', function(){
+  //   applyFilters();
+  //   triggerFilter(false);
+  // });
 
   //close filter dropdown inside lateral .cd-filter
 	$('.cd-filter-block h4').on('click', function(){
@@ -49,16 +60,19 @@ $(document).ready(function($){
       e.preventDefault();
       // if (e.ctrlKey) {
       applyFilters()
+      //closes filter bar
       triggerFilter(false);
       return true;
     }
   });
 
+  //apply filter with enter is pressed on age fields
   $('#min-age').keydown(function (e) {
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
       applyFilters();
+      //closes filter bar
       triggerFilter(false);
       return true;
     }
@@ -68,73 +82,65 @@ $(document).ready(function($){
     if (e.keyCode == 13) {
       e.preventDefault();
       // if (e.ctrlKey) {
-      applyFilters()
+      applyFilters();
+      //closes filter bar
       triggerFilter(false);
       return true;
     }
   });
 });
 
+//function to add listeners to each model and its magnifying glass
 function addClickListener(model) {
+  //magnifying glass --> modalgreeting and overlay
   $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
+  // selects model if you click on it
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
 
+//function to prevent overlay from exiting when the user clicks on the modal
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
+//deals with clicking on the overlay
 $('#overlay').click(function() {
+  //checks if safe was selected
   checkOverlay();
+  //allows for click and unclick
   isSafeSelected = !isSafeSelected;
 });
 
+//turns off the overlay when the X is clicked
 $('.close-button-modal').click(function() {
   overlayOff();
 });
 
-function deselectAll()
-{
-  //if at least one model has been selected
-  if(selectedModels.filter(value => value === true).length > 0){
-    //sends a "confirm action" notification
-    doConfirm("Are you sure you want to deselect all selected models?", function yes() {
-      selectedModels.fill(false);
-      removeContent();
-      updateCounters(lastFapplied, filteredData);
-      errorMessage(true, "viewingselected");
-      document.getElementById("select-all").classList.add("cannotSelect");
-    });
-  }
-}
-
-function doConfirm(msg, yesFn, noFn) {
-  var confirmBox = $("#confirmBox");
-  confirmBox.find(".message").text(msg);
-  confirmBox.find(".yes,.no").unbind().click(function () {
-      confirmBox.hide();
-  });
-  confirmBox.find(".yes").click(yesFn);
-  confirmBox.find(".no").click(noFn);
-  confirmBox.show();
-}
-
+//updates selectedModels when a change has been made
 function updatedSelectedList(model)
 {
+  //allows user to click and unclick model
   selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
+  //gets element to animate it after a model is selected
   var menu = document.getElementById("menu-bar");
 
   if(selectedModels[preservedOrderData.indexOf(model)])
   {
+    //selects model
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.add("selected");
+    //adds animation class
     menu.classList.add("selected");
   }
   else
   {
+    //deselects model
     var element = document.getElementById(model['Name'] + "_isSelected");
     element.classList.remove("selected");
   }
 
+  //updates counters
   updateCounters(lastFapplied, filteredData);
+
+  //deals with clearing class from menu-bar to reset animation
   countBucket++;
   var tempCounter = countBucket;
 
@@ -146,39 +152,53 @@ function updatedSelectedList(model)
   }, 750);
 }
 
+//code for modal-greeting
 function greetingText(data)
 {
+  //sets global var viewingModel
   viewingModel = data;
+
   $('.details-text').scrollTop(0);
+
+  //modal's first line
   $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
 
-  var details = []
+  //details inside window
+  var details = "";
+  //all categories displayed in window
   var categoryName = getCategoryName();
 
   for(var d = 0; d < categoryName.length; d++)
   {
+    //valInCat is the value in the category
     var valInCat = data[categoryName[d]];
+
+    //accounts for when value is not specified
     if(valInCat == "-")
     {
       details += categoryName[d] + ": N/A";
     }
     else{
+      //deals with age for most relevant unit
       if(categoryName[d] == "Age")
       {
         details += categoryName[d] + ": " + ageCalculator(valInCat);
       }
+      //specifies species if can be more specific
       else if(categoryName[d] == "Species" && valInCat == "Animal")
       {
         details += categoryName[d] + ": " + data["Animal"];
       }
       else
       {
+        //accounts for when there are multiple details, separated by a "_"
         if(valInCat.indexOf("_") == -1)
         {
           details += categoryName[d] + ": " + valInCat;
         }
         else
         {
+          //formats multiple details
           details += categoryName[d] + "s: ";
 
           details += listFormater(valInCat)
@@ -186,12 +206,15 @@ function greetingText(data)
       } //end else if more than one detail
     }
 
+    //adds new line per detail
     details += '\n';
 
   } //end for-loop through categoryName
 
+  //formatting for whether or not each fdr is avaliable
   var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
   for (var i = 0; i < fdrs.length; i++) {
+    //changes "1" to "yes" and "0" to "no"
     if (data[fdrs[i]] == '1') {
       details = details + fdrs[i] + ' available: yes'
     }
@@ -200,22 +223,32 @@ function greetingText(data)
         details = details + fdrs[i] + ' available: no'
       }
     }
-    if (i != fdrs.length-1)
-      details = details + '\n'
+    //adds new line after everything except the last detail
+    if (i != fdrs.length - 1)
+    {
+      details += '\n'
+    }
   }
-  var size = parseInt(data['Size']) / 1000000
+  //adds details to window
   $('.details-text')[0].value = details
 
+  //deals with units for size
+  var size = parseInt(data['Size']) / 1000000
+
+  //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
   modalclosure.innerHTML = "";
 
+  //accounts for when there are no additional notes
   if(data["Notes"] != '-')
   {
     notes = data["Notes"];
 
+    //allows for URLs in the Notes
     if(notes.includes("\\url"))
     {
       var string = notes;
+      //allows for multiple URLs
       while(string.includes("\\url"))
       {
         var output = URLMaker(string);
@@ -225,46 +258,60 @@ function greetingText(data)
         string = output[2].textContent;
       }
       
+      //adds last element since loop skips it
       modalclosure.appendChild(output[2]);
-
-      var sizeText = document.createElement("div");
-      sizeText.classList.add("newParagraph");
-      sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
-      modalclosure.appendChild(sizeText);
     }
     else
     {
-      var text = document.createElement("span");
-      text.classList.add("newParagraph");
-      text.textContent = data["Notes"];
-      modalclosure.appendChild(text);
+      //if no URL, adds notes as regular text
+      if (data["Notes"].includes("\\n"))
+      {
+        //allows for new lines in notes that don't have URLs
+        var text = newLineNoURL(data["Notes"], true)
+      }
+      else
+      {
+        //if no new line, creates regular span
+        var text = document.createElement("span");
+        text.classList.add("newParagraph");
+        text.textContent = data["Notes"];
+      }
 
-      var sizeText = document.createElement("div");
-      sizeText.classList.add("newParagraph");
-      sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
-      modalclosure.appendChild(sizeText);
+      modalclosure.appendChild(text);
     }
+
+    //after notes, prints size
+    var sizeText = document.createElement("div");
+    sizeText.classList.add("newParagraph");
+    sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
+
+    modalclosure.appendChild(sizeText);
   }
   else
   {
+    //if no notes, only prints size
     modalclosure.innerText = 'The size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
   }
 }
 
+//function to prevent user from scrolling
 function preventScroll(e){
-    e.preventDefault();
-    e.stopPropagation();
+  e.preventDefault();
+  e.stopPropagation();
 
-    return false;
+  return false;
 }
 
+//turns overlay and all accompanying elements on
 function overlayOn(){
+  //updates displat and global variable isOverlayOn
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
+  //opens modalDialog
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
 
-  var prevBodyY = window.scrollY
+  //turns off scroll and sets height to auto
   if (smallScreen) {
     // padding is not necessary on mobile
     $('.html').css({"height": "auto", "overflow-y": "hidden"})
@@ -274,20 +321,29 @@ function overlayOn(){
     $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
     $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
   }
+
+  //sets listener for scroll
   document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
   document.body.style.position = '';
+
+  //saves where the user was before overlay turned on
+  var prevBodyY = window.scrollY
   document.body.style.top = `-${prevBodyY}px`;
 }
 
+//deals with turning overlay off
 function overlayOff(){
+  //updates variables
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
   isOverlayOn = false;
 
+  //resets html, body, modalDialog
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
   $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
   $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
 
+  //resets scrolling
   const scrollY = document.body.style.top;
   document.body.style.position = '';
   document.body.style.top = '';
@@ -295,11 +351,12 @@ function overlayOff(){
   document.querySelector('.body').removeEventListener('scroll', preventScroll);
 }
 
+//checks status of overlay
 function checkOverlay(){
-  //enters when magnifying glass is clicked on
-  //enters when clicks outside of details panel
+  //if user clicked on overlay and not modalDialog
   if(!isSafeSelected)
   {
+    //updates overlay
     isOverlayOn = !isOverlayOn;
     if(isOverlayOn)
     {
@@ -311,43 +368,55 @@ function checkOverlay(){
   }
 }
 
+//generates individual gallery object
 function generateContent(modelData) {
+  //creates div for place in gallery
   var div = document.createElement("div");
+  //allows for different number of columns depending on width
   div.classList.add("col-lg-3");
   div.classList.add("col-md-4");
   div.classList.add("col-sm-6");
   div.classList.add("col-12");
 
+  //div to hold image specifically
   var divModelImage = document.createElement("div");
+  //formatting of box holding image
   divModelImage.classList.add("model-image");
+  //hover animation
   divModelImage.classList.add("animate");
+  //ID for hook to select model
   divModelImage.setAttribute("id",modelData['Name'] + "_isSelected");
 
+  //if model is selected, show that upon loading
   if(selectedModels[preservedOrderData.indexOf(modelData)])
   {
     divModelImage.classList.add("selected");
   }
-
+  
+  //holds magnifying glass and image
   let aWrap = document.createElement("a");
   aWrap.classList.add("a-img")
   // aWrap.setAttribute("id",modelData['Name']);
 
+  //creates magnifying glass icon on the top-left
   let detailsImg = document.createElement("i");
   detailsImg.classList.add("fa-solid");
-  detailsImg.classList.add("fa-pink");
   detailsImg.classList.add("fa-magnifying-glass");
   detailsImg.classList.add("top-left");
+  //lingering mouse over icon will say "View Details"
   detailsImg.setAttribute("title", "View Details");
+  //creates ID for hook to open modalDialog
   detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
+  //creates image of model
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id",modelData['Name']);
 
-  aWrap.appendChild(innerImg)
-  aWrap.appendChild(detailsImg)
-  divModelImage.appendChild(aWrap);
+  divModelImage.appendChild(innerImg)
+  divModelImage.appendChild(detailsImg)
+  // divModelImage.appendChild(aWrap);
   div.appendChild(divModelImage);
 
   return div

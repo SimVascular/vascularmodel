@@ -465,7 +465,7 @@ error msg block behavior
 .menu-bar {
   position: fixed;
   /* position is different because of rotation */
-  top: 216px;
+  top: calc(216px + 48px);
   right: calc(-252.5px/2 + 27px);
   width: 252.5px;
   height: auto;
@@ -478,6 +478,9 @@ error msg block behavior
   background-color: var(--select);
   border: 2px solid var(--darkgrey);
   padding-right: 5px;
+
+  border-top-left-radius: 30%;
+  border-top-right-radius: 30%;
 
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
@@ -500,7 +503,7 @@ error msg block behavior
 }
 
 .features {
-  top: 115px;
+  top: calc(115px + 48px);
   right: -300px;
   z-index: 1;
   position: fixed;
