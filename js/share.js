@@ -124,6 +124,9 @@ function displayModel()
     div.appendChild(title);
     div.appendChild(img);
     div.appendChild(desc);
+
+    //creates inside of icons
+    createIcons();
 }
 
 //deals with table of information
@@ -185,6 +188,11 @@ function getDescription()
                     
                         newColumn.appendChild(output[2]);
                     }
+                    else
+                    {
+                        //updates details if not dealing with URLs
+                        details += model["Notes"];
+                    }
                 }
             }
             else if(categoryName[d] == "Size")
@@ -213,46 +221,6 @@ function getDescription()
   }
 
   return table;
-}
-
-//icon to download model
-$("#downloadModel").click(function () {
-    downloadModel();
-});
-
-//download model using anchor tag
-function downloadModel()
-{
-  var modelName = model["Name"];
-
-  //downloads model from svprojects
-  var fileUrl = 'svprojects/' + modelName + '.zip';
-  var a = document.createElement("a");
-  a.href = fileUrl;
-  a.setAttribute("download", modelName);
-  //simulates click to download
-  a.click();
-
-  //messages server with download
-  gtag('event', 'download_' + modelName, {
-    'send_to': 'G-YVVR1546XJ',
-    'event_category': 'Model download',
-    'event_label': 'test',
-    'value': '1'
-});
-}
-
-//go to gallery icon
-$("#goToGallery").click(function () {
-    goToGallery();
-});
-
-//brings user to dataset.html
-function goToGallery() {
-    //creates anchor tag and simulates click
-    var a = document.createElement("a");
-    a.href = "dataset.html";
-    a.click();
 }
 
 //function to display multiple models in a table
@@ -340,4 +308,87 @@ function goToModel(model){
 
     //opens new window with encoded model
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
+}
+
+function createIcons()
+{
+    var downloadModel = document.getElementById("downloadModel");
+    var icon = document.createElement("i");
+    icon.classList.add("fa-solid");
+    icon.classList.add("fa-download");
+    icon.classList.add("featuresIcons")
+    downloadModel.appendChild(icon);
+
+    var goToGallery = document.getElementById("goToGallery");
+    var icon = document.createElement("i");
+    icon.classList.add("fa-solid");
+    icon.classList.add("fa-image");
+    icon.classList.add("featuresIcons")
+    goToGallery.appendChild(icon);
+
+    if(model["Results"] == 1)
+    {
+        var results = document.getElementById("downloadSimulations");
+        results.classList.add("spanForIcons");
+        results.classList.add("centerIcon");
+        results.setAttribute("title", "Download Simulation Results");
+
+        var icon = document.createElement("i");
+        icon.classList.add("fa-solid");
+        icon.classList.add("fa-video");
+        icon.classList.add("featuresIcons")
+        results.appendChild(icon);
+    }
+}
+
+//icon to download model
+$("#downloadModel").click(function () {
+    download("model");
+});
+
+$("#downloadSimulations").click(function () {
+    download("simulation");
+});
+
+//download model using anchor tag
+function download(string)
+{
+  var modelName = model["Name"];
+
+  //downloads model or simulation results
+  if(string == "model")
+  {
+    var fileUrl = 'svprojects/' + modelName + '.zip';
+  }
+  else if (string == "simulation")
+  {
+    var fileUrl = 'results/' + modelName + '.zip';
+  }
+  
+  var a = document.createElement("a");
+  a.href = fileUrl;
+  a.setAttribute("download", modelName);
+  //simulates click to download
+  a.click();
+
+  //messages server with download
+  gtag('event', 'download_' + modelName, {
+    'send_to': 'G-YVVR1546XJ',
+    'event_category': 'Model download',
+    'event_label': 'test',
+    'value': '1'
+});
+}
+
+//go to gallery icon
+$("#goToGallery").click(function () {
+    goToGallery();
+});
+
+//brings user to dataset.html
+function goToGallery() {
+    //creates anchor tag and simulates click
+    var a = document.createElement("a");
+    a.href = "dataset.html";
+    a.click();
 }

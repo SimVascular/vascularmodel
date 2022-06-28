@@ -47,7 +47,7 @@ table {
   }
 
   .button:hover{
-    background-color: #ebebeb;
+    background-color: black;
   }
   
   .button {
@@ -68,19 +68,13 @@ table {
   
   .features {
     position: absolute;
-    top: 9vw;
-    right: 0px;
-    width: 120px;
-    height: 200px;
-    border: none;
-  }
-
-  .features div {
-    height: auto;
+    top: calc(5vw + 40px);
+    right: 7.5px;
     width: auto;
-    padding: 15px;
-    float: right;
-}
+    height: auto;
+    border: none;
+    background: transparent;
+  }
 
   h1 {
     font-size: 5vw;
@@ -102,14 +96,14 @@ table {
     border-radius: 0%;
     background-color: var(--grey);
     color: #424651 ;
-    border: 2px solid var(--grey);
+    border: 2px solid var(--darkgrey);
   }
 
   .spanForIcons:hover {
     border-radius: 0%;
     background-color: #424651 ;
     color: var(--grey);
-    border: 2px solid var(--grey);
+    border: 2px solid var(--darkgrey);
   }
 
   .featuresIcons {
@@ -139,4 +133,8 @@ table {
   .modelRow:hover {
     background-color: var(--darkgrey);
     cursor: pointer;
+  }
+
+  .iconRow {
+    background-color: transparent !important;
   }
