@@ -392,17 +392,6 @@ function triggerFilter($bool) {
   });
 }
 
-function informUser(msg) {
-  var informUser = $("#informUser");
-  informUser.find(".message").text(msg);
-  informUser.show();
-  var div = document.getElementById("informUser");
-  div.style.opacity = 1;
-  setTimeout(() => {
-    informUser.hide();
-  }, 1500);
-}
-
 function checkWidth() {
     if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
         if (smallScreen) {

@@ -47,6 +47,22 @@ $("#select-all").click(function() {
     }
 });
 
+function deselectModel(model)
+{
+  selectedModels[preservedOrderData.indexOf(model)] = false;
+  var element = document.getElementById(model['Name'] + "_isSelected");
+  if (element)
+    element.classList.remove("selected");
+}
+
+function selectModel(model)
+{
+  selectedModels[preservedOrderData.indexOf(model)] = true;
+  var element = document.getElementById(model['Name'] + "_isSelected");
+  if (element)
+    element.classList.add("selected");
+}
+
 function selectAllFilteredData()
 {
   wantsToSelectAllInFiltered = !wantsToSelectAllInFiltered;
@@ -74,51 +90,8 @@ function selectAllFilteredData()
   updateCounters(lastFapplied, filteredData);
 }
 
-function deselectModel(model)
-{
-  selectedModels[preservedOrderData.indexOf(model)] = false;
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.remove("selected");
-}
-
-function selectModel(model)
-{
-  selectedModels[preservedOrderData.indexOf(model)] = true;
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.add("selected");
-}
-
 $('.download-button-modal').click(function() {
     downloadModel(viewingModel["Name"]);
-});
-
-$('#proOrRe').click(function() {
-    var element = document.getElementById("switch-input");
-  
-    if(element.checked)
-    {
-      modeIsResults = true;
-    }
-    else
-    {
-      modeIsResults = false;
-    }
-  
-    applyFilters();
-});
-
-$('#sharelink-all').click(function() {
-    var binary = boolToYN(selectedModels);
-    copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
-    informUser("Link copied");
-  });
-  
-  $('.shareableLink-button-modal').click(function() {
-    var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
-    copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
-    informUser("Link copied");
 });
 
 $("#download-all").click(function () {
@@ -139,9 +112,9 @@ $("#download-all").click(function () {
         downloadAllSelectedModels();
       });
     }
-  });
-  
-  function downloadModel(modelToDownloadName)
+});
+
+function downloadModel(modelToDownloadName)
   {
     if(modeIsResults)
     {
@@ -211,29 +184,28 @@ $("#returnToGalleryButton").click(function () {
     }
 });
 
-$("#checkbox-Images").change(function () {
-    applyFilters();
+$('.shareableLink-button-modal').click(function() {
+    var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
+    copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
+    informUser("Link copied");
 });
-  
-  $("#checkbox-Paths").change(function () {
-    applyFilters();
+
+$('#sharelink-all').click(function() {
+    var binary = boolToYN(selectedModels);
+    copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
+    informUser("Link copied");
 });
-  
-  $("#checkbox-Segmentations").change(function () {
-    applyFilters();
-});
-  
-  $("#checkbox-Models").change(function () {
-    applyFilters();
-});
-  
-  $("#checkbox-Meshes").change(function () {
-    applyFilters();
-});
-  
-  $("#checkbox-Simulations").change(function () {
-    applyFilters();
-});
+
+function informUser(msg) {
+    var informUser = $("#informUser");
+    informUser.find(".message").text(msg);
+    informUser.show();
+    var div = document.getElementById("informUser");
+    div.style.opacity = 1;
+    setTimeout(() => {
+      informUser.hide();
+    }, 1500);
+  }
 
 function viewSelected(flipViewingSelectedModels, moveToTop = true) {
     if (flipViewingSelectedModels)
@@ -297,18 +269,13 @@ function viewSelected(flipViewingSelectedModels, moveToTop = true) {
         errorMessage(false, "filter")
       }
     }
-  }
-
-$("#view-selected").click(function() {
-    viewSelected(true);
-});
+}
 
 $("#menu-bar").click(function() {
     menuBarShowing = !menuBarShowing;
     var features = document.getElementById("features");
     var menuBar = document.getElementById("menu-bar");
-  
-  
+
     if (menuBarShowing)
     {
       features.classList.add("features-is-visible");
@@ -319,4 +286,47 @@ $("#menu-bar").click(function() {
       features.classList.remove("features-is-visible");
       menuBar.classList.remove("features-is-visible");
     }
+});
+
+$('#proOrRe').click(function() {
+    var element = document.getElementById("switch-input");
+  
+    if(element.checked)
+    {
+      modeIsResults = true;
+    }
+    else
+    {
+      modeIsResults = false;
+    }
+  
+    applyFilters();
+});
+
+$("#checkbox-Images").change(function () {
+    applyFilters();
+});
+  
+  $("#checkbox-Paths").change(function () {
+    applyFilters();
+});
+  
+  $("#checkbox-Segmentations").change(function () {
+    applyFilters();
+});
+  
+  $("#checkbox-Models").change(function () {
+    applyFilters();
+});
+  
+  $("#checkbox-Meshes").change(function () {
+    applyFilters();
+});
+  
+  $("#checkbox-Simulations").change(function () {
+    applyFilters();
+});
+
+$("#view-selected").click(function() {
+    viewSelected(true);
 });
