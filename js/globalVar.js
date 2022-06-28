@@ -473,6 +473,8 @@ function selectedModelsWithResults()
   return withResults;
 }
 
+//updates the select-all icon
+//updates global variable selectAllIconApplied and the class the element select-all has
 function isSelectAllApplied(bool)
 {
   if(bool)

@@ -23,8 +23,12 @@ $("#clearAllButton").click(function() {
 });
 
 function clearAllFilters(){
-  //clear all checked boxes
+  var proOrReStatus = document.getElementById("switch-input").checked;
   $('input:checkbox').removeAttr('checked');
+  if(proOrReStatus)
+  {
+    document.getElementById("switch-input").checked = true;
+  }
   
   //reset age filter
   document.getElementById("min-age").value = 0;
