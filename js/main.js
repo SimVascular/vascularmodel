@@ -1,58 +1,84 @@
-// <li class="mix color-2 check2 radio2 option2"><img src="img/vmr-images/0003_0001.png" alt="Image 2"></li>
-
-$("#closeAllButton").click(function() {
-  var h4Elements = document.getElementsByTagName("h4");
-  var changeClass = []
-  for(var i = 0; i < h4Elements.length; i++)
-  {
-    if(!h4Elements[i].classList.contains('closed'))
-    {
-      changeClass.push(h4Elements[i]);
+$(document).ready(function($){
+  $.ajax({
+    type: "GET",
+    url: "dataset/dataset.csv",
+    dataType: "text",
+    async: false,
+    success: function(fdata) {
+      data = $.csv.toObjects(fdata);
+      for(var i = 0; i < data.length; i++)
+      {
+        preservedOrderData.push(data[i]);
+      }
+      // we shuffle array to make it always different
+      data.sort(() => (Math.random() > .5) ? 1 : -1);
     }
-  }
-  $(changeClass).addClass('closed').siblings(".cd-filter-content").slideToggle(300);
-  var contentH4 = document.getElementsByClassName(".cd-filter-content");
-  $(contentH4).css({ "display": "none" });
+  });
+
+  filteredData = data;
+  checkWidth();
+  // create copy of data
+  initializeSelectedModels();
+  updateCounters(false, data);
+  getFilterMenu();
+  populate(data);
+
+  //open/close lateral filter
+  $('.cd-filter-trigger').on('click', function(){
+    triggerFilter(true);
+  });
+  $('.cd-filter .cd-close').on('click', function(){
+    triggerFilter(false);
+  });
+
+  $('#apply-btn').on('click', function(){
+    applyFilters();
+    triggerFilter(false);
+  });
+
+
+
+  //close filter dropdown inside lateral .cd-filter
+	$('.cd-filter-block h4').on('click', function(){
+		$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
+	})
+
+  // we apply the filter when enter is pressed on the search field
+  $('#search-field').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters()
+      triggerFilter(false);
+      return true;
+    }
+  });
+
+  $('#min-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters();
+      triggerFilter(false);
+      return true;
+    }
+  });
+
+  $('#max-age').keydown(function (e) {
+    if (e.keyCode == 13) {
+      e.preventDefault();
+      // if (e.ctrlKey) {
+      applyFilters()
+      triggerFilter(false);
+      return true;
+    }
+  });
 });
-
-$("#clearAllButton").click(function() {
-  clearAllFilters();
-});
-
-function clearAllFilters(){
-  //clear all checked boxes
-  $('input:checkbox').removeAttr('checked');
-
-  //reset age filter
-  document.getElementById("min-age").value = 0;
-  document.getElementById("max-age").value = 120;
-
-  //set both dropdown menus to no value
-  document.getElementById("select-Sex").value = "all";
-  document.getElementById("select-Species").value = "all";
-  
-  //set search bar to no value
-  document.getElementById('search-field').value = "";
-
-  applyFilters();
-}
 
 function addClickListener(model) {
   $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
 }
-
-$("#select-all").click(function() {
-  if(viewingSelectedModels)
-  {
-    deselectAll();
-  }
-  if(!viewingSelectedModels)
-  {
-    document.getElementById("select-all").classList.remove("cannotSelect");
-    selectAllFilteredData();
-  }
-});
 
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
@@ -89,49 +115,6 @@ function doConfirm(msg, yesFn, noFn) {
   confirmBox.find(".yes").click(yesFn);
   confirmBox.find(".no").click(noFn);
   confirmBox.show();
-}
-
-function selectAllFilteredData()
-{
-  wantsToSelectAllInFiltered = !wantsToSelectAllInFiltered;
-
-  if(wantsToSelectAllInFiltered)
-  {
-    for (var i = 0; i < filteredData.length; i++)
-    {
-      selectModel(filteredData[i]);
-    }
-    selectIcon = document.getElementById("select-all");
-    selectIcon.classList.add("applied");
-  }
-  else
-  {
-    for (var i = 0; i < filteredData.length; i++)
-    {
-      deselectModel(filteredData[i]);
-    }
-
-    selectIcon = document.getElementById("select-all");
-    selectIcon.classList.remove("applied");
-  }
-  //parameters should not have an impact
-  updateCounters(lastFapplied, filteredData);
-}
-
-function deselectModel(model)
-{
-  selectedModels[preservedOrderData.indexOf(model)] = false;
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.remove("selected");
-}
-
-function selectModel(model)
-{
-  selectedModels[preservedOrderData.indexOf(model)] = true;
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.add("selected");
 }
 
 function updatedSelectedList(model)
@@ -295,6 +278,7 @@ function overlayOn(){
   document.body.style.position = '';
   document.body.style.top = `-${prevBodyY}px`;
 }
+
 function overlayOff(){
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
@@ -398,83 +382,6 @@ function populate(dataArray, num_images = 24) {
   curIndex = ubound;
 }
 
-$(document).ready(function($){
-  $.ajax({
-    type: "GET",
-    url: "dataset/dataset.csv",
-    dataType: "text",
-    async: false,
-    success: function(fdata) {
-      data = $.csv.toObjects(fdata);
-      for(var i = 0; i < data.length; i++)
-      {
-        preservedOrderData.push(data[i]);
-      }
-      // we shuffle array to make it always different
-      data.sort(() => (Math.random() > .5) ? 1 : -1);
-    }
-  });
-
-  filteredData = data;
-  checkWidth();
-  // create copy of data
-  initializeSelectedModels();
-  updateCounters(false, data);
-  getFilterMenu();
-  populate(data);
-
-  //open/close lateral filter
-  $('.cd-filter-trigger').on('click', function(){
-    triggerFilter(true);
-  });
-  $('.cd-filter .cd-close').on('click', function(){
-    triggerFilter(false);
-  });
-
-  $('#apply-btn').on('click', function(){
-    applyFilters();
-    triggerFilter(false);
-  });
-
-
-
-  //close filter dropdown inside lateral .cd-filter
-	$('.cd-filter-block h4').on('click', function(){
-		$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-	})
-
-  // we apply the filter when enter is pressed on the search field
-  $('#search-field').keydown(function (e) {
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      // if (e.ctrlKey) {
-      applyFilters()
-      triggerFilter(false);
-      return true;
-    }
-  });
-
-  $('#min-age').keydown(function (e) {
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      // if (e.ctrlKey) {
-      applyFilters();
-      triggerFilter(false);
-      return true;
-    }
-  });
-
-  $('#max-age').keydown(function (e) {
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      // if (e.ctrlKey) {
-      applyFilters()
-      triggerFilter(false);
-      return true;
-    }
-  });
-});
-
 // this function is called whenever "Filters" is pressed. It applies the
 // "filter-is-visible" class to all elements in elementsToTrigger. The behavior
 // filter-is-visible is determined in style_dataset.css
@@ -484,38 +391,6 @@ function triggerFilter($bool) {
     $(this).toggleClass('filter-is-visible', $bool);
   });
 }
-
-$('.download-button-modal').click(function() {
-  downloadModel(viewingModel["Name"]);
-});
-
-$('#proOrRe').click(function() {
-  var element = document.getElementById("switch-input");
-
-  if(element.checked)
-  {
-    modeIsResults = true;
-  }
-  else
-  {
-    modeIsResults = false;
-  }
-
-  applyFilters();
-});
-
-
-$('#sharelink-all').click(function() {
-  var binary = boolToYN(selectedModels);
-  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
-  informUser("Link copied");
-});
-
-$('.shareableLink-button-modal').click(function() {
-  var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
-  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
-  informUser("Link copied");
-});
 
 function informUser(msg) {
   var informUser = $("#informUser");
@@ -527,120 +402,6 @@ function informUser(msg) {
     informUser.hide();
   }, 1500);
 }
-
-$("#download-all").click(function () {
-  var count = selectedModels.filter(value => value === true).length;
-  var message = "";
-  if (count > 0)
-  {
-    if(count == 1)
-    {
-      message = "Are you sure you want to download 1 model?"
-    }
-    else
-    {
-      message = "Are you sure you want to download " + count + " models?"
-    }
-    
-    doConfirm(message, function yes() {
-      downloadAllSelectedModels();
-    });
-  }
-});
-
-function downloadModel(modelToDownloadName)
-{
-  if(modeIsResults)
-  {
-    var fileUrl = 'results/' + modelToDownloadName + '.zip';
-  }
-  else
-  {
-    var fileUrl = 'svprojects/' + modelToDownloadName + '.zip';
-  }
-  var a = document.createElement("a");
-  a.href = fileUrl;
-  a.setAttribute("download", modelToDownloadName);
-  a.click();
-
-  gtag('event', 'download_' + modelToDownloadName, {
-    'send_to': 'G-YVVR1546XJ',
-    'event_category': 'Model download',
-    'event_label': 'test',
-    'value': '1'
-});
-}
-
-async function downloadAllSelectedModels(){
-
-  listOfNames = []
-
-  for(var i = 0; i < selectedModels.length; i++)
-  {
-    if(selectedModels[i])
-    {
-      listOfNames.push(preservedOrderData[i]["Name"])
-    }
-  }
-
-  for(var i = 0; i < listOfNames.length; i++)
-  {
-    downloadModel(listOfNames[i]);
-    await new Promise(r => setTimeout(r, 3));
-  }
-
-  selectedModels.fill(false);
-  scrollToTop();
-  removeContent();
-  populate([]);
-  errorMessage(true, "justdownloaded")
-  viewingSelectedModels = true;
-  updateCounters(lastFapplied, filteredData, "justdownloaded");
-}
-
-$("#returnToGalleryButton").click(function () {
-  //update select all icon
-  document.getElementById("select-all").classList.remove("applied");
-  document.getElementById("view-selected").classList.remove("applied");
-
-  viewingSelectedModels = false;
-  removeContent();
-  scrollToTop();
-  curIndex = 0;
-  populate(filteredData);
-  updateCounters(lastFapplied, filteredData);
-
-  if (filteredData.length == 0) {
-    errorMessage(true, "filter")
-  }
-  else {
-    errorMessage(false, "filter")
-  }
-});
-
-$("#checkbox-Images").change(function () {
-  applyFilters();
-});
-
-$("#checkbox-Paths").change(function () {
-  applyFilters();
-});
-
-$("#checkbox-Segmentations").change(function () {
-  applyFilters();
-});
-
-$("#checkbox-Models").change(function () {
-  applyFilters();
-});
-
-$("#checkbox-Meshes").change(function () {
-  applyFilters();
-});
-
-$("#checkbox-Simulations").change(function () {
-  applyFilters();
-});
 
 function checkWidth() {
     if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
@@ -731,8 +492,6 @@ function updateCounters(fApplied, fData, string)
     viewSelectedIcon.classList.remove("applied");
   }
 }
-
-
 
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
@@ -838,92 +597,6 @@ var buttonFilter = {
     }
 }
 
-function viewSelected(flipViewingSelectedModels, moveToTop = true) {
-  if (flipViewingSelectedModels)
-    viewingSelectedModels = !viewingSelectedModels;
-
-  if(viewingSelectedModels)
-  {
-    triggerFilter(false);
-
-    displayedData = []
-
-    for(var i = 0; i < data.length; i++)
-    {
-      if(selectedModels[i])
-      {
-        displayedData.push(preservedOrderData[i])
-      }
-    }
-
-    removeContent();
-    if (moveToTop)
-      scrollToTop();
-    curIndex = 0;
-    populate(displayedData);
-
-    if (displayedData.length == 0) {
-      errorMessage(true, "viewingselected")
-    }
-    else {
-      errorMessage(false, "viewingselected")
-    }
-
-    //parameters should not have an impact
-    updateCounters(lastFapplied, filteredData);
-
-    //update select all icon
-    if(displayedData.length > 0)
-    {
-      document.getElementById("select-all").classList.add("applied");
-    }
-    else
-    {
-      document.getElementById("select-all").classList.add("cannotSelect");
-    }
-  }
-  else
-  {
-    //update select all icon
-    document.getElementById("select-all").classList.remove("applied");
-
-    removeContent();
-    scrollToTop();
-    curIndex = 0;
-    populate(filteredData);
-    updateCounters(lastFapplied, filteredData);
-
-    if (filteredData.length == 0) {
-      errorMessage(true, "filter")
-    }
-    else {
-      errorMessage(false, "filter")
-    }
-  }
-}
-
-$("#view-selected").click(function() {
-  viewSelected(true);
-});
-
-$("#menu-bar").click(function() {
-  menuBarShowing = !menuBarShowing;
-  var features = document.getElementById("features");
-  var menuBar = document.getElementById("menu-bar");
-
-
-  if (menuBarShowing)
-  {
-    features.classList.add("features-is-visible");
-    menuBar.classList.add("features-is-visible");
-  }
-  else
-  {
-    features.classList.remove("features-is-visible");
-    menuBar.classList.remove("features-is-visible");
-  }
-});
-
 function errorMessage(isOn, whichToDisplay)
 {
   var errorMsg = document.getElementById('error-msg');
@@ -962,5 +635,4 @@ function errorMessage(isOn, whichToDisplay)
     button.style.transitionDuration = '0s';
     button.style.opacity = 0;
   }
-
 }
