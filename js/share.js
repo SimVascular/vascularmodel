@@ -1,4 +1,8 @@
+var models = []
+var model;
+
 $(document).ready(function($){
+    //reads CSV for data
     $.ajax({
       type: "GET",
       url: "dataset/dataset.csv",
@@ -9,11 +13,9 @@ $(document).ready(function($){
       }
     });
 
+    //deals with URL input
     getVariable();
 });
-
-var models = []
-var model;
 
 function getVariable()
 {
