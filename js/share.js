@@ -362,11 +362,11 @@ function createIcons()
         icon.classList.add("featuresIcons")
         results.appendChild(icon);
 
-        menuBar.classList.add("small");
+        menuBar.classList.add("big");
     }
     else
     {
-        menuBar.classList.add("big");
+        menuBar.classList.add("small");
     }
 }
 
