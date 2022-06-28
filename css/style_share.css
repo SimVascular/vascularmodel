@@ -71,12 +71,15 @@ table {
     text-decoration: none;
   }
 
-  .menu-bar.small {
+  .menu-bar {
     position: absolute;
-    top: calc(5vw + 53px + 51.5px);
-    width: 170px;
     color: #424651;
     background-color: var(--grey);
+  }
+
+  .menu-bar.small {
+    top: calc(5vw + 53px + 51px);
+    width: 170px;
     right: calc(-170px/2 + 32px);
   }
 
@@ -85,12 +88,9 @@ table {
   }
   
   .menu-bar.big {
-    position: absolute;
-    top: calc(5vw + 100px + 51.5px);
+    top: calc(5vw + 100px + 50px);
     width: 260px;
-    color: #424651;
-    background-color: var(--grey);
-    right: calc(-260px/2 + 27px);
+    right: calc(-260px/2 + 32px);
   }
 
   .menu-bar.features-is-visible.big {
