@@ -73,12 +73,14 @@
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
 
+      <!-- box to confirm user actions -->
       <div id="confirmBox">
         <div class="message"></div>
         <span class="button yes">Yes</span>
         <span class="button no">No</span>
       </div>
 
+      <!-- box to inform user of actions -->
       <div id="informUser" style = "opacity: 0;">
         <div class="message"></div>
       </div>
@@ -90,11 +92,13 @@
         <div id = "errorBlock" class="error-msg-block">
           <span id="error-msg"></span>
           <div>
+            <!-- return to gallery after downloading -->
             <button style = "opacity: 0;" id = "returnToGalleryButton" class = "returnToGalleryButton">Return to Gallery</button>
           </div>
         </div>
         <div class="container-fluid">
           <div class="row" id="model-gallery">
+            <!-- models generated here -->
           </div>
         </div>
       </section> <!-- cd-gallery -->
@@ -102,6 +106,7 @@
       <section class="cd-filter">
         <form>
           <!-- <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div> -->
+          <!-- buttons to help with filtering -->
           <div class="filterButtons">
             <button class = "closeAllButton" id="closeAllButton" type="button">Collapse All</button>
             <button class = "clearAllButton" id="clearAllButton" type="button">Clear All</button>
@@ -109,7 +114,6 @@
           
           <div class="cd-filter-block">
             <h4 title = "Search Bar">Search</h4>
-
             <div class="cd-filter-content">
               <input type="search" placeholder="Search" id="search-field">
             </div> <!-- cd-filter-content -->
@@ -141,7 +145,7 @@
                   <!-- generated in js -->
                 </select>
               </div>
-            </div>
+            </div> <!-- cd-filter-block -->
 
             <div class="cd-filter-block">
               <h4>Species</h4>
@@ -150,7 +154,7 @@
                   <!-- generated in js -->
                 </select>
               </div>
-            </div>
+            </div> <!-- cd-filter-block -->
 
             <div class="cd-filter-block">
               <h4 class="closed">Anatomy</h4>
@@ -164,14 +168,14 @@
               <ul id = "DiseaseUl" class="cd-filter-content cd-filters list" style="display: none;">
                 <!-- generated in js -->
               </ul>
-            </div>
+            </div> <!-- cd-filter-block -->
             
             <div class="cd-filter-block">
               <h4 class="closed">Procedure</h4>
               <ul id = "ProcedureUl" class="cd-filter-content cd-filters list" style="display: none;">
                 <!-- generated in js -->
               </ul>
-            </div>
+            </div> <!-- cd-filter-block -->
 
             <div class="cd-filter-block">
               <h4 class="closed">Project Must Contain</h4>
@@ -201,17 +205,16 @@
                   <label class="checkbox-label" for="checkbox-Simulations">Simulations</label>
                 </li>
               </ul>
-            </div>
-          
-          <!-- <div id = "filterCheckboxes"></div> -->
-          
+            </div> <!-- cd-filter-block -->          
       </form>
+      <!-- button to Close and Filters header -->
         <a href="#0" class="cd-filter-trigger insideFilterBar">Filters</a>
         <a href="#0" class="cd-close">Close</a>
       </section> <!-- cd-filter -->
-
+      <!-- Filters header for when filter bar not open -->
       <a href="#0" class="cd-filter-trigger outsideFilterBar">Filters</a>
 
+      <!-- section for menu -->
       <section class="menu-bar" id = "menu-bar">
         <div>Menu</div>
       </section>
@@ -224,15 +227,14 @@
               <span class="switch-label" data-on="Results" data-off="Projects"></span> 
               <span class="switch-handle"></span> 
             </label>
-          </div>
+          </div> <!-- slider for projects/results -->
           <table>
             <tr>
               <td>
                 <div title = "Select All" class = "spanForIcons">
                   <i id = "select-all" class="fa-regular fa-square-check featuresIcons"></i>
                 </div>
-                
-              </td>
+              </td> <!-- end select-all icon -->
               <td>
                 <div title="View Selected" id = "view-selected" class = "spanForIcons">
                   <span class="fa-stack fa-lg">
@@ -240,28 +242,31 @@
                     <i class="fa fa-solid fa-box-archive fa-stack-2x featuresIcons"></i>
                   </span>
                 </div>
-              </td>
-            </tr>
-            <tr>
+              </td> <!-- end view-selected icon -->
+            </tr> <!-- end row -->
+            <tr> 
               <td>
                 <div title="Download Selected" class = "spanForIcons">
                   <i id = "download-all" class="fa-solid fa-download featuresIcons"></i>
                 </div>
-              </td>
+              </td> <!-- end download-all icon -->
               <td>
                 <div title="Get Shareable Link" class = "spanForIcons">
                   <i id = "sharelink-all" class="fa-solid fa-share featuresIcons"></i>
                 </div>
-              </td>
-            </tr>
-          </table>
+              </td> <!-- end sharelink-all icon -->
+            </tr> <!-- end row -->
+          </table> <!-- table to arrange icons -->
         </form>
       </section> <!-- features -->
     </main> <!-- cd-main-content -->
+  
+<!-- overlay for detailsModal -->
 <div id="overlay">
   <div class="container">
     <div id="openModal" class="modalDialog">
-      <div> 
+      <div>
+        <!-- safeOfOverlayClick is where the user can click and the detailsModal does not close -->
         <div id ="safeOfOverlayClick">
           <p id="modal-greeting">Placeholder</p>
           <textarea class="details-text" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dolor elementum, malesuada est in, molestie libero. Morbi in nibh est. Quisque venenatis cursus augue, in pellentesque est. Nam placerat finibus sapien, venenatis placerat nibh tincidunt sed. Curabitur vehicula vulputate leo ac suscipit. Pellentesque sollicitudin, justo sed maximus porttitor, tellus orci ornare sem, et finibus augue leo vitae libero. Morbi vitae diam dui. Donec ac mollis felis, vel ornare quam. Nam risus elit, semper sed nulla vitae, vulputate ultrices dolor. Donec interdum molestie eros nec facilisis. Integer vel pretium magna, non tempor lorem. Aliquam semper est in odio condimentum ultricies. Maecenas non nulla viverra, cursus tellus ut, posuere ligula. Praesent massa eros, rutrum eget eros in, rhoncus scelerisque justo. Cras lacus diam, congue vitae elit ut, convallis rhoncus diam.
@@ -271,6 +276,7 @@
               Mauris elit leo, semper et lobortis eget, iaculis at erat. Nulla vulputate purus in rhoncus semper. Donec dolor ante, hendrerit eget ullamcorper sed, egestas ac libero. Morbi vestibulum nulla nec enim pretium, eu tincidunt tortor suscipit. Integer porta fringilla nunc, ut pulvinar enim lobortis ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas pellentesque ligula orci, sed aliquam enim ultrices quis. Nunc imperdiet imperdiet lorem, at tempus elit tincidunt facilisis. Donec vitae pharetra lectus, ac tempus odio. Integer vitae pellentesque ipsum, id semper velit. Etiam sapien arcu, rutrum vitae sapien quis, semper tincidunt elit. Ut placerat urna nec enim imperdiet gravida. Aliquam eget odio at lorem tempus pharetra. Pellentesque pellentesque turpis vel nibh consequat dictum.</textarea>
           <div id="modal-closure" style="margin-bottom:10px;">Placeholder</div>
           <div class="row">
+            <!-- three buttons: close, download, share -->
             <div class="col-xs-12 col-sm-6 text-center">
               <a title = "Get Shareable Link" class="button button-modal shareableLink-button-modal"><i class="fa-solid fa-share"></i></a>
             </div>
@@ -287,6 +293,7 @@
     </div>
   </div>
 </div>
+<!-- footer with contacts -->
 <section id="contact-section">
   <div class="container">
     <div class="row align-items-center">
