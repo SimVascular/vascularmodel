@@ -107,7 +107,7 @@ function getMustContainFilterTitles()
   return returnCategories;
 }
 
-//returns the actual amount of possibilities of values under key
+//returns all possible options under each category
 function namesOfValuesPerKey(categoryName)
 {
   var checkboxNameSet = new Set();
@@ -384,5 +384,23 @@ function makeshiftSelectedModels(preservedOrderData, model)
   //selects the right index to make true
   array[indexOfModel] = "Y";
   array = array.toString().replaceAll(',', '')
+  return array;
+}
+
+//translates string with spaces to an array
+function valueToSearchInArrayForm(valueToSearch)
+{
+  var array = []
+  var indexOfSpace = valueToSearch.indexOf(" ");
+
+  while(indexOfSpace != -1)
+  {
+    array.push(valueToSearch.substring(0, indexOfSpace));
+    valueToSearch = valueToSearch.substring(indexOfSpace + 1);
+    indexOfSpace = valueToSearch.indexOf(" ")
+  }
+
+  array.push(valueToSearch);
+
   return array;
 }
