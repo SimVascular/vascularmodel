@@ -1,9 +1,13 @@
+//all global variables to stay organized
+
+//all arrays of datas
 var data;
 var filteredData;
 var hasResultsData;
 var preservedOrderData = [];
 var displayedData;
-var viewingModel = ''
+
+var viewingModel = '';
 var curIndex = 0;
 var smallScreen = false
 var lastFapplied = 0;
@@ -19,8 +23,7 @@ var isSafeSelected = false;
 var menuBarShowing = false;
 var modeIsResults = false;
 
-
-//returns the keys of *all* the categories
+//returns the keys of all the categories except "Results"
 function getAllCategories()
 {
   var allCategories = []
@@ -32,6 +35,7 @@ function getAllCategories()
   return allCategories;
 }
 
+//returns titles for the share.html table
 function getDetailsTitles()
 {
   var allCategories = getAllCategories();
@@ -52,6 +56,7 @@ function getDetailsTitles()
   return output;
 }
 
+//returns titles for the share multiple models table
 function getBareMinimum()
 {
   var output = ["Name", "Species", "Anatomy"]
@@ -59,7 +64,7 @@ function getBareMinimum()
   return output;
 }
 
-//returns the keys of all the categories except "Size" and "Name"
+//excludes titles that don't have filters
 function getFilterTitles()
 {
   var allCategories = getAllCategories()
