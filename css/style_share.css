@@ -65,15 +65,43 @@ table {
     color: black;
     text-decoration: none;
   }
+
+  .menu-bar.small {
+    position: absolute;
+    top: calc(5vw + 100px + 51.5px);
+    width: 180px;
+    border: none;
+    color: #424651;
+    background-color: var(--grey);
+    right: calc(-180px/2 + 27px);
+  }
+  
+  .menu-bar.big {
+    position: absolute;
+    top: calc(5vw + 100px + 51.5px);
+    width: 260px;
+    border: none;
+    color: #424651;
+    background-color: var(--grey);
+    right: calc(-260px/2 + 27px);
+  }
+
+  .menu-bar.features-is-visible {
+    right: calc(-260px/2 + 31px + 90px);
+  }
   
   .features {
     position: absolute;
     top: calc(5vw + 40px);
-    right: 7.5px;
+    right: -150px;
     width: auto;
     height: auto;
     border: none;
     background: transparent;
+  }
+
+  .features.features-is-visible {
+    right: 7.5px;
   }
 
   h1 {

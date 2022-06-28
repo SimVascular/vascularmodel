@@ -160,37 +160,45 @@ $("#download-all").click(function () {
     //informs user what they are downloading depending on their mode
     if(modeIsResults)
     {
-      //calculates how many models do not have results
-      var difference = countModels - countResults;
-
-      //grammar with plural
-      //informs user of simulation results that they cannot havwe
-      if(difference == 1)
+      if(countResults != 0)
       {
-        message = "One model does not have simulation results to download.\\n\\n";
-      }
-      else if(difference != 0)
-      {
-        message = difference + " models do not have simulation results to download.\\n\\n";
-      }
+        //calculates how many models do not have results
+        var difference = countModels - countResults;
 
-      //download confirmation
-      message += "Are you sure you want to download ";
+        //grammar with plural
+        //informs user of simulation results that they cannot havwe
+        if(difference == 1)
+        {
+          message = "One model does not have simulation results to download.";
+        }
+        else if(difference != 0)
+        {
+          message = difference + " models do not have simulation results to download.";
+        }
 
-      //grammar with plural
-      if(countResults == 1)
-      {
-        message += "one simulation result?";
-      }
-      else if(countResults != 0)
-      {
-        message += countResults + " simulation results?";
-      }
+        //download confirmation
+        message += "\\n\\nAre you sure you want to download ";
 
-      //if the user clicks "yes," downloads all simulation results
-      doConfirm(message, function yes() {
-        downloadAllModels(modelsWithResults);
-      });
+        //grammar with plural
+        if(countResults == 1)
+        {
+          message += "one simulation result?";
+        }
+        else if(countResults != 0)
+        {
+          message += countResults + " simulation results?";
+        }
+
+        //if the user clicks "yes," downloads all simulation results
+        doConfirm(message, function yes() {
+          downloadAllModels(modelsWithResults);
+        });
+      }
+      else
+      {
+        message = "Your selected models do not have simulation results to download."
+        informUser(message, "lower", true);
+      }
     }
     else
     {
@@ -479,7 +487,7 @@ function doConfirm(msg, yesFn, noFn) {
 }
 
 //informs user of a message
-function informUser(msg) {
+function informUser(msg, string = "", hasOk = false) {
   var informUser = $("#informUser");
   informUser.find(".message").text(msg);
   informUser.show();
@@ -488,10 +496,41 @@ function informUser(msg) {
   var div = document.getElementById("informUser");
   div.style.opacity = 1;
 
-  //fades after 1.5 seconds
-  setTimeout(() => {
-    informUser.hide();
-  }, 1500);
+  //changes position of alert for clarity
+  if(string == "lower")
+  {
+    div.setAttribute("style", "top: 300px");
+  }
+  else
+  {
+    div.setAttribute("style", "top: 30px")
+  }
+
+  //clears where the Okay button goes
+  var goesHere = document.getElementById("okayGoesHere");
+  goesHere.innerHTML = "";
+
+  if(hasOk)
+  {
+    //if has an okay button, creates it
+    var span = document.createElement("span");
+    span.classList.add("button");
+    span.classList.add("yes");
+    span.textContent = "Okay";
+    goesHere.appendChild(span);
+
+    //hides informUser box after button is clicked
+    informUser.find(".yes").unbind().click(function () {
+      informUser.hide();
+    });
+  }
+  else
+  {
+    //fades after 1.5 seconds if doesn't have an Okay button
+    setTimeout(() => {
+      informUser.hide();
+    }, 1500);
+  }
 }
 
 // listeners for ProjectMustContain and search bar

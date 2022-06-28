@@ -672,7 +672,7 @@ error msg block behavior
   padding: 8px 10px 10px;
   box-sizing: border-box;
   text-align: center;
-  z-index: 2;
+  z-index: 99999;
 }
 #confirmBox .button {
   background-color: #ccc;
@@ -698,18 +698,33 @@ error msg block behavior
 
 #informUser
 {
-  display: none;
+  /* display: none; */
   background-color: var(--grey);
   border-radius: 5px;
   border: 2px solid var(--darkgrey);
   position: fixed;
-  top: 30px;
+  /* top: 30px; */
   padding: 8px 10px 10px;
   box-sizing: border-box;
   z-index: 99999;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 350px;
 }
+
+#informUser .button {
+  background-color: #ccc;
+  display: inline-block;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+  padding: 2px;
+  text-align: center;
+  width: 80px;
+  cursor: pointer;
+  margin-top: 15px;
+  float: right;
+}
+
 #informUser .message
 {
   text-align: center;

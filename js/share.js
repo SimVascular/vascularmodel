@@ -310,6 +310,27 @@ function goToModel(model){
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
 }
 
+$("#menu-bar").click(function() {
+    //allows user to click and unclick
+    menuBarShowing = !menuBarShowing;
+  
+    var features = document.getElementById("features");
+    var menuBar = document.getElementById("menu-bar");
+  
+    if (menuBarShowing)
+    {
+      //reveals features and moves menuBar
+      features.classList.add("features-is-visible");
+      menuBar.classList.add("features-is-visible");
+    }
+    else
+    {
+      //hides features and moves menuBar
+      features.classList.remove("features-is-visible");
+      menuBar.classList.remove("features-is-visible");
+    }
+  });
+
 function createIcons()
 {
     var downloadModel = document.getElementById("downloadModel");
@@ -326,6 +347,8 @@ function createIcons()
     icon.classList.add("featuresIcons")
     goToGallery.appendChild(icon);
 
+    var menuBar = document.getElementById("menu-bar");
+
     if(model["Results"] == 1)
     {
         var results = document.getElementById("downloadSimulations");
@@ -338,6 +361,12 @@ function createIcons()
         icon.classList.add("fa-video");
         icon.classList.add("featuresIcons")
         results.appendChild(icon);
+
+        menuBar.classList.add("small");
+    }
+    else
+    {
+        menuBar.classList.add("big");
     }
 }
 
