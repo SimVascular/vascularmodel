@@ -7,6 +7,10 @@ JavaScript for Filter Bar
 function getFilterMenu()
 {
   var allHooks = []
+  
+  //sets default values for Age
+  document.getElementById("min-age").value = 0;
+  document.getElementById("max-age").value = 120;
 
   //generates html of Sex dropdown menu
   var sexSelect = document.getElementById("select-Sex");
