@@ -1,4 +1,5 @@
 $(document).ready(function($){
+  //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
     url: "dataset/dataset.csv",
@@ -6,6 +7,7 @@ $(document).ready(function($){
     async: false,
     success: function(fdata) {
       data = $.csv.toObjects(fdata);
+      //saves the csv order of the models in preservedOrderData
       for(var i = 0; i < data.length; i++)
       {
         preservedOrderData.push(data[i]);
@@ -58,7 +60,6 @@ $(document).ready(function($){
   $('#search-field').keydown(function (e) {
     if (e.keyCode == 13) {
       e.preventDefault();
-      // if (e.ctrlKey) {
       applyFilters()
       //closes filter bar
       triggerFilter(false);
@@ -81,7 +82,6 @@ $(document).ready(function($){
   $('#max-age').keydown(function (e) {
     if (e.keyCode == 13) {
       e.preventDefault();
-      // if (e.ctrlKey) {
       applyFilters();
       //closes filter bar
       triggerFilter(false);
@@ -122,6 +122,7 @@ function updatedSelectedList(model)
   //gets element to animate it after a model is selected
   var menu = document.getElementById("menu-bar");
 
+  //selectedModels index depends on preservedOrderData
   if(selectedModels[preservedOrderData.indexOf(model)])
   {
     //selects model
@@ -468,13 +469,17 @@ function checkWidth() {
   //at 767px, screen is considered "small"
   if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
     if (smallScreen) {
+      //updates smallScreen
       smallScreen = false;
+      //updates counters
       updateCounters(lastFapplied, filteredData);
     }
   }
   else {
     if (!smallScreen) {
+      //updates smallScreen
       smallScreen = true;
+      //updates counters
       updateCounters(lastFapplied, filteredData);
     }
   }
@@ -544,12 +549,8 @@ function updateCounters(fApplied, fData, string)
 
     //if not viewingSelectedModels, shows number of models in gallery
     if (smallScreen) {
-      if (fApplied) {
-        counterPanel.textContent = fData.length + '/' + totalLength + ' models'
-      }
-      else {
-        counterPanel.textContent = fData.length + '/' + totalLength + ' models'
-      }
+      //no specification of whether or not the filter is applied
+      counterPanel.textContent = fData.length + '/' + totalLength + ' models';
     }
     else {
       if (fApplied) {
@@ -590,6 +591,53 @@ window.addEventListener('scroll', () => {
 //function to reset scroll
 function scrollToTop() {
   window.scrollTo(0, 0);
+}
+
+//function that works with error message
+function errorMessage(isOn, whichToDisplay)
+{
+  var errorMsg = document.getElementById('error-msg');
+  var button = document.getElementById("returnToGalleryButton");
+
+  //determines which message is showing
+  if(whichToDisplay == "filter")
+  {
+    //shows the error message for the filter
+    errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
+  }
+  else if(whichToDisplay == "viewingselected")
+  {
+    //shows the error message for selected models page
+    errorMsg.textContent = "It looks like no models are currently selected!";
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
+  }
+  else if(whichToDisplay == "justdownloaded")
+  {
+    //shows the message to thank the user
+    errorMsg.textContent = "Thank you for downloading!";
+    //show the button to return to gallery
+    button.style.transitionDuration = '0.3s';
+    button.style.opacity = 1;
+  }
+
+  //whether or not the error message is visible/displayed
+  if(isOn)
+  {
+    //when button is showing is shown above 
+    errorMsg.style.transitionDuration = '0.3s';
+    errorMsg.style.opacity = 1;
+  }
+  else
+  {
+    //hides both if error message is not on
+    errorMsg.style.transitionDuration = '0s';
+    errorMsg.style.opacity = 0;
+    button.style.transitionDuration = '0s';
+    button.style.opacity = 0;
+  }
 }
 
 /*****************************************************
@@ -674,45 +722,4 @@ var buttonFilter = {
         self.$container.mixItUp('filter', self.outputString);
     }
     }
-}
-
-//function that works with error message
-function errorMessage(isOn, whichToDisplay)
-{
-  var errorMsg = document.getElementById('error-msg');
-  var button = document.getElementById("returnToGalleryButton");
-
-  //determines which message is showing
-  if(whichToDisplay == "filter")
-  {
-    errorMsg.textContent = "It looks like there are no results matching the filters! Please consider using less restrictive rules.";
-    button.style.transitionDuration = '0s';
-    button.style.opacity = 0;
-  }
-  else if(whichToDisplay == "viewingselected")
-  {
-    errorMsg.textContent = "It looks like no models are currently selected!";
-    button.style.transitionDuration = '0s';
-    button.style.opacity = 0;
-  }
-  else if(whichToDisplay == "justdownloaded")
-  {
-    errorMsg.textContent = "Thank you for downloading!";
-    button.style.transitionDuration = '0.3s';
-    button.style.opacity = 1;
-  }
-
-  //whether or not the error message is visible/displayed
-  if(isOn)
-  {
-    errorMsg.style.transitionDuration = '0.3s';
-    errorMsg.style.opacity = 1;
-  }
-  else
-  {
-    errorMsg.style.transitionDuration = '0s';
-    errorMsg.style.opacity = 0;
-    button.style.transitionDuration = '0s';
-    button.style.opacity = 0;
-  }
 }
