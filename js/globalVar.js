@@ -64,7 +64,7 @@ function getBareMinimum()
   return output;
 }
 
-//excludes titles that don't have filters
+//excludes titles that aren't filtered in the filter bar
 function getFilterTitles()
 {
   var allCategories = getAllCategories()
@@ -117,10 +117,12 @@ function namesOfValuesPerKey(categoryName)
 {
   var checkboxNameSet = new Set();
 
+  //does not add element if "-"
   for(var d = 0; d < data.length; d++)
   {
     if(data[d][categoryName].indexOf("_") != -1)
     {
+      //if multiple categories to add separated by "_", different code
       var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
       for(var a = 0; a < toAdd.length; a++)
       {
@@ -163,6 +165,7 @@ function checkboxNameInArrayForm(checkboxNameArr)
 //grammar for commas and ands
 function listFormater(string)
 {
+  //delimtiter "_" interferes with some names of models
   if(string.indexOf("_") == -1)
   {
     return string;
@@ -192,9 +195,11 @@ function listFormater(string)
 
 function ageCalculator(value)
 {
+  //calculates age in the most relevant unit
+  //rounds to the nearest 100s
   if(value > 1)
   {
-    return value + " years"
+    return Math.round(value*100)/100 + " years"
   }
   else
   {
@@ -215,80 +220,101 @@ function ageCalculator(value)
   }
 }
 
+//reads "\url()" format in URL
 function URLMaker(notes)
-{ 
+{
   indexOfStartOfTag = notes.indexOf("\\url");
 
   indexOfStartOfLink = notes.indexOf("(\"");
   indexOfEndOfLink = notes.indexOf("\",", indexOfStartOfLink);
+  //extracts URL from notes
   url = notes.substring(indexOfStartOfLink + 2, indexOfEndOfLink);
 
   indexOfStartOfWord = notes.indexOf(" \"", indexOfEndOfLink);
   indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
+  //extracts word that stands for URL from notes
   word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
 
+  //creates span/div before URL
   pBefore = createpBeforeAndAfter(notes.substring(0, indexOfStartOfTag), true);
 
+  //creates anchor element with URL
   var a = document.createElement("a")
   a.setAttribute("href", url);
   a.setAttribute("target", "_blank");
   a.classList.add("link");
   a.textContent = word;
 
+  //if contains a .zip, allows for a downlaod
   if(url.includes(".zip"))
   {
     a.setAttribute("download", "");
   }
+
+  //creates span/div after URL
   pAfter = createpBeforeAndAfter(notes.substring(indexOfEndOfWord + 2), false);
   
+  //returns elements to be appended after
   return [pBefore, a, pAfter];
 }
 
+//creates span/div before/after URL
 function createpBeforeAndAfter(text, isBefore)
 {
+  //\n conflicts with \url reading
   if(text.includes("\\n") && !text.includes("\\url"))
   {
+    //creates div if \n
     var p = document.createElement("div");
     p.classList.add("newParagraph");
     
+    //allows for multiple \n
     while(text.includes("\\n"))
     {
       var index = text.indexOf("\\n");
       var pDiv = document.createElement("div");
       pDiv.classList.add("newParagraph");
       
+      //appends textContent between each \n
       pDiv.textContent = text.substring(0, index);
       text = text.substring(index + 2);
       
       p.appendChild(pDiv);
     }
 
+    //checks whether element is pBefore or pAfter
     if(isBefore)
     {
+      //if before, creates a span so that there is no line break before the URL
       p.classList.add("sameLine");
       var pDiv = document.createElement("span");
     }
     else
     {
+      //creates div to have a line break
       pDiv.classList.add("newParagraph");
       var pDiv = document.createElement("div");
     }
+
     pDiv.textContent = text;
     p.appendChild(pDiv);
   }
   else
   {
+    //creates span if \n or if URL
     var p = document.createElement("span");
     p.textContent = text;
   }
+
   return p;
-  
 }
 
+//function to copy the shareable links
 function copyText(message) {
   navigator.clipboard.writeText(message);
 }
 
+//converts boolean array to an array with Y and N
 function boolToYN(array)
 {
   binary = "";
@@ -306,6 +332,8 @@ function boolToYN(array)
   return binary;
 }
 
+//accounts for when the code is invalid
+//decodes RLE to Y and N string
 function decodeRLE(binary) {
   if(binary == "invalid code")
   {
@@ -315,14 +343,17 @@ function decodeRLE(binary) {
   return binary.replace(/(\d+)([ \w])/g, (_, count, chr) => chr.repeat(count));
 };
 
+//encodes Y and N to RLE
 function encodeRLE(binary) {
   return binary.replace(/([ \w])\1+/g, (group, chr) => group.length + chr );
 };
 
+//takes in RLE, gives out base64 conversion
 function encodeBTOA(code)
 {
   code = btoa(code);
 
+  //accounts for reserved characters URL
   for(var i = 0; i < code.length; i++)
   {
     if(code.charAt(i) == "=")
@@ -338,8 +369,10 @@ function encodeBTOA(code)
   return code;
 }
 
+//takes in base64 and returns RLE
 function encodeATOB(code)
 {
+  //un-does conversions for URL
   for(var i = 0; i < code.length; i++)
   {
     if(code.charAt(i) == "_")
@@ -363,6 +396,7 @@ function encodeATOB(code)
   return code;
 }
 
+//function to check if str is valid base64
 function isBase64(str) {
   if (str ==='' || str.trim() ===''){ return false; }
   try {
@@ -372,6 +406,7 @@ function isBase64(str) {
   }
 }
 
+//function to help with character replacements
 function replaceCharAt(code, i, char)
 {
   var newCode = code.substring(0, i);
@@ -380,6 +415,7 @@ function replaceCharAt(code, i, char)
   return newCode;
 }
 
+//creates array of N except for one Y
 function makeshiftSelectedModels(preservedOrderData, model)
 {
   //creates makeshift selectedmodels array
