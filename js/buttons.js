@@ -23,10 +23,14 @@ $("#clearAllButton").click(function() {
 });
 
 function clearAllFilters(){
+  //checks if project or results button is checked
   var proOrReStatus = document.getElementById("switch-input").checked;
+  //deselects all checkboxes (including the projects or results button)
   $('input:checkbox').removeAttr('checked');
+  //checks status
   if(proOrReStatus)
   {
+    //reverts if checkbox was wrongfully unchecked
     document.getElementById("switch-input").checked = true;
   }
   
