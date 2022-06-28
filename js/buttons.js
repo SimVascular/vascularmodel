@@ -105,18 +105,17 @@ function selectModel(model)
 function selectAllFilteredData()
 {
   //allows for click and unclick
-  wantsToSelectAllInFiltered = !wantsToSelectAllInFiltered;
-
-  if(wantsToSelectAllInFiltered)
+  selectAllIconApplied = !selectAllIconApplied;
+  //resets select-all icon
+  isSelectAllApplied(selectAllIconApplied);
+  
+  if(selectAllIconApplied)
   {
     //selects all filteredData models
     for (var i = 0; i < filteredData.length; i++)
     {
       selectModel(filteredData[i]);
     }
-    //updates selectIcon to applied state
-    selectIcon = document.getElementById("select-all");
-    selectIcon.classList.add("applied");
   }
   else
   {
@@ -125,10 +124,6 @@ function selectAllFilteredData()
     {
       deselectModel(filteredData[i]);
     }
-
-    //updates selectIcon to unapplied state
-    selectIcon = document.getElementById("select-all");
-    selectIcon.classList.remove("applied");
   } 
 
   //parameters should not have an impact
@@ -142,47 +137,74 @@ $('.download-button-modal').click(function() {
 
 //downloading all selected models
 $("#download-all").click(function () {
-  //counts number of models to download
-  var count = selectedModels.filter(value => value === true).length;
+  //counts number of selected models
+  var countModels = selectedModels.filter(value => value === true).length;
+
+  var modelsWithResults = selectedModelsWithResults();
+  var countResults = modelsWithResults.filter(value => value === true).length;
+  
   var message = "";
-  var endWord = ""
+
   //if nothing to download, download-all button has no function
-  if (count > 0)
+  if (countModels > 0)
   {
     //informs user what they are downloading depending on their mode
     if(modeIsResults)
     {
-      endWord = " simulation result";
+      var difference = countModels - countResults;
+
+      if(difference == 1)
+      {
+        message = "One model does not have simulation results to download.\\n\\n";
+      }
+      else if(difference != 0)
+      {
+        message = difference + " models do not have simulation results to download.\\n\\n";
+      }
+
+      message += "Are you sure you want to download ";
+
+      if(countResults == 1)
+      {
+        message += "one simulation result?";
+      }
+      else if(countResults != 0)
+      {
+        message += countResults + " simulation results?";
+      }
+
+      //if the user clicks "yes," downloads all simulation results
+      doConfirm(message, function yes() {
+        downloadAllModels(modelsWithResults);
+      });
     }
     else
     {
-      endWord = " model";
-    }
+      message = "Are you sure you want to download ";
+      if(countModels == 1)
+      {
+        message += "one model?";
+      }
+      else
+      {
+        message += countModels + " models?";
+      }
 
-    //for the grammar with the "s"
-    if(count == 1)
-    {
-      message = "Are you sure you want to download one " + endWord + "?";
+      //if the user clicks "yes," downloads all selected models
+      doConfirm(message, function yes() {
+        downloadAllModels(selectedModels);
+      });
     }
-    else
-    {
-      message = "Are you sure you want to download " + count + endWord + "s?";
-    }
-
-    //if the user clicks "yes," downloads all selected models/simulation results
-    doConfirm(message, function yes() {
-      downloadAllSelectedModels();
-    });
   }
 });
 
-async function downloadAllSelectedModels(){
+async function downloadAllModels(boolModels){
   listOfNames = []
   
-  for(var i = 0; i < selectedModels.length; i++)
+  for(var i = 0; i < boolModels.length; i++)
   {
-    //index of selectedModels corresponds with preservedOrderData
-    if(selectedModels[i])
+    //index of boolModels corresponds with preservedOrderData
+    if(boolModels[i])
     {
       //takes in list of names of all the models to download
       listOfNames.push(preservedOrderData[i]["Name"])
@@ -196,8 +218,8 @@ async function downloadAllSelectedModels(){
     await new Promise(r => setTimeout(r, 3));
   }
   
-  //clears selectedModels
-  selectedModels.fill(false);
+  //clears boolModels
+  boolModels.fill(false);
 
   //resets page
   scrollToTop();
@@ -248,7 +270,7 @@ function downloadModel(modelToDownloadName)
 
 $("#returnToGalleryButton").click(function () {
     //update select all icon
-    document.getElementById("select-all").classList.remove("applied");
+    isSelectAllApplied(false);
     document.getElementById("view-selected").classList.remove("applied");
 
     //brings user to gallery
@@ -339,7 +361,7 @@ function viewSelected(flipViewingSelectedModels, moveToTop = true) {
     //update select all icon
     if(displayedData.length > 0)
     {
-      document.getElementById("select-all").classList.add("applied");
+      isSelectAllApplied(true);
     }
     else
     {
@@ -350,7 +372,7 @@ function viewSelected(flipViewingSelectedModels, moveToTop = true) {
   else
   {
     //update select all icon
-    document.getElementById("select-all").classList.remove("applied");
+    isSelectAllApplied(false);
 
     //reset page
     removeContent();
@@ -405,15 +427,30 @@ $('#proOrRe').click(function() {
   {
     modeIsResults = false;
   }
-    
+  
+  var selectIconStatus = selectAllIconApplied;
   //resets filters
   applyFilters();
+
+  if(selectIconStatus)
+  {
+    isSelectAllApplied(true);
+  }
+  
 });
 
 //lets us confirm actions with users
 function doConfirm(msg, yesFn, noFn) {
   var confirmBox = $("#confirmBox");
-  confirmBox.find(".message").text(msg);
+  if(msg.includes("\\n"))
+  {
+    confirmBox.find(".message")[0].innerHTML = "";
+    confirmBox.find(".message")[0].appendChild(newLineNoURL(msg, false));
+  }
+  else
+  {
+    confirmBox.find(".message").text(msg);
+  }
 
   //hides confirmation after button is clicked
   confirmBox.find(".yes,.no").unbind().click(function () {

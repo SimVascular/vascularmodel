@@ -6,22 +6,20 @@ var filteredData;
 var hasResultsData;
 var preservedOrderData = [];
 var displayedData;
-
+var selectedModels = [];
 var viewingModel = '';
 var curIndex = 0;
 var smallScreen = false
 var lastFapplied = 0;
 var lastFdata = [];
 var lastSelectedData = [];
-var selectedModels = [];
 var viewingSelectedModels = false;
 var countBucket = 0;
-var wantsToSelectAllInFiltered = false;
-var wantsToSelectAllInBucket = false;
 var isOverlayOn = false;
 var isSafeSelected = false;
 var menuBarShowing = false;
 var modeIsResults = false;
+var selectAllIconApplied = false;
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -456,4 +454,35 @@ function valueToSearchInArrayForm(valueToSearch)
   array.push(valueToSearch);
 
   return array;
+}
+
+//returns an array of booleans of the selected models that has results
+function selectedModelsWithResults()
+{
+  var withResults = [];
+
+  for(var i = 0; i < selectedModels.length; i++)
+  {
+    //if is selected and has results
+    if(selectedModels[i] && preservedOrderData[i]["Results"] == "1")
+    {
+      withResults[i] = true;
+    }
+  }
+
+  return withResults;
+}
+
+function isSelectAllApplied(bool)
+{
+  if(bool)
+  {
+    selectAllIconApplied = true;
+    document.getElementById("select-all").classList.add("applied");
+  }
+  else
+  {
+    selectAllIconApplied = false;
+    document.getElementById("select-all").classList.remove("applied");
+  }
 }
