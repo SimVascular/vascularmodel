@@ -140,6 +140,7 @@ $("#download-all").click(function () {
   //counts number of selected models
   var countModels = selectedModels.filter(value => value === true).length;
 
+  //modelsWithResults is a boolean array of all the models with results and that are selected
   var modelsWithResults = selectedModelsWithResults();
   var countResults = modelsWithResults.filter(value => value === true).length;
   
@@ -151,8 +152,11 @@ $("#download-all").click(function () {
     //informs user what they are downloading depending on their mode
     if(modeIsResults)
     {
+      //calculates how many models do not have results
       var difference = countModels - countResults;
 
+      //grammar with plural
+      //informs user of simulation results that they cannot havwe
       if(difference == 1)
       {
         message = "One model does not have simulation results to download.\\n\\n";
@@ -162,8 +166,10 @@ $("#download-all").click(function () {
         message = difference + " models do not have simulation results to download.\\n\\n";
       }
 
+      //download confirmation
       message += "Are you sure you want to download ";
 
+      //grammar with plural
       if(countResults == 1)
       {
         message += "one simulation result?";
@@ -180,6 +186,7 @@ $("#download-all").click(function () {
     }
     else
     {
+      //confirmation to download when user is not viewing simulation results
       message = "Are you sure you want to download ";
       if(countModels == 1)
       {
@@ -200,7 +207,7 @@ $("#download-all").click(function () {
 
 async function downloadAllModels(boolModels){
   listOfNames = []
-  
+
   for(var i = 0; i < boolModels.length; i++)
   {
     //index of boolModels corresponds with preservedOrderData
@@ -210,7 +217,7 @@ async function downloadAllModels(boolModels){
       listOfNames.push(preservedOrderData[i]["Name"])
     }
   }
-  
+
   //sends to download all models
   for(var i = 0; i < listOfNames.length; i++)
   {

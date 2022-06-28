@@ -392,11 +392,6 @@ function generateContent(modelData) {
   {
     divModelImage.classList.add("selected");
   }
-  
-  //holds magnifying glass and image
-  let aWrap = document.createElement("a");
-  aWrap.classList.add("a-img")
-  // aWrap.setAttribute("id",modelData['Name']);
 
   //creates magnifying glass icon on the top-left
   let detailsImg = document.createElement("i");
@@ -416,12 +411,12 @@ function generateContent(modelData) {
 
   divModelImage.appendChild(innerImg)
   divModelImage.appendChild(detailsImg)
-  // divModelImage.appendChild(aWrap);
   div.appendChild(divModelImage);
 
   return div
 }
 
+//removes models from gallery
 function removeContent() {
   var modelList = document.getElementById("model-gallery")
   while (modelList.firstChild) {
@@ -437,17 +432,25 @@ function populate(dataArray, num_images = 24) {
   //clears confirm message if data repopulated
   $("#confirmBox").hide();
 
+  //model-gallery is where models are appended
   var modelList = document.getElementById("model-gallery")
+
   var arrayLength = dataArray.length;
+  //curIndex for the infinite scroll feature
   var ubound = arrayLength;
+  //updates ubound
   if (curIndex + num_images < arrayLength) {
     ubound = curIndex + num_images
   }
+  //generates content in regards to bounds
   for (var i = curIndex; i < ubound; i++) {
+    //newContent is the model img/div
     var newContent = generateContent(dataArray[i]);
     modelList.appendChild(newContent);
+    //hooks for models
     addClickListener(dataArray[i])
   }
+  //updates bounds/stopping point
   curIndex = ubound;
 }
 
@@ -462,26 +465,29 @@ function triggerFilter($bool) {
 }
 
 function checkWidth() {
-    if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
-        if (smallScreen) {
-          smallScreen = false;
-          updateCounters(lastFapplied, filteredData);
-        }
+  //at 767px, screen is considered "small"
+  if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
+    if (smallScreen) {
+      smallScreen = false;
+      updateCounters(lastFapplied, filteredData);
     }
-    else {
-      if (!smallScreen) {
-        smallScreen = true;
-        updateCounters(lastFapplied, filteredData);
-      }
+  }
+  else {
+    if (!smallScreen) {
+      smallScreen = true;
+      updateCounters(lastFapplied, filteredData);
     }
+  }
 }
 
+//sets selectedModels all to false
 function initializeSelectedModels()
 {
   selectedModels = new Array(data.length);
   selectedModels.fill(false);
 }
 
+//hooks that check width
 $(window).ready(checkWidth);
 $(window).resize(checkWidth);
 
@@ -491,8 +497,10 @@ function updateCounters(fApplied, fData, string)
   var count = selectedModels.filter(value => value === true).length;
   document.getElementById('selected-counter').textContent = count;
 
+  //the header bar with the counters
   var counterPanel = document.getElementById("counterPanel");
 
+  //totalLength is the total number of models possible in the current mode
   var totalLength;
   if(modeIsResults)
   {
@@ -503,16 +511,19 @@ function updateCounters(fApplied, fData, string)
     totalLength = data.length;
   }
 
+  //custom string for when someone just downloaded models
   if(string == "justdownloaded")
   {
     counterPanel.textContent = "";
   }
   else if (viewingSelectedModels)
   {
+    //if viewingSelectedModels, shows number of models selected
     if (smallScreen) {
       counterPanel.textContent = count + " selected";
     }
     else {
+      //grammar for plural
       if (count == 1) {
         counterPanel.textContent = count + " model selected";
       }
@@ -527,8 +538,11 @@ function updateCounters(fApplied, fData, string)
   }
   else if (!viewingSelectedModels)
   {
-    // lastFdata = fData;
+    //updates global variables
+    lastFdata = fData;
     lastFapplied = fApplied;
+
+    //if not viewingSelectedModels, shows number of models in gallery
     if (smallScreen) {
       if (fApplied) {
         counterPanel.textContent = fData.length + '/' + totalLength + ' models'
@@ -545,28 +559,35 @@ function updateCounters(fApplied, fData, string)
         document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
       }
     }
+
     //updates icon status
     viewSelectedIcon = document.getElementById("view-selected");
     viewSelectedIcon.classList.remove("applied");
   }
 }
 
+//listener for scroll to kick in infinite scroll
 window.addEventListener('scroll', () => {
   var footerHeight = $('#contact-section').height();
   // var footerHeight = document.getElementById("contact-section").height()
   var padding = 50;
   var dataToPopulate;
+
+  //which gallery is the scrolling filling?
   if(!viewingSelectedModels) {
     dataToPopulate = filteredData;
   }
   else {
     dataToPopulate = displayedData;
   }
+
+  //populates with 8 more models when someone scrolls
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
     populate(dataToPopulate, 8);
   }
 });
 
+//function to reset scroll
 function scrollToTop() {
   window.scrollTo(0, 0);
 }
@@ -655,6 +676,7 @@ var buttonFilter = {
     }
 }
 
+//function that works with error message
 function errorMessage(isOn, whichToDisplay)
 {
   var errorMsg = document.getElementById('error-msg');
