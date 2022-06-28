@@ -107,14 +107,21 @@
       </div>
     </nav>
 
+    <!-- main content -->
     <section class="share-main">
+      <!-- when one model is selected -->
       <div class="centerBox" id = "whenModelSelected">
         <div id="displayedModel">
+
+          <!-- menu bar and features icons -->
           <section class="menu-bar" id = "menu-bar">
             <div>Menu</div>
           </section>
           <section class="features" id = "features">
-            <table>            
+            <!-- creates a table to organize the icons -->
+            <table>
+              <!-- one icon per row -->
+              <!-- iconRow clears css for tr and tdClear does the same for td -->
               <tr class = "iconRow"> 
                 <td title="Download Model"
                 id="downloadModel"
@@ -142,16 +149,18 @@
         </div>
       </div>
 
+      <!-- when multiple models are shown in a table -->
       <div class="centerBox" id = "whenModelsSelected">
         <div id="modelsTable"></div>
-        
+        <!-- generated in js -->
         </div>
       </div>
 
+      <!-- when there is no model to display -->
       <div id="errorBlock" class="error-msg-block">
         <span id="error-msg"></span>
       </div>
-      <!-- error message -->
+      
     </section>
 
     <section id="contact-section">
