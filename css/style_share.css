@@ -35,6 +35,18 @@ table {
     border-collapse: collapse;
     width: 100%;
   }
+
+  @media screen and (max-width: 576px) {
+    table {
+      font-size: 4vw;
+    }
+
+    .buttonDownload {
+      font-size: 4vw;
+      padding: 2vw !important;
+      margin-bottom: 2vw !important;
+    }
+  }
   
   td, th {
     border: 2px solid var(--darkgrey);
