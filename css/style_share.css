@@ -51,7 +51,7 @@ table {
     background-color: var(--grey);
   }
   
-  .button {
+  .buttonDownload {
     border: 2px solid var(--grey);
     padding: 10px;
     margin-bottom: 15px;
@@ -59,7 +59,7 @@ table {
     display: block;
   }
 
-  .button:hover{
+  .buttonDownload:hover{
     background-color: var(--darkgrey);
   }
 

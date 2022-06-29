@@ -227,27 +227,16 @@ function getDescription()
 function displayTableModels()
 {
     //creates "header"
-    var div = document.getElementById("modelsTable");
+    var div = document.getElementById("tableHeader");
     var h1 = document.createElement("h1");
     h1.classList.add("titleForTableModels");
     h1.textContent = "You are viewing " + models.length + " models.";
     div.appendChild(h1);
 
-    // //creates button to download all buttons in table
-    // var downloadAllButton = document.createElement("button");
-    // downloadAllButton.classList.add("button");
-    // downloadAllButton.textContent = "Download All Models";
-    // downloadAllButton.setAttribute("id", "download-all-models");
-    // div.appendChild(downloadAllButton);
-
-    // //creates button to download all simulation results in table
-    // var simDownloadAllButton = document.createElement("button");
-    // simDownloadAllButton.classList.add("button");
-    // simDownloadAllButton.textContent = "Download All Simulation Results";
-    // simDownloadAllButton.setAttribute("id", "download-all-sim");
-    // div.appendChild(simDownloadAllButton);
+    //buttons then in the html
     
     //sets up table
+    var modelsTable = document.getElementById("modelsTable")
     var table = document.createElement("table");
     var categoryNames = getBareMinimum();
 
@@ -301,7 +290,7 @@ function displayTableModels()
         hooks.push(models[m]);
     }
     //adds table to multiple models page
-    div.appendChild(table);
+    modelsTable.appendChild(table);
 
     //creates loop for hooks outside of function to avoid bug
     for(var i = 0; i < hooks.length; i++)
@@ -448,7 +437,7 @@ async function downloadAll(array, string)
 {
     listOfNames = []
 
-    for(var i = 0; i < boolModels.length; i++)
+    for(var i = 0; i < array.length; i++)
     {
         //takes in list of names of all the models to download
         listOfNames.push(array[i]["Name"])
@@ -473,9 +462,9 @@ $("#downloadSimulations").click(function () {
 });
 
 //download model using anchor tag
-function download(string, modelToDownload = model)
+function download(string, modelToDownload = model["Name"])
 {
-  var modelName = modelToDownload["Name"];
+  var modelName = modelToDownload;
 
   //downloads model or simulation results
   if(string == "model")
