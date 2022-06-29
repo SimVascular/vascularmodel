@@ -24,6 +24,7 @@ body, html {
   height: 100%;
   font-family: "Poppins", sans-serif;
   font-size: 17px;
+  overflow-x: hidden;
 }
 
 .link {

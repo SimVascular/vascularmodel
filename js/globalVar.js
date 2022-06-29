@@ -380,7 +380,7 @@ function encodeBTOA(code)
     }
     if(code.charAt(i) == "/")
     {
-      code = replaceCharAt(i, "~");
+      code = replaceCharAt(i, "-");
     }
   }
 
@@ -397,7 +397,7 @@ function encodeATOB(code)
     {
       code = replaceCharAt(code, i, "=");
     }
-    if(code.charAt(i) == "~")
+    if(code.charAt(i) == "-")
     {
       code = replaceCharAt(code, i, "/");
     }
