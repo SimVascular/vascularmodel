@@ -124,6 +124,10 @@ Main Components
   margin-top: 30%;
 }
 
+#video {
+  border: 15px solid var(--grey);
+}
+
 @media only screen and (min-width: 1170px) {
   #holdsYTVideo {
     margin-top: 351px;

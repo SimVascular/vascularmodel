@@ -122,6 +122,7 @@ function updateCounters(fApplied, fData, string)
       //no specification of whether or not the filter is applied
       counterPanel.textContent = fData.length + '/' + totalLength + ' models';
 
+      //clears HTML to allow for dynamic putHelpWordHere
       document.getElementById("putHelpWordHere").innerHTML = "";
     }
     else {
@@ -132,6 +133,7 @@ function updateCounters(fApplied, fData, string)
         document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
       }
       
+      //adds text if the screen is not small
       document.getElementById("putHelpWordHere").textContent = "Help  ";
     }
 
