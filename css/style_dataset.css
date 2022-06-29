@@ -23,6 +23,7 @@ body {
   font-family: "Open Sans", sans-serif; */
   color: #331d35;
   background-color: #e7e7e7;
+  overflow-x: hidden;
 }
 
 a {
@@ -58,7 +59,7 @@ Main Components
 
 .cd-main-content {
   position: relative;
-  min-height: 75vh;
+  min-height: 100vh;
 }
 .cd-main-content:after {
   content: "";
@@ -197,6 +198,7 @@ gallery
   background-position: center;
   aspect-ratio: 1432 / 859;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
 }
 
 .model-image img {
@@ -462,15 +464,67 @@ error msg block behavior
 
 /* FORMAT FOR FEATURES BOX */
 
+.menu-bar {
+  position: fixed;
+  /* position is different because of rotation */
+  top: calc(216px + 48px);
+  right: calc(-252.5px/2 + 32px);
+  width: 252.5px;
+  height: auto;
+  z-index: 2;
+  transform: rotate(-90deg);
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--applied);
+  background-color: var(--select);
+  border: 2px solid var(--darkgrey);
+  padding-right: 5px;
+
+  border-top-left-radius: 30%;
+  border-top-right-radius: 30%;
+
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+
+  cursor: pointer;
+}
+
+.menu-bar div {
+  float: right;
+  padding: 5px;
+  font-size: 25px;
+}
+
+.menu-bar.features-is-visible {
+  right: calc(-252.5px/2 + 32px + 214px);
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
 .features {
-  top: 130px;
-  right: 15px;
-  width: 135px;
-  height: 300px;
-  box-shadow: 4px 4px 20px transparent;
+  top: calc(115px + 48px);
+  right: -300px;
   z-index: 1;
   position: fixed;
-  /* background-color:rgba(0, 0, 0, 0.1); */
+  height: 252.5px;
+  width: 214px;
+  background: white;
+  border: 2px solid var(--darkgrey);
+  box-shadow:rgba(0, 0, 0, 0.1);
+
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
+.features.features-is-visible {
+  right: 3px;
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
 }
 
 .features form {
@@ -500,7 +554,7 @@ error msg block behavior
   /* border: 2px solid black; */
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (min-width: 767px) {
   .spanForIcons:hover {
     color: var(--select);
     background-color: var(--applied);
@@ -524,10 +578,10 @@ error msg block behavior
   margin-top: 2px;
   color: white;
   z-index: 2;
-  text-shadow: 2px 2px 5px black;
+  text-shadow: 2px 2px 5px var(--black);
 }
 
-@-webkit-keyframes animateBucket {  
+@-webkit-keyframes animateMenu {  
   0% { 
     background-color: var(--select);
     color: var(--applied);
@@ -542,9 +596,8 @@ error msg block behavior
   }
 }
 
-.spanForIcons.selected {
-  /* color: var(--select); */
-  -webkit-animation-name: animateBucket;
+.menu-bar.selected {
+  -webkit-animation-name: animateMenu;
   -webkit-animation-iteration-count: 1;  
   -webkit-animation-duration: 0.75s; 
 } 
@@ -558,12 +611,23 @@ error msg block behavior
   border: 2px solid var(--grey);
   float: right;
   padding: 10px;
-  margin-left: 10px;
   cursor: pointer;
 }
 
-.closeAllButton:hover .returnToGalleryButton:hover{
+.closeAllButton:hover, .clearAllButton:hover, .returnToGalleryButton:hover{
   background-color: #ebebeb;
+}
+
+.filterButtons {
+  margin-bottom: 20px;
+  height: 60px;
+}
+
+.clearAllButton {
+  border: 2px solid var(--grey);
+  float: left;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .returnToGalleryButton {
@@ -610,7 +674,7 @@ error msg block behavior
   padding: 8px 10px 10px;
   box-sizing: border-box;
   text-align: center;
-  z-index: 2;
+  z-index: 99999;
 }
 #confirmBox .button {
   background-color: #ccc;
@@ -636,18 +700,33 @@ error msg block behavior
 
 #informUser
 {
-  display: none;
+  /* display: none; */
   background-color: var(--grey);
   border-radius: 5px;
   border: 2px solid var(--darkgrey);
   position: fixed;
-  top: 30px;
+  /* top: 30px; */
   padding: 8px 10px 10px;
   box-sizing: border-box;
   z-index: 99999;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 350px;
 }
+
+#informUser .button {
+  background-color: #ccc;
+  display: inline-block;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+  padding: 2px;
+  text-align: center;
+  width: 80px;
+  cursor: pointer;
+  margin-top: 15px;
+  float: right;
+}
+
 #informUser .message
 {
   text-align: center;

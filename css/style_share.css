@@ -5,7 +5,7 @@
 }
 
 .centerBox {
-    box-shadow: 0px 0px 2px black;
+    box-shadow: 0px 0px 2px var(--black);
     background-color: white;
     position: relative;
     width: 95%;
@@ -41,13 +41,18 @@ table {
     text-align: left;
     padding: 8px;
   }
+
+  .tdClear {
+    border: 0px;
+    padding: 0px;
+  }
   
   tr:nth-child(even) {
     background-color: var(--grey);
   }
 
   .button:hover{
-    background-color: #ebebeb;
+    background-color: var(--black);
   }
   
   .button {
@@ -58,28 +63,53 @@ table {
   }
 
   .noStyle {
-    color: black;
+    color: var(--black);
   }
 
   .noStyle:hover {
-    color: black;
+    color: var(--black);
     text-decoration: none;
+  }
+
+  .menu-bar {
+    position: absolute;
+    color: var(--darkdarkgrey);
+    background-color: var(--grey);
+  }
+
+  .menu-bar.small {
+    top: calc(5vw + 53px + 51px);
+    width: 170px;
+    right: calc(-170px/2 + 32px);
+  }
+
+  .menu-bar.features-is-visible.small {
+    right: calc(-170px/2 + 29px + 90px);
+  }
+  
+  .menu-bar.big {
+    top: calc(5vw + 100px + 50px);
+    width: 260px;
+    right: calc(-260px/2 + 32px);
+  }
+
+  .menu-bar.features-is-visible.big {
+    right: calc(-260px/2 + 29px + 90px);
   }
   
   .features {
     position: absolute;
-    top: 9vw;
-    right: 0px;
-    width: 120px;
-    height: 200px;
+    top: calc(5vw + 40px);
+    right: -300px;
+    width: auto;
+    height: auto;
+    border: none;
+    background: transparent;
   }
 
-  .features div {
-    height: auto;
-    width: auto;
-    padding: 15px;
-    float: right;
-}
+  .features.features-is-visible {
+    right: 3.5px;
+  }
 
   h1 {
     font-size: 5vw;
@@ -100,15 +130,15 @@ table {
   .spanForIcons {
     border-radius: 0%;
     background-color: var(--grey);
-    color: #424651 ;
-    border: 2px solid var(--grey);
+    color: var(--darkdarkgrey);
+    border: 2px solid var(--darkgrey);
   }
 
   .spanForIcons:hover {
     border-radius: 0%;
-    background-color: #424651 ;
+    background-color: var(--darkdarkgrey) ;
     color: var(--grey);
-    border: 2px solid var(--grey);
+    border: 2px solid var(--darkgrey);
   }
 
   .featuresIcons {
@@ -138,4 +168,8 @@ table {
   .modelRow:hover {
     background-color: var(--darkgrey);
     cursor: pointer;
+  }
+
+  .iconRow {
+    background-color: transparent !important;
   }

@@ -1,34 +1,47 @@
-var data;
-var filteredData;
-var preservedOrderData = [];
-var displayedData;
-var viewingModel = ''
-var curIndex = 0;
-var smallScreen = false
-var lastFapplied = 0;
-var lastFdata = [];
-var lastSelectedData = [];
-var selectedModels = [];
-var viewingSelectedModels = false;
-var countBucket = 0;
-var wantsToSelectAllInFiltered = false;
-var wantsToSelectAllInBucket = false;
-var isOverlayOn = false;
-var isSafeSelected = false;
+//all global variables to stay organized
 
+//all arrays of datas:
+  //data has all the models read in the csv, scrambled
+  var data;
+  //filteredData has the models that correspond to the filters selected
+  var filteredData;
+  //hasResultsData is the models that have simulation results
+  var hasResultsData;
+  //preservedOrderData is data read from the csv but unscrambled
+  var preservedOrderData = [];
+  //displayedData is the data that is displayed in the view selected models
+  var displayedData;
+  //selectedModels is an array of booleans that contains which models are selected by the user
+  var selectedModels = [];
 
-//returns the keys of *all* the categories
+//other global variables:
+  var viewingModel = '';
+  var curIndex = 0;
+  var smallScreen = false
+  var lastFapplied = 0;
+  var lastFdata = [];
+  var lastSelectedData = [];
+  var viewingSelectedModels = false;
+  var countBucket = 0;
+  var isOverlayOn = false;
+  var isSafeSelected = false;
+  var menuBarShowing = false;
+  var modeIsResults = false;
+  var selectAllIconApplied = false;
+
+//returns the keys of all the categories except "Results"
 function getAllCategories()
 {
   var allCategories = []
 
   for (const [key, value] of Object.entries(data[0])) {
-    allCategories.push(key);
+    if(key != "Results")
+      allCategories.push(key);
   }
-
   return allCategories;
 }
 
+//returns titles for the share.html table
 function getDetailsTitles()
 {
   var allCategories = getAllCategories();
@@ -49,6 +62,7 @@ function getDetailsTitles()
   return output;
 }
 
+//returns titles for the share multiple models table
 function getBareMinimum()
 {
   var output = ["Name", "Species", "Anatomy"]
@@ -56,7 +70,7 @@ function getBareMinimum()
   return output;
 }
 
-//returns the keys of all the categories except "Size" and "Name"
+//excludes titles that aren't filtered in the filter bar
 function getFilterTitles()
 {
   var allCategories = getAllCategories()
@@ -104,15 +118,17 @@ function getMustContainFilterTitles()
   return returnCategories;
 }
 
-//returns the actual amount of possibilities of values under key
+//returns all possible options under each category
 function namesOfValuesPerKey(categoryName)
 {
   var checkboxNameSet = new Set();
 
+  //does not add element if "-"
   for(var d = 0; d < data.length; d++)
   {
     if(data[d][categoryName].indexOf("_") != -1)
     {
+      //if multiple categories to add separated by "_", different code
       var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
       for(var a = 0; a < toAdd.length; a++)
       {
@@ -155,6 +171,7 @@ function checkboxNameInArrayForm(checkboxNameArr)
 //grammar for commas and ands
 function listFormater(string)
 {
+  //delimtiter "_" interferes with some names of models
   if(string.indexOf("_") == -1)
   {
     return string;
@@ -184,9 +201,11 @@ function listFormater(string)
 
 function ageCalculator(value)
 {
+  //calculates age in the most relevant unit
+  //rounds to the nearest 100s
   if(value > 1)
   {
-    return value + " years"
+    return Math.round(value*100)/100 + " years"
   }
   else
   {
@@ -207,80 +226,113 @@ function ageCalculator(value)
   }
 }
 
+//reads "\url()" format in URL
 function URLMaker(notes)
-{ 
+{
   indexOfStartOfTag = notes.indexOf("\\url");
 
   indexOfStartOfLink = notes.indexOf("(\"");
   indexOfEndOfLink = notes.indexOf("\",", indexOfStartOfLink);
+  //extracts URL from notes
   url = notes.substring(indexOfStartOfLink + 2, indexOfEndOfLink);
 
   indexOfStartOfWord = notes.indexOf(" \"", indexOfEndOfLink);
   indexOfEndOfWord = notes.indexOf("\")", indexOfStartOfWord);
+  //extracts word that stands for URL from notes
   word = notes.substring(indexOfStartOfWord + 2, indexOfEndOfWord);
 
+  //creates span/div before URL
   pBefore = createpBeforeAndAfter(notes.substring(0, indexOfStartOfTag), true);
 
+  //creates anchor element with URL
   var a = document.createElement("a")
   a.setAttribute("href", url);
   a.setAttribute("target", "_blank");
   a.classList.add("link");
   a.textContent = word;
 
+  //if contains a .zip, allows for a downlaod
   if(url.includes(".zip"))
   {
     a.setAttribute("download", "");
   }
+
+  //creates span/div after URL
   pAfter = createpBeforeAndAfter(notes.substring(indexOfEndOfWord + 2), false);
   
+  //returns elements to be appended after
   return [pBefore, a, pAfter];
 }
 
+//creates span/div before/after URL
 function createpBeforeAndAfter(text, isBefore)
 {
+  //\n conflicts with \url reading
   if(text.includes("\\n") && !text.includes("\\url"))
   {
-    var p = document.createElement("div");
-    p.classList.add("newParagraph");
-    
-    while(text.includes("\\n"))
-    {
-      var index = text.indexOf("\\n");
-      var pDiv = document.createElement("div");
-      pDiv.classList.add("newParagraph");
-      
-      pDiv.textContent = text.substring(0, index);
-      text = text.substring(index + 2);
-      
-      p.appendChild(pDiv);
-    }
-
-    if(isBefore)
-    {
-      p.classList.add("sameLine");
-      var pDiv = document.createElement("span");
-    }
-    else
-    {
-      pDiv.classList.add("newParagraph");
-      var pDiv = document.createElement("div");
-    }
-    pDiv.textContent = text;
-    p.appendChild(pDiv);
+    //returns p as a DIV with new lines in the form of new elements
+    p = newLineNoURL(text, isBefore);
   }
   else
   {
+    //creates span if not \n or if URL
     var p = document.createElement("span");
     p.textContent = text;
   }
+
   return p;
-  
 }
 
+//works with \n in CSV to add a new line
+function newLineNoURL(text, isBefore)
+{
+  //creates div if \n
+  var p = document.createElement("div");
+  p.classList.add("newParagraph");
+  
+  //allows for multiple \n
+  while(text.includes("\\n"))
+  {
+    var index = text.indexOf("\\n");
+    var pDiv = document.createElement("div");
+    pDiv.classList.add("newParagraph");
+    
+    //appends textContent between each \n
+    pDiv.textContent = text.substring(0, index);
+    text = text.substring(index + 2);
+    
+    p.appendChild(pDiv);
+  }
+
+  //checks whether element is pBefore or pAfter
+  //doesn't want to make a line break if there is a URL later
+  if(isBefore)
+  {
+    //if before, creates a span so that there is no line break before the URL
+    p.classList.add("sameLine");
+    p.classList.remove("newParagraph");
+    var pDiv = document.createElement("span");
+  }
+  else
+  {
+    //creates div to have a line break
+    pDiv.classList.add("newParagraph");
+    var pDiv = document.createElement("div");
+  }
+
+  //appends last element to div
+  pDiv.textContent = text;
+  p.appendChild(pDiv);
+
+  return p;
+}
+
+//function to copy the shareable links
 function copyText(message) {
   navigator.clipboard.writeText(message);
 }
 
+//converts boolean array to an array with Y and N
 function boolToYN(array)
 {
   binary = "";
@@ -298,6 +350,8 @@ function boolToYN(array)
   return binary;
 }
 
+//accounts for when the code is invalid
+//decodes RLE to Y and N string
 function decodeRLE(binary) {
   if(binary == "invalid code")
   {
@@ -307,38 +361,43 @@ function decodeRLE(binary) {
   return binary.replace(/(\d+)([ \w])/g, (_, count, chr) => chr.repeat(count));
 };
 
+//encodes Y and N to RLE
 function encodeRLE(binary) {
   return binary.replace(/([ \w])\1+/g, (group, chr) => group.length + chr );
 };
 
+//takes in RLE, gives out base64 conversion
 function encodeBTOA(code)
 {
   code = btoa(code);
 
+  //accounts for reserved characters URL
   for(var i = 0; i < code.length; i++)
   {
     if(code.charAt(i) == "=")
     {
-      code = replaceCharAt(code, i, "^");
+      code = replaceCharAt(code, i, "_");
     }
     if(code.charAt(i) == "/")
     {
-      code = replaceCharAt(i, "~");
+      code = replaceCharAt(i, "-");
     }
   }
 
   return code;
 }
 
+//takes in base64 and returns RLE
 function encodeATOB(code)
 {
+  //un-does conversions for URL
   for(var i = 0; i < code.length; i++)
   {
-    if(code.charAt(i) == "^")
+    if(code.charAt(i) == "_")
     {
       code = replaceCharAt(code, i, "=");
     }
-    if(code.charAt(i) == "~")
+    if(code.charAt(i) == "-")
     {
       code = replaceCharAt(code, i, "/");
     }
@@ -355,6 +414,7 @@ function encodeATOB(code)
   return code;
 }
 
+//function to check if str is valid base64
 function isBase64(str) {
   if (str ==='' || str.trim() ===''){ return false; }
   try {
@@ -364,6 +424,7 @@ function isBase64(str) {
   }
 }
 
+//function to help with character replacements
 function replaceCharAt(code, i, char)
 {
   var newCode = code.substring(0, i);
@@ -372,6 +433,7 @@ function replaceCharAt(code, i, char)
   return newCode;
 }
 
+//creates array of N except for one Y
 function makeshiftSelectedModels(preservedOrderData, model)
 {
   //creates makeshift selectedmodels array
@@ -382,4 +444,55 @@ function makeshiftSelectedModels(preservedOrderData, model)
   array[indexOfModel] = "Y";
   array = array.toString().replaceAll(',', '')
   return array;
+}
+
+//translates string with spaces to an array
+function valueToSearchInArrayForm(valueToSearch)
+{
+  var array = []
+  var indexOfSpace = valueToSearch.indexOf(" ");
+
+  while(indexOfSpace != -1)
+  {
+    array.push(valueToSearch.substring(0, indexOfSpace));
+    valueToSearch = valueToSearch.substring(indexOfSpace + 1);
+    indexOfSpace = valueToSearch.indexOf(" ")
+  }
+
+  array.push(valueToSearch);
+
+  return array;
+}
+
+//returns an array of booleans of the selected models that has results
+function selectedModelsWithResults()
+{
+  var withResults = [];
+
+  for(var i = 0; i < selectedModels.length; i++)
+  {
+    //if is selected and has results
+    if(selectedModels[i] && preservedOrderData[i]["Results"] == "1")
+    {
+      withResults[i] = true;
+    }
+  }
+
+  return withResults;
+}
+
+//updates the select-all icon
+//updates global variable selectAllIconApplied and the class the element select-all has
+function isSelectAllApplied(bool)
+{
+  if(bool)
+  {
+    selectAllIconApplied = true;
+    document.getElementById("select-all").classList.add("applied");
+  }
+  else
+  {
+    selectAllIconApplied = false;
+    document.getElementById("select-all").classList.remove("applied");
+  }
 }
