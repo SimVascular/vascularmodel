@@ -54,7 +54,7 @@ function getVariable()
     else{
         // multiple model display
         displayErrorMessage(3);
-        displayTableModels(models);
+        displayTableModels();
     }
 }
 
@@ -224,7 +224,7 @@ function getDescription()
 }
 
 //function to display multiple models in a table
-function displayTableModels(models)
+function displayTableModels()
 {
     //creates "header"
     var div = document.getElementById("modelsTable");
@@ -232,6 +232,20 @@ function displayTableModels(models)
     h1.classList.add("titleForTableModels");
     h1.textContent = "You are viewing " + models.length + " models.";
     div.appendChild(h1);
+
+    // //creates button to download all buttons in table
+    // var downloadAllButton = document.createElement("button");
+    // downloadAllButton.classList.add("button");
+    // downloadAllButton.textContent = "Download All Models";
+    // downloadAllButton.setAttribute("id", "download-all-models");
+    // div.appendChild(downloadAllButton);
+
+    // //creates button to download all simulation results in table
+    // var simDownloadAllButton = document.createElement("button");
+    // simDownloadAllButton.classList.add("button");
+    // simDownloadAllButton.textContent = "Download All Simulation Results";
+    // simDownloadAllButton.setAttribute("id", "download-all-sim");
+    // div.appendChild(simDownloadAllButton);
     
     //sets up table
     var table = document.createElement("table");
@@ -381,6 +395,73 @@ function createIcons()
     }
 }
 
+//button to download all models in table
+$("#download-all-models").click(function () {
+    //confirmation before downloading
+    var message = "Are you sure you want to download " + models.length + " models?";
+
+    //if the user clicks "yes," downloads all selected models
+    doConfirm(message, function yes() {
+        downloadAll(models, "model");
+    });
+});
+
+//button to download all simulation results in table
+$("#download-all-sim").click(function () {
+    var simModels = []
+
+    for(var i = 0; i < models.length; i++)
+    {
+        if(models[i]["Results"] == "1")
+        {
+            simModels.push(models[i]);
+        }
+    }
+
+    if(simModels.length == 0)
+    {
+        informUser("No model has simulation results","lower", true)
+    }
+    if(simModels.length == 1)
+    {
+        //confirmation to download when user is not viewing simulation results
+        var message = "Are you sure you want to download one simulation result?";
+
+        //if the user clicks "yes," downloads all selected models
+        doConfirm(message, function yes() {
+            downloadAll(simModels, "simulation");
+        });
+    }
+    else
+    {
+        //confirmation to download when user is not viewing simulation results
+        var message = "Are you sure you want to download " + simModels.length + " simulation results?";
+
+        //if the user clicks "yes," downloads all selected models
+        doConfirm(message, function yes() {
+            downloadAll(simModels, "simulation");
+        });
+    }
+});
+
+async function downloadAll(array, string)
+{
+    listOfNames = []
+
+    for(var i = 0; i < boolModels.length; i++)
+    {
+        //takes in list of names of all the models to download
+        listOfNames.push(array[i]["Name"])
+    }
+
+    //sends to download all models
+    for(var i = 0; i < listOfNames.length; i++)
+    {
+        download(string, listOfNames[i]);
+        await new Promise(r => setTimeout(r, 3));
+    }
+}
+
 //icon to download model
 $("#downloadModel").click(function () {
     download("model");
@@ -392,9 +473,9 @@ $("#downloadSimulations").click(function () {
 });
 
 //download model using anchor tag
-function download(string)
+function download(string, modelToDownload = model)
 {
-  var modelName = model["Name"];
+  var modelName = modelToDownload["Name"];
 
   //downloads model or simulation results
   if(string == "model")

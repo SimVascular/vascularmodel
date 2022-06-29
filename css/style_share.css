@@ -50,16 +50,17 @@ table {
   tr:nth-child(even) {
     background-color: var(--grey);
   }
-
-  .button:hover{
-    background-color: var(--black);
-  }
   
   .button {
-    border: 2px solid grey;
+    border: 2px solid var(--grey);
     padding: 10px;
-    margin-top: 15px;
+    margin-bottom: 15px;
     cursor: pointer;
+    display: block;
+  }
+
+  .button:hover{
+    background-color: var(--darkgrey);
   }
 
   .noStyle {
