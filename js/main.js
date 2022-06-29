@@ -143,6 +143,11 @@ function updateCounters(fApplied, fData, string)
   }
 } //end updateCounters
 
+function show3D(model)
+{
+  console.log("enters")
+}
+
 //code for modal-greeting
 function greetingText(data)
 {
@@ -441,14 +446,20 @@ function generateContent(modelData) {
   //creates ID for hook to open modalDialog
   detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
+  let threeD = document.createElement("i");
+  threeD.textContent = "3D"
+  threeD.classList.add("bottom-left");
+  threeD.setAttribute("id", modelData['Name'] + "_3D")
+  
   //creates image of model
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id",modelData['Name']);
 
-  divModelImage.appendChild(innerImg)
-  divModelImage.appendChild(detailsImg)
+  divModelImage.appendChild(innerImg);
+  divModelImage.appendChild(detailsImg);
+  divModelImage.appendChild(threeD);
   div.appendChild(divModelImage);
 
   return div
@@ -460,6 +471,8 @@ function addClickListener(model) {
   $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
   // selects model if you click on it
   $('#' + model['Name']).click(function() {updatedSelectedList(model);});
+  //show 3D version of model if you click on it
+  $("#" + model['Name'] + "_3D").click(function() {show3D(model);});
 }
 
 //removes models from gallery
