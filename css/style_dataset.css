@@ -23,6 +23,7 @@ body {
   font-family: "Open Sans", sans-serif; */
   color: #331d35;
   background-color: #e7e7e7;
+  overflow-x: hidden;
 }
 
 a {
@@ -466,7 +467,7 @@ error msg block behavior
   position: fixed;
   /* position is different because of rotation */
   top: calc(216px + 48px);
-  right: calc(-252.5px/2 + 30px);
+  right: calc(-252.5px/2 + 32px);
   width: 252.5px;
   height: auto;
   z-index: 2;
