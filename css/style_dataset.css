@@ -660,7 +660,7 @@ error msg block behavior
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
 
-#overlayModal, #vidOverlay{
+#overlay, #vidOverlay{
   position: fixed;
   display: none;
   width: 100%;

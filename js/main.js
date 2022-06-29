@@ -289,7 +289,7 @@ function greetingText(data)
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
 //deals with clicking on the overlay
-$('#overlayModal').click(function() {
+$('#overlay').click(function() {
   //checks if safe was selected
   checkOverlay();
   //allows for click and unclick
@@ -321,7 +321,7 @@ function checkOverlay(){
 //turns overlay and all accompanying elements on
 function overlayOn(){
   //updates displat and global variable isOverlayOn
-  document.getElementById("overlayModal").style.display = "block";
+  document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
   //opens modalDialog
