@@ -5,7 +5,7 @@
 }
 
 .centerBox {
-    box-shadow: 0px 0px 2px black;
+    box-shadow: 0px 0px 2px var(--black);
     background-color: white;
     position: relative;
     width: 95%;
@@ -52,7 +52,7 @@ table {
   }
 
   .button:hover{
-    background-color: black;
+    background-color: var(--black);
   }
   
   .button {
@@ -63,17 +63,17 @@ table {
   }
 
   .noStyle {
-    color: black;
+    color: var(--black);
   }
 
   .noStyle:hover {
-    color: black;
+    color: var(--black);
     text-decoration: none;
   }
 
   .menu-bar {
     position: absolute;
-    color: #424651;
+    color: var(--darkdarkgrey);
     background-color: var(--grey);
   }
 
@@ -130,13 +130,13 @@ table {
   .spanForIcons {
     border-radius: 0%;
     background-color: var(--grey);
-    color: #424651 ;
+    color: var(--darkdarkgrey);
     border: 2px solid var(--darkgrey);
   }
 
   .spanForIcons:hover {
     border-radius: 0%;
-    background-color: #424651 ;
+    background-color: var(--darkdarkgrey) ;
     color: var(--grey);
     border: 2px solid var(--darkgrey);
   }

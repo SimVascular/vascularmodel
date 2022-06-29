@@ -577,7 +577,7 @@ error msg block behavior
   margin-top: 2px;
   color: white;
   z-index: 2;
-  text-shadow: 2px 2px 5px black;
+  text-shadow: 2px 2px 5px var(--black);
 }
 
 @-webkit-keyframes animateMenu {  

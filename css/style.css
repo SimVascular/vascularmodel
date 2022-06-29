@@ -2,6 +2,7 @@
 
 /* define nice colors from palette (taken from https://hookagency.com/blog/website-color-schemes/)*/
 :root {
+  --black: black;
   --dark1: #172229;
   --dark2: #3a596e;
     --dark2shade: #2E4758;
@@ -12,6 +13,7 @@
   --light2: #f05d62;
   --grey: #e6e6e6;
   --darkgrey: #d9d9d9;
+  --darkdarkgrey: #424651;
   --lightgrey: #f7f7f7;
   --white: #ffffff;
   --select: #c1dbde;
@@ -362,7 +364,7 @@ ul.contact-address li i {
 /* ============= Contact us ============= */
 
 .contact-us {
-  color: black;
+  color: var(--black);
   width:100%;
   height:700px;
   overflow-y: auto;
