@@ -234,9 +234,39 @@ function displayTableModels()
     div.appendChild(h1);
 
     //buttons then in the html
+
+    var simModels = []
+
+    for(var i = 0; i < models.length; i++)
+    {
+        if(models[i]["Results"] == "1")
+        {
+            simModels.push(models[i]);
+        }
+    }
+
+    if(simModels.length == 0)
+    {
+        var simButton = document.getElementById("holdsSimButton");
+        simButton.innerHTML = "";
+    }
     
-    //sets up table
+    //creates table
+    var output = createMultiModelTable();
+
+    //adds table to multiple models page
     var modelsTable = document.getElementById("modelsTable")
+    modelsTable.appendChild(output[0]);
+
+    //creates loop for hooks outside of function to avoid bug
+    for(var i = 0; i < output[1].length; i++)
+    {
+        createHook(output[1][i]);
+    }
+}
+
+function createMultiModelTable()
+{
     var table = document.createElement("table");
     var categoryNames = getBareMinimum();
 
@@ -289,14 +319,8 @@ function displayTableModels()
         //saves model to later create hook
         hooks.push(models[m]);
     }
-    //adds table to multiple models page
-    modelsTable.appendChild(table);
 
-    //creates loop for hooks outside of function to avoid bug
-    for(var i = 0; i < hooks.length; i++)
-    {
-        createHook(hooks[i]);
-    }
+    return [table, hooks]
 }
 
 //creates hooks for the rows of the models in the table
@@ -396,6 +420,7 @@ $("#download-all-models").click(function () {
 });
 
 //button to download all simulation results in table
+//if this button exists, there are simulation results to download
 $("#download-all-sim").click(function () {
     var simModels = []
 
@@ -407,10 +432,6 @@ $("#download-all-sim").click(function () {
         }
     }
 
-    if(simModels.length == 0)
-    {
-        informUser("No model has simulation results","lower", true)
-    }
     if(simModels.length == 1)
     {
         //confirmation to download when user is not viewing simulation results
