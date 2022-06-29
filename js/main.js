@@ -465,6 +465,7 @@ function triggerFilter($bool) {
   });
 }
 
+//checks width of screen and updates counters as needed
 function checkWidth() {
   //at 767px, screen is considered "small"
   if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {

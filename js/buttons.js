@@ -196,7 +196,10 @@ $("#download-all").click(function () {
       }
       else
       {
+        //lets the user know that they cannot download anything
         message = "Your selected models do not have simulation results to download."
+
+        //specifies that the message is lower and has an Okay button
         informUser(message, "lower", true);
       }
     }
@@ -221,6 +224,7 @@ $("#download-all").click(function () {
   }
 });
 
+//deals with downloading multiple models
 async function downloadAllModels(boolModels){
   listOfNames = []
 
@@ -488,8 +492,12 @@ function doConfirm(msg, yesFn, noFn) {
 
 //informs user of a message
 function informUser(msg, string = "", hasOk = false) {
+  //gets element informUser
   var informUser = $("#informUser");
+
+  //message is equal to msg passed in parameter
   informUser.find(".message").text(msg);
+
   informUser.show();
 
   //reveals the box with opacity

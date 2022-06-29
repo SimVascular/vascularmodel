@@ -466,7 +466,7 @@ error msg block behavior
   position: fixed;
   /* position is different because of rotation */
   top: calc(216px + 48px);
-  right: calc(-252.5px/2 + 27px);
+  right: calc(-252.5px/2 + 30px);
   width: 252.5px;
   height: auto;
   z-index: 2;

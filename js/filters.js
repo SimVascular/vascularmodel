@@ -514,6 +514,8 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
   filter.fill(false);
 
   var allCategories = getAllCategories();
+  
+  //categoriesWith1s is an array with i.e. "Images", "Simulations"
   var categoriesWith1s = []
   
   for(var i = 0; i < allCategories.length; i++)
@@ -523,8 +525,7 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
       categoriesWith1s.push(allCategories[i].toLowerCase())
     }
   }
-  //categoriesWith1s is an array with i.e. "Images", "Simulations"
-      
+   
   //filtering part
   for (var i = 0; i < partialData.length; i++) {
     //traverses through all keys and values

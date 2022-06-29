@@ -1,25 +1,33 @@
 //all global variables to stay organized
 
-//all arrays of datas
-var data;
-var filteredData;
-var hasResultsData;
-var preservedOrderData = [];
-var displayedData;
-var selectedModels = [];
-var viewingModel = '';
-var curIndex = 0;
-var smallScreen = false
-var lastFapplied = 0;
-var lastFdata = [];
-var lastSelectedData = [];
-var viewingSelectedModels = false;
-var countBucket = 0;
-var isOverlayOn = false;
-var isSafeSelected = false;
-var menuBarShowing = false;
-var modeIsResults = false;
-var selectAllIconApplied = false;
+//all arrays of datas:
+  //data has all the models read in the csv, scrambled
+  var data;
+  //filteredData has the models that correspond to the filters selected
+  var filteredData;
+  //hasResultsData is the models that have simulation results
+  var hasResultsData;
+  //preservedOrderData is data read from the csv but unscrambled
+  var preservedOrderData = [];
+  //displayedData is the data that is displayed in the view selected models
+  var displayedData;
+  //selectedModels is an array of booleans that contains which models are selected by the user
+  var selectedModels = [];
+
+//other global variables:
+  var viewingModel = '';
+  var curIndex = 0;
+  var smallScreen = false
+  var lastFapplied = 0;
+  var lastFdata = [];
+  var lastSelectedData = [];
+  var viewingSelectedModels = false;
+  var countBucket = 0;
+  var isOverlayOn = false;
+  var isSafeSelected = false;
+  var menuBarShowing = false;
+  var modeIsResults = false;
+  var selectAllIconApplied = false;
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()

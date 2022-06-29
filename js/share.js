@@ -331,8 +331,10 @@ $("#menu-bar").click(function() {
     }
   });
 
+//creates the icons
 function createIcons()
 {
+    //fills downloadModel with an icon
     var downloadModel = document.getElementById("downloadModel");
     var icon = document.createElement("i");
     icon.classList.add("fa-solid");
@@ -340,6 +342,7 @@ function createIcons()
     icon.classList.add("featuresIcons")
     downloadModel.appendChild(icon);
 
+    //fills goToGallery with an icon
     var goToGallery = document.getElementById("goToGallery");
     var icon = document.createElement("i");
     icon.classList.add("fa-solid");
@@ -347,25 +350,32 @@ function createIcons()
     icon.classList.add("featuresIcons")
     goToGallery.appendChild(icon);
 
+    //gets menuBar element
     var menuBar = document.getElementById("menu-bar");
 
+    //if we should show the download simulation results icon
     if(model["Results"] == 1)
-    {
+    {  
+        //create the box that contains the download-results icon
         var results = document.getElementById("downloadSimulations");
         results.classList.add("spanForIcons");
         results.classList.add("centerIcon");
         results.setAttribute("title", "Download Simulation Results");
 
+        //create the download-results icon
         var icon = document.createElement("i");
         icon.classList.add("fa-solid");
         icon.classList.add("fa-video");
-        icon.classList.add("featuresIcons")
+        icon.classList.add("featuresIcons");
+
         results.appendChild(icon);
 
+        //makes menuBar big to adjust to third icon
         menuBar.classList.add("big");
     }
     else
     {
+        //makes menuBar small to contain two icons only
         menuBar.classList.add("small");
     }
 }
@@ -375,6 +385,7 @@ $("#downloadModel").click(function () {
     download("model");
 });
 
+//icon to download simulation
 $("#downloadSimulations").click(function () {
     download("simulation");
 });
