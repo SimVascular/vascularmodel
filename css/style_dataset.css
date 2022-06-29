@@ -111,7 +111,24 @@ Main Components
   float: center;
 }
 
-/* --------------------------------
+#help {
+  float: right;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+#holdsYTVideo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30%;
+}
+
+@media only screen and (min-width: 1170px) {
+  #holdsYTVideo {
+    margin-top: 351px;
+  }
+}
 
 xgallery
 
@@ -639,7 +656,7 @@ error msg block behavior
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
 
-#overlay {
+#overlayModal, #vidOverlay{
   position: fixed;
   display: none;
   width: 100%;

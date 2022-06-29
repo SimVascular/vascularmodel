@@ -69,6 +69,7 @@
         <div class="cd-tab-filter" style = "height: auto;">
           <div>
             <span id="counterPanel"></span>
+            <span id="help"><span id ="putHelpWordHere"></span><i class="fa-regular fa-circle-question"></i></span>
           </div>
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
@@ -84,6 +85,12 @@
       <div id="informUser" style = "opacity: 0;">
         <div class="message"></div>
         <div id="okayGoesHere"></div>
+      </div>
+
+      <div id="vidOverlay">
+        <div id="holdsYTVideo" style = "height: 0px;">
+          <iframe id = "video" width="560" height="315"title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- As a trick, we load the loading_image first but keep it 0px to not display it -->

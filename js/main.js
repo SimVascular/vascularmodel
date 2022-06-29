@@ -73,6 +73,7 @@ function updateCounters(fApplied, fData, string)
 
   //the header bar with the counters
   var counterPanel = document.getElementById("counterPanel");
+  var helpButton = document.getElementById("help");
 
   //totalLength is the total number of models possible in the current mode
   var totalLength;
@@ -128,6 +129,9 @@ function updateCounters(fApplied, fData, string)
       else {
         document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
       }
+      
+      var span = document.getElementById("putHelpWordHere");
+      span.textContent = "Help  ";
     }
 
     //updates icon status
@@ -282,7 +286,7 @@ function greetingText(data)
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
 //deals with clicking on the overlay
-$('#overlay').click(function() {
+$('#overlayModal').click(function() {
   //checks if safe was selected
   checkOverlay();
   //allows for click and unclick
@@ -314,7 +318,7 @@ function checkOverlay(){
 //turns overlay and all accompanying elements on
 function overlayOn(){
   //updates displat and global variable isOverlayOn
-  document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlayModal").style.display = "block";
   isOverlayOn = true;
 
   //opens modalDialog
