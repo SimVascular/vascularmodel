@@ -121,6 +121,8 @@ function updateCounters(fApplied, fData, string)
     if (smallScreen) {
       //no specification of whether or not the filter is applied
       counterPanel.textContent = fData.length + '/' + totalLength + ' models';
+
+      document.getElementById("putHelpWordHere").innerHTML = "";
     }
     else {
       if (fApplied) {
@@ -130,8 +132,7 @@ function updateCounters(fApplied, fData, string)
         document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
       }
       
-      var span = document.getElementById("putHelpWordHere");
-      span.textContent = "Help  ";
+      document.getElementById("putHelpWordHere").textContent = "Help  ";
     }
 
     //updates icon status
