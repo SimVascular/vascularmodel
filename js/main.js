@@ -30,128 +30,111 @@ $(document).ready(function($){
   updateCounters(false, data);
 
   //creates html for filters
+  //this function is in filters.js
   getFilterMenu();
 
   //populates gallery with all models
   populate(data);
-
-  //open/close lateral filter
-  //sets listeners for Close button
-  $('.cd-filter-trigger').on('click', function(){
-    triggerFilter(true);
-  });
-
-  $('.cd-filter .cd-close').on('click', function(){
-    triggerFilter(false);
-  });
-
-  // code for button that no longer exists
-  // $('#apply-btn').on('click', function(){
-  //   applyFilters();
-  //   triggerFilter(false);
-  // });
-
-  //close filter dropdown inside lateral .cd-filter
-	$('.cd-filter-block h4').on('click', function(){
-		$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-	})
-
-  // we apply the filter when enter is pressed on the search field
-  $('#search-field').keydown(function (e) {
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      applyFilters()
-      //closes filter bar
-      triggerFilter(false);
-      return true;
-    }
-  });
-
-  //apply filter with enter is pressed on age fields
-  $('#min-age').keydown(function (e) {
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      // if (e.ctrlKey) {
-      applyFilters();
-      //closes filter bar
-      triggerFilter(false);
-      return true;
-    }
-  });
-
-  $('#max-age').keydown(function (e) {
-    if (e.keyCode == 13) {
-      e.preventDefault();
-      applyFilters();
-      //closes filter bar
-      triggerFilter(false);
-      return true;
-    }
-  });
 });
 
-//function to add listeners to each model and its magnifying glass
-function addClickListener(model) {
-  //magnifying glass --> modalgreeting and overlay
-  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
-  // selects model if you click on it
-  $('#' + model['Name']).click(function() {updatedSelectedList(model);});
+//checks width of screen and updates counters as needed
+function checkWidth() {
+  //at 767px, screen is considered "small"
+  if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
+    if (smallScreen) {
+      //updates smallScreen
+      smallScreen = false;
+      //updates counters
+      updateCounters(lastFapplied, filteredData);
+    }
+  }
+  else {
+    if (!smallScreen) {
+      //updates smallScreen
+      smallScreen = true;
+      //updates counters
+      updateCounters(lastFapplied, filteredData);
+    }
+  }
 }
 
-//function to prevent overlay from exiting when the user clicks on the modal
-$("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
-
-//deals with clicking on the overlay
-$('#overlay').click(function() {
-  //checks if safe was selected
-  checkOverlay();
-  //allows for click and unclick
-  isSafeSelected = !isSafeSelected;
-});
-
-//turns off the overlay when the X is clicked
-$('.close-button-modal').click(function() {
-  overlayOff();
-});
-
-//updates selectedModels when a change has been made
-function updatedSelectedList(model)
+//sets selectedModels all to false
+function initializeSelectedModels()
 {
-  //allows user to click and unclick model
-  selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
-  //gets element to animate it after a model is selected
-  var menu = document.getElementById("menu-bar");
+  selectedModels = new Array(data.length);
+  selectedModels.fill(false);
+}
 
-  //selectedModels index depends on preservedOrderData
-  if(selectedModels[preservedOrderData.indexOf(model)])
+function updateCounters(fApplied, fData, string)
+{
+  //update counter of selected models on bucket
+  var count = selectedModels.filter(value => value === true).length;
+  document.getElementById('selected-counter').textContent = count;
+
+  //the header bar with the counters
+  var counterPanel = document.getElementById("counterPanel");
+
+  //totalLength is the total number of models possible in the current mode
+  var totalLength;
+  if(modeIsResults)
   {
-    //selects model
-    var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.add("selected");
-    //adds animation class
-    menu.classList.add("selected");
+    totalLength = hasResultsData.length;
   }
   else
   {
-    //deselects model
-    var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.remove("selected");
+    totalLength = data.length;
   }
 
-  //updates counters
-  updateCounters(lastFapplied, filteredData);
-
-  //deals with clearing class from menu-bar to reset animation
-  countBucket++;
-  var tempCounter = countBucket;
-
-  //remove class that allows for animation of bucket
-  setTimeout(() => {
-    if(tempCounter == countBucket) {
-      menu.classList.remove("selected");
+  //custom string for when someone just downloaded models
+  if(string == "justdownloaded")
+  {
+    counterPanel.textContent = "";
+  }
+  else if (viewingSelectedModels)
+  {
+    //if viewingSelectedModels, shows number of models selected
+    if (smallScreen) {
+      counterPanel.textContent = count + " selected";
     }
-  }, 750);
-}
+    else {
+      //grammar for plural
+      if (count == 1) {
+        counterPanel.textContent = count + " model selected";
+      }
+      else {
+        counterPanel.textContent = count + " models selected";
+      }
+    }
+
+    //updates icon status
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.add("applied");
+  }
+  else if (!viewingSelectedModels)
+  {
+    //updates global variables
+    lastFdata = fData;
+    lastFapplied = fApplied;
+
+    //if not viewingSelectedModels, shows number of models in gallery
+    if (smallScreen) {
+      //no specification of whether or not the filter is applied
+      counterPanel.textContent = fData.length + '/' + totalLength + ' models';
+    }
+    else {
+      if (fApplied) {
+        counterPanel.textContent = "Filters applied: " + fData.length + '/' + totalLength + ' models'
+      }
+      else {
+        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
+      }
+    }
+
+    //updates icon status
+    viewSelectedIcon = document.getElementById("view-selected");
+    viewSelectedIcon.classList.remove("applied");
+  }
+} //end updateCounters
 
 //code for modal-greeting
 function greetingText(data)
@@ -293,14 +276,39 @@ function greetingText(data)
     //if no notes, only prints size
     modalclosure.innerText = 'The size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
   }
-}
+} //end greetingText()
 
-//function to prevent user from scrolling
-function preventScroll(e){
-  e.preventDefault();
-  e.stopPropagation();
+//function to prevent overlay from exiting when the user clicks on the modal
+$("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
-  return false;
+//deals with clicking on the overlay
+$('#overlay').click(function() {
+  //checks if safe was selected
+  checkOverlay();
+  //allows for click and unclick
+  isSafeSelected = !isSafeSelected;
+});
+
+//turns off the overlay when the X is clicked
+$('.close-button-modal').click(function() {
+  overlayOff();
+});
+
+//checks status of overlay
+function checkOverlay(){
+  //if user clicked on overlay and not modalDialog
+  if(!isSafeSelected)
+  {
+    //updates overlay
+    isOverlayOn = !isOverlayOn;
+    if(isOverlayOn)
+    {
+      overlayOn();
+    }
+    else{
+      overlayOff();
+    }
+  }
 }
 
 //turns overlay and all accompanying elements on
@@ -352,21 +360,42 @@ function overlayOff(){
   document.querySelector('.body').removeEventListener('scroll', preventScroll);
 }
 
-//checks status of overlay
-function checkOverlay(){
-  //if user clicked on overlay and not modalDialog
-  if(!isSafeSelected)
-  {
-    //updates overlay
-    isOverlayOn = !isOverlayOn;
-    if(isOverlayOn)
-    {
-      overlayOn();
-    }
-    else{
-      overlayOff();
-    }
+//function to prevent user from scrolling
+function preventScroll(e){
+  e.preventDefault();
+  e.stopPropagation();
+
+  return false;
+}
+
+function populate(dataArray, num_images = 24) {
+  //clears not-allowed function when data is repopulated on select all icon
+  document.getElementById("select-all").classList.remove("cannotSelect");
+  isSelectAllApplied(false);
+
+  //clears confirm message if data repopulated
+  $("#confirmBox").hide();
+
+  //model-gallery is where models are appended
+  var modelList = document.getElementById("model-gallery")
+
+  var arrayLength = dataArray.length;
+  //curIndex for the infinite scroll feature
+  var ubound = arrayLength;
+  //updates ubound
+  if (curIndex + num_images < arrayLength) {
+    ubound = curIndex + num_images
   }
+  //generates content in regards to bounds
+  for (var i = curIndex; i < ubound; i++) {
+    //newContent is the model img/div
+    var newContent = generateContent(dataArray[i]);
+    modelList.appendChild(newContent);
+    //hooks for models
+    addClickListener(dataArray[i])
+  }
+  //updates bounds/stopping point
+  curIndex = ubound;
 }
 
 //generates individual gallery object
@@ -417,6 +446,14 @@ function generateContent(modelData) {
   return div
 }
 
+//function to add listeners to each model and its magnifying glass
+function addClickListener(model) {
+  //magnifying glass --> modalgreeting and overlay
+  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
+  // selects model if you click on it
+  $('#' + model['Name']).click(function() {updatedSelectedList(model);});
+}
+
 //removes models from gallery
 function removeContent() {
   var modelList = document.getElementById("model-gallery")
@@ -425,34 +462,43 @@ function removeContent() {
   }
 }
 
-function populate(dataArray, num_images = 24) {
-  //clears not-allowed function when data is repopulated on select all icon
-  document.getElementById("select-all").classList.remove("cannotSelect");
-  isSelectAllApplied(false);
+//updates selectedModels when a change has been made
+function updatedSelectedList(model)
+{
+  //allows user to click and unclick model
+  selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
+  //gets element to animate it after a model is selected
+  var menu = document.getElementById("menu-bar");
 
-  //clears confirm message if data repopulated
-  $("#confirmBox").hide();
-
-  //model-gallery is where models are appended
-  var modelList = document.getElementById("model-gallery")
-
-  var arrayLength = dataArray.length;
-  //curIndex for the infinite scroll feature
-  var ubound = arrayLength;
-  //updates ubound
-  if (curIndex + num_images < arrayLength) {
-    ubound = curIndex + num_images
+  //selectedModels index depends on preservedOrderData
+  if(selectedModels[preservedOrderData.indexOf(model)])
+  {
+    //selects model
+    var element = document.getElementById(model['Name'] + "_isSelected");
+    element.classList.add("selected");
+    //adds animation class
+    menu.classList.add("selected");
   }
-  //generates content in regards to bounds
-  for (var i = curIndex; i < ubound; i++) {
-    //newContent is the model img/div
-    var newContent = generateContent(dataArray[i]);
-    modelList.appendChild(newContent);
-    //hooks for models
-    addClickListener(dataArray[i])
+  else
+  {
+    //deselects model
+    var element = document.getElementById(model['Name'] + "_isSelected");
+    element.classList.remove("selected");
   }
-  //updates bounds/stopping point
-  curIndex = ubound;
+
+  //updates counters
+  updateCounters(lastFapplied, filteredData);
+
+  //deals with clearing class from menu-bar to reset animation
+  countBucket++;
+  var tempCounter = countBucket;
+
+  //remove class that allows for animation of bucket
+  setTimeout(() => {
+    if(tempCounter == countBucket) {
+      menu.classList.remove("selected");
+    }
+  }, 750);
 }
 
 // this function is called whenever "Filters" is pressed. It applies the
@@ -463,109 +509,6 @@ function triggerFilter($bool) {
   elementsToTrigger.each(function(){
     $(this).toggleClass('filter-is-visible', $bool);
   });
-}
-
-//checks width of screen and updates counters as needed
-function checkWidth() {
-  //at 767px, screen is considered "small"
-  if (screen.width >= 767 && (document.documentElement.clientWidth >= 767)) {
-    if (smallScreen) {
-      //updates smallScreen
-      smallScreen = false;
-      //updates counters
-      updateCounters(lastFapplied, filteredData);
-    }
-  }
-  else {
-    if (!smallScreen) {
-      //updates smallScreen
-      smallScreen = true;
-      //updates counters
-      updateCounters(lastFapplied, filteredData);
-    }
-  }
-}
-
-//sets selectedModels all to false
-function initializeSelectedModels()
-{
-  selectedModels = new Array(data.length);
-  selectedModels.fill(false);
-}
-
-//hooks that check width
-$(window).ready(checkWidth);
-$(window).resize(checkWidth);
-
-function updateCounters(fApplied, fData, string)
-{
-  //update counter of selected models on bucket
-  var count = selectedModels.filter(value => value === true).length;
-  document.getElementById('selected-counter').textContent = count;
-
-  //the header bar with the counters
-  var counterPanel = document.getElementById("counterPanel");
-
-  //totalLength is the total number of models possible in the current mode
-  var totalLength;
-  if(modeIsResults)
-  {
-    totalLength = hasResultsData.length;
-  }
-  else
-  {
-    totalLength = data.length;
-  }
-
-  //custom string for when someone just downloaded models
-  if(string == "justdownloaded")
-  {
-    counterPanel.textContent = "";
-  }
-  else if (viewingSelectedModels)
-  {
-    //if viewingSelectedModels, shows number of models selected
-    if (smallScreen) {
-      counterPanel.textContent = count + " selected";
-    }
-    else {
-      //grammar for plural
-      if (count == 1) {
-        counterPanel.textContent = count + " model selected";
-      }
-      else {
-        counterPanel.textContent = count + " models selected";
-      }
-    }
-
-    //updates icon status
-    viewSelectedIcon = document.getElementById("view-selected");
-    viewSelectedIcon.classList.add("applied");
-  }
-  else if (!viewingSelectedModels)
-  {
-    //updates global variables
-    lastFdata = fData;
-    lastFapplied = fApplied;
-
-    //if not viewingSelectedModels, shows number of models in gallery
-    if (smallScreen) {
-      //no specification of whether or not the filter is applied
-      counterPanel.textContent = fData.length + '/' + totalLength + ' models';
-    }
-    else {
-      if (fApplied) {
-        counterPanel.textContent = "Filters applied: " + fData.length + '/' + totalLength + ' models'
-      }
-      else {
-        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
-      }
-    }
-
-    //updates icon status
-    viewSelectedIcon = document.getElementById("view-selected");
-    viewSelectedIcon.classList.remove("applied");
-  }
 }
 
 //listener for scroll to kick in infinite scroll
@@ -724,3 +667,57 @@ var buttonFilter = {
     }
     }
 }
+
+// HOOKS FOR MAIN
+
+//open/close lateral filter
+//sets listeners for Close button
+$('.cd-filter-trigger').on('click', function(){
+  triggerFilter(true);
+});
+
+$('.cd-filter .cd-close').on('click', function(){
+  triggerFilter(false);
+});
+
+//close filter dropdown inside lateral .cd-filter
+$('.cd-filter-block h4').on('click', function(){
+	$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
+})
+
+// we apply the filter when enter is pressed on the search field
+$('#search-field').keydown(function (e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    applyFilters()
+    //closes filter bar
+    triggerFilter(false);
+    return true;
+  }
+});
+
+//apply filter with enter is pressed on age fields
+$('#min-age').keydown(function (e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    // if (e.ctrlKey) {
+    applyFilters();
+    //closes filter bar
+    triggerFilter(false);
+    return true;
+  }
+});
+
+$('#max-age').keydown(function (e) {
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    applyFilters();
+    //closes filter bar
+    triggerFilter(false);
+    return true;
+  }
+});
+
+//hooks that check width
+$(window).ready(checkWidth);
+$(window).resize(checkWidth);
