@@ -407,6 +407,7 @@ function generateContent(modelData) {
   div.classList.add("col-md-4");
   div.classList.add("col-sm-6");
   div.classList.add("col-12");
+  div.setAttribute("title", "Select " + modelData["Name"]);
 
   //div to hold image specifically
   var divModelImage = document.createElement("div");
