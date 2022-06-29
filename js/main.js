@@ -490,15 +490,9 @@ function updatedSelectedList(model)
   //updates counters
   updateCounters(lastFapplied, filteredData);
 
-  //deals with clearing class from menu-bar to reset animation
-  countBucket++;
-  var tempCounter = countBucket;
-
-  //remove class that allows for animation of bucket
+  //remove class that allows for animation of menu bar
   setTimeout(() => {
-    if(tempCounter == countBucket) {
-      menu.classList.remove("selected");
-    }
+    menu.classList.remove("selected");
   }, 750);
 }
 

@@ -22,7 +22,6 @@
   var lastFdata = [];
   var lastSelectedData = [];
   var viewingSelectedModels = false;
-  var countBucket = 0;
   var isOverlayOn = false;
   var isSafeSelected = false;
   var menuBarShowing = false;
