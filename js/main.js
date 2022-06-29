@@ -73,7 +73,6 @@ function updateCounters(fApplied, fData, string)
 
   //the header bar with the counters
   var counterPanel = document.getElementById("counterPanel");
-  var helpButton = document.getElementById("help");
 
   //totalLength is the total number of models possible in the current mode
   var totalLength;
@@ -122,8 +121,12 @@ function updateCounters(fApplied, fData, string)
       //no specification of whether or not the filter is applied
       counterPanel.textContent = fData.length + '/' + totalLength + ' models';
 
-      //clears HTML to allow for dynamic putHelpWordHere
-      document.getElementById("putHelpWordHere").innerHTML = "";
+      if(document.getElementById("putHelpWordHere") !== null)
+      {
+        //clears HTML to allow for dynamic putHelpWordHere
+        document.getElementById("putHelpWordHere").innerHTML = "";
+      }
+      
     }
     else {
       if (fApplied) {
@@ -133,8 +136,11 @@ function updateCounters(fApplied, fData, string)
         document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
       }
       
-      //adds text if the screen is not small
-      document.getElementById("putHelpWordHere").textContent = "Help  ";
+      if(document.getElementById("putHelpWordHere") !== null)
+      {
+        //adds text if the screen is not small
+        document.getElementById("putHelpWordHere").textContent = "Help  ";
+      }
     }
 
     //updates icon status
