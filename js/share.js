@@ -257,6 +257,7 @@ function displayTableModels(models)
         modelRow.classList.add("modelRow");
         //gives ID so the row is click-able
         modelRow.setAttribute("id", models[m]["Name"] + "_row");
+        modelRow.setAttribute("title", "View " + models[m]["Name"]);
 
         for(var c = 0; c < categoryNames.length; c++)
         {  

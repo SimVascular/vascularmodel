@@ -169,15 +169,15 @@ $("#download-all").click(function () {
         //informs user of simulation results that they cannot havwe
         if(difference == 1)
         {
-          message = "One model does not have simulation results to download.";
+          message = "One model does not have simulation results to download.\\n";
         }
         else if(difference != 0)
         {
-          message = difference + " models do not have simulation results to download.";
+          message = difference + " models do not have simulation results to download.\\n";
         }
 
         //download confirmation
-        message += "\\n\\nAre you sure you want to download ";
+        message += "Are you sure you want to download ";
 
         //grammar with plural
         if(countResults == 1)

@@ -407,7 +407,6 @@ function generateContent(modelData) {
   div.classList.add("col-md-4");
   div.classList.add("col-sm-6");
   div.classList.add("col-12");
-  div.setAttribute("title", "Select " + modelData["Name"]);
 
   //div to hold image specifically
   var divModelImage = document.createElement("div");
@@ -417,6 +416,7 @@ function generateContent(modelData) {
   divModelImage.classList.add("animate");
   //ID for hook to select model
   divModelImage.setAttribute("id",modelData['Name'] + "_isSelected");
+  divModelImage.setAttribute("title", "Select " + modelData["Name"]);
 
   //if model is selected, show that upon loading
   if(selectedModels[preservedOrderData.indexOf(modelData)])
