@@ -432,26 +432,36 @@ $("#download-all-sim").click(function () {
         }
     }
 
+    //calculates how many models do not have results
+    var difference = models.length - simModels.length;
+    var message = "";
+
+    //grammar with plural
+    //informs user of simulation results that they cannot havwe
+    if(difference == 1)
+    {
+      message += "One model does not have simulation results to download.\\n";
+    }
+    else if(difference != 0)
+    {
+      message += difference + " models do not have simulation results to download.\\n";
+    }
+
     if(simModels.length == 1)
     {
         //confirmation to download when user is not viewing simulation results
-        var message = "Are you sure you want to download one simulation result?";
-
-        //if the user clicks "yes," downloads all selected models
-        doConfirm(message, function yes() {
-            downloadAll(simModels, "simulation");
-        });
+        message += "Are you sure you want to download one simulation result?";
     }
     else
     {
         //confirmation to download when user is not viewing simulation results
-        var message = "Are you sure you want to download " + simModels.length + " simulation results?";
-
-        //if the user clicks "yes," downloads all selected models
-        doConfirm(message, function yes() {
-            downloadAll(simModels, "simulation");
-        });
+        message += "Are you sure you want to download " + simModels.length + " simulation results?";
     }
+
+    //if the user clicks "yes," downloads all selected models
+    doConfirm(message, function yes() {
+        downloadAll(simModels, "simulation");
+    });
 });
 
 async function downloadAll(array, string)
