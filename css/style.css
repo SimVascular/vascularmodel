@@ -99,15 +99,15 @@ body, html {
 /* The hero image */
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-  background-image: linear-gradient(rgba(2, 59, 89, 0.5), rgba(2, 59, 89, 0.5)), url("../img/hero_img.png");
+  background-image: linear-gradient(rgb(2 59 89 / 22%), rgba(2, 59, 89, 0.5)), url("../img/hero_img.jpg");
 
   /* Set a specific height */
   height: 50%;
 
   /* Position and center the image to scale nicely on all screens */
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-repeat: repeat;
+  background-size: 700px;
   position: relative;
 }
 

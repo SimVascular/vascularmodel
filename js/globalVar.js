@@ -40,27 +40,6 @@ function getAllCategories()
   return allCategories;
 }
 
-//returns titles for the share.html table
-function getDetailsTitles()
-{
-  var allCategories = getAllCategories();
-  var mustContainTitles = getMustContainFilterTitles()
-  var output = []
-
-  for(var i = 0; i < allCategories.length; i++)
-  {
-    if(allCategories[i] != "Name" && allCategories[i] != "Animal" && allCategories[i] != "DOI")
-    {
-      if(!mustContainTitles.includes(allCategories[i]))
-      {
-        output.push(allCategories[i]);
-      }
-    }
-  }
-
-  return output;
-}
-
 //returns titles for the share multiple models table
 function getBareMinimum()
 {
@@ -69,21 +48,20 @@ function getBareMinimum()
   return output;
 }
 
+//returns titles for the share.html table
+function getDetailsTitles()
+{
+  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Size"]
+
+  return output;
+}
+
 //excludes titles that aren't filtered in the filter bar
 function getFilterTitles()
 {
-  var allCategories = getAllCategories()
-  var onlyFilterTitles = []
+  var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
 
-  for(var i = 0; i < allCategories.length; i++)
-  {
-    if(allCategories[i] != "Name" && allCategories[i] != "Animal" && allCategories[i] != "Notes" && allCategories[i] != "Size" && allCategories[i] != "DOI")
-    {
-      onlyFilterTitles.push(allCategories[i])
-    }
-  }
-
-  return onlyFilterTitles;
+  return output;
 }
 
 //returns the keys of the categories skipping "Name" and ending before the MustContain categories
