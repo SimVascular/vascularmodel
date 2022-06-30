@@ -64,35 +64,20 @@ function getFilterTitles()
   return output;
 }
 
-//returns the keys of the categories skipping "Name" and ending before the MustContain categories
+//returns the different categories someone can filter through
 function getCategoryName()
 {
-  var allCategories = getAllCategories()
-  var onlyTheAttributes = []
+  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"];
 
-  //skips Name
-  //ends before start of MustContain filters
-  for (var i = 1; i < allCategories.indexOf("Images"); i++)
-  {
-    if(allCategories[i] != "Animal")
-      onlyTheAttributes.push(allCategories[i]);
-  }
-
-  return onlyTheAttributes;
+  return output;
 }
 
-//returns the keys of the categories starting at "Images" and ending at "Size"
+//returns the titles under ProjectMustContain
 function getMustContainFilterTitles()
 {
-  var allCategoryNames = getAllCategories()
-  var returnCategories = []
-
-  for(var i = allCategoryNames.indexOf("Images"); i <= allCategoryNames.indexOf("Simulations"); i++)
-  {
-    returnCategories.push(allCategoryNames[i])
-  }
-
-  return returnCategories;
+  var output = ["Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"];
+  
+  return output;
 }
 
 //returns all possible options under each category

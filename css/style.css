@@ -125,6 +125,13 @@ body, html {
 
 /* ============= About section ============= */
 
+/* allows the width to traverse the entire screen */
+@media only screen and (min-width: 1500px) {
+  .container {
+    max-width: 90%;
+  }
+}
+
 .about-section {
   padding-top: 50px;
   text-align: center;
