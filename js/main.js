@@ -234,8 +234,7 @@ function greetingText(data)
   //adds details to window
   $('.details-text')[0].value = details
 
-  //deals with units for size
-  var size = parseInt(data['Size']) / 1000000
+  var size = data["Size"]
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
@@ -285,14 +284,14 @@ function greetingText(data)
     //after notes, prints size
     var sizeText = document.createElement("div");
     sizeText.classList.add("newParagraph");
-    sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
+    sizeText.textContent = '\n\nThe size of this project is ' + sizeConverter(size);
 
     modalclosure.appendChild(sizeText);
   }
   else
   {
     //if no notes, only prints size
-    modalclosure.innerText = 'The size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
+    modalclosure.innerText = 'The size of this project is ' + sizeConverter(size);
   }
 } //end greetingText()
 

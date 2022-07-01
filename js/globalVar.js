@@ -564,3 +564,13 @@ function craftURL(modelName)
 
   return url;
 }
+
+//deals with units for size
+function sizeConverter(size)
+{
+  size = parseInt(size) / 1000000;
+
+  size = size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
+
+  return size;
+}

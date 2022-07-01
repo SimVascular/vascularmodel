@@ -223,11 +223,8 @@ function difference(countModels, countResults, warningHTML)
 
 function downloadConfirmation(count, type)
 {
-  //download confirmation
-  var message = "Are you sure you want to download ";
-
   var sizeWarning = document.getElementById("downloadSize");
-  sizeWarning.textContent = "Download Size: ";
+  sizeWarning.textContent = "Size: ";
 
   if(modeIsResults)
   {
@@ -237,6 +234,9 @@ function downloadConfirmation(count, type)
   {
     sizeWarning.textContent += getSumOfSizes(selectedModels);
   }
+
+  //download confirmation
+  var message = "Are you sure you want to download ";
 
   //grammar with plural
   if(count == 1)
@@ -271,9 +271,9 @@ function getSumOfSizes(boolArray)
   {
     //temporary
     names[i] = "0082_0001"
-
-    var key = names[i] + "." + downloadType;
+    
     var url = craftURL(names[i]);
+    var key = names[i] + "." + downloadType;
 
     //updates dictionary "sizes" with size of file if the file has not already been added
     if(checkFileExist(url) && !(key in sizes))
@@ -283,6 +283,9 @@ function getSumOfSizes(boolArray)
 
     count += parseInt(sizes[key]);
   }
+
+  //count is size in bytes
+  count = sizeConverter(count)
 
   return count;
 }
