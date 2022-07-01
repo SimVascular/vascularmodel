@@ -27,6 +27,8 @@
   var menuBarShowing = false;
   var modeIsResults = false;
   var selectAllIconApplied = false;
+  // if nothing is selected, will download vtp files
+  var downloadType = "vtp";
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()

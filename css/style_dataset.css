@@ -688,6 +688,10 @@ error msg block behavior
   cursor: default;
 }
 
+#chooseType {
+  padding: 5px;
+}
+
 /* styling for confirm box */
 
 #confirmBox
@@ -698,7 +702,7 @@ error msg block behavior
   border: 1px solid #aaa;
   position: fixed;
   width: 300px;
-  top: 300px;
+  top: 255px;
   left: 50%;
   margin-left: -150px;
   padding: 8px 10px 10px;

@@ -76,4 +76,11 @@ a {
 
 .skipTo form {
     padding: 15px;
+    position: fixed;
+}
+
+@media screen and (max-width: 960px) {
+    .skipTo form {
+        position: relative;
+    }
 }

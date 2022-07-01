@@ -152,7 +152,12 @@ $("#download-all").click(function () {
   var modelsWithResults = selectedModelsWithResults();
   var countResults = modelsWithResults.filter(value => value === true).length;
   
-  var message = "";
+  var warningHTML = document.getElementById("warning");
+  warningHTML.innerHTML = "";
+  warningHTML.classList.remove("newParagraph");
+
+  var putDropDownHere = document.getElementById("putDropDownHere");
+  putDropDownHere.innerHTML = "";
 
   //if nothing to download, download-all button has no function
   if (countModels > 0)
@@ -162,32 +167,10 @@ $("#download-all").click(function () {
     {
       if(countResults != 0)
       {
-        //calculates how many models do not have results
-        var difference = countModels - countResults;
+        difference(countModels, countResults, warningHTML);
+        var message = downloadConfirmation(countResults, "simulation result");
 
-        //grammar with plural
-        //informs user of simulation results that they cannot havwe
-        if(difference == 1)
-        {
-          message = "One model does not have simulation results to download.\\n";
-        }
-        else if(difference != 0)
-        {
-          message = difference + " models do not have simulation results to download.\\n";
-        }
-
-        //download confirmation
-        message += "Are you sure you want to download ";
-
-        //grammar with plural
-        if(countResults == 1)
-        {
-          message += "one simulation result?";
-        }
-        else if(countResults != 0)
-        {
-          message += countResults + " simulation results?";
-        }
+        dropDownMenu(putDropDownHere);
 
         //if the user clicks "yes," downloads all simulation results
         doConfirm(message, function yes() {
@@ -197,7 +180,7 @@ $("#download-all").click(function () {
       else
       {
         //lets the user know that they cannot download anything
-        message = "Your selected models do not have simulation results to download."
+        var message = "Your selected models do not have simulation results to download."
 
         //specifies that the message is lower and has an Okay button
         informUser(message, "lower", true);
@@ -205,16 +188,7 @@ $("#download-all").click(function () {
     }
     else
     {
-      //confirmation to download when user is not viewing simulation results
-      message = "Are you sure you want to download ";
-      if(countModels == 1)
-      {
-        message += "one model?";
-      }
-      else
-      {
-        message += countModels + " models?";
-      }
+      var message = downloadConfirmation(countModels, "model")
 
       //if the user clicks "yes," downloads all selected models
       doConfirm(message, function yes() {
@@ -223,6 +197,93 @@ $("#download-all").click(function () {
     }
   }
 });
+
+function difference(countModels, countResults, warningHTML)
+{
+  //calculates how many models do not have results
+  var difference = countModels - countResults;
+
+  //grammar with plural
+  //informs user of simulation results that they cannot havwe
+  if(difference == 1)
+  {
+    var warning = "One model does not have simulation results to download.";
+
+    warningHTML.classList.add("newParagraph");
+    warningHTML.textContent = warning;
+  }
+  else if(difference != 0)
+  {
+    var warning = difference + " models do not have simulation results to download.";
+
+    warningHTML.classList.add("newParagraph");
+    warningHTML.textContent = warning;
+  }
+}
+
+function downloadConfirmation(count, type)
+{
+  //download confirmation
+  var message = "Are you sure you want to download ";
+
+  //grammar with plural
+  if(count == 1)
+  {
+    message += "one " + type + "?";
+  }
+  else if(count != 0)
+  {
+    message += count + " " + type + "s?";
+  }
+
+  return message; 
+}
+
+function dropDownMenu(putDropDownHere)
+{
+  //labels the drop down menu
+  var title = document.createElement("div");
+  title.textContent = "Choose type: "
+  putDropDownHere.appendChild(title)
+
+  //creates the select box
+  var select = document.createElement("select");
+  select.setAttribute("id", "chooseType");
+  select.setAttribute("class", "newParagraph");
+
+  //these values must be exactly the folder type
+  //i.e. "vtp", "vtu"
+  var options = ["vtp", "vtu"];
+
+  //reset type to default
+  downloadType = options[0]
+
+  for(var i = 0; i < options.length; i++)
+  {
+    //create options under select
+    var option = document.createElement("option");
+    option.setAttribute("value", options[i]);
+
+    //specify what the options are
+    if(options[i] == "vtp")
+    {
+      option.textContent = "Surface Model (.vtp)";
+    }
+    else if(options[i] == "vtu")
+    {
+      option.textContent = "Volume Model (.vtu)";
+    }
+    select.appendChild(option);
+  }
+
+  putDropDownHere.appendChild(select)
+}
+
+//listener for change in drop down menu
+$("#putDropDownHere").click(function () {
+  downloadType = document.getElementById("chooseType").value;
+});
+
 
 //deals with downloading multiple models
 async function downloadAllModels(boolModels){
@@ -270,8 +331,8 @@ function downloadModel(modelToDownloadName)
     //checks what the user wants to download
     if(modeIsResults)
     {
-      //different path to folder
-      var fileUrl = 'results/' + modelToDownloadName + '.zip';
+      var fileUrl = 'svprojects/results/' + modelToDownloadName + "." + downloadType;
+      console.log(fileUrl)
     }
     else
     {
