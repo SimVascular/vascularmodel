@@ -331,24 +331,11 @@ ul.contact-address li i {
   text-decoration: none;
 }
 
-.social-media {
-
-}
-
 .social-media > div {
   padding-bottom: 10px;
 }
 
 /* ============= end Footer section ============= */
-
-/* ============= Documentation ============= */
-
-#documentation {
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
-/* ============= end Documentation ============= */
 
 /* ============= FAQs ============= */
 .license-faqs {
