@@ -549,14 +549,13 @@ function checkFileExist(url) {
 
 function craftURL(modelName)
 {
-  var url = "svprojects/"
-
   if(modeIsResults)
   {
-    url += "results/"
+    var url = "svresults/"
   }
   else
   {
+    var url = "svprojects/"
     downloadType = "zip";
   }
 

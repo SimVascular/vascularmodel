@@ -1,4 +1,5 @@
 .DS_Store
 svprojects/
+svresults/
 *.sh
 extra_data/

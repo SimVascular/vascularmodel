@@ -271,15 +271,10 @@ function getSumOfSizes(boolArray)
   {
     //temporary
     names[i] = "0082_0001"
-    
-    var url = craftURL(names[i]);
-    var key = names[i] + "." + downloadType;
 
-    //updates dictionary "sizes" with size of file if the file has not already been added
-    if(checkFileExist(url) && !(key in sizes))
-    {
-      getFileSize(url, key);
-    }
+    var key = modelName + "." + downloadType;
+    
+    getSizeIndiv(names[i], key)
 
     count += parseInt(sizes[key]);
   }
@@ -288,6 +283,17 @@ function getSumOfSizes(boolArray)
   count = sizeConverter(count)
 
   return count;
+}
+
+function getSizeIndiv(modelName, key)
+{
+  var url = craftURL(modelName);
+
+  //updates dictionary "sizes" with size of file if the file has not already been added
+  if(checkFileExist(url) && !(key in sizes))
+  {
+    getFileSize(url, key);
+  }
 }
 
 //returns file size given a URL
@@ -354,8 +360,9 @@ function dropDownMenu(putDropDownHere)
 //listener for change in drop down menu
 $("#putDropDownHere").click(function () {
   downloadType = document.getElementById("chooseType").value;
-  var boolArray = selectedModelsWithResults();
-  console.log(getSumOfSizes(boolArray));
+
+  var sizeWarning = document.getElementById("downloadSize");
+  sizeWarning.textContent = "Size: " + getSumOfSizes(selectedModelsWithResults());
 });
 
 //deals with downloading multiple models
@@ -411,13 +418,26 @@ function downloadModel(modelName)
     //simulates click
     a.click();
     
-    //sends message to server with user's download
-    gtag('event', 'download_' + modelName, {
-      'send_to': 'G-YVVR1546XJ',
-      'event_category': 'Model download',
-      'event_label': 'test',
-      'value': '1'
-  });
+    if(modeIsResults)
+    {
+      //sends message to server with user's download
+      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+        'send_to': 'G-YVVR1546XJ',
+        'event_category': 'Model download',
+        'event_label': 'test',
+        'value': '1'
+      });
+    }
+    else
+    {
+      //sends message to server with user's download
+      gtag('event', 'download_' + modelName, {
+        'send_to': 'G-YVVR1546XJ',
+        'event_category': 'Model download',
+        'event_label': 'test',
+        'value': '1'
+      });
+    }
 }
 
 $("#returnToGalleryButton").click(function () {
