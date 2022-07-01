@@ -468,74 +468,74 @@ $('#proOrRe').click(function() {
 
 // help button listener
 $("#help").click(function () {
-  viewVideo("https://www.youtube.com/embed/TCK3SmGwBa8");
+  window.open("documentation.html");
 });
 
-//closes video
-$('#vidOverlay').click(function() {
-  closeVideo();
-});
+// //closes video
+// $('#vidOverlay').click(function() {
+//   closeVideo();
+// });
 
-//shows video with overlay
-function viewVideo(src)
-{
-  //embed video
-  if(!smallScreen)
-  {
-    //show overlay
-    document.getElementById("vidOverlay").style.display = "block";
-    isOverlayOn = true;
+// //shows video with overlay
+// function viewVideo(src)
+// {
+//   //embed video
+//   if(!smallScreen)
+//   {
+//     //show overlay
+//     document.getElementById("vidOverlay").style.display = "block";
+//     isOverlayOn = true;
   
-    var videoHolder = document.getElementById("holdsYTVideo");
-    videoHolder.setAttribute("style", "height:auto");
+//     var videoHolder = document.getElementById("holdsYTVideo");
+//     videoHolder.setAttribute("style", "height:auto");
 
-    var video = document.getElementById("video");
-    video.setAttribute("src", src);
+//     var video = document.getElementById("video");
+//     video.setAttribute("src", src);
   
-    //turns off scroll and sets height to auto
-    $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
-    $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+//     //turns off scroll and sets height to auto
+//     $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+//     $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
 
-    //sets listener for scroll
-    document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
-    document.body.style.position = '';
+//     //sets listener for scroll
+//     document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
+//     document.body.style.position = '';
 
-    //saves where the user was before overlay turned on
-    var prevBodyY = window.scrollY
-    document.body.style.top = `-${prevBodyY}px`
-  }
-  else
-  {
-    //opens video link in another window if smallScreen
-    window.open(src);
-  }
-}
+//     //saves where the user was before overlay turned on
+//     var prevBodyY = window.scrollY
+//     document.body.style.top = `-${prevBodyY}px`
+//   }
+//   else
+//   {
+//     //opens video link in another window if smallScreen
+//     window.open(src);
+//   }
+// }
 
-//closes video and overlay
-function closeVideo()
-{
-  //updates variables
-  document.getElementById("vidOverlay").style.display = "none";
-  isSafeSelected = false;
-  isOverlayOn = false;
+// //closes video and overlay
+// function closeVideo()
+// {
+//   //updates variables
+//   document.getElementById("vidOverlay").style.display = "none";
+//   isSafeSelected = false;
+//   isOverlayOn = false;
 
-  var videoHolder = document.getElementById("holdsYTVideo");
-  videoHolder.setAttribute("style", "height: 0px");
+//   var videoHolder = document.getElementById("holdsYTVideo");
+//   videoHolder.setAttribute("style", "height: 0px");
 
-  var video = document.getElementById("video");
-  video.removeAttribute("src");
+//   var video = document.getElementById("video");
+//   video.removeAttribute("src");
 
-  //resets html, body, modalDialog
-  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+//   //resets html, body, modalDialog
+//   $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+//   $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
 
-  //resets scrolling
-  const scrollY = document.body.style.top;
-  document.body.style.position = '';
-  document.body.style.top = '';
-  window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  document.querySelector('.body').removeEventListener('scroll', preventScroll);
-}
+//   //resets scrolling
+//   const scrollY = document.body.style.top;
+//   document.body.style.position = '';
+//   document.body.style.top = '';
+//   window.scrollTo(0, parseInt(scrollY || '0') * -1);
+//   document.querySelector('.body').removeEventListener('scroll', preventScroll);
+// }
 
 //function to prevent user from scrolling
 function preventScroll(e){
