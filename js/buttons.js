@@ -272,11 +272,7 @@ function getSumOfSizes(boolArray)
     //temporary
     names[i] = "0082_0001"
 
-    var key = modelName + "." + downloadType;
-    
-    getSizeIndiv(names[i], key)
-
-    count += parseInt(sizes[key]);
+    count += getSizeIndiv(names[i]);
   }
 
   //count is size in bytes
@@ -285,8 +281,10 @@ function getSumOfSizes(boolArray)
   return count;
 }
 
-function getSizeIndiv(modelName, key)
+function getSizeIndiv(modelName)
 {
+  var key = modelName + "." + downloadType;
+
   var url = craftURL(modelName);
 
   //updates dictionary "sizes" with size of file if the file has not already been added
@@ -294,6 +292,8 @@ function getSizeIndiv(modelName, key)
   {
     getFileSize(url, key);
   }
+
+  return parseInt(sizes[key]);
 }
 
 //returns file size given a URL
