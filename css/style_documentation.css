@@ -1,8 +1,11 @@
 #documentation {
     /* padding-top: 50px; */
     padding-bottom: 50px;
-    text-align: justify; 
-  }
+}
+
+p {
+    text-align: justify;
+}
 
 .main-content {
     position: relative;
@@ -25,14 +28,21 @@ body {
     margin: 2%;
 }
 
+.tOC {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
 h1 {
     font-size: 1.75rem;
     text-align: center;
+    /* word-wrap: break-word; */
 }
 
 h2 {
     font-size: 1.5rem;
     margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 h3 {
@@ -48,4 +58,22 @@ h3 {
     float: right;
     margin-left: 0px;
     margin-right: 40px;
+}
+
+a {
+    color: var(--light1);
+}
+
+.skipTo {
+    height: auto;
+    width: auto;
+    margin: 2%;
+    top: 100px;
+    right: 15px;
+    position: fixed;
+    background-color: white;
+}
+
+.skipTo form {
+    padding: 15px;
 }
