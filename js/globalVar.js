@@ -534,10 +534,10 @@ function informUser(msg, string = "", hasOk = false) {
   }
 }
 
-//checks if a file exists given a url
-function checkFileExist(urlToFile) {
+//checks if a file exists given url
+function checkFileExist(url) {
   var xhr = new XMLHttpRequest();
-  xhr.open('HEAD', urlToFile, false);
+  xhr.open('HEAD', url, false);
   xhr.send();
    
   if (xhr.status == "404") {
@@ -545,4 +545,22 @@ function checkFileExist(urlToFile) {
   } else {
       return true;
   }
+}
+
+function craftURL(modelName)
+{
+  var url = "svprojects/"
+
+  if(modeIsResults)
+  {
+    url += "results/"
+  }
+  else
+  {
+    downloadType = "zip";
+  }
+
+  url += modelName + "." + downloadType;
+
+  return url;
 }

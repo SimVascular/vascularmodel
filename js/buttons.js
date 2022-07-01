@@ -226,13 +226,16 @@ function downloadConfirmation(count, type)
   //download confirmation
   var message = "Are you sure you want to download ";
 
+  var sizeWarning = document.getElementById("downloadSize");
+  sizeWarning.textContent = "Download Size: ";
+
   if(modeIsResults)
   {
-    message += getSumOfSizes(modelsWithResults) + ", ";
+    sizeWarning.textContent += getSumOfSizes(selectedModelsWithResults());
   }
   else
   {
-    message += getSumOfSizes(selectedModels) + ", ";
+    sizeWarning.textContent += getSumOfSizes(selectedModels);
   }
 
   //grammar with plural
@@ -251,16 +254,6 @@ function downloadConfirmation(count, type)
 //returns sum of sizes of the arrays selected in the boolArray
 function getSumOfSizes(boolArray)
 {
-  var urlStart = "svprojects/"
-  if(modeIsResults)
-  {
-    urlStart += "results/"
-  }
-  else
-  {
-    downloadType = "zip";
-  }
-
   //array with model names
   var names = []
 
@@ -278,13 +271,13 @@ function getSumOfSizes(boolArray)
   {
     //temporary
     names[i] = "0082_0001"
-    key = names[i] + "." + downloadType
-    var url = urlStart + key;
+
+    var key = names[i] + "." + downloadType;
+    var url = craftURL(names[i]);
 
     //updates dictionary "sizes" with size of file if the file has not already been added
     if(checkFileExist(url) && !(key in sizes))
     {
-      // make sync
       getFileSize(url, key);
     }
 
@@ -295,22 +288,24 @@ function getSumOfSizes(boolArray)
 }
 
 //returns file size given a URL
-function getFileSize(url, modelName)
+function getFileSize(url, key)
 {
   var fileSize = '';
   var http = new XMLHttpRequest();
   http.open('HEAD', url, false);
+
   http.onreadystatechange = function() {
     if (this.readyState == this.DONE) {
       if (this.status === 200) {
         fileSize = this.getResponseHeader('content-length');
 
         //saves size in dictionary sizes
-        sizes[modelName] = fileSize;
+        sizes[key] = fileSize;
       }
     }
   };
-  http.send(); // it will submit request and jump to the next line immediately, without even waiting for request result b/c we used ASYNC XHR call
+
+  http.send();
 }
 
 function dropDownMenu(putDropDownHere)
@@ -401,29 +396,20 @@ async function downloadAllModels(boolModels){
 }
 
 //downloads individual models
-function downloadModel(modelToDownloadName)
+function downloadModel(modelName)
   {
-    //checks what the user wants to download
-    if(modeIsResults)
-    {
-      var fileUrl = 'svprojects/results/' + modelToDownloadName + "." + downloadType;
-      console.log(fileUrl)
-    }
-    else
-    {
-      //different path to folder
-      var fileUrl = 'svprojects/' + modelToDownloadName + '.zip';
-    }
+    //creates link of what the user wants to download
+    var fileUrl = craftURL(modelName)
 
     //creates anchor tag to download
     var a = document.createElement("a");
     a.href = fileUrl;
-    a.setAttribute("download", modelToDownloadName);
+    a.setAttribute("download", modelName);
     //simulates click
     a.click();
     
     //sends message to server with user's download
-    gtag('event', 'download_' + modelToDownloadName, {
+    gtag('event', 'download_' + modelName, {
       'send_to': 'G-YVVR1546XJ',
       'event_category': 'Model download',
       'event_label': 'test',
