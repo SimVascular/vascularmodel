@@ -29,6 +29,8 @@
   var selectAllIconApplied = false;
   // if nothing is selected, will download vtp files
   var downloadType = "vtp";
+  //dictionary with the sizes of all the files
+  var sizes = {};
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -440,6 +442,10 @@ function selectedModelsWithResults()
     {
       withResults[i] = true;
     }
+    else
+    {
+      withResults[i] = false;
+    }
   }
 
   return withResults;
@@ -464,15 +470,7 @@ function isSelectAllApplied(bool)
 //lets us confirm actions with users
 function doConfirm(msg, yesFn, noFn) {
   var confirmBox = $("#confirmBox");
-  if(msg.includes("\\n"))
-  {
-    confirmBox.find(".message")[0].innerHTML = "";
-    confirmBox.find(".message")[0].appendChild(newLineNoURL(msg, false));
-  }
-  else
-  {
-    confirmBox.find(".message").text(msg);
-  }
+  confirmBox.find(".message").text(msg);
 
   //hides confirmation after button is clicked
   confirmBox.find(".yes,.no").unbind().click(function () {
@@ -533,5 +531,18 @@ function informUser(msg, string = "", hasOk = false) {
     setTimeout(() => {
       informUser.hide();
     }, 1500);
+  }
+}
+
+//checks if a file exists given a url
+function checkFileExist(urlToFile) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('HEAD', urlToFile, false);
+  xhr.send();
+   
+  if (xhr.status == "404") {
+      return false;
+  } else {
+      return true;
   }
 }

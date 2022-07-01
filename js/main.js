@@ -473,13 +473,14 @@ function generateContent(modelData) {
 
 //function to add listeners to each model and its magnifying glass
 function addClickListener(model) {
+  modelName =  model['Name'];
   //magnifying glass --> modalgreeting and overlay
-  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
+  $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
   // selects model if you click on it
-  $('#' + model['Name']).click(function() {updatedSelectedList(model);});
+  $('#' + modelName).click(function() {updatedSelectedList(model);});
 
   // //show 3D version of model if you click on it
-  // $("#" + model['Name'] + "_3D").click(function() {show3D(model);});
+  // $("#" + modelName + "_3D").click(function() {show3D(model);});
 }
 
 //removes models from gallery

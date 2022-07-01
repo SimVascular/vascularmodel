@@ -188,7 +188,7 @@ $("#download-all").click(function () {
     }
     else
     {
-      var message = downloadConfirmation(countModels, "model")
+      var message = downloadConfirmation(countModels, "model");
 
       //if the user clicks "yes," downloads all selected models
       doConfirm(message, function yes() {
@@ -226,6 +226,15 @@ function downloadConfirmation(count, type)
   //download confirmation
   var message = "Are you sure you want to download ";
 
+  if(modeIsResults)
+  {
+    message += getSumOfSizes(modelsWithResults) + ", ";
+  }
+  else
+  {
+    message += getSumOfSizes(selectedModels) + ", ";
+  }
+
   //grammar with plural
   if(count == 1)
   {
@@ -237,6 +246,71 @@ function downloadConfirmation(count, type)
   }
 
   return message; 
+}
+
+//returns sum of sizes of the arrays selected in the boolArray
+function getSumOfSizes(boolArray)
+{
+  var urlStart = "svprojects/"
+  if(modeIsResults)
+  {
+    urlStart += "results/"
+  }
+  else
+  {
+    downloadType = "zip";
+  }
+
+  //array with model names
+  var names = []
+
+  for(var i = 0; i < boolArray.length; i++)
+  {
+    if(boolArray[i])
+    {
+      names.push(preservedOrderData[i]["Name"])
+    }
+  }
+  
+  var count = 0;
+
+  for(var i = 0 ; i < names.length; i++)
+  {
+    //temporary
+    names[i] = "0082_0001"
+    key = names[i] + "." + downloadType
+    var url = urlStart + key;
+
+    //updates dictionary "sizes" with size of file if the file has not already been added
+    if(checkFileExist(url) && !(key in sizes))
+    {
+      // make sync
+      getFileSize(url, key);
+    }
+
+    count += parseInt(sizes[key]);
+  }
+
+  return count;
+}
+
+//returns file size given a URL
+function getFileSize(url, modelName)
+{
+  var fileSize = '';
+  var http = new XMLHttpRequest();
+  http.open('HEAD', url, false);
+  http.onreadystatechange = function() {
+    if (this.readyState == this.DONE) {
+      if (this.status === 200) {
+        fileSize = this.getResponseHeader('content-length');
+
+        //saves size in dictionary sizes
+        sizes[modelName] = fileSize;
+      }
+    }
+  };
+  http.send(); // it will submit request and jump to the next line immediately, without even waiting for request result b/c we used ASYNC XHR call
 }
 
 function dropDownMenu(putDropDownHere)
@@ -255,7 +329,7 @@ function dropDownMenu(putDropDownHere)
   //i.e. "vtp", "vtu"
   var options = ["vtp", "vtu"];
 
-  //reset type to default
+  //reset type to default of select
   downloadType = options[0]
 
   for(var i = 0; i < options.length; i++)
@@ -276,14 +350,15 @@ function dropDownMenu(putDropDownHere)
     select.appendChild(option);
   }
 
-  putDropDownHere.appendChild(select)
+  putDropDownHere.appendChild(select);
 }
 
 //listener for change in drop down menu
 $("#putDropDownHere").click(function () {
   downloadType = document.getElementById("chooseType").value;
+  var boolArray = selectedModelsWithResults();
+  console.log(getSumOfSizes(boolArray));
 });
-
 
 //deals with downloading multiple models
 async function downloadAllModels(boolModels){
