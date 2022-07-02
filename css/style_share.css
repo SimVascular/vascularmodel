@@ -83,45 +83,15 @@ table {
     color: var(--black);
     text-decoration: none;
   }
-
-  .menu-bar {
-    position: absolute;
-    color: var(--darkdarkgrey);
-    background-color: var(--grey);
-  }
-
-  .menu-bar.small {
-    top: calc(5vw + 53px + 51px);
-    width: 170px;
-    right: calc(-170px/2 + 32px);
-  }
-
-  .menu-bar.features-is-visible.small {
-    right: calc(-170px/2 + 29px + 90px);
-  }
-  
-  .menu-bar.big {
-    top: calc(5vw + 100px + 50px);
-    width: 260px;
-    right: calc(-260px/2 + 32px);
-  }
-
-  .menu-bar.features-is-visible.big {
-    right: calc(-260px/2 + 29px + 90px);
-  }
   
   .features {
     position: absolute;
-    top: calc(5vw + 40px);
-    right: -300px;
+    top: calc(5vw + 50px);
+    right: 5px;
     width: auto;
     height: auto;
     border: none;
     background: transparent;
-  }
-
-  .features.features-is-visible {
-    right: 3.5px;
   }
 
   h1 {

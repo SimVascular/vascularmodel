@@ -353,6 +353,10 @@ error msg block behavior
   margin-bottom: 15px;
 }
 
+.spaceBelow {
+  margin-bottom: 15px;
+}
+
 .sameLine {
   display: inline;
 }

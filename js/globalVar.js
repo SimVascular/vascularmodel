@@ -573,3 +573,169 @@ function sizeConverter(size)
 
   return size;
 }
+
+//returns sum of sizes of the arrays selected in the boolArray
+function getSumOfSizes(boolArray)
+{
+  //array with model names
+  var names = []
+
+  for(var i = 0; i < boolArray.length; i++)
+  {
+    if(boolArray[i])
+    {
+      names.push(preservedOrderData[i]["Name"])
+    }
+  }
+  
+  var count = 0;
+
+  for(var i = 0 ; i < names.length; i++)
+  {
+    count += getSizeIndiv(names[i]);
+  }
+
+  //count is size in bytes
+  count = sizeConverter(count)
+
+  return count;
+}
+
+function getSizeIndiv(modelName)
+{
+  var key = modelName + "." + downloadType;
+
+  var url = craftURL(modelName);
+
+  //updates dictionary "sizes" with size of file if the file has not already been added
+  if(checkFileExist(url) && !(key in sizes))
+  {
+    getFileSize(url, key);
+  }
+
+  return parseInt(sizes[key]);
+}
+
+//returns file size given a URL
+function getFileSize(url, key)
+{
+  var fileSize = '';
+  var http = new XMLHttpRequest();
+  http.open('HEAD', url, false);
+
+  http.onreadystatechange = function() {
+    if (this.readyState == this.DONE) {
+      if (this.status === 200) {
+        fileSize = this.getResponseHeader('content-length');
+
+        //saves size in dictionary sizes
+        sizes[key] = fileSize;
+      }
+    }
+  };
+
+  http.send();
+}
+
+function downloadConfirmation(count, type)
+{
+  var sizeWarning = document.getElementById("downloadSize");
+  sizeWarning.textContent = "Size: ";
+
+  if(modeIsResults)
+  {
+    sizeWarning.textContent += getSumOfSizes(selectedModelsWithResults());
+  }
+  else
+  {
+    sizeWarning.textContent += getSumOfSizes(selectedModels);
+  }
+
+  //download confirmation
+  var message = "Are you sure you want to download ";
+
+  //grammar with plural
+  if(count == 1)
+  {
+    message += "one " + type + "?";
+  }
+  else if(count != 0)
+  {
+    message += count + " " + type + "s?";
+  }
+
+  return message; 
+}
+
+function difference(countModels, countResults, warningHTML)
+{
+  //calculates how many models do not have results
+  var difference = countModels - countResults;
+
+  //grammar with plural
+  //informs user of simulation results that they cannot havwe
+  if(difference == 1)
+  {
+    var warning = "One model does not have simulation results to download.";
+
+    warningHTML.classList.add("newParagraph");
+    warningHTML.textContent = warning;
+  }
+  else if(difference != 0)
+  {
+    var warning = difference + " models do not have simulation results to download.";
+
+    warningHTML.classList.add("newParagraph");
+    warningHTML.textContent = warning;
+  }
+}
+
+function dropDown(putDropDownHere, allChoices)
+{
+  //labels the drop down menu
+  var title = document.createElement("div");
+  title.textContent = "Choose file type: ";
+  putDropDownHere.appendChild(title)
+
+  //creates the select box
+  var select = document.createElement("select");
+  select.setAttribute("id", "chooseType");
+  select.setAttribute("class", "spaceBelow");
+
+  //these values must be exactly the folder type
+  //i.e. "vtp", "vtu"
+  var options = []
+  if(allChoices)
+  {
+    options.push("zip");
+  }
+  options.push("vtp");
+  options.push("vtu");
+
+  //reset type to default of select
+  downloadType = options[0]
+
+  for(var i = 0; i < options.length; i++)
+  {
+    //create options under select
+    var option = document.createElement("option");
+    option.setAttribute("value", options[i]);
+
+    //specify what the options are
+    if(options[i] == "vtp")
+    {
+      option.textContent = "Surface Model (.vtp)";
+    }
+    else if(options[i] == "vtu")
+    {
+      option.textContent = "Volume Model (.vtu)";
+    }
+    else if (options[i] == "zip")
+    {
+      option.textContent = "Project (.zip)";
+    }
+    select.appendChild(option);
+  }
+
+  putDropDownHere.appendChild(select);
+}

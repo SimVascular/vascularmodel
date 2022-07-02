@@ -338,27 +338,6 @@ function goToModel(model){
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
 }
 
-$("#menu-bar").click(function() {
-    //allows user to click and unclick
-    menuBarShowing = !menuBarShowing;
-  
-    var features = document.getElementById("features");
-    var menuBar = document.getElementById("menu-bar");
-  
-    if (menuBarShowing)
-    {
-      //reveals features and moves menuBar
-      features.classList.add("features-is-visible");
-      menuBar.classList.add("features-is-visible");
-    }
-    else
-    {
-      //hides features and moves menuBar
-      features.classList.remove("features-is-visible");
-      menuBar.classList.remove("features-is-visible");
-    }
-  });
-
 //creates the icons
 function createIcons()
 {
@@ -377,44 +356,23 @@ function createIcons()
     icon.classList.add("fa-image");
     icon.classList.add("featuresIcons")
     goToGallery.appendChild(icon);
-
-    //gets menuBar element
-    var menuBar = document.getElementById("menu-bar");
-
-    //if we should show the download simulation results icon
-    if(model["Results"] == 1)
-    {  
-        //create the box that contains the download-results icon
-        var results = document.getElementById("downloadSimulations");
-        results.classList.add("spanForIcons");
-        results.classList.add("centerIcon");
-        results.setAttribute("title", "Download Simulation Results");
-
-        //create the download-results icon
-        var icon = document.createElement("i");
-        icon.classList.add("fa-solid");
-        icon.classList.add("fa-video");
-        icon.classList.add("featuresIcons");
-
-        results.appendChild(icon);
-
-        //makes menuBar big to adjust to third icon
-        menuBar.classList.add("big");
-    }
-    else
-    {
-        //makes menuBar small to contain two icons only
-        menuBar.classList.add("small");
-    }
 }
 
 //button to download all models in table
 $("#download-all-models").click(function () {
+    var warningHTML = document.getElementById("warning");
+    warningHTML.innerHTML = "";
+    warningHTML.classList.remove("newParagraph");
+
+    var putDropDownHere = document.getElementById("putDropDownHere");
+    putDropDownHere.innerHTML = "";
+
     //confirmation before downloading
-    var message = "Are you sure you want to download " + models.length + " models?";
+    var message = downloadConfirmation(models.length, "model")
 
     //if the user clicks "yes," downloads all selected models
     doConfirm(message, function yes() {
+        modeIsResults = false;
         downloadAll(models, "model");
     });
 });
@@ -431,40 +389,31 @@ $("#download-all-sim").click(function () {
             simModels.push(models[i]);
         }
     }
+    var countModels = models.length;
+    var countResults = simModels.length;
 
-    //calculates how many models do not have results
-    var difference = models.length - simModels.length;
-    var message = "";
+    var warningHTML = document.getElementById("warning");
+    warningHTML.innerHTML = "";
+    warningHTML.classList.remove("newParagraph");
 
-    //grammar with plural
-    //informs user of simulation results that they cannot havwe
-    if(difference == 1)
-    {
-      message += "One model does not have simulation results to download.\\n";
-    }
-    else if(difference != 0)
-    {
-      message += difference + " models do not have simulation results to download.\\n";
-    }
+    difference(countModels, countResults, warningHTML); 
 
-    if(simModels.length == 1)
-    {
-        //confirmation to download when user is not viewing simulation results
-        message += "Are you sure you want to download one simulation result?";
-    }
-    else
-    {
-        //confirmation to download when user is not viewing simulation results
-        message += "Are you sure you want to download " + simModels.length + " simulation results?";
-    }
+    var type = "simulation result";
+
+    var message = downloadConfirmation(countResults, type);
+
+    var putDropDownHere = document.getElementById("putDropDownHere");
+    putDropDownHere.innerHTML = "";
+    dropDown(putDropDownHere, false);
 
     //if the user clicks "yes," downloads all selected models
     doConfirm(message, function yes() {
-        downloadAll(simModels, "simulation");
+        modeIsResults = true;
+        downloadAll(simModels);
     });
 });
 
-async function downloadAll(array, string)
+async function downloadAll(array)
 {
     listOfNames = []
 
@@ -477,35 +426,32 @@ async function downloadAll(array, string)
     //sends to download all models
     for(var i = 0; i < listOfNames.length; i++)
     {
-        download(string, listOfNames[i]);
+        download(listOfNames[i]);
         await new Promise(r => setTimeout(r, 3));
     }
 }
 
 //icon to download model
 $("#downloadModel").click(function () {
-    download("model");
-});
+    // var message = downloadConfirmation(1, type);
 
-//icon to download simulation
-$("#downloadSimulations").click(function () {
-    download("simulation");
+    var putDropDownHere = document.getElementById("putDropDownHere");
+    putDropDownHere.innerHTML = "";
+    dropDown(putDropDownHere, true);
+
+    var sizeWarning = document.getElementById("downloadSize");
+    sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"]);
+
+    doConfirm("Are you sure you want to download model files?", function yes(){
+        download();
+    })
 });
 
 //download model using anchor tag
-function download(string, modelToDownload = model["Name"])
+function download(modelName = model["Name"])
 {
-  var modelName = modelToDownload;
-
-  //downloads model or simulation results
-  if(string == "model")
-  {
-    var fileUrl = 'svprojects/' + modelName + '.zip';
-  }
-  else if (string == "simulation")
-  {
-    var fileUrl = 'results/' + modelName + '.zip';
-  }
+  //fileType determined by global variable downloadType
+  var fileUrl = craftURL(modelName);
   
   var a = document.createElement("a");
   a.href = fileUrl;
@@ -534,3 +480,11 @@ function goToGallery() {
     a.href = "dataset.html";
     a.click();
 }
+
+//listener for change in drop down menu
+$("#putDropDownHere").click(function () {
+    downloadType = document.getElementById("chooseType").value;
+  
+    var sizeWarning = document.getElementById("downloadSize");
+    sizeWarning.textContent = "Size: " + getSumOfSizes(selectedModelsWithResults());
+});

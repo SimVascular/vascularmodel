@@ -234,7 +234,7 @@ function greetingText(data)
   //adds details to window
   $('.details-text')[0].value = details
 
-  var size = data["Size"];
+  var size = getSizeIndiv(viewingModel["Name"]);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
