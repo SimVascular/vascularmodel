@@ -690,7 +690,7 @@ function difference(countModels, countResults, warningHTML)
   }
 }
 
-function dropDown(putDropDownHere, allChoices)
+function dropDown(putDropDownHere, string)
 {
   //labels the drop down menu
   var title = document.createElement("div");
@@ -705,13 +705,22 @@ function dropDown(putDropDownHere, allChoices)
   //these values must be exactly the folder type
   //i.e. "vtp", "vtu"
   var options = []
-  if(allChoices)
+  if(string == "all")
+  {
+    options.push("zip");
+    options.push("vtp");
+    options.push("vtu");
+  }
+  if(string == "no results")
   {
     options.push("zip");
   }
-  options.push("vtp");
-  options.push("vtu");
-
+  if(string == "only results")
+  {
+    options.push("vtp");
+    options.push("vtu");
+  }
+  
   //reset type to default of select
   downloadType = options[0]
 

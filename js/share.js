@@ -404,7 +404,7 @@ $("#download-all-sim").click(function () {
 
     var putDropDownHere = document.getElementById("putDropDownHere");
     putDropDownHere.innerHTML = "";
-    dropDown(putDropDownHere, false);
+    dropDown(putDropDownHere, "only results");
 
     //if the user clicks "yes," downloads all selected models
     doConfirm(message, function yes() {
@@ -433,11 +433,17 @@ async function downloadAll(array)
 
 //icon to download model
 $("#downloadModel").click(function () {
-    // var message = downloadConfirmation(1, type);
-
     var putDropDownHere = document.getElementById("putDropDownHere");
     putDropDownHere.innerHTML = "";
-    dropDown(putDropDownHere, true);
+    if(model["Results"] == "1")
+    {
+        dropDown(putDropDownHere, "all");
+    }
+    else
+    {
+        dropDown(putDropDownHere, "no results");
+    }
+    
 
     var sizeWarning = document.getElementById("downloadSize");
     sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"]);

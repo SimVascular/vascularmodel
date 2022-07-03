@@ -170,7 +170,7 @@ $("#download-all").click(function () {
         difference(countModels, countResults, warningHTML);
         var message = downloadConfirmation(countResults, "simulation result");
 
-        dropDown(putDropDownHere, false);
+        dropDown(putDropDownHere, "only results");
 
         //if the user clicks "yes," downloads all simulation results
         doConfirm(message, function yes() {
