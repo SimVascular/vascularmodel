@@ -1,5 +1,6 @@
 //two global variables of share.js
 var models = []
+var boolArray = []
 var model;
 
 $(document).ready(function($){
@@ -11,6 +12,7 @@ $(document).ready(function($){
       async: false,
       success: function(fdata) {
         data = $.csv.toObjects(fdata);
+        preservedOrderData = data;
       }
     });
 
@@ -35,7 +37,12 @@ function getVariable()
         if(encodedNames[i] == "Y")
         {
             models.push(data[i]);
+            boolArray.push(true);
             found = true;
+        }
+        else if (encodedNames[i] == "N")
+        {
+            boolArray.push(false);
         }
     }
 
@@ -360,6 +367,9 @@ function createIcons()
 
 //button to download all models in table
 $("#download-all-models").click(function () {
+    modeIsResults = false;
+    downloadType = "zip"
+
     var warningHTML = document.getElementById("warning");
     warningHTML.innerHTML = "";
     warningHTML.classList.remove("newParagraph");
@@ -368,11 +378,10 @@ $("#download-all-models").click(function () {
     putDropDownHere.innerHTML = "";
 
     //confirmation before downloading
-    var message = downloadConfirmation(models.length, "model")
+    var message = downloadConfirmation(models.length, "model", boolArray)
 
     //if the user clicks "yes," downloads all selected models
     doConfirm(message, function yes() {
-        modeIsResults = false;
         downloadAll(models, "model");
     });
 });
@@ -380,6 +389,7 @@ $("#download-all-models").click(function () {
 //button to download all simulation results in table
 //if this button exists, there are simulation results to download
 $("#download-all-sim").click(function () {
+    modeIsResults = true;
     var simModels = []
 
     for(var i = 0; i < models.length; i++)
@@ -400,15 +410,14 @@ $("#download-all-sim").click(function () {
 
     var type = "simulation result";
 
-    var message = downloadConfirmation(countResults, type);
-
     var putDropDownHere = document.getElementById("putDropDownHere");
     putDropDownHere.innerHTML = "";
     dropDown(putDropDownHere, "only results");
 
+    var message = downloadConfirmation(countResults, type, boolArray);
+
     //if the user clicks "yes," downloads all selected models
     doConfirm(message, function yes() {
-        modeIsResults = true;
         downloadAll(simModels);
     });
 });
@@ -435,6 +444,10 @@ async function downloadAll(array)
 $("#downloadModel").click(function () {
     var putDropDownHere = document.getElementById("putDropDownHere");
     putDropDownHere.innerHTML = "";
+
+    //.zip is default so modeIsResults is default
+    modeIsResults = false;
+
     if(model["Results"] == "1")
     {
         dropDown(putDropDownHere, "all");
@@ -444,9 +457,8 @@ $("#downloadModel").click(function () {
         dropDown(putDropDownHere, "no results");
     }
     
-
     var sizeWarning = document.getElementById("downloadSize");
-    sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"]);
+    sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
 
     doConfirm("Are you sure you want to download model files?", function yes(){
         download();
@@ -458,6 +470,7 @@ function download(modelName = model["Name"])
 {
   //fileType determined by global variable downloadType
   var fileUrl = craftURL(modelName);
+  console.log(fileUrl)
   
   var a = document.createElement("a");
   a.href = fileUrl;
@@ -490,7 +503,15 @@ function goToGallery() {
 //listener for change in drop down menu
 $("#putDropDownHere").click(function () {
     downloadType = document.getElementById("chooseType").value;
-  
-    var sizeWarning = document.getElementById("downloadSize");
-    sizeWarning.textContent = "Size: " + getSumOfSizes(selectedModelsWithResults());
+
+    if(downloadType != "zip")
+    {
+        modeIsResults = true;
+    }
+    else
+    {
+        modeIsResults = false;
+    }
+    
+    updateSize(boolArray)
 });

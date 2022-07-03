@@ -168,9 +168,11 @@ $("#download-all").click(function () {
       if(countResults != 0)
       {
         difference(countModels, countResults, warningHTML);
-        var message = downloadConfirmation(countResults, "simulation result");
 
+        //defines downloadType
         dropDown(putDropDownHere, "only results");
+
+        var message = downloadConfirmation(countResults, "simulation result", modelsWithResults);
 
         //if the user clicks "yes," downloads all simulation results
         doConfirm(message, function yes() {
@@ -188,7 +190,8 @@ $("#download-all").click(function () {
     }
     else
     {
-      var message = downloadConfirmation(countModels, "model");
+      downloadType = "zip";
+      var message = downloadConfirmation(countModels, "model", selectedModels);
 
       //if the user clicks "yes," downloads all selected models
       doConfirm(message, function yes() {

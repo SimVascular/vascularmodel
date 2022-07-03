@@ -217,7 +217,7 @@ function URLMaker(notes)
   a.classList.add("link");
   a.textContent = word;
 
-  //if contains a .zip, allows for a downlaod
+  //if contains a .zip, allows for a download
   if(url.includes(".zip"))
   {
     a.setAttribute("download", "");
@@ -493,18 +493,18 @@ function informUser(msg, string = "", hasOk = false) {
 
   informUser.show();
 
-  //reveals the box with opacity
+  //reveals the box
   var div = document.getElementById("informUser");
-  div.style.opacity = 1;
+  div.style.display = "block"
 
   //changes position of alert for clarity
   if(string == "lower")
   {
-    div.setAttribute("style", "top: 300px");
+    div.style.top = "300px";
   }
   else
   {
-    div.setAttribute("style", "top: 30px")
+    div.style.top = "30px";
   }
 
   //clears where the Okay button goes
@@ -584,7 +584,12 @@ function getSumOfSizes(boolArray)
   {
     if(boolArray[i])
     {
-      names.push(preservedOrderData[i]["Name"])
+      //if modeIsResults, only adds to count if model has a result
+      if(preservedOrderData[i]["Results"] == "1" || !modeIsResults)
+      {
+        names.push(preservedOrderData[i]["Name"])
+      }
+      
     }
   }
   
@@ -592,7 +597,9 @@ function getSumOfSizes(boolArray)
 
   for(var i = 0 ; i < names.length; i++)
   {
-    count += getSizeIndiv(names[i]);
+    var size = getSizeIndiv(names[i]);
+    //saves size in bytes
+    count += size[0];
   }
 
   //count is size in bytes
@@ -613,7 +620,9 @@ function getSizeIndiv(modelName)
     getFileSize(url, key);
   }
 
-  return parseInt(sizes[key]);
+  var size = parseInt(sizes[key]);
+  //returns bytes and readable version of size
+  return [size, sizeConverter(size)];
 }
 
 //returns file size given a URL
@@ -637,20 +646,16 @@ function getFileSize(url, key)
   http.send();
 }
 
-function downloadConfirmation(count, type)
+function updateSize(boolArray)
 {
   var sizeWarning = document.getElementById("downloadSize");
-  sizeWarning.textContent = "Size: ";
+  sizeWarning.textContent = "Size: " + getSumOfSizes(boolArray);
+}
 
-  if(modeIsResults)
-  {
-    sizeWarning.textContent += getSumOfSizes(selectedModelsWithResults());
-  }
-  else
-  {
-    sizeWarning.textContent += getSumOfSizes(selectedModels);
-  }
-
+function downloadConfirmation(count, type, boolArray)
+{
+  updateSize(boolArray)
+  
   //download confirmation
   var message = "Are you sure you want to download ";
 

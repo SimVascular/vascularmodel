@@ -738,7 +738,7 @@ error msg block behavior
 
 #informUser
 {
-  /* display: none; */
+  display: none;
   background-color: var(--grey);
   border-radius: 5px;
   border: 2px solid var(--darkgrey);
@@ -775,4 +775,12 @@ error msg block behavior
   cursor: not-allowed;
   color: var(--applied);
   background-color: var(--select)
+}
+
+.hideElement{
+  opacity: 0;
+  height: 0px;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
 }
