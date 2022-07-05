@@ -279,10 +279,18 @@ $('.shareableLink-button-modal').click(function() {
 //share-all button
 //makes a shareable link for all selected models
 $('#sharelink-all').click(function() {
-  //makes selectedModels, in true/false, to array in Y/N
-  var binary = boolToYN(selectedModels);
-  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
-  informUser("Link copied");
+  if(selectedModels.filter(value => value === true).length > 0)
+  {
+    //makes selectedModels, in true/false, to array in Y/N
+    var binary = boolToYN(selectedModels);
+    copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
+    informUser("Link copied");
+  }
+  else
+  {
+    informUser("No models selected to share.");
+  }
+  
 });
 
 //brings user to view-selected page

@@ -552,6 +552,8 @@ function informUser(msg, hasOk = false) {
   }
   else
   {
+    div.style.top = "30px";
+
     //fades after 1.5 seconds if doesn't have an Okay button
     setTimeout(() => {
       informUser.hide();
