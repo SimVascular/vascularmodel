@@ -501,9 +501,9 @@ error msg block behavior
 .menu-bar {
   position: fixed;
   /* position is different because of rotation */
-  top: calc(216px + 48px);
-  right: calc(-252.5px/2 + 32px);
-  width: 252.5px;
+  top: calc(216px + 33px);
+  right: calc(-222.5px/2 + 32px);
+  width: 222.5px;
   height: auto;
   z-index: 2;
   transform: rotate(-90deg);
@@ -532,7 +532,7 @@ error msg block behavior
 }
 
 .menu-bar.features-is-visible {
-  right: calc(-252.5px/2 + 32px + 214px);
+  right: calc(-222.5px/2 + 32px + 214px);
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
   transition: right 0.3s;
@@ -543,7 +543,7 @@ error msg block behavior
   right: -300px;
   z-index: 1;
   position: fixed;
-  height: 252.5px;
+  height: 222.5px;
   width: 214px;
   background: white;
   border: 2px solid var(--darkgrey);

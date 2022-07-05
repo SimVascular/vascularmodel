@@ -4,6 +4,8 @@ var simModels = []
 var boolArray = []
 var boolArrayWResults = []
 var model;
+var multiModel = false;
+var singleModel = false;
 
 $(document).ready(function($){
     //reads CSV for data
@@ -65,12 +67,14 @@ function getVariable()
     }
     else if (models.length == 1)
     {
+        singleModel = true;
         //display for one model
         displayErrorMessage(2);
         model = models[0];
         displayModel(model);
     }
     else{
+        multiModel = true;
         // multiple model display
         displayErrorMessage(3);
         displayTableModels();
@@ -363,7 +367,7 @@ function createIcons()
 
 $("#download-all-models").click(function () {
     clearDoConfirm();
-    
+
     //counts number of selected models
     countModels = models.length;
     countResults = simModels.length;
@@ -454,7 +458,7 @@ $("#putDropDownHere").click(function () {
     warningHTML.classList.remove("newParagraph");
     
     //if viewing model
-    if(isOverlayOn)
+    if(singleModel)
     {
       updateSize(makeBooleanArray(preservedOrderData, model));
     }
