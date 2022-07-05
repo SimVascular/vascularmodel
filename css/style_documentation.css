@@ -87,6 +87,7 @@ img {
     object-fit: contain;
     margin-bottom: 10px;
     position: relative;
+    display: block;
 }
 
 .column {
@@ -101,3 +102,36 @@ img {
     display: table;
     clear: both;
 }
+
+/* FORMATTING FOR ICONS */
+
+.spanForIcons {
+    background-color: var(--select);
+    border-radius: 50%;
+    color: var(--applied);
+    cursor: pointer;
+    margin: 5px;
+    height: 80px;
+    width: 80px;
+}
+
+.featuresIcons {
+    font-size: 40px;
+    padding: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    float: right;
+    /* border: 2px solid black; */
+}
+
+@media only screen and (min-width: 767px) {
+    .spanForIcons:hover {
+        color: var(--select);
+        background-color: var(--applied);
+    }
+}
+
+.fa-square-check {
+    padding-left: 22.5px;
+    padding-right: 22.5px;
+  }
