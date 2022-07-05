@@ -28,11 +28,6 @@ body {
     margin: 2%;
 }
 
-.tOC {
-    margin-top: 30px;
-    margin-bottom: 10px;
-}
-
 h1 {
     font-size: 1.75rem;
     text-align: center;
@@ -64,23 +59,18 @@ a {
     color: var(--light1);
 }
 
-.skipTo {
-    height: auto;
-    width: auto;
-    margin: 2%;
-    top: 100px;
-    right: 15px;
-    position: fixed;
-    background-color: white;
+.tOC {
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
-.skipTo form {
+.tOC form {
     padding: 15px;
     position: fixed;
 }
 
-@media screen and (max-width: 960px) {
-    .skipTo form {
+@media screen and (max-width: 1200px) {
+    .tOC form {
         position: relative;
     }
 }
