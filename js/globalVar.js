@@ -516,7 +516,7 @@ function doConfirm(msg, yesFn, noFn) {
 }
 
 //informs user of a message
-function informUser(msg, string = "", hasOk = false) {
+function informUser(msg, hasOk = false) {
   //gets element informUser
   var informUser = $("#informUser");
 
@@ -529,22 +529,15 @@ function informUser(msg, string = "", hasOk = false) {
   var div = document.getElementById("informUser");
   div.style.display = "block"
 
-  //changes position of alert for clarity
-  if(string == "lower")
-  {
-    div.style.top = "300px";
-  }
-  else
-  {
-    div.style.top = "30px";
-  }
-
   //clears where the Okay button goes
   var goesHere = document.getElementById("okayGoesHere");
   goesHere.innerHTML = "";
 
   if(hasOk)
   {
+    //changes position for clarity
+    div.style.top = "300px";
+
     //if has an okay button, creates it
     var span = document.createElement("span");
     span.classList.add("button");

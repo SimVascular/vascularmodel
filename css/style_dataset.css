@@ -748,7 +748,7 @@ error msg block behavior
   border-radius: 5px;
   border: 2px solid var(--darkgrey);
   position: fixed;
-  /* top: 30px; */
+  top: 30px;
   padding: 8px 10px 10px;
   box-sizing: border-box;
   z-index: 99999;
