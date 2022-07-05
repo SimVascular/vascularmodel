@@ -185,13 +185,25 @@ $("#download-all").click(function () {
 
     //if the user clicks "yes," downloads all selected models
     doConfirm(message, function yes() {
-      downloadAllModels(selectedModels);
+      downloadAllModels();
     });
   }
 });
 
 //deals with downloading multiple models
-async function downloadAllModels(boolModels){
+async function downloadAllModels(){
+  var boolModels = selectedModels;
+  if(downloadType != "zip")
+  {
+    for(var i = 0 ; i < boolModels.length; i++)
+    {
+      if(boolModels[i] && preservedOrderData[i]["Results"] != "1") 
+      {
+        boolModels[i] = false;
+      }
+    }
+  }
+  
   listOfNames = []
 
   for(var i = 0; i < boolModels.length; i++)

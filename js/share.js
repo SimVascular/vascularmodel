@@ -1,6 +1,8 @@
 //two global variables of share.js
 var models = []
+var simModels = []
 var boolArray = []
+var boolArrayWResults = []
 var model;
 
 $(document).ready(function($){
@@ -39,10 +41,20 @@ function getVariable()
             models.push(data[i]);
             boolArray.push(true);
             found = true;
+            if(preservedOrderData[i]["Results"] == "1")
+            {
+                boolArrayWResults.push(true);
+                simModels.push(data[i]);
+            }
+            else
+            {
+                boolArrayWResults.push(false);
+            }
         }
         else if (encodedNames[i] == "N")
         {
             boolArray.push(false);
+            boolArrayWResults.push(false);
         }
     }
 
@@ -241,22 +253,6 @@ function displayTableModels()
     div.appendChild(h1);
 
     //buttons then in the html
-
-    var simModels = []
-
-    for(var i = 0; i < models.length; i++)
-    {
-        if(models[i]["Results"] == "1")
-        {
-            simModels.push(models[i]);
-        }
-    }
-
-    if(simModels.length == 0)
-    {
-        var simButton = document.getElementById("holdsSimButton");
-        simButton.innerHTML = "";
-    }
     
     //creates table
     var output = createMultiModelTable();
@@ -365,61 +361,42 @@ function createIcons()
     goToGallery.appendChild(icon);
 }
 
-//button to download all models in table
 $("#download-all-models").click(function () {
     clearDoConfirm();
-
-    //resets variables
-    downloadType = "zip";
-
-    //confirmation before downloading
-    var message = downloadConfirmation(models.length, "model", boolArray)
-
-    //if the user clicks "yes," downloads all selected models
-    doConfirm(message, function yes() {
-        downloadAll(models);
-    });
-});
-
-//button to download all simulation results in table
-//if this button exists, there are simulation results to download
-$("#download-all-sim").click(function () {
-    clearDoConfirm();
-
-    var simModels = []
-
-    for(var i = 0; i < models.length; i++)
-    {
-        if(models[i]["Results"] == "1")
-        {
-            simModels.push(models[i]);
-        }
-    }
-
-    var countModels = models.length;
-    var countResults = simModels.length;
-
-    difference(countModels, countResults, warningHTML); 
-
-    var type = "simulation result";
     
-    //resets downloadtype
-    dropDown(putDropDownHere, "only results");
+    //counts number of selected models
+    countModels = models.length;
+    countResults = simModels.length;
 
-    var message = downloadConfirmation(countResults, type, boolArray);
+    //if nothing to download, download-all button has no function
+    if (countModels > 0)
+    {
+        //dropDown defines downloadType
+        if(countResults == 0)
+        {
+            dropDown(putDropDownHere, "no results");
+        }
+        else
+        {
+            dropDown(putDropDownHere, "all");
+        }
 
-    //if the user clicks "yes," downloads all selected models
-    doConfirm(message, function yes() {
-        downloadAll(simModels);
-    });
+        var message = downloadConfirmation(countModels, "model", boolArray);
+
+        //if the user clicks "yes," downloads all selected models
+        doConfirm(message, function yes() {
+            downloadAll();
+        });
+    }
 });
 
-async function downloadAll(array)
+async function downloadAll()
 {
     listOfNames = []
 
     for(var i = 0; i < array.length; i++)
     {
+        if(downloadType == "zip" || array[i]["Results"] == "1")
         //takes in list of names of all the models to download
         listOfNames.push(array[i]["Name"])
     }
@@ -471,6 +448,28 @@ function goToGallery() {
 //listener for change in drop down menu
 $("#putDropDownHere").click(function () {
     downloadType = document.getElementById("chooseType").value;
+  
+    //clear variables
+    warningHTML.innerHTML = "";
+    warningHTML.classList.remove("newParagraph");
     
-    updateSize(boolArray)
-});
+    //if viewing model
+    if(isOverlayOn)
+    {
+      updateSize(makeBooleanArray(preservedOrderData, model));
+    }
+    else
+    {
+      if(downloadType == "zip")
+      {
+        var msg = downloadConfirmation(countModels, "model", boolArray);
+      }
+      else
+      {
+        var msg = downloadConfirmation(countResults, "simulation result", boolArrayWResults);
+        difference(countModels, countResults, warningHTML);
+      }
+  
+      updateMessage(msg);
+    }
+  });

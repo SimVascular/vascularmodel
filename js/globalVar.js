@@ -787,13 +787,13 @@ function dropDown(putDropDownHere, string)
 
   putDropDownHere.appendChild(select);
 }
-
+var count = 0;
 //downloads individual models
 function downloadModel(modelName)
   {
     //creates link of what the user wants to download
     var fileUrl = craftURL(modelName)
-    console.log(fileUrl)
+    console.log(fileUrl);
 
     //creates anchor tag to download
     var a = document.createElement("a");

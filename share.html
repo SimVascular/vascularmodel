@@ -148,11 +148,6 @@
           <button class="buttonDownload" id="download-all-models">
             Download Models
           </button>
-          <div id="holdsSimButton">
-            <button class="buttonDownload" id="download-all-sim">
-              Download Simulation Results
-            </button>
-          </div>
           <div id="modelsTable"></div>
         </div>
       </div>
@@ -163,13 +158,16 @@
       </div>
 
       <!-- box to confirm user actions -->
-      <div id="confirmBox">
-        <div id="warning"></div>
-        <div class="message"></div>
-        <div id="putDropDownHere"></div>
-        <div id="downloadSize" class="spaceBelow"></div>
-        <span class="button yes">Yes</span>
-        <span class="button no">No</span>
+      <div id="confirmOverlay">
+        <!-- box to confirm user actions -->
+        <div id="confirmBox">
+          <div id="warning"></div>
+          <div class="message newParagraph" id="message"></div>
+          <div id="putDropDownHere"></div>
+          <div id="downloadSize" class="newParagraph"></div>
+          <span class="button yes">Yes</span>
+          <span class="button no">No</span>
+        </div>
       </div>
 
       <!-- box to inform user of actions -->
