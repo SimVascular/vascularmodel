@@ -5,8 +5,6 @@
   var data;
   //filteredData has the models that correspond to the filters selected
   var filteredData;
-  //hasResultsData is the models that have simulation results
-  var hasResultsData;
   //preservedOrderData is data read from the csv but unscrambled
   var preservedOrderData = [];
   //displayedData is the data that is displayed in the view selected models
@@ -27,10 +25,16 @@
   var menuBarShowing = false;
   // var modeIsResults = false;
   var selectAllIconApplied = false;
-  // if nothing is selected, will download vtp files
-  var downloadType = "vtp";
+  //default is always "zip"
+  var downloadType = "zip";
   //dictionary with the sizes of all the files
   var sizes = {};
+
+  var countModels;
+  var modelsWithResults;
+  var countResults;
+  var warningHTML = document.getElementById("warning");
+  var putDropDownHere = document.getElementById("putDropDownHere");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -412,6 +416,18 @@ function makeshiftSelectedModels(preservedOrderData, model)
   return array;
 }
 
+// converts Y/N to 1/0
+function makeBooleanArray(preservedOrderData, model)
+{
+  //creates makeshift selectedmodels array
+  var array = new Array(preservedOrderData.length);
+  array.fill(false);
+  var indexOfModel = preservedOrderData.indexOf(model);
+  //selects the right index to make true
+  array[indexOfModel] = true;
+  return array;
+}
+
 //translates string with spaces to an array
 function valueToSearchInArrayForm(valueToSearch)
 {
@@ -465,6 +481,17 @@ function isSelectAllApplied(bool)
     selectAllIconApplied = false;
     document.getElementById("select-all").classList.remove("applied");
   }
+}
+
+function clearDoConfirm()
+{
+  document.getElementById("downloadSize").innerHTML = "";
+
+  warningHTML.innerHTML = "";
+  warningHTML.classList.remove("newParagraph");
+
+  putDropDownHere.innerHTML = "";
+  document.getElementById("downloadSize").innerHTML = "";
 }
 
 //lets us confirm actions with users
@@ -656,6 +683,12 @@ function updateSize(boolArray)
   sizeWarning.textContent = "Size: " + getSumOfSizes(boolArray);
 }
 
+function updateMessage(msg)
+{
+  var confirmBox = $("#confirmBox");
+  confirmBox.find(".message").text(msg);
+}
+
 function downloadConfirmation(count, type, boolArray)
 {
   updateSize(boolArray)
@@ -686,17 +719,14 @@ function difference(countModels, countResults, warningHTML)
   if(difference == 1)
   {
     var warning = "One model does not have simulation results to download.";
-
-    warningHTML.classList.add("newParagraph");
-    warningHTML.textContent = warning;
   }
   else if(difference != 0)
   {
     var warning = difference + " models do not have simulation results to download.";
-
-    warningHTML.classList.add("newParagraph");
-    warningHTML.textContent = warning;
   }
+
+  warningHTML.classList.add("newParagraph");
+  warningHTML.textContent = warning;
 }
 
 function dropDown(putDropDownHere, string)

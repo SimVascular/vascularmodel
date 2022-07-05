@@ -367,28 +367,25 @@ function createIcons()
 
 //button to download all models in table
 $("#download-all-models").click(function () {
+    clearDoConfirm();
+
     //resets variables
-    downloadType = "zip"
-
-    var warningHTML = document.getElementById("warning");
-    warningHTML.innerHTML = "";
-    warningHTML.classList.remove("newParagraph");
-
-    var putDropDownHere = document.getElementById("putDropDownHere");
-    putDropDownHere.innerHTML = "";
+    downloadType = "zip";
 
     //confirmation before downloading
     var message = downloadConfirmation(models.length, "model", boolArray)
 
     //if the user clicks "yes," downloads all selected models
     doConfirm(message, function yes() {
-        downloadAll(models, "model");
+        downloadAll(models);
     });
 });
 
 //button to download all simulation results in table
 //if this button exists, there are simulation results to download
 $("#download-all-sim").click(function () {
+    clearDoConfirm();
+
     var simModels = []
 
     for(var i = 0; i < models.length; i++)
@@ -402,17 +399,11 @@ $("#download-all-sim").click(function () {
     var countModels = models.length;
     var countResults = simModels.length;
 
-    var warningHTML = document.getElementById("warning");
-    warningHTML.innerHTML = "";
-    warningHTML.classList.remove("newParagraph");
-
     difference(countModels, countResults, warningHTML); 
 
     var type = "simulation result";
-
+    
     //resets downloadtype
-    var putDropDownHere = document.getElementById("putDropDownHere");
-    putDropDownHere.innerHTML = "";
     dropDown(putDropDownHere, "only results");
 
     var message = downloadConfirmation(countResults, type, boolArray);
@@ -443,8 +434,7 @@ async function downloadAll(array)
 
 //icon to download model
 $("#downloadModel").click(function () {
-    var putDropDownHere = document.getElementById("putDropDownHere");
-    putDropDownHere.innerHTML = "";
+    clearDoConfirm();
 
     //resets downloadtype as well
     if(model["Results"] == "1")

@@ -63,6 +63,8 @@ function deselectAll()
   //if at least one model has been selected
   if(selectedModels.filter(value => value === true).length > 0){
 
+    clearDoConfirm();
+
     //sends a "confirm action" notification
     doConfirm("Are you sure you want to deselect all selected models?", function yes() {
       //if user confirms, clears selectedModels array
@@ -132,10 +134,9 @@ function selectAllFilteredData()
 
 //downloading model in modalText
 $('.download-button-modal').click(function() {
+  clearDoConfirm();
+
   var message = "Are you sure you want to download " + viewingModel["Name"] + "?";
-  
-  var putDropDownHere = document.getElementById("putDropDownHere");
-  putDropDownHere.innerHTML = "";
 
   //resets downloadtype as well
   if(viewingModel["Results"] == "1")
@@ -158,61 +159,34 @@ $('.download-button-modal').click(function() {
 
 //downloading all selected models
 $("#download-all").click(function () {
+  clearDoConfirm();
+  
   //counts number of selected models
-  var countModels = selectedModels.filter(value => value === true).length;
+  countModels = selectedModels.filter(value => value === true).length;
 
   //modelsWithResults is a boolean array of all the models with results and that are selected
-  var modelsWithResults = selectedModelsWithResults();
-  var countResults = modelsWithResults.filter(value => value === true).length;
-  
-  var warningHTML = document.getElementById("warning");
-  warningHTML.innerHTML = "";
-  warningHTML.classList.remove("newParagraph");
-
-  var putDropDownHere = document.getElementById("putDropDownHere");
-  putDropDownHere.innerHTML = "";
+  modelsWithResults = selectedModelsWithResults();
+  countResults = modelsWithResults.filter(value => value === true).length;
 
   //if nothing to download, download-all button has no function
   if (countModels > 0)
   {
-    //informs user what they are downloading depending on their mode
-    if(downloadType != "zip")
+    //dropDown defines downloadType
+    if(countResults == 0)
     {
-      if(countResults != 0)
-      {
-        difference(countModels, countResults, warningHTML);
-
-        //defines downloadType
-        dropDown(putDropDownHere, "only results");
-
-        var message = downloadConfirmation(countResults, "simulation result", modelsWithResults);
-
-        //if the user clicks "yes," downloads all simulation results
-        doConfirm(message, function yes() {
-          downloadAllModels(modelsWithResults);
-        });
-      }
-      else
-      {
-        //lets the user know that they cannot download anything
-        var message = "Your selected models do not have simulation results to download."
-
-        //specifies that the message is lower and has an Okay button
-        informUser(message, "lower", true);
-      }
+      dropDown(putDropDownHere, "no results");
     }
     else
     {
-      //resets downloadType
-      downloadType = "zip";
-
-      var message = downloadConfirmation(countModels, "model", selectedModels);
-
-      //if the user clicks "yes," downloads all selected models
-      doConfirm(message, function yes() {
-        downloadAllModels(selectedModels);
-      });
+      dropDown(putDropDownHere, "all");
     }
+
+    var message = downloadConfirmation(countModels, "model", selectedModels);
+
+    //if the user clicks "yes," downloads all selected models
+    doConfirm(message, function yes() {
+      downloadAllModels(selectedModels);
+    });
   }
 });
 
@@ -515,6 +489,27 @@ $('#proOrRe').click(function() {
 $("#putDropDownHere").click(function () {
   downloadType = document.getElementById("chooseType").value;
 
-  var sizeWarning = document.getElementById("downloadSize");
-  sizeWarning.textContent = "Size: " + getSumOfSizes(selectedModelsWithResults());
+  //clear variables
+  warningHTML.innerHTML = "";
+  warningHTML.classList.remove("newParagraph");
+  
+  //if viewing model
+  if(isOverlayOn)
+  {
+    updateSize(makeBooleanArray(preservedOrderData, viewingModel));
+  }
+  else
+  {
+    if(downloadType == "zip")
+    {
+      var msg = downloadConfirmation(countModels, "model", selectedModels);
+    }
+    else
+    {
+      var msg = downloadConfirmation(countResults, "simulation result", modelsWithResults);
+      difference(countModels, countResults, warningHTML)
+    }
+
+    updateMessage(msg);
+  }
 });
