@@ -100,14 +100,43 @@
   
           <h2 class="title-documentation" id="Using_the_Filters">Using the Filters</h2>
             <h3>Opening the filter menu</h3>
-              <p>Find the word "FILTERS" on the top left of the page and click on it.</p>
-              <img src="img/help/openingPageF.png" alt="Opening Page of Gallery">             
+              <p>To open the filter menu, find the word "FILTERS" on the top left of the page and click on it.</p>
+              <img src="img/help/openingPageF.png" alt="Opening Page of Gallery">
+            <h3>About the filter menu</h3>
+              <h4>The Error Message</h4>
+                <p>If what you are looking for is too specific, an error message may appear. 
+                  If so, it means the specific models you are searching for are not currently avaliable on our repository. 
+                  You may need to enter in fewer specifications into the filter for models to appear in the gallery.</p>
+                <img src="img/help/errorMessageExZ1.jpg" alt="Image of error message.">
+                <img src="img/help/errorMessageExZ2.jpg" alt="Image of what the error message says.">
+                <img src="img/help/errorMessageEx.jpg" alt="Image of how to get an error message.">
+                <p>In the example above, an error message has appeared. This is because the Vascular Model Repository does not currently contain models that are of pulmonary arteries that have undergone the coronary artery bypass graft procedure.</p>
+              <h4>The Clear All Button</h4>
+                <p>If you want to return to the default state of the dataset gallery, click on the Clear All button. It will clear all of the filters that are currently applied.</p>
+                <img src="img/help/clearAllBefore.jpg" alt="Image of what a filled up filter bar looks like.">
+                <img src="img/help/clearAllAfter.jpg" alt="Image of cleared filter bar.">
+              <h4>The Collapse All Button</h4>
+                <p>If you want to collapse all the filter menus, click on the Collapse All Button. It will do so. Clicking this button, however, will not clear the filters that are applied.</p>
+                <img src="img/help/collapseAllBefore.jpg" alt="Image of a filled up filter bar">
+                <img src="img/help/collapseAllAfter.jpg" alt="Image of a collaped filter bar">
+                <p>In the example above, the collapse all button has been pressed, which collapses all the filter headers. The filters remain applied.</p>
             <h3>Looking at the different categories</h3>
               <h4>The Search Bar</h4>
                 <p>With the search bar, you are able to search for specific models. To search for multiple characteristics, add a space between each characteristic. To apply the filter, write in an entry and hit the ENTER key.</p>
                 <img src="img/help/searchBarExZ.jpg" alt="Example of what a search looks like in the search bar">
                 <img src="img/help/searchBarEx.jpg" alt="Full screen of what a search looks like with the search bar">
                 <p>In the example above, the models that are a result of the search bar entry are all male models of aortas that have aneurysms.</p>
+                <p>If you are looking for one specific model, you can search for the name of the model in the search bar.</p>
+              <h4>The Simulation Results Filter</h4>
+                <p>We have ran simulations for some of the models in this repository. They come in <code>.vtu</code> and <code>.vtp</code> files. 
+                  This filter allows you to search for those models.</p>
+                <img src="img/help/simResultsDefault.jpg" alt="Image of default state of simulation results button.">
+                <p>Above is what the default for the simulation results button is. In this state, no models are being filtered for simulation results.</p>
+                <p>To apply this filter, click on the mode you want to be in. If "MUST HAVE" is showing, you are filtering for the models that have simulation results. 
+                  If "OPTIONAL" is showing, you are not filtering for simulation results.</p>
+                <img src="img/help/simResultsApplied.jpg" alt="Image of applied state of simulation results button.">
+                <img src="img/help/simResultsEx.jpg" alt="Image of what gallery looks like with simulation results selected.">
+                <p>In the example above, the models that are the result of clicking the simulation results button have downloadable <code>.vtu</code> and <code>.vtp</code> files. </p>
               <h4>The Age Filter</h4>
                 <p>With the filter for age, you are able to search within an age range. The current minimum for the filter is 0 years of age, and the current maximum is 120 years.</p>
                 <img src="img/help/ageG.jpg" alt="Image of what the age filter looks like.">
@@ -133,10 +162,20 @@
                 <p>In the example above, the models that are a result of the checkbox entries are of aortas.</p>
                 <p>Some models check off more than one box per category. However, selecting more than one option under a category will return the union of those entries. 
                   To search for models that specifically have 2+ entries under one category, you will find the search bar to be more helpful.</p>
+                <p>Between categories (such as "Anatomy" and "Disease"), the checkboxes act as an intersection of the entries.</p>
                 <img src="img/help/checkboxUnionExZ.jpg" alt="Image of what applying multiple checkboxes under one category looks like.">
                 <img src="img/help/checkboxUnionEx.jpg" alt="Image of what the gallery looks like with given filters">
-                <p>In the example above, the models that are a result of the checkbox entries are either of aortas, pulmonary models, or both, if it were possible.</p>
-          <h2 class="title-documentation" id="Using_the_Menu_Bar">Using the Menu Bar</h2>
+                <p>In the example above, the models that are a result of the checkbox entries are either of aortas with aneurysm(s) or of coronary arteries with aneurysm(s).</p>
+              <h4>The Project Must Contain Filter</h4>
+                <p>A few models do not contain certain files. With the Project Must Contain filter, you are able to filter through the models that have the files you are looking to download.</p>
+                <p>Unlike the filter above, these checkboxes act as intersections. To apply the filters, click or unclick a checkbox.</p>
+                <img src="img/help/mustContainExZ.jpg" alt="Image of what applied project must contain filter looks like.">
+                <img src="img/help/mustContainEx.jpg" alt="Image of what applied project must contain filter looks like in the gallery.">
+                <p>In the example above, the models that are a result of the project must contain entries all contain both "Paths" and "Simulations" file.</p>
+              <h4>Summary</h4>
+                <p>There are different ways to find what you are searching for in the Vascular Model Repository. If you are looking for a specific model, the search bar is the most effective. 
+                  If you are looking for models in specific categories, the other forms of filters will be the most helpful.</p>
+                <h2 class="title-documentation" id="Using_the_Menu_Bar">Using the Menu Bar</h2>
           <p>*description*</p>
   
           <h2 class="title-documentation" id ="Sharing_Models">Sharing Models</h2>

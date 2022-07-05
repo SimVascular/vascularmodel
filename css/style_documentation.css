@@ -83,10 +83,10 @@ img {
     height: 100%;
     width: 100%;
     max-width: 750px;
+    max-height: 750px;
     object-fit: contain;
     margin-bottom: 10px;
     position: relative;
-    display: block;
 }
 
 .column {
