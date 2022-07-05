@@ -25,7 +25,7 @@
   var isOverlayOn = false;
   var isSafeSelected = false;
   var menuBarShowing = false;
-  var modeIsResults = false;
+  // var modeIsResults = false;
   var selectAllIconApplied = false;
   // if nothing is selected, will download vtp files
   var downloadType = "vtp";
@@ -469,12 +469,17 @@ function isSelectAllApplied(bool)
 
 //lets us confirm actions with users
 function doConfirm(msg, yesFn, noFn) {
+  //show overlay
+  var overlay = document.getElementById("confirmOverlay");
+  overlay.style.display = "block";
+
   var confirmBox = $("#confirmBox");
   confirmBox.find(".message").text(msg);
 
   //hides confirmation after button is clicked
   confirmBox.find(".yes,.no").unbind().click(function () {
       confirmBox.hide();
+      overlay.style.display = "none";
   });
 
   //deals with which function to call depending on user input
@@ -549,15 +554,13 @@ function checkFileExist(url) {
 
 function craftURL(modelName)
 {
-  if(modeIsResults)
+  if(downloadType == "zip")
   {
-    var url = "svresults/"
+    var url = "svprojects/"
   }
   else
   {
-    var url = "svprojects/"
-    //updates downloadType once more
-    downloadType = "zip";
+    var url = "svresults/"
   }
 
   url += modelName + "." + downloadType;
@@ -585,8 +588,8 @@ function getSumOfSizes(boolArray)
   {
     if(boolArray[i])
     {
-      //if modeIsResults, only adds to count if model has a result
-      if(preservedOrderData[i]["Results"] == "1" || !modeIsResults)
+      //come back here
+      if(preservedOrderData[i]["Results"] == "1" || downloadType == "zip")
       {
         names.push(preservedOrderData[i]["Name"])
       }
@@ -769,7 +772,7 @@ function downloadModel(modelName)
     //simulates click
     a.click();
     
-    if(modeIsResults)
+    if(downloadType == "zip")
     {
       //sends message to server with user's download
       gtag('event', 'download_results_' + modelName + "." + downloadType, {

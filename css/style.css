@@ -20,6 +20,8 @@
   --applied: #07575b;
   --midpointSelectApplied: #64999D;
   --lighterselect: #e0dddd;
+  --darkSimRe: #666;
+  --lightSimRe: #9a9a9a;
 }
 
 body, html {

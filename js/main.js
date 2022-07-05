@@ -75,15 +75,7 @@ function updateCounters(fApplied, fData, string)
   var counterPanel = document.getElementById("counterPanel");
 
   //totalLength is the total number of models possible in the current mode
-  var totalLength;
-  if(modeIsResults)
-  {
-    totalLength = hasResultsData.length;
-  }
-  else
-  {
-    totalLength = data.length;
-  }
+  var totalLength = data.length;
 
   //custom string for when someone just downloaded models
   if(string == "justdownloaded")
@@ -148,11 +140,6 @@ function updateCounters(fApplied, fData, string)
     viewSelectedIcon.classList.remove("applied");
   }
 } //end updateCounters
-
-// function show3D(model)
-// {
-//   console.log("enters")
-// }
 
 //code for modal-greeting
 function greetingText(data)
@@ -234,6 +221,7 @@ function greetingText(data)
   //adds details to window
   $('.details-text')[0].value = details
 
+  downloadType = "zip";
   var size = getSizeIndiv(viewingModel["Name"]);
 
   //gets element after the window

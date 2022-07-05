@@ -23,16 +23,8 @@ $("#clearAllButton").click(function() {
 });
 
 function clearAllFilters(){
-  //checks if project or results button is checked
-  var proOrReStatus = document.getElementById("switch-input").checked;
   //deselects all checkboxes (including the projects or results button)
   $('input:checkbox').removeAttr('checked');
-  //checks status
-  if(proOrReStatus)
-  {
-    //reverts if checkbox was wrongfully unchecked
-    document.getElementById("switch-input").checked = true;
-  }
   
   //reset age filter
   document.getElementById("min-age").value = 0;
@@ -140,7 +132,28 @@ function selectAllFilteredData()
 
 //downloading model in modalText
 $('.download-button-modal').click(function() {
-  downloadModel(viewingModel["Name"]);
+  var message = "Are you sure you want to download " + viewingModel["Name"] + "?";
+  
+  var putDropDownHere = document.getElementById("putDropDownHere");
+  putDropDownHere.innerHTML = "";
+
+  //resets downloadtype as well
+  if(viewingModel["Results"] == "1")
+  {
+    dropDown(putDropDownHere, "all");
+  }
+  else
+  {
+    dropDown(putDropDownHere, "no results");
+  }
+
+  //updates size with individual model
+  var sizeWarning = document.getElementById("downloadSize");
+  sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel["Name"])[1];
+
+  doConfirm(message, function (){
+    downloadModel(viewingModel["Name"]);
+  });
 });
 
 //downloading all selected models
@@ -163,7 +176,7 @@ $("#download-all").click(function () {
   if (countModels > 0)
   {
     //informs user what they are downloading depending on their mode
-    if(modeIsResults)
+    if(downloadType != "zip")
     {
       if(countResults != 0)
       {
@@ -389,32 +402,6 @@ $("#menu-bar").click(function() {
   }
 });
 
-//proOrRe: projects or results slider
-$('#proOrRe').click(function() {
-  var element = document.getElementById("switch-input");
-
-  //checks which mode is checked
-  if(element.checked)
-  {
-    //updates global variable modeIsResults 
-    modeIsResults = true;
-  }
-  else
-  {
-    modeIsResults = false;
-  }
-  
-  var selectIconStatus = selectAllIconApplied;
-  //resets filters
-  applyFilters();
-
-  if(selectIconStatus)
-  {
-    isSelectAllApplied(true);
-  }
-  
-});
-
 // help button listener
 $("#help").click(function () {
   window.open("documentation.html");
@@ -496,27 +483,32 @@ function preventScroll(e){
 
 // listeners for ProjectMustContain and search bar
 $("#checkbox-Images").change(function () {
-    applyFilters();
+  applyFilters();
 });
-  
-  $("#checkbox-Paths").change(function () {
-    applyFilters();
+
+$("#checkbox-Paths").change(function () {
+  applyFilters();
 });
-  
-  $("#checkbox-Segmentations").change(function () {
-    applyFilters();
+
+$("#checkbox-Segmentations").change(function () {
+  applyFilters();
 });
-  
-  $("#checkbox-Models").change(function () {
-    applyFilters();
+
+$("#checkbox-Models").change(function () {
+  applyFilters();
 });
-  
-  $("#checkbox-Meshes").change(function () {
-    applyFilters();
+
+$("#checkbox-Meshes").change(function () {
+  applyFilters();
 });
-  
-  $("#checkbox-Simulations").change(function () {
-    applyFilters();
+
+$("#checkbox-Simulations").change(function () {
+  applyFilters();
+});
+
+//proOrRe: projects or results slider
+$('#proOrRe').click(function() {
+  applyFilters();
 });
 
 //listener for change in drop down menu

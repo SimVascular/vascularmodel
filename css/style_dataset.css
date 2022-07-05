@@ -673,7 +673,7 @@ error msg block behavior
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
 
-#overlay, #vidOverlay{
+#overlay, #confirmOverlay, #vidOverlay{
   position: fixed;
   display: none;
   width: 100%;
@@ -685,6 +685,11 @@ error msg block behavior
   background-color: rgba(0,0,0,0.5);
   z-index: 99997;
   cursor: pointer;
+}
+
+#confirmOverlay {
+  z-index: 99998;
+  cursor: default;
 }
 
 #safeOfOverlayClick {

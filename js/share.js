@@ -368,7 +368,6 @@ function createIcons()
 //button to download all models in table
 $("#download-all-models").click(function () {
     //resets variables
-    modeIsResults = false;
     downloadType = "zip"
 
     var warningHTML = document.getElementById("warning");
@@ -390,9 +389,6 @@ $("#download-all-models").click(function () {
 //button to download all simulation results in table
 //if this button exists, there are simulation results to download
 $("#download-all-sim").click(function () {
-    //updates variables
-    modeIsResults = true;
-
     var simModels = []
 
     for(var i = 0; i < models.length; i++)
@@ -450,9 +446,6 @@ $("#downloadModel").click(function () {
     var putDropDownHere = document.getElementById("putDropDownHere");
     putDropDownHere.innerHTML = "";
 
-    //.zip is default so modeIsResults is default
-    modeIsResults = false;
-
     //resets downloadtype as well
     if(model["Results"] == "1")
     {
@@ -467,7 +460,7 @@ $("#downloadModel").click(function () {
     var sizeWarning = document.getElementById("downloadSize");
     sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
 
-    doConfirm("Are you sure you want to download model files?", function yes(){
+    doConfirm("Are you sure you want to download " + model["Name"] + "?", function yes(){
         downloadModel(model["Name"]);
     })
 });
@@ -488,15 +481,6 @@ function goToGallery() {
 //listener for change in drop down menu
 $("#putDropDownHere").click(function () {
     downloadType = document.getElementById("chooseType").value;
-
-    if(downloadType != "zip")
-    {
-        modeIsResults = true;
-    }
-    else
-    {
-        modeIsResults = false;
-    }
     
     updateSize(boolArray)
 });

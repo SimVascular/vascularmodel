@@ -74,22 +74,6 @@
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
 
-      <!-- box to confirm user actions -->
-      <div id="confirmBox">
-        <div id="warning"></div>
-        <div class="message"></div>
-        <div id="putDropDownHere"></div>
-        <div id="downloadSize" class = "newParagraph"></div>
-        <span class="button yes">Yes</span>
-        <span class="button no">No</span>
-      </div>
-
-      <!-- box to inform user of actions -->
-      <div id="informUser">
-        <div class="message"></div>
-        <div id="okayGoesHere"></div>
-      </div>
-
       <!-- help video with overlay
       <div id="vidOverlay">
         <div id="holdsYTVideo" style = "height: 0px;">
@@ -130,6 +114,19 @@
               <input type="search" placeholder="Search" id="search-field">
             </div> <!-- cd-filter-content -->
           </div> <!-- cd-filter-block -->
+          
+          <div class="cd-filter-block">
+            <h4>Simulation results</h4>
+            <div class="cd-filter-content" style = "display: block;">
+              <div>
+                <label class="switch switch-flat" id = "proOrRe">
+                  <input id = "switch-input" class="switch-input" type="checkbox" />
+                  <span class="switch-label" data-on="Must Have" data-off="Optional"></span> 
+                  <span class="switch-handle"></span> 
+                </label>
+              </div>
+            </div>
+          </div>
            
           <div class="cd-filter-block">
               <h4>Age</h4>
@@ -233,13 +230,6 @@
 
       <section class="features" id = "features">
         <form>
-          <div>
-            <label class="switch switch-flat" id = "proOrRe">
-              <input id = "switch-input" class="switch-input" type="checkbox" />
-              <span class="switch-label" data-on="Results" data-off="Projects"></span> 
-              <span class="switch-handle"></span> 
-            </label>
-          </div> <!-- slider for projects/results -->
           <table>
             <tr>
               <td>
@@ -272,7 +262,25 @@
         </form>
       </section> <!-- features -->
     </main> <!-- cd-main-content -->
-  
+
+<div id = "confirmOverlay">
+  <!-- box to confirm user actions -->
+  <div id="confirmBox">
+    <div id="warning"></div>
+    <div class="message"></div>
+    <div id="putDropDownHere"></div>
+    <div id="downloadSize" class = "newParagraph"></div>
+    <span class="button yes">Yes</span>
+    <span class="button no">No</span>
+  </div>
+</div>
+
+<!-- box to inform user of actions -->
+<div id="informUser">
+  <div class="message"></div>
+  <div id="okayGoesHere"></div>
+</div>
+
 <!-- overlay for detailsModal -->
 <div id="overlay">
   <div class="container">
