@@ -367,6 +367,7 @@ function createIcons()
 
 //button to download all models in table
 $("#download-all-models").click(function () {
+    //resets variables
     modeIsResults = false;
     downloadType = "zip"
 
@@ -389,7 +390,9 @@ $("#download-all-models").click(function () {
 //button to download all simulation results in table
 //if this button exists, there are simulation results to download
 $("#download-all-sim").click(function () {
+    //updates variables
     modeIsResults = true;
+
     var simModels = []
 
     for(var i = 0; i < models.length; i++)
@@ -399,6 +402,7 @@ $("#download-all-sim").click(function () {
             simModels.push(models[i]);
         }
     }
+
     var countModels = models.length;
     var countResults = simModels.length;
 
@@ -410,6 +414,7 @@ $("#download-all-sim").click(function () {
 
     var type = "simulation result";
 
+    //resets downloadtype
     var putDropDownHere = document.getElementById("putDropDownHere");
     putDropDownHere.innerHTML = "";
     dropDown(putDropDownHere, "only results");
@@ -435,7 +440,7 @@ async function downloadAll(array)
     //sends to download all models
     for(var i = 0; i < listOfNames.length; i++)
     {
-        download(listOfNames[i]);
+        downloadModel(listOfNames[i]);
         await new Promise(r => setTimeout(r, 3));
     }
 }
@@ -448,6 +453,7 @@ $("#downloadModel").click(function () {
     //.zip is default so modeIsResults is default
     modeIsResults = false;
 
+    //resets downloadtype as well
     if(model["Results"] == "1")
     {
         dropDown(putDropDownHere, "all");
@@ -457,35 +463,14 @@ $("#downloadModel").click(function () {
         dropDown(putDropDownHere, "no results");
     }
     
+    //updates size with individual model
     var sizeWarning = document.getElementById("downloadSize");
     sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
 
     doConfirm("Are you sure you want to download model files?", function yes(){
-        download();
+        downloadModel(model["Name"]);
     })
 });
-
-//download model using anchor tag
-function download(modelName = model["Name"])
-{
-  //fileType determined by global variable downloadType
-  var fileUrl = craftURL(modelName);
-  console.log(fileUrl)
-  
-  var a = document.createElement("a");
-  a.href = fileUrl;
-  a.setAttribute("download", modelName);
-  //simulates click to download
-  a.click();
-
-  //messages server with download
-  gtag('event', 'download_' + modelName, {
-    'send_to': 'G-YVVR1546XJ',
-    'event_category': 'Model download',
-    'event_label': 'test',
-    'value': '1'
-});
-}
 
 //go to gallery icon
 $("#goToGallery").click(function () {

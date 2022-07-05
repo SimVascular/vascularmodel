@@ -556,6 +556,7 @@ function craftURL(modelName)
   else
   {
     var url = "svprojects/"
+    //updates downloadType once more
     downloadType = "zip";
   }
 
@@ -752,4 +753,40 @@ function dropDown(putDropDownHere, string)
   }
 
   putDropDownHere.appendChild(select);
+}
+
+//downloads individual models
+function downloadModel(modelName)
+  {
+    //creates link of what the user wants to download
+    var fileUrl = craftURL(modelName)
+    console.log(fileUrl)
+
+    //creates anchor tag to download
+    var a = document.createElement("a");
+    a.href = fileUrl;
+    a.setAttribute("download", modelName);
+    //simulates click
+    a.click();
+    
+    if(modeIsResults)
+    {
+      //sends message to server with user's download
+      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+        'send_to': 'G-YVVR1546XJ',
+        'event_category': 'Model download',
+        'event_label': 'test',
+        'value': '1'
+      });
+    }
+    else
+    {
+      //sends message to server with user's download
+      gtag('event', 'download_' + modelName, {
+        'send_to': 'G-YVVR1546XJ',
+        'event_category': 'Model download',
+        'event_label': 'test',
+        'value': '1'
+      });
+    }
 }
