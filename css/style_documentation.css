@@ -164,3 +164,7 @@ img {
         width: 100%;
     }
 }
+
+.smaller {
+    height: 300px; width: 300px
+}
