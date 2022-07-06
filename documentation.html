@@ -63,176 +63,47 @@
 
 <div class="container-fluid main-content centerBox">
   <h1 id="top">Documentation</h1>
-  <div class="row" id="model-gallery">
-    <div class="col-lg-3 col-sm-12 tOC">
-      <form>
-          Skip To...
+      <div id="documentation">
+        <h2 class="title-documentation" id="Getting_Started">Getting Started</h2>
+        <p>The Vascular Model Repository is a library of cardiovascular models. Model projects can be downloaded in <code>.zip</code> format from the <a href="dataset.html" class="link" target="_blank">Repository</a>. Each archive contains a project compatible with SimVascular, an open-source software for patient-specific cardiovascular modeling and simulation. We refer to the <a href="https://simvascular.github.io/" target="_blank" class="link">SimVascular website</a> and <a href=https://simvascular.github.io/docsQuickGuide.html target="_blank" class="link" target="_blank">Getting started page</a> for an in-depth discussion of the software capabilities and its usage. In this documentation, we limit ourselves to recall that a SimVascular project can be opened by clicking <span style="font-weight:600">File > Open SV Project...</span> in the graphical user interface and by selecting the desired project folder.</p>
+        <p>Although the models are compatible with SimVascular by design, some components (in particular, image data and computational meshes) can be easily opened in other pieces of software too. Here is a brief description of the subfolders contained in each project:</p>
+        <p>
+          <span style="font-weight:600">Images:</span> directory containing medical image data in <code>.vti</code> format, which can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p>
+          <span style="font-weight:600">Paths:</span> directory containing path files in <code>*.pth</code> format, where <code>*</code> is usually one of the vessels making up the current model. Path files store path points (in <code>.xml</code> format) manually identified during the centerline identification stage of SimVascular.</p>
+        <p>
+          <span style="font-weight:600">Segmentations:</span> directory containing contour files in <code>*.ctgr</code> format, where <code>*</code> is usually one of the vessels making up the current model. Contour files store contour points (in <code>.xml</code> format) manually identified during the segmentation stage of SimVascular.</p>
+        <p>
+          <span style="font-weight:600">Models:</span> directory containing the surface model of the geometry.</p>
+        <p>
+          <span style="font-weight:600">Meshes:</span> directory containing the meshes of the model. Surface meshes are stored in <code>.vtp</code>, while volumetric meshes are stored in <code>.msh</code> and <code>.vtu</code> formats; <code>.vtp</code> and <code>.vtu</code> files can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p>
+          <span style="font-weight:600">flow-files:</span> directory containing inflow boundary conditions. These as stored in files called <code>inflow_3d.flow</code>, i.e., as raw text files in which each row corresponds to a particular timestep and flowrate value. Note that, in SimVascular, a positive inflow requires a negative sign (as the normal to the inlet surface and the velocity field have opposite orientations).</p>
+        <p>
+          <span style="font-weight:600">Simulations:</span> directory containing simulation files compatible with SimVascular. Please note that simulation results are currently not included in the repository.</p>
+        <p>For help on how to use the dataset features, go to this <a href="tutorial.html">Tutorial</a>.</p>
+        <h2 class="title-documentation" id ="History">History</h2>
+        <p>The Vascular Model Repository was originally created by 
+          <a class="link" href="https://www.anderson.ucla.edu/faculty-and-research/global-economics-and-management/faculty/wilson" target="_blank">Nathan Wilson</a> 
+          and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institues of Health (NIH). 
+          The repository has then been migrated into its current form in a joint effort between the <a href="https://cbcl.stanford.edu" class="link" target="_blank">Cardiovascular Biomechanics Computation Lab</a> 
+          at Stanford University, the 
+          <a href="https://shaddenlab.berkeley.edu" class="link" target="_blank">Shadden Lab</a>
+          at Berkeley University, and Nathan Wilson. The project is currently supported by the NIH National Library of Medicine (grant 5R01LM013120).</p>
 
-          <a class="tab" href="#Using_the_Models">Using the Models</a>
-          <a class="tab" href="#Using_the_Filters">Using the Filters</a>
-          <a class="tab" href="#Using_the_Menu_Bar">Using the Menu Bar</a>
-          <a class="tab" href="#Sharing_Models">Sharing Models</a>
-          <a class="tab" href="#History">History</a>
-          <a class="tab" href="#References">References</a>
-          <a class="tab" href="#Questions_or_Comments">Questions or Comments?</a>
-        </form>
-      </div> <!-- end table of contents-->
-      
-      <div class="col-lg-9 col-12">    
-        <div id="documentation">
-          <h2 class="title-documentation" id="Using_the_Models">Using the Models</h2>
-          <p>The Vascular Model Repository is a library of cardiovascular models. Model projects can be downloaded in <code>.zip</code> format from the <a href="dataset.html" class="link" target="_blank">Repository</a>. Each archive contains a project compatible with SimVascular, an open-source software for patient-specific cardiovascular modeling and simulation. We refer to the <a href="https://simvascular.github.io/" target="_blank" class="link">SimVascular website</a> and <a href=https://simvascular.github.io/docsQuickGuide.html target="_blank" class="link" target="_blank">Getting started page</a> for an in-depth discussion of the software capabilities and its usage. In this documentation, we limit ourselves to recall that a SimVascular project can be opened by clicking <span style="font-weight:600">File > Open SV Project...</span> in the graphical user interface and by selecting the desired project folder.</p>
-          <p>Although the models are compatible with SimVascular by design, some components (in particular, image data and computational meshes) can be easily opened in other pieces of software too. Here is a brief description of the subfolders contained in each project:</p>
-          <p>
-            <span style="font-weight:600">Images:</span> directory containing medical image data in <code>.vti</code> format, which can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
-          <p>
-            <span style="font-weight:600">Paths:</span> directory containing path files in <code>*.pth</code> format, where <code>*</code> is usually one of the vessels making up the current model. Path files store path points (in <code>.xml</code> format) manually identified during the centerline identification stage of SimVascular.</p>
-          <p>
-            <span style="font-weight:600">Segmentations:</span> directory containing contour files in <code>*.ctgr</code> format, where <code>*</code> is usually one of the vessels making up the current model. Contour files store contour points (in <code>.xml</code> format) manually identified during the segmentation stage of SimVascular.</p>
-          <p>
-            <span style="font-weight:600">Models:</span> directory containing the surface model of the geometry.</p>
-          <p>
-            <span style="font-weight:600">Meshes:</span> directory containing the meshes of the model. Surface meshes are stored in <code>.vtp</code>, while volumetric meshes are stored in <code>.msh</code> and <code>.vtu</code> formats; <code>.vtp</code> and <code>.vtu</code> files can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
-          <p>
-            <span style="font-weight:600">flow-files:</span> directory containing inflow boundary conditions. These as stored in files called <code>inflow_3d.flow</code>, i.e., as raw text files in which each row corresponds to a particular timestep and flowrate value. Note that, in SimVascular, a positive inflow requires a negative sign (as the normal to the inlet surface and the velocity field have opposite orientations).</p>
-          <p>
-            <span style="font-weight:600">Simulations:</span> directory containing simulation files compatible with SimVascular. Please note that simulation results are currently not included in the repository.</p>
-  
-          <h2 class="title-documentation" id="Using_the_Filters">Using the Filters</h2>
-            <h3>Opening the filter menu</h3>
-              <p>To open the filter menu, find the word "FILTERS" on the top left of the page and click on it.</p>
-              <img src="img/help/openingPageF.png" alt="Opening Page of Gallery">
-            <h3>About the filter menu</h3>
-              <h4>The Error Message</h4>
-                <p>If what you are looking for is too specific, an error message may appear. 
-                  If so, it means the specific models you are searching for are not currently avaliable on our repository. 
-                  You may need to enter in fewer specifications into the filter for models to appear in the gallery.</p>
-                <img src="img/help/errorMessageExZ1.jpg" alt="Image of error message.">
-                <img src="img/help/errorMessageExZ2.jpg" alt="Image of what the error message says.">
-                <img src="img/help/errorMessageEx.jpg" alt="Image of how to get an error message.">
-                <p>In the example above, an error message has appeared. This is because the Vascular Model Repository does not currently contain models that are of pulmonary arteries that have undergone the coronary artery bypass graft procedure.</p>
-              <h4>The Clear All Button</h4>
-                <p>If you want to return to the default state of the dataset gallery, click on the Clear All button. It will clear all of the filters that are currently applied.</p>
-                <img src="img/help/clearAllBefore.jpg" alt="Image of what a filled up filter bar looks like.">
-                <img src="img/help/clearAllAfter.jpg" alt="Image of cleared filter bar.">
-              <h4>The Collapse All Button</h4>
-                <p>If you want to collapse all the filter menus, click on the Collapse All Button. It will do so. Clicking this button, however, will not clear the filters that are applied.</p>
-                <img src="img/help/collapseAllBefore.jpg" alt="Image of a filled up filter bar">
-                <img src="img/help/collapseAllAfter.jpg" alt="Image of a collaped filter bar">
-                <p>In the example above, the collapse all button has been pressed, which collapses all the filter headers. The filters remain applied.</p>
-            <h3>Looking at the different categories</h3>
-              <h4>The Search Bar</h4>
-                <p>With the search bar, you are able to search for specific models. To search for multiple characteristics, add a space between each characteristic. To apply the filter, write in an entry and hit the ENTER key.</p>
-                <img src="img/help/searchBarExZ.jpg" alt="Example of what a search looks like in the search bar">
-                <img src="img/help/searchBarEx.jpg" alt="Full screen of what a search looks like with the search bar">
-                <p>In the example above, the models that are a result of the search bar entry are all male models of aortas that have aneurysms.</p>
-                <p>If you are looking for one specific model, you can search for the name of the model in the search bar.</p>
-              <h4>The Simulation Results Filter</h4>
-                <p>We have ran simulations for some of the models in this repository. They come in <code>.vtu</code> and <code>.vtp</code> files. 
-                  This filter allows you to search for those models.</p>
-                <img src="img/help/simResultsDefault.jpg" alt="Image of default state of simulation results button.">
-                <p>Above is what the default for the simulation results button is. In this state, no models are being filtered for simulation results.</p>
-                <p>To apply this filter, click on the mode you want to be in. If "MUST HAVE" is showing, you are filtering for the models that have simulation results. 
-                  If "OPTIONAL" is showing, you are not filtering for simulation results.</p>
-                <img src="img/help/simResultsApplied.jpg" alt="Image of applied state of simulation results button.">
-                <img src="img/help/simResultsEx.jpg" alt="Image of what gallery looks like with simulation results selected.">
-                <p>In the example above, the models that are the result of clicking the simulation results button have downloadable <code>.vtu</code> and <code>.vtp</code> files. </p>
-              <h4>The Age Filter</h4>
-                <p>With the filter for age, you are able to search within an age range. The current minimum for the filter is 0 years of age, and the current maximum is 120 years.</p>
-                <img src="img/help/ageG.jpg" alt="Image of what the age filter looks like.">
-                <p>Both the minimum and maximum bounds are inclusive. To apply the filter, hit the ENTER key.</p>
-                <img src="img/help/ageExZ.jpg" alt="Image of what the applied age filter looks like.">
-                <img src="img/help/ageEx.jpg" alt="Image of what the gallery looks like with the filter applied.">
-                <p>In the example above, the models that are a result of the age filter entries are 5 years old.</p>
-              <h4>The Drop-Down Menus</h4>
-                <p>With the two drop down menus, you are able to search for models of a specific sex and species. To apply the filters, select the subcategory you are looking for.</p>
-                <!-- <img src="img/help/" alt="Image of what "> -->
-                <img src="img/help/dropdownExZ.jpg" alt="Image of what the applied drop down menus look like.">
-                <img src="img/help/dropdownEx.jpg" alt="Image of what the gallery looks like with the drop down menus applied">
-                <p>In the example above, the models that are a result of the drop down menu entries are both female and human.</p>
-                <p>To deselect a drop down menu entry without clearing all applied filters, click on the "Select One" option.</p>
-                <img src="img/help/dropdownResetEx.jpg" alt="Image of where to click to reset dropdown menu.">
-                <p>Here is what the reset drop down menu should look like:</p>
-                <img src="img/help/dropdownResetEx2.jpg" alt="Image of how the resetted drop down menu looks like.">
-              <h4>The Checkboxes</h4>
-                <p>With checkboxes under the three categories "Anatomy," "Disease," and "Procedure," you are able to search for models of a specific anatomy, disease, or surgical procedure.</p>
-                <p>To apply the filters, click or unclick a checkbox.</p>
-                <img src="img/help/checkboxExZ.jpg" alt="Image of what an applied check box looks like.">
-                <img src="img/help/checkboxEx.jpg" alt="Image of what the gallery looks like with the applied checkbox">
-                <p>In the example above, the models that are a result of the checkbox entries are of aortas.</p>
-                <p>Some models check off more than one box per category. However, selecting more than one option under a category will return the union of those entries. 
-                  To search for models that specifically have 2+ entries under one category, you will find the search bar to be more helpful.</p>
-                <p>Between categories (such as "Anatomy" and "Disease"), the checkboxes act as an intersection of the entries.</p>
-                <img src="img/help/checkboxUnionExZ.jpg" alt="Image of what applying multiple checkboxes under one category looks like.">
-                <img src="img/help/checkboxUnionEx.jpg" alt="Image of what the gallery looks like with given filters">
-                <p>In the example above, the models that are a result of the checkbox entries are either of aortas with aneurysm(s) or of coronary arteries with aneurysm(s).</p>
-              <h4>The Project Must Contain Filter</h4>
-                <p>A few models do not contain certain files. With the Project Must Contain filter, you are able to filter through the models that have the files you are looking to download.</p>
-                <p>Unlike the filter above, these checkboxes act as intersections. To apply the filters, click or unclick a checkbox.</p>
-                <img src="img/help/mustContainExZ.jpg" alt="Image of what applied project must contain filter looks like.">
-                <img src="img/help/mustContainEx.jpg" alt="Image of what applied project must contain filter looks like in the gallery.">
-                <p>In the example above, the models that are a result of the project must contain entries all contain both "Paths" and "Simulations" file.</p>
-              <h4>Summary</h4>
-                <p>There are different ways to find what you are searching for in the Vascular Model Repository. If you are looking for a specific model, the search bar is the most effective. 
-                  If you are looking for models in specific categories, the other forms of filters will be the most helpful.</p>
-          <h2 class="title-documentation" id="Using_the_Menu_Bar">Using the Menu Bar</h2>
-            <h3>Opening the Menu Bar</h3>
-              <p>To open the menu bar, click on the horizontal MENU bar on the top-middle right of the screen.</p>
-              <img src="img/help/openingPageM.png" alt="Image of how to find menu bar">
-              After opening the menu bar, you will see four different icons, each with unique functions to help you navigate the Vascular Model Repository's dataset. The functions of each of these icons are described below.
-            <h3>The Select and Deselect All Icon</h3>
-              <img style = "height: 300px; width: 300px;" src="img/help/selectAllIcon.png" alt="Image of the select-all icon">
-              <p>By clicking and unclicking this icon, you are able to select and deselect all of the models that are showing in the gallery.</p>
-              <img src="img/help/appliedSelectAll.jpg" alt="Image of select all in action">
-              <p>In the example above, by clicking the Select All icon, all the models in the repository have been selected.</p>
-              <p>When you are viewing the models you have selected, a place you can access by clicking on the View Selected Models icon, clicking the Select All icon will deselect all the models you have selectd. 
-                A confirmation message will appear. By clicking "Yes," you are able to clear the models you have selected.</p>
-              <img src="img/help/inViewSelected.jpg" alt="Image of selected models in view selected models">
-              <p>In the example above, one is viewing vertebral models they have selected.</p>
-              <img src="img/help/deselectConfirmExZ.jpg" alt="Image of the confirmation message">
-              <img src="img/help/deselectConfirmEx.jpg" alt="Image of what happens when you click the Select All icon when viewing selected models">
-              <p>The example above demonstrates the confirmation message that will appear if you click on the Select All icon when viewing the models you have selected.</p>
-            <h3>The View Selected Models Icon</h3>
-              <p>After selecting models, you may want to view all the models you have selected before downloading their files. To do so, find the view selected models icon, the top right icon, in the menu bar and click on it.</p>
-              <p>The number on the icon is how many models you have selected.</p>
-              <img src="img/help/afterSelectingAll.jpg" alt="Image of gallery after selecting models">
-              <img style = "height: 300px; width: 300px;" src="img/help/viewSelectedIcon.jpg" alt="Image of the view selected icon">
-              <p>Once you click on this icon, you can unclick it or apply new filters to return to the gallery.</p>
-              <p>When you are viewing the models you have selected, you can see how many you have selected on the top-middle of the screen.</p>
-              <img src="img/help/viewSelectedPlace.jpg" alt="Image of selected models in view selected models">
-              <img src="img/help/headerViewSelected.jpg" alt="Image of header when viewing selected models">
-              <p>In the example above, one knows that they are viewing the four models they have selected.</p>
-              <p>In this page, by clicking the Select All icon, you can deselect all the models you have selected.</p>
-            <h3>The Download All Icon</h3>
-              <p>Once you are ready to download your models, click on the download icon in the menu bar.</p>
-              <img style = "height: 300px; width: 300px;" src="img/help/downloadIconZ.jpg" alt="Image of download icon zoomed in.">
-          <h2 class="title-documentation" id ="Sharing_Models">Sharing Models</h2>
-          <p>*description*</p>
-  
-          <h2 class="title-documentation" id ="History">History</h2>
-          <p>The Vascular Model Repository was originally created by 
-            <a class="link" href="https://www.anderson.ucla.edu/faculty-and-research/global-economics-and-management/faculty/wilson" target="_blank">Nathan Wilson</a> 
-            and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institues of Health (NIH). 
-            The repository has then been migrated into its current form in a joint effort between the <a href="https://cbcl.stanford.edu" class="link" target="_blank">Cardiovascular Biomechanics Computation Lab</a> 
-            at Stanford University, the 
-            <a href="https://shaddenlab.berkeley.edu" class="link" target="_blank">Shadden Lab</a>
-            at Berkeley University, and Nathan Wilson. The project is currently supported by the NIH National Library of Medicine (grant 5R01LM013120).</p>
-  
-          <h2 id="References"> References</h2>
-          <p>We refer to the following publications for additional details on the Vascular Model Repository. 
-            If you find the repository useful, please consider citing these references.</p>
-          <p> N.M. Wilson, A.K. Ortiz, and A.B. Johnson, 
-            <em>The Vascular Model Repository: A Public Resource of Medical Imaging Data and Blood Flow Simulation Results</em>, 
-            J. Med. Devices 7(4), 040923 (Dec 05, 2013) doi:10.1115/1.4025983.
-          <p> M.R. Pfaller, J. Pham, A. Verma, N.M. Wilson, D.W. Parker, W. Yang, and A.L. Marsden, 
-            <em>Automated generation of 0D and 1D reduced-order models of patient-specific blood flow</em>, 
-            arXiv:2111.04878.
-  
-          <h2 id="Questions_or_Comments">Have Questions or Comments?</h2>
-          <p>Let us know what functions you would like to see in the Vascular Model Respository by <a href="contacts.html" target="_blank">contacting us.</a></p>
+        <h2 id="References"> References</h2>
+        <p>We refer to the following publications for additional details on the Vascular Model Repository. 
+          If you find the repository useful, please consider citing these references.</p>
+        <p> N.M. Wilson, A.K. Ortiz, and A.B. Johnson, 
+          <em>The Vascular Model Repository: A Public Resource of Medical Imaging Data and Blood Flow Simulation Results</em>, 
+          J. Med. Devices 7(4), 040923 (Dec 05, 2013) doi:10.1115/1.4025983.
+        <p> M.R. Pfaller, J. Pham, A. Verma, N.M. Wilson, D.W. Parker, W. Yang, and A.L. Marsden, 
+          <em>Automated generation of 0D and 1D reduced-order models of patient-specific blood flow</em>, 
+          arXiv:2111.04878.
+
+        <h2 id="Questions_or_Comments">Have Questions or Comments?</h2>
+        <p>Let us know what functions you would like to see in the Vascular Model Respository by <a href="contacts.html" target="_blank">contacting us.</a></p>
       </div> <!-- end documentation-->
-    </div> <!-- end column-->
-    </div> <!-- end row-->
   </div> <!-- end container -->
 
       <section id="contact-section">

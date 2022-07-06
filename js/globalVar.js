@@ -767,15 +767,15 @@ function dropDown(putDropDownHere, string)
     //specify what the options are
     if(options[i] == "vtp")
     {
-      option.textContent = "Surface Model (.vtp)";
+      option.textContent = "Simulation Results (.vtp)";
     }
     else if(options[i] == "vtu")
     {
-      option.textContent = "Volume Model (.vtu)";
+      option.textContent = "Simulation Results (.vtu)";
     }
     else if (options[i] == "zip")
     {
-      option.textContent = "Project (.zip)";
+      option.textContent = "SimVascular Project (.zip)";
     }
     select.appendChild(option);
   }
