@@ -395,9 +395,9 @@ ul.contact-address li i {
   }
 
   .explore {
-    color: var(--black);
+    color: var(--white);
     padding-left: 30px;
-    border-left: 1px solid var(--dark1);
+    border-left: 0px;
     padding-top:20px;
     padding-bottom:20px;
   }
