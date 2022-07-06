@@ -35,6 +35,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css?v=1.0.0" />
     <link rel="stylesheet" href="css/style_documentation.css" />
+    <link rel="stylesheet" href="scss/tutorial.scss" />
     <title>Vascular Model Repository</title>
     <script
       async
@@ -110,6 +111,57 @@
       <div class="row" id="model-gallery">
         <div class="col-lg-3 col-sm-12 tOC">
           <form>
+            <nav class="accordion arrows">
+              <input type="radio" name="accordion" id="cb1" />
+              <section class="box">
+                <label class="box-title" for="cb1">Using the Filters</label>
+                <label class="box-close" for="acc-close"></label>
+                <div class="box-content">
+                  <a href="#Opening_the_filter_menu">Opening_the_filter_menu</a>
+                  <a href="#About_the_filter_menu">About_the_filter_menu</a>
+                  <a href="#Looking_at_the_different_categories"
+                    >Looking_at_the_different_categories</a
+                  >
+                  <a href="#Filters_summary">Filters_summary</a>
+                </div>
+              </section>
+              <input type="radio" name="accordion" id="cb2" />
+              <section class="box">
+                <label class="box-title" for="cb2">Read me too</label>
+                <label class="box-close" for="acc-close"></label>
+                <div class="box-content">
+                  Add the class 'arrows' to nav.accordion to add dropdown
+                  arrows.
+                </div>
+              </section>
+              <input type="radio" name="accordion" id="cb3" />
+              <section class="box">
+                <label class="box-title" for="cb3">Item 3</label>
+                <label class="box-close" for="acc-close"></label>
+                <div class="box-content">
+                  Vestibulum ante ipsum primis in faucibus orci luctus et
+                  ultrices posuere cubilia Curae; Quisque finibus tristique
+                  nisi, maximus ullamcorper ante finibus eget.
+                </div>
+              </section>
+
+              <input type="radio" name="accordion" id="acc-close" />
+            </nav>
+            <a class="tab" href="#Using_the_Filters">Using the Filters</a>
+            <ul>
+              <li>
+                <a class="tab" href="#Opening_the_filter_menu"
+                  >Opening_the_filter_menu</a
+                >
+                <a class="tab" href="#About_the_filter_menu"
+                  >About_the_filter_menu</a
+                >
+                <a class="tab" href="#Looking_at_the_different_categories"
+                  >Looking_at_the_different_categories</a
+                >
+                <a class="tab" href="#Filters_summary">Filters_summary</a>
+              </li>
+            </ul>
             Skip To...
             <a class="tab" href="#The_Gallery">Using the Gallery</a>
             <a class="tab" href="#Using_the_Filters">Using the Filters</a>
@@ -127,7 +179,7 @@
             <h2 class="title-documentation" id="Using_the_Filters">
               Using the Filters
             </h2>
-            <h3>Opening the filter menu</h3>
+            <h3 id="Opening_the_filter_menu">Opening the filter menu</h3>
             <p>
               To open the filter menu, find the word "FILTERS" on the top left
               of the page and click on it.
@@ -136,12 +188,12 @@
               src="img/help/openingPageF.png"
               alt="Opening Page of Gallery"
             />
-            <h3>About the filter menu</h3>
+            <h3 id="About_the_filter_menu">About the filter menu</h3>
             <h4>The Error Message</h4>
             <p>
               If what you are looking for is too specific, an error message may
               appear. If so, it means the specific models you are searching for
-              are not currently avaliable on our repository. You may need to
+              are not currently avaliable in our repository. You may need to
               enter in fewer specifications into the filter for models to appear
               in the gallery.
             </p>
@@ -196,7 +248,9 @@
               which collapses all the filter headers. The filters remain
               applied.
             </p>
-            <h3>Looking at the different categories</h3>
+            <h3 id="Looking_at_the_different_categories">
+              Looking at the different categories
+            </h3>
             <h4>The Search Bar</h4>
             <p>
               With the search bar, you are able to search for specific models.
@@ -377,7 +431,7 @@
               must contain entries all contain both "Paths" and "Simulations"
               file.
             </p>
-            <h4>Summary</h4>
+            <h3 id="Filters_summary">Summary</h3>
             <p>
               There are different ways to find what you are searching for in the
               Vascular Model Repository. If you are looking for a specific
@@ -388,7 +442,7 @@
             <h2 class="title-documentation" id="Using_the_Menu_Bar">
               Using the Menu Bar
             </h2>
-            <h3>Opening the Menu Bar</h3>
+            <h3 id="Opening_the_Menu_Bar">Opening the Menu Bar</h3>
             <p>
               To open the menu bar, click on the horizontal MENU bar on the
               top-middle right of the screen.
@@ -401,7 +455,9 @@
             with unique functions to help you navigate the Vascular Model
             Repository's dataset. The functions of each of these icons are
             described below.
-            <h3>The Select and Deselect All Icon</h3>
+            <h3 id="The_Select_and_Deselect_All_Icon">
+              The Select and Deselect All Icon
+            </h3>
             <img
               style="height: 300px; width: 300px"
               src="img/help/selectAllIcon.png"
@@ -447,7 +503,9 @@
               appear if you click on the Select All icon when viewing the models
               you have selected.
             </p>
-            <h3>The View Selected Models Icon</h3>
+            <h3 id="The_View_Selected_Models_Icon">
+              The View Selected Models Icon
+            </h3>
             <p>
               After selecting models, you may want to view all the models you
               have selected before downloading their files. To do so, find the
@@ -488,7 +546,7 @@
               In this page, by clicking the Select All icon, you can deselect
               all the models you have selected.
             </p>
-            <h3>The Download All Icon</h3>
+            <h3 id="The_Download_All_Icon">The Download All Icon</h3>
             <p>
               Once you are ready to download your models, click on the download
               icon in the menu bar.
@@ -554,7 +612,7 @@
               Once you are ready to download the models of the file type you
               have selected, click "Yes" and the files will begin downloading.
             </p>
-            <h3>The Share Icon</h3>
+            <h3 id="The_Share_Icon">The Share Icon</h3>
             <p>
               If you have selected models and now want to share them with
               someone, click on the Get Shareable Link icon in the menu bar.

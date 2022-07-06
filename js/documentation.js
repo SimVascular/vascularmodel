@@ -17,3 +17,18 @@ function offsetAnchor() {
   
   // Set the offset when entering page with hash present in the url
   window.setTimeout(offsetAnchor, 0);
+
+$('.select').click(function() {
+  var array = $('.select');
+  for(var i = 0; i < array.length; i++)
+  {
+    var goTo = array[i].value;
+  }
+  var a = document.createElement("a");
+  a.href = "#" + goTo;
+  a.click();
+  for(var i = 0; i < array.length; i++)
+  {
+    array[i].value = "none"
+  }
+});
