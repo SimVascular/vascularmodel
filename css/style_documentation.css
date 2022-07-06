@@ -86,22 +86,22 @@ a {
     width: 20%;
 }
 
-@media screen and (max-width: 1180px) {
-    .tOC form {
-        position: relative;
-        width: 100%;
-    }
-}
-
 img {
     height: 100%;
     width: 100%;
-    max-width: 750px;
+    max-width: 1200px;
     max-height: 750px;
     object-fit: contain;
     margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
     position: relative;
     display: block;
+}
+
+.inline {
+    display: inline;
+    width: 45%;
 }
 
 .column {
@@ -153,3 +153,14 @@ img {
     float: left;
     overflow: hidden;
   }
+
+  @media screen and (max-width: 1180px) {
+    .tOC form {
+        position: relative;
+        width: 100%;
+    }
+    .inline {
+        display: block;
+        width: 100%;
+    }
+}
