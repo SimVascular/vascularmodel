@@ -211,17 +211,37 @@
               Sharing Models
             </button>
             <div class="panel" id="panel004">
-              <button class="accordion" id="accordion041" type="button">
+              <button
+                class="accordion tOCDropDown"
+                id="accordion041"
+                type="button"
+              >
                 Sharing a model
               </button>
               <div class="panel" id="panel041">
-                <p>Lorem ipsum...</p>
+                <a class="accordion" href="#How_to_get_the_Link_for_One_Model"
+                  >How to get the link</a
+                >
+                <a class="accordion" href="#Viewing_the_shared_model"
+                  >Viewing the shared model</a
+                >
               </div>
-              <button class="accordion" id="accordion042" type="button">
+              <button
+                class="accordion tOCDropDown"
+                id="accordion042"
+                type="button"
+              >
                 Sharing multiple models
               </button>
               <div class="panel" id="panel042">
-                <p>Lorem ipsum...</p>
+                <a
+                  class="accordion"
+                  href="#How_to_get_the_Link_for_Multiple_Model"
+                  >How to get the link</a
+                >
+                <a class="accordion" href="#Viewing_the_shared_models"
+                  >Viewing the shared models</a
+                >
               </div>
             </div>
             <!-- end panel -->
@@ -730,7 +750,7 @@
               alt="Image of gallery after selecting models"
             />
             <img
-              style="height: 300px; width: 300px"
+              class="smaller"
               src="img/help/viewSelectedIcon.jpg"
               alt="Image of the view selected icon"
             />
@@ -764,7 +784,7 @@
               icon in the menu bar.
             </p>
             <img
-              style="height: 300px; width: 300px"
+              class="smaller"
               src="img/help/downloadIconZ.png"
               alt="Image of download icon zoomed in."
             />
@@ -839,14 +859,6 @@
               By clicking this icon, you can copy the link to a page that
               displays the model(s) you have selected.
             </p>
-            <img
-              src="img/help/shareModels.jpg"
-              alt="Image of table for shared models."
-            />
-            <p>
-              Above is an example of what a page might look like. In this case,
-              someone has shared 107 models.
-            </p>
             <p>
               To learn more about this share page, go to the description on how
               to <a href="#Sharing_Models">Share Models</a>.
@@ -855,7 +867,7 @@
               Sharing Models
             </h2>
             <h3 id="Sharing_a_model">Sharing a model</h3>
-            <h4 id="How to get the Link">How to get the Link</h4>
+            <h4 id="How_to_get_the_Link_for_One_Model">How to get the link</h4>
             <p>There are two ways to get the link to share a model.</p>
             <ol>
               <li>
@@ -890,7 +902,7 @@
                 <a href="#The_Share_Icon">The Share Icon</a>.
               </li>
             </ol>
-            <h4 id="Viewing_the_shared_page">Viewing the shared page</h4>
+            <h4 id="Viewing_the_shared_model">Viewing the shared model</h4>
             <p>
               When you enter the link you have copied into a browser, a
               descripton of the shared model will appear. The first displayed
@@ -904,9 +916,19 @@
             <img
               class="inline"
               src="img/help/openingPageOneSharedImage.png"
-              alt="Opening page when one model is shared"
+              alt="Opening page when one model is shared highlight image"
             />
             <p>In the example above, someone is viewing model 0082_0001.</p>
+            <p>
+              Below the name and image is more information about the model.
+              Here, you can also know the size of the model's SimVascular
+              Project <code>.zip</code> files. If the model has additional notes
+              or links, they can also be found here.
+            </p>
+            <img
+              src="img/help/openingPageOneSharedDetails.png"
+              alt="Details table under image and name"
+            />
             <p>
               When viewing this page, you can download the model's files by
               clicking on the download icon on the top right.
@@ -914,12 +936,12 @@
             <img
               class="inline"
               src="img/help/openingPageOneSharedDownloadIcon.png"
-              alt="Opening page when one model is shared"
+              alt="Opening page when one model is shared highlight download icon"
             />
             <img
               class="inline"
               src="img/help/oneSharedDownloadConfirmDefault.jpg"
-              alt="Opening page when one model is shared"
+              alt="Confirm download message"
             />
             <p>
               If simulation results are avaliable for the model, the option will
@@ -932,13 +954,127 @@
             <img
               class="inline"
               src="img/help/oneSharedDownloadConfirmSimResults.jpg"
-              alt="Opening page when one model is shared"
+              alt="Confirm download message when sim results avaliable"
             />
             <img
               class="inline"
               src="img/help/oneSharedDownloadConfirmSize.jpg"
-              alt="Opening page when one model is shared"
+              alt="Size of download before downloading"
             />
+            <p>Once you are ready to download, click the "Yes" button.</p>
+            <p>
+              In addition to downloading the model files, you can also return to
+              the dataset by clicking on the View Gallery icon under the
+              download icon.
+            </p>
+            <img
+              src="img/help/openingPageOneSharedViewGalleryIcon.png"
+              alt="View gallery icon highlighted"
+            />
+            <h3>Sharing multiple models</h3>
+            <h4 id="How_to_get_the_Link_for_Multiple_Model">
+              How to get the link
+            </h4>
+            <p>
+              To share multiple models, select the models you want to share and
+              then click on the Select All icon in the menu bar.
+            </p>
+            <img
+              class="smaller"
+              src="img/help/shareAllIcon.jpg"
+              alt="Image of Share All Icon"
+            />
+            <p>
+              For more information about the Select icon, go to
+              <a href="#The_Select_and_Deselect_All_Icon"
+                >The Select and Deselect All Icon</a
+              >.
+            </p>
+            <h4 id="Viewing_the_shared_models">Viewing the shared models</h4>
+            <p>
+              When you create a link to share multiple models, you can then view
+              your selected models in a table.
+            </p>
+            <p>
+              Three functions are avaliable on this page. You can see how many
+              models you are viewing and view a brief summary of each model.
+            </p>
+            <img
+              class="inline"
+              src="img/help/shareModelsNumber.png"
+              alt="Image of table for shared models highlight number."
+            />
+            <img
+              class="inline"
+              src="img/help/sharedModelsTableDetails.png"
+              alt="Image of table for shared models highlight details."
+            />
+            <p>
+              Above is an example of what this page might look like. In this
+              case, someone has shared 107 models.
+            </p>
+            <p>
+              You can also download all of the files of the models by clicking
+              on the download button. Upon clicking download, a message will
+              appear.
+            </p>
+            <img
+              class="inline"
+              src="img/help/shareModelsDownloadButton.png"
+              alt="Image of table for shared models highlight download."
+            />
+            <img
+              class="inline"
+              src="img/help/tableConfirmation.jpg"
+              alt="Image of confirmation message"
+            />
+            <p>
+              If some of the models you have selected have simulation results,
+              the drop down menu under "Choose file type:" will allow you to
+              specify the file type.
+            </p>
+            <p>
+              A message will let you know if some of the models you want to
+              download simulation result files for do not have simulation
+              results.
+            </p>
+            <img
+              class="inline"
+              src="img/help/tableChooseType.jpg"
+              alt="Image of drop down menu to choose file type"
+            />
+            <img
+              class="inline"
+              src="img/help/tableSimResultsWarning.png"
+              alt="Image of warning"
+            />
+            <p>
+              Before downloading model files, you can see the size of the
+              download specified below the drop down menu.
+            </p>
+            <img
+              class="smaller"
+              src="img/help/tableSimResultsSize.png"
+              alt="Image of size"
+            />
+            <p>
+              To view models individually, click on the model's row, and a new
+              page will open viewing the individual model.
+            </p>
+            <img
+              class="inline"
+              src="img/help/tableHoverRow.jpg"
+              alt="Image of hovering above row"
+            />
+            <img
+              class="inline"
+              src="img/help/viewModelAfterOpeningPage.jpg"
+              alt="Image of page that appears"
+            />
+            <p>
+              For more information about viewing this page, go to
+              <a href="#Viewing_the_shared_model">viewing the shared model</a>.
+            </p>
           </div>
           <!-- end documentation-->
         </div>
