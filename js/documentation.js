@@ -17,7 +17,7 @@ function offsetAnchor() {
   // Set the offset when entering page with hash present in the url
   window.setTimeout(offsetAnchor, 0);
 
-  var acc = document.getElementsByClassName("dropdown");
+  var acc = document.getElementsByClassName("tOCDropDown");
   var i;
   
   for (i = 0; i < acc.length; i++) {
