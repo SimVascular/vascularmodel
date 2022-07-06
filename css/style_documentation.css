@@ -83,11 +83,13 @@ a {
 .tOC form {
     padding: 15px;
     position: fixed;
+    width: 20%;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1180px) {
     .tOC form {
         position: relative;
+        width: 100%;
     }
 }
 
@@ -115,133 +117,39 @@ img {
     clear: both;
 }
 
-/* FORMATTING FOR ICONS */
-
-.spanForIcons {
-    background-color: var(--select);
-    border-radius: 50%;
-    color: var(--applied);
-    cursor: pointer;
-    margin: 5px;
-    height: 80px;
-    width: 80px;
-}
-
-.featuresIcons {
-    font-size: 40px;
-    padding: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-    float: right;
-    /* border: 2px solid black; */
-}
-
-@media only screen and (min-width: 767px) {
-    .spanForIcons:hover {
-        color: var(--select);
-        background-color: var(--applied);
-    }
-}
-
-.fa-square-check {
-    padding-left: 22.5px;
-    padding-right: 22.5px;
-  }
-
-  ul, li {
-    list-style-type: none;
-  }
-
-  /* menu */
-
+/* MENU */
 .accordion {
-	margin: auto;
-	width: 100%;
-}
-.accordion input {
-	display: none;
-}
-.box {
-	position: relative;
-	background: white;
-    height: 64px;
-    transition: all .15s ease-in-out;
-}
-.box::before {
-    content: '';
-    position: absolute;
+    background-color: var(--grey);
+    color: black;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
     display: block;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    pointer-events: none;
-    box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
-}
-header.box {
-	background: #00BCD4;
-	z-index: 100;
-	cursor: initial;
-	box-shadow: 0 -1px 0 #e5e5e5,0 0 2px -2px rgba(0,0,0,.12),0 2px 4px -4px rgba(0,0,0,.24);
-}
-header .box-title {
-	margin: 0;
-	font-weight: normal;
-	font-size: 16pt;
-	color: white;
-	cursor: initial;
-}
-.box-title {
-	width: calc(100% - 40px);
-	height: 64px;
-	line-height: 64px;
-	padding: 0 20px;
-	display: inline-block;
-	cursor: pointer;
-	-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
-}
-.box-content {
-	width: calc(100% - 40px);
-	padding: 10px 20px 15px 20px;
-	font-size: 11pt;
-	color: rgba(0,0,0,.54);
-	display: none;
-}
-.box-close {
-	position: absolute;
-	height: 64px;
-	width: 100%;
-	top: 0;
-	left: 0;
-	cursor: pointer;
-	display: none;
-}
-input:checked + .box {
-	height: auto;
-	margin: 16px 0;
-    box-shadow: 0 0 6px rgba(0,0,0,.16),0 6px 12px rgba(0,0,0,.32);
-}
-input:checked + .box .box-title {
-	border-bottom: 1px solid rgba(0,0,0,.18);
-}
-input:checked + .box .box-content,
-input:checked + .box .box-close {
-	display: inline-block;
-}
-.arrows section .box-title {
-	padding-left: 44px;
-	width: calc(100% - 64px);
-}
-.arrows section .box-title:before {
-	position: absolute;
-	display: block;
-	content: '\203a';
-	font-size: 18pt;
-	left: 20px;
-	top: -2px;
-	transition: transform .15s ease-in-out;
-	color: rgba(0,0,0,.54);
-}
-input:checked + section.box .box-title:before {
-	transform: rotate(90deg);
-}
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .selected, .accordion:hover {
+    background-color: var(--lightgrey);
+  }
+
+  a.accordion:hover, #opening_filter:hover{
+    text-decoration: none;
+    color: var(--light1shade)
+  }
+  
+  a.accordion, #opening_filter {
+    display: block;
+  }
+
+  /* Style the accordion panel. Note: hidden by default */
+  .panel {
+    padding: 0 0 0 20px;
+    background-color: white;
+    display: none;
+    float: left;
+    overflow: hidden;
+  }

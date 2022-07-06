@@ -1,6 +1,5 @@
 // The function actually applying the offset
 function offsetAnchor() {
-    console.log("enters")
     if (location.hash.length !== 0) {
       window.scrollTo(window.scrollX, window.scrollY - 100);
     }
@@ -18,17 +17,30 @@ function offsetAnchor() {
   // Set the offset when entering page with hash present in the url
   window.setTimeout(offsetAnchor, 0);
 
-$('.select').click(function() {
-  var array = $('.select');
-  for(var i = 0; i < array.length; i++)
-  {
-    var goTo = array[i].value;
+  var acc = document.getElementsByClassName("dropdown");
+  var i;
+  
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      /* Toggle between adding and removing the "active" class,
+      to highlight the button that controls the panel */
+      this.classList.toggle("selected");
+      var number = this.id.substring(this.id.length - 3)
+  
+      /* Toggle between hiding and showing the active panel */
+      var panel = document.getElementById("panel" + number);
+
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    });
   }
-  var a = document.createElement("a");
-  a.href = "#" + goTo;
-  a.click();
-  for(var i = 0; i < array.length; i++)
-  {
-    array[i].value = "none"
-  }
-});
+
+  $('#opening_filter').click(function() {
+    var a = document.createElement("a");
+    a.href = "#Opening_the_filter_menu";
+    a.click();
+    offsetAnchor();
+  });

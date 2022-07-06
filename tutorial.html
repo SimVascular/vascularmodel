@@ -35,7 +35,6 @@
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css?v=1.0.0" />
     <link rel="stylesheet" href="css/style_documentation.css" />
-    <link rel="stylesheet" href="scss/tutorial.scss" />
     <title>Vascular Model Repository</title>
     <script
       async
@@ -111,68 +110,56 @@
       <div class="row" id="model-gallery">
         <div class="col-lg-3 col-sm-12 tOC">
           <form>
-            <nav class="accordion arrows">
-              <input type="radio" name="accordion" id="cb1" />
-              <section class="box">
-                <label class="box-title" for="cb1">Using the Filters</label>
-                <label class="box-close" for="acc-close"></label>
-                <div class="box-content">
-                  <a href="#Opening_the_filter_menu">Opening_the_filter_menu</a>
-                  <a href="#About_the_filter_menu">About_the_filter_menu</a>
-                  <a href="#Looking_at_the_different_categories"
-                    >Looking_at_the_different_categories</a
-                  >
-                  <a href="#Filters_summary">Filters_summary</a>
-                </div>
-              </section>
-              <input type="radio" name="accordion" id="cb2" />
-              <section class="box">
-                <label class="box-title" for="cb2">Read me too</label>
-                <label class="box-close" for="acc-close"></label>
-                <div class="box-content">
-                  Add the class 'arrows' to nav.accordion to add dropdown
-                  arrows.
-                </div>
-              </section>
-              <input type="radio" name="accordion" id="cb3" />
-              <section class="box">
-                <label class="box-title" for="cb3">Item 3</label>
-                <label class="box-close" for="acc-close"></label>
-                <div class="box-content">
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia Curae; Quisque finibus tristique
-                  nisi, maximus ullamcorper ante finibus eget.
-                </div>
-              </section>
 
-              <input type="radio" name="accordion" id="acc-close" />
-            </nav>
-            <a class="tab" href="#Using_the_Filters">Using the Filters</a>
-            <ul>
-              <li>
-                <a class="tab" href="#Opening_the_filter_menu"
-                  >Opening_the_filter_menu</a
-                >
-                <a class="tab" href="#About_the_filter_menu"
-                  >About_the_filter_menu</a
-                >
-                <a class="tab" href="#Looking_at_the_different_categories"
-                  >Looking_at_the_different_categories</a
-                >
-                <a class="tab" href="#Filters_summary">Filters_summary</a>
-              </li>
-            </ul>
-            Skip To...
-            <a class="tab" href="#The_Gallery">Using the Gallery</a>
-            <a class="tab" href="#Using_the_Filters">Using the Filters</a>
-            <a class="tab" href="#Using_the_Menu_Bar">Using the Menu Bar</a>
-            <a class="tab" href="#Sharing_Models">Sharing Models</a>
-            <a class="tab" href="#Questions_or_Comments"
-              >Questions or Comments?</a
-            >
-          </form>
-        </div>
-        <!-- end table of contents-->
+            <button class="accordion dropdown" id="accordion001" type="button">Using the Gallery</button>
+            <div class="panel" id="panel001">
+              <button class="accordion" id="accordion011" type="button">Section 1-1</button>
+              <div class="panel" id="panel011">
+                <p>Lorem ipsum...</p>
+              </div>
+            </div><!-- end panel -->
+
+            <button class="accordion dropdown" id="accordion002" type="button">Using the Filters</button>
+            <div class="panel" id="panel002">
+              <button class="accordion" id="opening_filter" type="button">Opening the Menu</button>
+              <button class="accordion dropdown" id="accordion021" type="button">About the filter menu</button>
+              <div class="panel" id="panel021">
+                <a class="accordion" href="#The_Error_Message">The Error Message</a>
+                <a class="accordion" href="#The_Clear_All_Button">The Clear All Button</a>
+                <a class="accordion" href="#The_Collapse_All_Button">The Collapse All Button</a>
+              </div>
+              <button class="accordion dropdown" id="accordion023" type="button">The Different Categories</button>
+              <div class="panel" id="panel023">
+                <a class="accordion" href="#The_Search_Bar">The Search Bar</a>
+                <a class="accordion" href="#The_Simulation_Results_Filter">The Simulation Results Filter</a>
+                <a class="accordion" href="#The_Age_Filter">The Age Filter</a>
+                <a class="accordion" href="#The_Drop-Down_Menus">The Drop-Down Menus</a>
+                <a class="accordion" href="#The_Checkboxes">The Checkboxes</a>
+                <a class="accordion" href="#The_Project_Must_Contain_Filter">The Project Must Contain Filter</a>
+              </div>
+            </div><!-- end panel -->
+
+            <button class="accordion dropdown" id="accordion003" type="button">Using the Menu Bar</button>
+            <div class="panel" id="panel003">
+              <a class="accordion" href="#Opening_the_Menu_Bar">Opening the Menu Bar</a>
+              <a class="accordion" href="#The_Select_and_Deselect_All_Icon">The Select and Deselect All Icon</a>
+              <a class="accordion" href="#The_View_Selected_Models_Icon">The View Selected Models Icon</a>
+              <a class="accordion" href="#The_Download_All_Icon">The Download All Icon</a>
+              <a class="accordion" href="#The_Share_Icon">The Share Icon</a>
+            </div> <!-- end panel -->
+
+            <button class="accordion" id="accordion004" type="button">Sharing Models</button>
+            <div class="panel" id="panel004">
+              <p>
+                <button class="accordion" id="accordion041" type="button">Section 1-1</button>
+                <div class="panel" id="panel041">
+                  <p>Lorem ipsum...</p>
+                </div>
+
+              </p>
+            </div><!-- end panel -->
+          </form> <!-- end form for table of contents -->
+        </div> <!-- end table of contents-->
 
         <div class="col-lg-9 col-12">
           <div id="documentation">
@@ -189,7 +176,7 @@
               alt="Opening Page of Gallery"
             />
             <h3 id="About_the_filter_menu">About the filter menu</h3>
-            <h4>The Error Message</h4>
+            <h4 id="The_Error_Message">The Error Message</h4>
             <p>
               If what you are looking for is too specific, an error message may
               appear. If so, it means the specific models you are searching for
@@ -215,7 +202,7 @@
               models that are of pulmonary arteries that have undergone the
               coronary artery bypass graft procedure.
             </p>
-            <h4>The Clear All Button</h4>
+            <h4 id="The_Clear_All_Button">The Clear All Button</h4>
             <p>
               If you want to return to the default state of the dataset gallery,
               click on the Clear All button. It will clear all of the filters
@@ -229,7 +216,7 @@
               src="img/help/clearAllAfter.jpg"
               alt="Image of cleared filter bar."
             />
-            <h4>The Collapse All Button</h4>
+            <h4 id="The_Collapse_All_Button">The Collapse All Button</h4>
             <p>
               If you want to collapse all the filter menus, click on the
               Collapse All Button. It will do so. Clicking this button, however,
@@ -251,7 +238,7 @@
             <h3 id="Looking_at_the_different_categories">
               Looking at the different categories
             </h3>
-            <h4>The Search Bar</h4>
+            <h4 id="The_Search_Bar">The Search Bar</h4>
             <p>
               With the search bar, you are able to search for specific models.
               To search for multiple characteristics, add a space between each
@@ -274,7 +261,7 @@
               If you are looking for one specific model, you can search for the
               name of the model in the search bar.
             </p>
-            <h4>The Simulation Results Filter</h4>
+            <h4 id="The_Simulation_Results_Filter">The Simulation Results Filter</h4>
             <p>
               We have ran simulations for some of the models in this repository.
               They come in <code>.vtu</code> and <code>.vtp</code> files. This
@@ -307,7 +294,7 @@
               the simulation results button have downloadable
               <code>.vtu</code> and <code>.vtp</code> files.
             </p>
-            <h4>The Age Filter</h4>
+            <h4 id="The_Age_Filter">The Age Filter</h4>
             <p>
               With the filter for age, you are able to search within an age
               range. The current minimum for the filter is 0 years of age, and
@@ -333,7 +320,7 @@
               In the example above, the models that are a result of the age
               filter entries are 5 years old.
             </p>
-            <h4>The Drop-Down Menus</h4>
+            <h4 id="The_Drop-Down_Menus">The Drop-Down Menus</h4>
             <p>
               With the two drop down menus, you are able to search for models of
               a specific sex and species. To apply the filters, select the
@@ -365,7 +352,7 @@
               src="img/help/dropdownResetEx2.jpg"
               alt="Image of how the resetted drop down menu looks like."
             />
-            <h4>The Checkboxes</h4>
+            <h4 id="The_Checkboxes">The Checkboxes</h4>
             <p>
               With checkboxes under the three categories "Anatomy," "Disease,"
               and "Procedure," you are able to search for models of a specific
@@ -408,7 +395,7 @@
               entries are either of aortas with aneurysm(s) or of coronary
               arteries with aneurysm(s).
             </p>
-            <h4>The Project Must Contain Filter</h4>
+            <h4 id="The_Project_Must_Contain_Filter">The Project Must Contain Filter</h4>
             <p>
               A few models do not contain certain files. With the Project Must
               Contain filter, you are able to filter through the models that
