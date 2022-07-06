@@ -24,8 +24,20 @@ body {
     width: 95%;
     height: 65%;
     height: auto;
-    padding: 20px;
+    padding: 5%;
     margin: 2%;
+}
+
+@media screen and (min-width: 800px) {
+    .centerBox {
+        padding: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .centerBox {
+        padding: 30px;
+    }
 }
 
 h1 {
