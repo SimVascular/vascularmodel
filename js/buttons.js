@@ -222,9 +222,7 @@ async function downloadAllModels(){
     downloadModel(listOfNames[i]);
     await new Promise(r => setTimeout(r, 3));
   }
-  
-  //clears boolModels
-  boolModels.fill(false);
+
 
   //resets page
   scrollToTop();
