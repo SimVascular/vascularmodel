@@ -536,6 +536,11 @@ window.addEventListener('scroll', () => {
     dataToPopulate = displayedData;
   }
 
+  if(doneDownloading)
+  {
+    dataToPopulate = [];
+  }
+
   //populates with 8 more models when someone scrolls
   if (window.scrollY + window.innerHeight + footerHeight + padding>= document.documentElement.scrollHeight) {
     populate(dataToPopulate, 8);
@@ -591,6 +596,11 @@ function errorMessage(isOn, whichToDisplay)
     errorMsg.style.opacity = 0;
     button.style.transitionDuration = '0s';
     button.style.opacity = 0;
+  }
+
+  if(button.style.opacity == 0)
+  {
+    doneDownloading = false;
   }
 }
 

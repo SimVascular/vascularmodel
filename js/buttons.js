@@ -228,6 +228,7 @@ async function downloadAllModels(){
   scrollToTop();
   removeContent();
   populate([]);
+  doneDownloading = true;
 
   //not really an error message
   //shows screen with Thank you for downloading!

@@ -20,6 +20,7 @@
   var lastFdata = [];
   var lastSelectedData = [];
   var viewingSelectedModels = false;
+  var doneDownloading = false;
   var isOverlayOn = false;
   var isSafeSelected = false;
   var menuBarShowing = false;
