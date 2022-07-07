@@ -720,7 +720,7 @@ error msg block behavior
   top: 255px;
   left: 50%;
   margin-left: -150px;
-  padding: 8px 10px 10px;
+  padding: 10px 15px 15px;
   box-sizing: border-box;
   text-align: center;
   z-index: 99999;
@@ -743,6 +743,9 @@ error msg block behavior
 {
   text-align: center;
   margin-bottom: 8px;
+}
+#downloadSize {
+  margin-top: 0;
 }
 
 /* styling for inform user box */

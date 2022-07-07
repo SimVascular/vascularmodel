@@ -500,6 +500,30 @@ function doConfirm(msg, yesFn, noFn) {
   var overlay = document.getElementById("confirmOverlay");
   overlay.style.display = "block";
 
+  //work with scroll
+  if(window.location.pathname == "/dataset.html")
+  {
+    //turns off scroll and sets height to auto
+    if (smallScreen) {
+      // padding is not necessary on mobile
+      $('.html').css({"height": "auto", "overflow-y": "hidden"})
+      $('.body').css({"height": "auto", "overflow-y": "hidden"})
+    }
+    else {
+      $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+      $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+    }
+
+    //sets listener for scroll
+    document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
+    document.body.style.position = '';
+
+    //saves where the user was before overlay turned on
+    var prevBodyY = window.scrollY
+    document.body.style.top = `-${prevBodyY}px`;
+  }
+  //end scroll
+
   var confirmBox = $("#confirmBox");
   confirmBox.find(".message").text(msg);
 
@@ -507,6 +531,19 @@ function doConfirm(msg, yesFn, noFn) {
   confirmBox.find(".yes,.no").unbind().click(function () {
       confirmBox.hide();
       overlay.style.display = "none";
+
+      if(window.location.pathname == "/dataset.html")
+      {
+        $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+        $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+
+        //resets scrolling
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        document.querySelector('.body').removeEventListener('scroll', preventScroll);
+      }
   });
 
   //deals with which function to call depending on user input
