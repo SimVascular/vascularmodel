@@ -376,6 +376,11 @@ function viewSelected(flipViewingSelectedModels, moveToTop = true) {
 
 //works with menu bar
 $("#menu-bar").click(function() {
+  toggleMenuBar();
+});
+
+function toggleMenuBar()
+{
   //allows user to click and unclick
   menuBarShowing = !menuBarShowing;
 
@@ -394,11 +399,21 @@ $("#menu-bar").click(function() {
     features.classList.remove("features-is-visible");
     menuBar.classList.remove("features-is-visible");
   }
-});
+}
 
 // help button listener
 $("#help").click(function () {
-  window.open("documentation.html");
+  window.open("tutorial.html");
+});
+
+$("#helpFilters").click(function () {
+  window.open("tutorial.html#Using_the_Filters");
+});
+
+$("#helpMenu").click(function () {
+  window.open("tutorial.html#Using_the_Menu_Bar");
+  menuBarShowing = true;
+  toggleMenuBar()
 });
 
 // //closes video

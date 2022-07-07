@@ -111,10 +111,16 @@ Main Components
   float: center;
 }
 
-#help {
+#help, #helpFilters {
   float: right;
   margin-right: 15px;
   cursor: pointer;
+}
+
+#helpMenu {
+  font-size: 25px;
+  float: left;
+  transform: rotate(90deg);
 }
 
 #holdsYTVideo {
