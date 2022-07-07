@@ -5,8 +5,6 @@
   var data;
   //filteredData has the models that correspond to the filters selected
   var filteredData;
-  //hasResultsData is the models that have simulation results
-  var hasResultsData;
   //preservedOrderData is data read from the csv but unscrambled
   var preservedOrderData = [];
   //displayedData is the data that is displayed in the view selected models
@@ -25,8 +23,18 @@
   var isOverlayOn = false;
   var isSafeSelected = false;
   var menuBarShowing = false;
-  var modeIsResults = false;
+  // var modeIsResults = false;
   var selectAllIconApplied = false;
+  //default is always "zip"
+  var downloadType = "zip";
+  //dictionary with the sizes of all the files
+  var sizes = {};
+
+  var countModels;
+  var modelsWithResults;
+  var countResults;
+  var warningHTML = document.getElementById("warning");
+  var putDropDownHere = document.getElementById("putDropDownHere");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -213,7 +221,7 @@ function URLMaker(notes)
   a.classList.add("link");
   a.textContent = word;
 
-  //if contains a .zip, allows for a downlaod
+  //if contains a .zip, allows for a download
   if(url.includes(".zip"))
   {
     a.setAttribute("download", "");
@@ -408,6 +416,18 @@ function makeshiftSelectedModels(preservedOrderData, model)
   return array;
 }
 
+// converts Y/N to 1/0
+function makeBooleanArray(preservedOrderData, model)
+{
+  //creates makeshift selectedmodels array
+  var array = new Array(preservedOrderData.length);
+  array.fill(false);
+  var indexOfModel = preservedOrderData.indexOf(model);
+  //selects the right index to make true
+  array[indexOfModel] = true;
+  return array;
+}
+
 //translates string with spaces to an array
 function valueToSearchInArrayForm(valueToSearch)
 {
@@ -438,6 +458,10 @@ function selectedModelsWithResults()
     {
       withResults[i] = true;
     }
+    else
+    {
+      withResults[i] = false;
+    }
   }
 
   return withResults;
@@ -459,22 +483,30 @@ function isSelectAllApplied(bool)
   }
 }
 
+function clearDoConfirm()
+{
+  document.getElementById("downloadSize").innerHTML = "";
+
+  warningHTML.innerHTML = "";
+  warningHTML.classList.remove("newParagraph");
+
+  putDropDownHere.innerHTML = "";
+  document.getElementById("downloadSize").innerHTML = "";
+}
+
 //lets us confirm actions with users
 function doConfirm(msg, yesFn, noFn) {
+  //show overlay
+  var overlay = document.getElementById("confirmOverlay");
+  overlay.style.display = "block";
+
   var confirmBox = $("#confirmBox");
-  if(msg.includes("\\n"))
-  {
-    confirmBox.find(".message")[0].innerHTML = "";
-    confirmBox.find(".message")[0].appendChild(newLineNoURL(msg, false));
-  }
-  else
-  {
-    confirmBox.find(".message").text(msg);
-  }
+  confirmBox.find(".message").text(msg);
 
   //hides confirmation after button is clicked
   confirmBox.find(".yes,.no").unbind().click(function () {
       confirmBox.hide();
+      overlay.style.display = "none";
   });
 
   //deals with which function to call depending on user input
@@ -484,7 +516,7 @@ function doConfirm(msg, yesFn, noFn) {
 }
 
 //informs user of a message
-function informUser(msg, string = "", hasOk = false) {
+function informUser(msg, hasOk = false) {
   //gets element informUser
   var informUser = $("#informUser");
 
@@ -493,19 +525,9 @@ function informUser(msg, string = "", hasOk = false) {
 
   informUser.show();
 
-  //reveals the box with opacity
+  //reveals the box
   var div = document.getElementById("informUser");
-  div.style.opacity = 1;
-
-  //changes position of alert for clarity
-  if(string == "lower")
-  {
-    div.setAttribute("style", "top: 300px");
-  }
-  else
-  {
-    div.setAttribute("style", "top: 30px")
-  }
+  div.style.display = "block"
 
   //clears where the Okay button goes
   var goesHere = document.getElementById("okayGoesHere");
@@ -513,6 +535,9 @@ function informUser(msg, string = "", hasOk = false) {
 
   if(hasOk)
   {
+    //changes position for clarity
+    div.style.top = "300px";
+
     //if has an okay button, creates it
     var span = document.createElement("span");
     span.classList.add("button");
@@ -527,9 +552,269 @@ function informUser(msg, string = "", hasOk = false) {
   }
   else
   {
+    div.style.top = "30px";
+
     //fades after 1.5 seconds if doesn't have an Okay button
     setTimeout(() => {
       informUser.hide();
     }, 1500);
   }
+}
+
+//checks if a file exists given url
+function checkFileExist(url) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('HEAD', url, false);
+  xhr.send();
+   
+  if (xhr.status == "404") {
+      return false;
+  } else {
+      return true;
+  }
+}
+
+function craftURL(modelName)
+{
+  if(downloadType == "zip")
+  {
+    var url = "svprojects/"
+  }
+  else
+  {
+    var url = "svresults/"
+  }
+
+  url += modelName + "." + downloadType;
+
+  return url;
+}
+
+//deals with units for size
+function sizeConverter(size)
+{
+  size = parseInt(size) / 1000000;
+
+  size = size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
+
+  return size;
+}
+
+//returns sum of sizes of the arrays selected in the boolArray
+function getSumOfSizes(boolArray)
+{
+  //array with model names
+  var names = []
+
+  for(var i = 0; i < boolArray.length; i++)
+  {
+    if(boolArray[i])
+    {
+      //come back here
+      if(preservedOrderData[i]["Results"] == "1" || downloadType == "zip")
+      {
+        names.push(preservedOrderData[i]["Name"])
+      }
+      
+    }
+  }
+  
+  var count = 0;
+
+  for(var i = 0 ; i < names.length; i++)
+  {
+    var size = getSizeIndiv(names[i]);
+    //saves size in bytes
+    count += size[0];
+  }
+
+  //count is size in bytes
+  count = sizeConverter(count)
+
+  return count;
+}
+
+function getSizeIndiv(modelName)
+{
+  var key = modelName + "." + downloadType;
+
+  var url = craftURL(modelName);
+
+  //updates dictionary "sizes" with size of file if the file has not already been added
+  if(checkFileExist(url) && !(key in sizes))
+  {
+    getFileSize(url, key);
+  }
+
+  var size = parseInt(sizes[key]);
+  //returns bytes and readable version of size
+  return [size, sizeConverter(size)];
+}
+
+//returns file size given a URL
+function getFileSize(url, key)
+{
+  var fileSize = '';
+  var http = new XMLHttpRequest();
+  http.open('HEAD', url, false);
+
+  http.onreadystatechange = function() {
+    if (this.readyState == this.DONE) {
+      if (this.status === 200) {
+        fileSize = this.getResponseHeader('content-length');
+
+        //saves size in dictionary sizes
+        sizes[key] = fileSize;
+      }
+    }
+  };
+
+  http.send();
+}
+
+function updateSize(boolArray)
+{
+  var sizeWarning = document.getElementById("downloadSize");
+  sizeWarning.textContent = "Size: " + getSumOfSizes(boolArray);
+}
+
+function updateMessage(msg)
+{
+  var confirmBox = $("#confirmBox");
+  confirmBox.find(".message").text(msg);
+}
+
+function downloadConfirmation(count, type, boolArray)
+{
+  updateSize(boolArray)
+  
+  //download confirmation
+  var message = "Are you sure you want to download ";
+
+  //grammar with plural
+  if(count == 1)
+  {
+    message += "one " + type + "?";
+  }
+  else if(count != 0)
+  {
+    message += count + " " + type + "s?";
+  }
+
+  return message; 
+}
+
+function difference(countModels, countResults, warningHTML)
+{
+  //calculates how many models do not have results
+  var difference = countModels - countResults;
+
+  //grammar with plural
+  //informs user of simulation results that they cannot havwe
+  if(difference == 1)
+  {
+    var warning = "One model does not have simulation results to download.";
+  }
+  else if(difference != 0)
+  {
+    var warning = difference + " models do not have simulation results to download.";
+  }
+
+  warningHTML.classList.add("newParagraph");
+  warningHTML.textContent = warning;
+}
+
+function dropDown(putDropDownHere, string)
+{
+  //labels the drop down menu
+  var title = document.createElement("div");
+  title.textContent = "Choose file type: ";
+  putDropDownHere.appendChild(title)
+
+  //creates the select box
+  var select = document.createElement("select");
+  select.setAttribute("id", "chooseType");
+  select.setAttribute("class", "spaceBelow");
+
+  //these values must be exactly the folder type
+  //i.e. "vtp", "vtu"
+  var options = []
+  if(string == "all")
+  {
+    options.push("zip");
+    options.push("vtp");
+    options.push("vtu");
+  }
+  if(string == "no results")
+  {
+    options.push("zip");
+  }
+  if(string == "only results")
+  {
+    options.push("vtp");
+    options.push("vtu");
+  }
+  
+  //reset type to default of select
+  downloadType = options[0]
+
+  for(var i = 0; i < options.length; i++)
+  {
+    //create options under select
+    var option = document.createElement("option");
+    option.setAttribute("value", options[i]);
+
+    //specify what the options are
+    if(options[i] == "vtp")
+    {
+      option.textContent = "Simulation Results (.vtp)";
+    }
+    else if(options[i] == "vtu")
+    {
+      option.textContent = "Simulation Results (.vtu)";
+    }
+    else if (options[i] == "zip")
+    {
+      option.textContent = "SimVascular Project (.zip)";
+    }
+    select.appendChild(option);
+  }
+
+  putDropDownHere.appendChild(select);
+}
+var count = 0;
+//downloads individual models
+function downloadModel(modelName)
+  {
+    //creates link of what the user wants to download
+    var fileUrl = craftURL(modelName)
+    console.log(fileUrl);
+
+    //creates anchor tag to download
+    var a = document.createElement("a");
+    a.href = fileUrl;
+    a.setAttribute("download", modelName);
+    //simulates click
+    a.click();
+    
+    if(downloadType == "zip")
+    {
+      //sends message to server with user's download
+      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+        'send_to': 'G-YVVR1546XJ',
+        'event_category': 'Model download',
+        'event_label': 'test',
+        'value': '1'
+      });
+    }
+    else
+    {
+      //sends message to server with user's download
+      gtag('event', 'download_' + modelName, {
+        'send_to': 'G-YVVR1546XJ',
+        'event_category': 'Model download',
+        'event_label': 'test',
+        'value': '1'
+      });
+    }
 }

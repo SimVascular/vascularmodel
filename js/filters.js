@@ -174,11 +174,6 @@ function applyFilters()
   //declares filterOutput
   var filterOutput;
 
-  // runs this function first so that hasResultsData is unaffected by other filters
-  filterOutput = hasResults(filteredData);
-  filteredData = filterOutput[0]
-  filterApplied = filterApplied || filterOutput[1]
-
   //sets up values
   var nTimes = getNTimes();
   var titles = getFilterTitles();
@@ -229,6 +224,11 @@ function applyFilters()
   }
   //filters for search bar
   filterOutput = searchBarFilter(filteredData);
+  filteredData = filterOutput[0];
+  filterApplied = filterApplied || filterOutput[1];
+
+  //filters for whether or not a model has simulation results
+  filterOutput = hasResults(filteredData);
   filteredData = filterOutput[0]
   filterApplied = filterApplied || filterOutput[1]
 
@@ -606,25 +606,23 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
 }
 
 function hasResults(partialData){
-  //filter for whether or not the model has results
-  if(!modeIsResults)
+  if(document.getElementById("switch-input").checked)
   {
-    //if "results" mode is not selected
+    var filteredData = []
+
+      for (var i = 0; i < partialData.length; i++) {
+        if(partialData[i]["Results"] == "1")
+        {
+          //saves in both arrays
+          filteredData.push(partialData[i]);
+        }
+      }
+
+    return [filteredData, true];
+  }
+  else
+  {
     return [partialData, false];
   }
-
-  var filteredData = []
-  //global variable hasResultsData keeps track of models that have results
-  hasResultsData = []
-
-  for (var i = 0; i < partialData.length; i++) {
-    if(partialData[i]["Results"] == "1")
-    {
-      //saves in both arrays
-      filteredData.push(partialData[i]);
-      hasResultsData.push(partialData[i]);
-    }
-  }
-
-  return [filteredData, false]
+  
 }

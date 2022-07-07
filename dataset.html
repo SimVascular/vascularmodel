@@ -51,8 +51,11 @@
                 Repository
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item custom-active" href="dataset.html">Dataset</a>
-                <a class="dropdown-item" href="documentation.html">Documentation</a>
+                <a class="dropdown-item" href="dataset.html">Dataset</a>
+                <a class="dropdown-item" href="tutorial.html">Tutorial</a>
+                <a class="dropdown-item" href="documentation.html"
+                  >Documentation</a
+                >
                 <a class="dropdown-item" href="FAQs.html">FAQs</a>
               </div>
             </li>
@@ -69,30 +72,17 @@
         <div class="cd-tab-filter" style = "height: auto;">
           <div>
             <span id="counterPanel"></span>
-            <!-- <span id="help"><span id ="putHelpWordHere"></span><i class="fa-regular fa-circle-question"></i></span> -->
+            <span id="help"><span id ="putHelpWordHere"></span><i class="fa-regular fa-circle-question"></i></span>
           </div>
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
 
-      <!-- box to confirm user actions -->
-      <div id="confirmBox">
-        <div class="message"></div>
-        <span class="button yes">Yes</span>
-        <span class="button no">No</span>
-      </div>
-
-      <!-- box to inform user of actions -->
-      <div id="informUser" style = "opacity: 0;">
-        <div class="message"></div>
-        <div id="okayGoesHere"></div>
-      </div>
-
-      <!-- help video with overlay -->
+      <!-- help video with overlay
       <div id="vidOverlay">
         <div id="holdsYTVideo" style = "height: 0px;">
           <iframe id = "video" width="560" height="315"title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-      </div>
+      </div> -->
 
       <!-- As a trick, we load the loading_image first but keep it 0px to not display it -->
       <!-- <img src="img/loading_image.jpg" style="width:0px; height:0px"> -->
@@ -127,6 +117,19 @@
               <input type="search" placeholder="Search" id="search-field">
             </div> <!-- cd-filter-content -->
           </div> <!-- cd-filter-block -->
+          
+          <div class="cd-filter-block">
+            <h4>Simulation results</h4>
+            <div class="cd-filter-content" style = "display: block;">
+              <div>
+                <label class="switch switch-flat" id = "proOrRe">
+                  <input id = "switch-input" class="switch-input" type="checkbox" />
+                  <span class="switch-label" data-on="Must Have" data-off="Optional"></span> 
+                  <span class="switch-handle"></span> 
+                </label>
+              </div>
+            </div>
+          </div>
            
           <div class="cd-filter-block">
               <h4>Age</h4>
@@ -214,7 +217,11 @@
                   <label class="checkbox-label" for="checkbox-Simulations">Simulations</label>
                 </li>
               </ul>
-            </div> <!-- cd-filter-block -->          
+            </div> <!-- cd-filter-block --> 
+            
+            <div class="cd-filter-block">
+              <span id="helpFilters">Help  <i class="fa-regular fa-circle-question"></i></span>
+            </div>
       </form>
       <!-- button to Close and Filters header -->
         <a href="#0" class="cd-filter-trigger insideFilterBar">Filters</a>
@@ -226,17 +233,11 @@
       <!-- section for menu -->
       <section class="menu-bar" id = "menu-bar">
         <div>Menu</div>
+        <div id="helpMenu"><i class="fa-regular fa-circle-question"></i></div>
       </section>
 
       <section class="features" id = "features">
         <form>
-          <div>
-            <label class="switch switch-flat" id = "proOrRe">
-              <input id = "switch-input" class="switch-input" type="checkbox" />
-              <span class="switch-label" data-on="Results" data-off="Projects"></span> 
-              <span class="switch-handle"></span> 
-            </label>
-          </div> <!-- slider for projects/results -->
           <table>
             <tr>
               <td>
@@ -269,7 +270,25 @@
         </form>
       </section> <!-- features -->
     </main> <!-- cd-main-content -->
-  
+
+<div id = "confirmOverlay">
+  <!-- box to confirm user actions -->
+  <div id="confirmBox">
+    <div id="warning"></div>
+    <div class="message newParagraph" id="message"></div>
+    <div id="putDropDownHere"></div>
+    <div id="downloadSize" class = "newParagraph"></div>
+    <span class="button yes">Yes</span>
+    <span class="button no">No</span>
+  </div>
+</div>
+
+<!-- box to inform user of actions -->
+<div id="informUser">
+  <div class="message"></div>
+  <div id="okayGoesHere"></div>
+</div>
+
 <!-- overlay for detailsModal -->
 <div id="overlay">
   <div class="container">
@@ -320,6 +339,7 @@
         <div class="explore"  style="text-align: left;">
           <h5>Explore</h5>
           <div><a href="dataset.html">Dataset</a></div>
+          <div><a href="tutorial.html">Tutorial</a></div>
           <div><a href="documentation.html">Documentation</a></div>
           <div><a href="FAQs.html">FAQs</a></div>
           <div><a href="contacts.html">Contact us</a></div>

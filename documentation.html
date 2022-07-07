@@ -17,6 +17,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css?v=1.0.0">
+  <link rel="stylesheet" href="css/style_documentation.css">
 
   <title>Vascular Model Repository</title>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVVR1546XJ"></script>
@@ -48,7 +49,10 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="dataset.html">Dataset</a>
-              <a class="dropdown-item custom-active" href="documentation.html">Documentation</a>
+              <a class="dropdown-item" href="tutorial.html">Tutorial</a>
+              <a class="dropdown-item" href="documentation.html"
+                >Documentation</a
+              >
               <a class="dropdown-item" href="FAQs.html">FAQs</a>
             </div>
           </li>
@@ -60,38 +64,51 @@
     </div>
   </nav>
 
-  <div class="container" id="documentation">
-    <div class="row">
-      <div class="col-md-12 mx-auto">
-        <h3 class="title-documentation">Getting started</h3>
-      </div>
-      <div class="col-md-12 mx-auto">
-        <p class="body-documentation">The Vascular Model Repository is a library of cardiovascular models. Model projects can be downloaded in <code>.zip</code> format from the <a href="dataset.html" class="link" target="_blank">Repository</a>. Each archive contains a project compatible with SimVascular, an open-source software for patient-specific cardiovascular modeling and simulation. We refer to the <a href="https://simvascular.github.io/" target="_blank" class="link">SimVascular website</a> and <a href=https://simvascular.github.io/docsQuickGuide.html target="_blank" class="link" target="_blank">Getting started page</a> for an in-depth discussion of the software capabilities and its usage. In this documentation, we limit ourselves to recall that a SimVascular project can be opened by clicking <span style="font-weight:600">File > Open SV Project...</span> in the graphical user interface and by selecting the desired project folder.</p>
-        <p class="body-documentation">Although the models are compatible with SimVascular by design, some components (in particular, image data and computational meshes) can be easily opened in other pieces of software too. Here is a brief description of the subfolders contained in each project:</p>
-        <p class="list-documentation"><span style="font-weight:600">Images:</span> directory containing medical image data in <code>.vti</code> format, which can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
-        <p class="list-documentation"><span style="font-weight:600">Paths:</span> directory containing path files in <code>*.pth</code> format, where <code>*</code> is usually one of the vessels making up the current model. Path files store path points (in <code>.xml</code> format) manually identified during the centerline identification stage of SimVascular.</p>
-        <p class="list-documentation"><span style="font-weight:600">Segmentations:</span> directory containing contour files in <code>*.ctgr</code> format, where <code>*</code> is usually one of the vessels making up the current model. Contour files store contour points (in <code>.xml</code> format) manually identified during the segmentation stage of SimVascular.</p>
-        <p class="list-documentation"><span style="font-weight:600">Models:</span> directory containing the surface model of the geometry.</p>
-        <p class="list-documentation"><span style="font-weight:600">Meshes:</span> directory containing the meshes of the model. Surface meshes are stored in <code>.vtp</code>, while volumetric meshes are stored in <code>.msh</code> and <code>.vtu</code> formats; <code>.vtp</code> and <code>.vtu</code> files can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
-        <p class="list-documentation"><span style="font-weight:600">flow-files:</span> directory containing inflow boundary conditions. These as stored in files called <code>inflow_3d.flow</code>, i.e., as raw text files in which each row corresponds to a particular timestep and flowrate value. Note that, in SimVascular, a positive inflow requires a negative sign (as the normal to the inlet surface and the velocity field have opposite orientations).</p>
-        <p class="list-documentation" style="margin-bottom:50px;"><span style="font-weight:600">Simulations:</span> directory containing simulation files compatible with SimVascular. Please note that simulation results are currently not included in the repository.</p>
-      </div>
-      <div class="col-md-12 mx-auto">
-        <h3 class="title-documentation">History</h3>
-      </div>
-      <div class="col-md-12 mx-auto">
-        <p class="body-documentation" style="margin-bottom:50px;">The Vascular Model Repository was originally created by <a class="link" href="https://www.anderson.ucla.edu/faculty-and-research/global-economics-and-management/faculty/wilson" target="_blank">Nathan Wilson</a> and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institues of Health (NIH). The repository has then been migrated into its current form in a joint effort between the <a href="https://cbcl.stanford.edu" class="link" target="_blank">Cardiovascular Biomechanics Computation Lab</a> at Stanford University, the <a href="https://shaddenlab.berkeley.edu" class="link" target="_blank">Shadden Lab</a> at Berkeley University, and Nathan Wilson. The project is currently supported by the NIH National Library of Medicine (grant 5R01LM013120).</p>
-      </div>
-      <div class="col-md-12 mx-auto">
-        <h3 class="title-documentation">References</h3>
-      </div>
-      <div class="col-md-12 mx-auto">
-        <p class="body-documentation">We refer to the following publications for additional details on the Vascular Model Repository. If you find the repository useful, please consider citing these references.</p>
-        <p class="list-documentation"> N.M. Wilson, A.K. Ortiz, and A.B. Johnson, <em>The Vascular Model Repository: A Public Resource of Medical Imaging Data and Blood Flow Simulation Results</em>, J. Med. Devices 7(4), 040923 (Dec 05, 2013) doi:10.1115/1.4025983.
-          <p class="list-documentation"> M.R. Pfaller, J. Pham, A. Verma, N.M. Wilson, D.W. Parker, W. Yang, and A.L. Marsden, <em>Automated generation of 0D and 1D reduced-order models of patient-specific blood flow</em>, arXiv:2111.04878.
-          </div>
-        </div>
-      </div>
+<div class="container-fluid main-content centerBox">
+  <h1 id="top">Documentation</h1>
+      <div id="documentation">
+        <h2 class="title-documentation" id="Getting_Started">Getting Started</h2>
+        <p>The Vascular Model Repository is a library of cardiovascular models. Model projects can be downloaded in <code>.zip</code> format from the <a href="dataset.html" class="link" target="_blank">Repository</a>. Each archive contains a project compatible with SimVascular, an open-source software for patient-specific cardiovascular modeling and simulation. We refer to the <a href="https://simvascular.github.io/" target="_blank" class="link">SimVascular website</a> and <a href=https://simvascular.github.io/docsQuickGuide.html target="_blank" class="link" target="_blank">Getting started page</a> for an in-depth discussion of the software capabilities and its usage. In this documentation, we limit ourselves to recall that a SimVascular project can be opened by clicking <span style="font-weight:600">File > Open SV Project...</span> in the graphical user interface and by selecting the desired project folder.</p>
+        <p>Although the models are compatible with SimVascular by design, some components (in particular, image data and computational meshes) can be easily opened in other pieces of software too. Here is a brief description of the subfolders contained in each project:</p>
+        <p>
+          <span style="font-weight:600">Images:</span> directory containing medical image data in <code>.vti</code> format, which can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p>
+          <span style="font-weight:600">Paths:</span> directory containing path files in <code>*.pth</code> format, where <code>*</code> is usually one of the vessels making up the current model. Path files store path points (in <code>.xml</code> format) manually identified during the centerline identification stage of SimVascular.</p>
+        <p>
+          <span style="font-weight:600">Segmentations:</span> directory containing contour files in <code>*.ctgr</code> format, where <code>*</code> is usually one of the vessels making up the current model. Contour files store contour points (in <code>.xml</code> format) manually identified during the segmentation stage of SimVascular.</p>
+        <p>
+          <span style="font-weight:600">Models:</span> directory containing the surface model of the geometry.</p>
+        <p>
+          <span style="font-weight:600">Meshes:</span> directory containing the meshes of the model. Surface meshes are stored in <code>.vtp</code>, while volumetric meshes are stored in <code>.msh</code> and <code>.vtu</code> formats; <code>.vtp</code> and <code>.vtu</code> files can be opened, for example, using <a class="link" href="https://www.paraview.org" target="_blank">Paraview</a>.</p>
+        <p>
+          <span style="font-weight:600">flow-files:</span> directory containing inflow boundary conditions. These as stored in files called <code>inflow_3d.flow</code>, i.e., as raw text files in which each row corresponds to a particular timestep and flowrate value. Note that, in SimVascular, a positive inflow requires a negative sign (as the normal to the inlet surface and the velocity field have opposite orientations).</p>
+        <p>
+          <span style="font-weight:600">Simulations:</span> directory containing simulation files compatible with SimVascular. Please note that simulation results are currently not included in the repository.</p>
+        <p>For help on how to use the dataset features, go to this <a href="tutorial.html">Tutorial</a>.</p>
+        <h2 class="title-documentation" id ="History">History</h2>
+        <p>The Vascular Model Repository was originally created by 
+          <a class="link" href="https://www.anderson.ucla.edu/faculty-and-research/global-economics-and-management/faculty/wilson" target="_blank">Nathan Wilson</a> 
+          and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institues of Health (NIH). 
+          The repository has then been migrated into its current form in a joint effort between the <a href="https://cbcl.stanford.edu" class="link" target="_blank">Cardiovascular Biomechanics Computation Lab</a> 
+          at Stanford University, the 
+          <a href="https://shaddenlab.berkeley.edu" class="link" target="_blank">Shadden Lab</a>
+          at Berkeley University, and Nathan Wilson. The project is currently supported by the NIH National Library of Medicine (grant 5R01LM013120).</p>
+
+        <h2 id="References"> References</h2>
+        <p>We refer to the following publications for additional details on the Vascular Model Repository. 
+          If you find the repository useful, please consider citing these references.</p>
+        <p> N.M. Wilson, A.K. Ortiz, and A.B. Johnson, 
+          <em>The Vascular Model Repository: A Public Resource of Medical Imaging Data and Blood Flow Simulation Results</em>, 
+          J. Med. Devices 7(4), 040923 (Dec 05, 2013) doi:10.1115/1.4025983.
+        <p> M.R. Pfaller, J. Pham, A. Verma, N.M. Wilson, D.W. Parker, W. Yang, and A.L. Marsden, 
+          <em>Automated generation of 0D and 1D reduced-order models of patient-specific blood flow</em>, 
+          arXiv:2111.04878.
+
+        <h2 id="Questions_or_Comments">Have Questions or Comments?</h2>
+        <p>Still have questions? Check out the <a href="FAQs.html">FAQs</a> page.</p>
+        <p>Let us know what functions you would like to see in the Vascular Model Respository by <a href="contacts.html" target="_blank">contacting us.</a></p>
+      </div> <!-- end documentation-->
+  </div> <!-- end container -->
 
       <section id="contact-section">
         <div class="container">
@@ -111,6 +128,7 @@
               <div class="explore"  style="text-align: left;">
                 <h5>Explore</h5>
                 <div><a href="dataset.html">Dataset</a></div>
+                <div><a href="tutorial.html">Tutorial</a></div>
                 <div><a href="documentation.html">Documentation</a></div>
                 <div><a href="FAQs.html">FAQs</a></div>
                 <div><a href="contacts.html">Contact us</a></div>
@@ -149,5 +167,6 @@
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <script src="js/documentation.js"></script>
     </body>
     </html>

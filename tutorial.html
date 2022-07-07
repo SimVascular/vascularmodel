@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- This corresponds to a fontawesome kit but can be customized -->
+    <script
+      src="https://kit.fontawesome.com/48644805cd.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css?v=1.0.0" />
+    <link rel="stylesheet" href="css/style_documentation.css" />
+    <title>Vascular Model Repository</title>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-YVVR1546XJ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-YVVR1546XJ");
+    </script>
+  </head>
+  <body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-custom">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">VMR</a>
+        <button
+          class="navbar-toggler ml-auto custom-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarSupportedContent"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html"
+                >Home <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle active"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Repository
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="dataset.html">Dataset</a>
+                <a class="dropdown-item" href="tutorial.html">Tutorial</a>
+                <a class="dropdown-item" href="documentation.html"
+                  >Documentation</a
+                >
+                <a class="dropdown-item" href="FAQs.html">FAQs</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contacts.html">Contact us</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section class="skiptoTop">
+      <a class="noDec" href="#top"><p class="text">Return to Top</p></a>
+    </section>
+    <div class="container-fluid main-content centerBox">
+      <h1 id="top">Tutorial</h1>
+      <div class="row" id="model-gallery">
+        <div class="col-lg-3 col-sm-12 tOC">
+          <form>
+            <button
+              class="accordion tOCDropDown"
+              id="accordion001"
+              type="button"
+            >
+              Using the Gallery
+            </button>
+            <div class="panel" id="panel001">
+              <a class="accordion" href="#Helpful_tools">Helpful tools</a>
+              <a class="accordion" href="#Viewing_model_details"
+                >Viewing model details</a
+              >
+              <a class="accordion" href="#Selecting_Models">Selecting models</a>
+            </div>
+            <!-- end panel -->
+
+            <button
+              class="accordion tOCDropDown"
+              id="accordion002"
+              type="button"
+            >
+              Using the Filters
+            </button>
+            <div class="panel" id="panel002">
+              <button class="accordion" id="opening_filter" type="button">
+                Opening the Menu
+              </button>
+              <button
+                class="accordion tOCDropDown"
+                id="accordion021"
+                type="button"
+              >
+                About the filter menu
+              </button>
+              <div class="panel" id="panel021">
+                <a class="accordion" href="#The_Gallery_Header"
+                  >The Gallery Header</a
+                >
+                <a class="accordion" href="#The_Error_Message"
+                  >The Error Message</a
+                >
+                <a class="accordion" href="#The_Clear_All_Button"
+                  >The Clear All Button</a
+                >
+                <a class="accordion" href="#The_Collapse_All_Button"
+                  >The Collapse All Button</a
+                >
+              </div>
+              <button
+                class="accordion tOCDropDown"
+                id="accordion023"
+                type="button"
+              >
+                The Different Categories
+              </button>
+              <div class="panel" id="panel023">
+                <a class="accordion" href="#The_Search_Bar">The Search Bar</a>
+                <a class="accordion" href="#The_Simulation_Results_Filter"
+                  >The Simulation Results Filter</a
+                >
+                <a class="accordion" href="#The_Age_Filter">The Age Filter</a>
+                <a class="accordion" href="#The_Drop-Down_Menus"
+                  >The Drop-Down Menus</a
+                >
+                <a class="accordion" href="#The_Checkboxes">The Checkboxes</a>
+                <a class="accordion" href="#The_Project_Must_Contain_Filter"
+                  >The Project Must Contain Filter</a
+                >
+              </div>
+            </div>
+            <!-- end panel -->
+
+            <button
+              class="accordion tOCDropDown"
+              id="accordion003"
+              type="button"
+            >
+              Using the Menu Bar
+            </button>
+            <div class="panel" id="panel003">
+              <a class="accordion" href="#Opening_the_Menu_Bar"
+                >Opening the Menu Bar</a
+              >
+              <a class="accordion" href="#The_Select_and_Deselect_All_Icon"
+                >The Select and Deselect All Icon</a
+              >
+              <a class="accordion" href="#The_View_Selected_Models_Icon"
+                >The View Selected Models Icon</a
+              >
+              <a class="accordion" href="#The_Download_All_Icon"
+                >The Download All Icon</a
+              >
+              <a class="accordion" href="#The_Share_Icon">The Share Icon</a>
+            </div>
+            <!-- end panel -->
+
+            <button
+              class="accordion tOCDropDown"
+              id="accordion004"
+              type="button"
+            >
+              Sharing Models
+            </button>
+            <div class="panel" id="panel004">
+              <button
+                class="accordion tOCDropDown"
+                id="accordion041"
+                type="button"
+              >
+                Sharing a model
+              </button>
+              <div class="panel" id="panel041">
+                <a class="accordion" href="#How_to_get_the_Link_for_One_Model"
+                  >How to get the link</a
+                >
+                <a class="accordion" href="#Viewing_the_shared_model"
+                  >Viewing the shared model</a
+                >
+              </div>
+              <button
+                class="accordion tOCDropDown"
+                id="accordion042"
+                type="button"
+              >
+                Sharing multiple models
+              </button>
+              <div class="panel" id="panel042">
+                <a
+                  class="accordion"
+                  href="#How_to_get_the_Link_for_Multiple_Model"
+                  >How to get the link</a
+                >
+                <a class="accordion" href="#Viewing_the_shared_models"
+                  >Viewing the shared models</a
+                >
+              </div>
+            </div>
+            <!-- end panel -->
+          </form>
+          <!-- end form for table of contents -->
+        </div>
+        <!-- end table of contents-->
+
+        <div class="col-lg-9 col-12">
+          <div id="documentation">
+            <h2 class="title-documentation" id="Using_the_Gallery">
+              Using the Gallery
+            </h2>
+            <h3 id="Helpful_tools">Helpful tools</h3>
+            <p>
+              To navigate the gallery, you may find the filters bar and menu bar
+              helpful. To learn more about these features, go to
+              <a href="#Using_the_Filters">Using the Filters</a> and
+              <a href="Using_the_Menu_Bar">Using the Menu Bar</a>.
+            </p>
+            <p>
+              To learn more about the files you can download, go to the
+              <a href="documentation.html">Documentation</a> page.
+            </p>
+            <p>
+              To learn more about sharing models with others, go to the
+              <a href="#Sharing_Models">Sharing Models</a>.
+            </p>
+            <p>
+              Still have questions? Visit the <a href="FAQs.html">FAQs</a> page
+              or <a href="contacts.html">contact us</a>.
+            </p>
+            <h3 id="Viewing_model_details">Viewing model details</h3>
+            <p>
+              On every model, there is a small magnifying glass icon on the top
+              left. To learn more about one specific model, click on this
+              magnifying glass and an informational panel will appear.
+            </p>
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassEx.jpg"
+              alt="Image of gallery with highlight on magnifying glass"
+            />
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassExPanel.jpg"
+              alt="Image of panel that opens when you click on the magnifying glass"
+            />
+            <p>
+              The informational panel tells you the name of the model you are
+              viewing, and below the name, are the details of the model you are
+              viewing.
+            </p>
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassExPanelName.png"
+              alt="Image of panel highlight on name"
+            />
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassExPanel.jpgDetails.png"
+              alt="Image of panel highlight on details"
+            />
+            <p>
+              If there are additional notes for the model, they will be shown
+              under the details window. You are able to view the size of the
+              SimVascular Project <code>.zip</code> files as well.
+            </p>
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassExPanelNotes.png"
+              alt="Image of panel highlight on additional notes"
+            />
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassExPanelSize.png"
+              alt="Image of panel highlight on size"
+            />
+            <p>
+              You can download the files of the individual model you are viewing
+              by clicking on the download icon.
+            </p>
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassExPanelDownload.png"
+              alt="Image of panel highlight on download icon"
+            />
+            <img
+              class="inline"
+              src="img/help/downloadConfirmationIndiv.jpg"
+              alt="Image of panel highlight on confirmation message"
+            />
+            <p>
+              If simulation results are avaliable for the model, you will be
+              able to choose which file type you want to download. As you change
+              the file type, the displayed size will update.
+            </p>
+            <img
+              class="inline"
+              src="img/help/magnifyingGlassExPanelChooseType.jpg"
+              alt="Image of panel highlight on confirmation message choosing type"
+            />
+            <img
+              class="inline"
+              src="img/help/downloadConfirmationIndivSize.jpg"
+              alt="Image of panel highlight on confirmation message choosing type"
+            />
+            <p>
+              You can also click on the share icon to copy a shareable link. To
+              view how to use this link, go to
+              <a href="#Sharing_a_model">sharing a model</a>.
+            </p>
+            <img
+              src="img/help/magnifyingGlassExPanelShare.png"
+              alt="Image of panel highlight on share button"
+            />
+            <p>
+              To exit the informational panel, you can click anywhere outside
+              the panel, or you can click on the close button located on the top
+              right.
+            </p>
+            <h3 id="Selecting_Models">Selecting models</h3>
+            <p>
+              Instead of downloading or creating shareable links for individual
+              models, you may want to work with multiple models at once.
+            </p>
+            <p>
+              To select and deselect a model to add it to or remove it from your
+              collection of models, simply click or unclick on the model's
+              image.
+            </p>
+            <img
+              class="inline"
+              src="img/help/readyToSelect.jpg"
+              alt="Image of a model"
+            />
+            <img
+              class="inline"
+              src="img/help/selectedModel.jpg"
+              alt="Image of selected model"
+            />
+            <p>
+              The example above demonstrates where to click and what a selected
+              model looks like.
+            </p>
+            <p>
+              You can also select multiple models at once with the Select All
+              icon in the menu bar. For more information on this feature, go to
+              <a href="#The_Select_and_Deselect_All_Icon"
+                >The Select and Deselect All Icon</a
+              >.
+            </p>
+            <p>
+              To view the models you have selected, click on the View Selected
+              icon in the menu bar. For more information on this feature, go to
+              <a href="#The_View_Selected_Models_Icon"
+                >The View Selected Models Icon</a
+              >.
+            </p>
+            <p>
+              Once you have selected the models you want to download or share,
+              either click on the Download All icon or the Get Shareable Link
+              icon. For more information on these icons, go to
+              <a href="#The_Download_All_Icon">The Download All Icon</a> and
+              <a href="#The_Share_Icon">The Share Icon</a>.
+            </p>
+            <h2 class="title-documentation" id="Using_the_Filters">
+              Using the Filters
+            </h2>
+            <h3 id="Opening_the_filter_menu">Opening the filter menu</h3>
+            <p>
+              To open the filter menu, find the word "FILTERS" on the top left
+              of the page and click on it.
+            </p>
+            <img
+              src="img/help/openingPageF.png"
+              alt="Opening Page of Gallery"
+            />
+            <h3 id="About_the_filter_menu">About the filter menu</h3>
+            <h4 id="The_Gallery_Header">The Gallery Header</h4>
+            <p>
+              At the top of the gallery, there is a header that indicates how
+              many models are showing in the gallery. It also displays whether
+              or not there are filters currently being applied.
+            </p>
+            <img
+              src="img/help/openingPageHeader.jpg.png"
+              alt="Opening page highlight on filter header"
+            />
+            <h4 id="The_Error_Message">The Error Message</h4>
+            <p>
+              If what you are looking for is too specific, an error message may
+              appear. If so, it means the specific models you are searching for
+              are not currently avaliable in our repository. You may need to
+              enter in fewer specifications into the filter for models to appear
+              in the gallery.
+            </p>
+            <img
+              src="img/help/errorMessageExZ1.jpg"
+              alt="Image of error message."
+            />
+            <img
+              class="inline"
+              src="img/help/errorMessageExZ2.jpg"
+              alt="Image of what the error message says."
+            />
+            <img
+              class="inline"
+              src="img/help/errorMessageEx.jpg"
+              alt="Image of how to get an error message."
+            />
+            <p>
+              In the example above, an error message has appeared. This is
+              because the Vascular Model Repository does not currently contain
+              models that are of pulmonary arteries that have undergone the
+              coronary artery bypass graft procedure.
+            </p>
+            <h4 id="The_Clear_All_Button">The Clear All Button</h4>
+            <p>
+              If you want to return to the default state of the dataset gallery,
+              click on the Clear All button. It will clear all of the filters
+              that are currently applied.
+            </p>
+            <img
+              class="inline"
+              src="img/help/clearAllBefore.jpg"
+              alt="Image of what a filled up filter bar looks like."
+            />
+            <img
+              class="inline"
+              src="img/help/clearAllAfter.jpg"
+              alt="Image of cleared filter bar."
+            />
+            <h4 id="The_Collapse_All_Button">The Collapse All Button</h4>
+            <p>
+              If you want to collapse all the filter menus, click on the
+              Collapse All Button. It will do so. Clicking this button, however,
+              will not clear the filters that are applied.
+            </p>
+            <img
+              class="inline"
+              src="img/help/collapseAllBefore.jpg"
+              alt="Image of a filled up filter bar"
+            />
+            <img
+              class="inline"
+              src="img/help/collapseAllAfter.jpg"
+              alt="Image of a collaped filter bar"
+            />
+            <p>
+              In the example above, the collapse all button has been pressed,
+              which collapses all the filter headers. The filters remain
+              applied.
+            </p>
+            <h3 id="Looking_at_the_different_categories">
+              Looking at the different categories
+            </h3>
+            <h4 id="The_Search_Bar">The Search Bar</h4>
+            <p>
+              With the search bar, you are able to search for specific models.
+              To search for multiple characteristics, add a space between each
+              characteristic. To apply the filter, write in an entry and hit the
+              ENTER key.
+            </p>
+            <img
+              src="img/help/searchBarExZ.jpg"
+              alt="Example of what a search looks like in the search bar"
+            />
+            <img
+              src="img/help/searchBarEx.jpg"
+              alt="Full screen of what a search looks like with the search bar"
+            />
+            <p>
+              In the example above, the models that are a result of the search
+              bar entry are all male models of aortas that have aneurysms.
+            </p>
+            <p>
+              If you are looking for one specific model, you can search for the
+              name of the model in the search bar.
+            </p>
+            <h4 id="The_Simulation_Results_Filter">
+              The Simulation Results Filter
+            </h4>
+            <p>
+              We have ran simulations for some of the models in this repository.
+              They come in <code>.vtu</code> and <code>.vtp</code> files. This
+              filter allows you to search for those models.
+            </p>
+            <img
+              src="img/help/simResultsDefault.jpg"
+              alt="Image of default state of simulation results button."
+            />
+            <p>
+              Above is what the default for the simulation results button is. In
+              this state, no models are being filtered for simulation results.
+            </p>
+            <p>
+              To apply this filter, click on the mode you want to be in. If
+              "MUST HAVE" is showing, you are filtering for the models that have
+              simulation results. If "OPTIONAL" is showing, you are not
+              filtering for simulation results.
+            </p>
+            <img
+              src="img/help/simResultsApplied.jpg"
+              alt="Image of applied state of simulation results button."
+            />
+            <img
+              src="img/help/simResultsEx.jpg"
+              alt="Image of what gallery looks like with simulation results selected."
+            />
+            <p>
+              In the example above, the models that are the result of clicking
+              the simulation results button have downloadable
+              <code>.vtu</code> and <code>.vtp</code> files.
+            </p>
+            <h4 id="The_Age_Filter">The Age Filter</h4>
+            <p>
+              With the filter for age, you are able to search within an age
+              range. The current minimum for the filter is 0 years of age, and
+              the current maximum is 120 years.
+            </p>
+            <img
+              src="img/help/ageG.jpg"
+              alt="Image of what the age filter looks like."
+            />
+            <p>
+              Both the minimum and maximum bounds are inclusive. To apply the
+              filter, hit the ENTER key.
+            </p>
+            <img
+              src="img/help/ageExZ.jpg"
+              alt="Image of what the applied age filter looks like."
+            />
+            <img
+              src="img/help/ageEx.jpg"
+              alt="Image of what the gallery looks like with the filter applied."
+            />
+            <p>
+              In the example above, the models that are a result of the age
+              filter entries are 5 years old.
+            </p>
+            <h4 id="The_Drop-Down_Menus">The Drop-Down Menus</h4>
+            <p>
+              With the two drop down menus, you are able to search for models of
+              a specific sex and species. To apply the filters, select the
+              subcategory you are looking for.
+            </p>
+            <!-- <img src="img/help/" alt="Image of what "> -->
+            <img
+              src="img/help/dropdownExZ.jpg"
+              alt="Image of what the applied drop down menus look like."
+            />
+            <img
+              src="img/help/dropdownEx.jpg"
+              alt="Image of what the gallery looks like with the drop down menus applied"
+            />
+            <p>
+              In the example above, the models that are a result of the drop
+              down menu entries are both female and human.
+            </p>
+            <p>
+              To deselect a drop down menu entry without clearing all applied
+              filters, click on the "Select One" option.
+            </p>
+            <img
+              class="inline"
+              src="img/help/dropdownResetEx.jpg"
+              alt="Image of where to click to reset dropdown menu."
+            />
+            <img
+              class="inline"
+              src="img/help/dropdownResetEx2.jpg"
+              alt="Image of resetted dropdown menu"
+            />
+            <h4 id="The_Checkboxes">The Checkboxes</h4>
+            <p>
+              With checkboxes under the three categories "Anatomy," "Disease,"
+              and "Procedure," you are able to search for models of a specific
+              anatomy, disease, or surgical procedure.
+            </p>
+            <p>To apply the filters, click or unclick a checkbox.</p>
+            <img
+              class="inline"
+              src="img/help/checkboxExZ.jpg"
+              alt="Image of what an applied check box looks like."
+            />
+            <img
+              class="inline"
+              src="img/help/checkboxEx.jpg"
+              alt="Image of what the gallery looks like with the applied checkbox"
+            />
+            <p>
+              In the example above, the models that are a result of the checkbox
+              entries are of aortas.
+            </p>
+            <p>
+              Some models check off more than one box per category. However,
+              selecting more than one option under a category will return the
+              union of those entries. To search for models that specifically
+              have 2+ entries under one category, you will find the search bar
+              to be more helpful.
+            </p>
+            <p>
+              Between categories (such as "Anatomy" and "Disease"), the
+              checkboxes act as an intersection of the entries.
+            </p>
+            <img
+              class="inline"
+              src="img/help/checkboxUnionExZ.jpg"
+              alt="Image of what applying multiple checkboxes under one category looks like."
+            />
+            <img
+              class="inline"
+              src="img/help/checkboxUnionEx.jpg"
+              alt="Image of what the gallery looks like with given filters"
+            />
+            <p>
+              In the example above, the models that are a result of the checkbox
+              entries are either of aortas with aneurysm(s) or of coronary
+              arteries with aneurysm(s).
+            </p>
+            <h4 id="The_Project_Must_Contain_Filter">
+              The Project Must Contain Filter
+            </h4>
+            <p>
+              A few models do not contain certain files. With the Project Must
+              Contain filter, you are able to filter through the models that
+              have the files you are looking to download.
+            </p>
+            <p>
+              Unlike the filter above, these checkboxes act as intersections. To
+              apply the filters, click or unclick a checkbox.
+            </p>
+            <img
+              class="inline"
+              src="img/help/mustContainExZ.jpg"
+              alt="Image of what applied project must contain filter looks like."
+            />
+            <img
+              class="inline"
+              src="img/help/mustContainEx.jpg"
+              alt="Image of what applied project must contain filter looks like in the gallery."
+            />
+            <p>
+              In the example above, the models that are a result of the project
+              must contain entries all contain both "Paths" and "Simulations"
+              file.
+            </p>
+            <h3 id="Filters_summary">Summary</h3>
+            <p>
+              There are different ways to find what you are searching for in the
+              Vascular Model Repository. If you are looking for a specific
+              model, the search bar is the most effective. If you are looking
+              for models in specific categories, the other forms of filters will
+              be the most helpful.
+            </p>
+            <h2 class="title-documentation" id="Using_the_Menu_Bar">
+              Using the Menu Bar
+            </h2>
+            <h3 id="Opening_the_Menu_Bar">Opening the Menu Bar</h3>
+            <p>
+              To open the menu bar, click on the horizontal MENU bar on the
+              top-middle right of the screen.
+            </p>
+            <img
+              src="img/help/openingPageM.jpg.png"
+              alt="Image of how to find menu bar"
+            />
+            After opening the menu bar, you will see four different icons, each
+            with unique functions to help you navigate the Vascular Model
+            Repository's dataset. The functions of each of these icons are
+            described below.
+            <h3 id="The_Select_and_Deselect_All_Icon">
+              The Select and Deselect All Icon
+            </h3>
+            <img
+              class="smaller"
+              src="img/help/selectAllIcon.png"
+              alt="Image of the select-all icon"
+            />
+            <p>
+              By clicking and unclicking this icon, you are able to select and
+              deselect all of the models that are showing in the gallery.
+            </p>
+            <img
+              src="img/help/appliedSelectAll.jpg"
+              alt="Image of select all in action"
+            />
+            <p>
+              In the example above, by clicking the Select All icon, all the
+              models in the repository have been selected.
+            </p>
+            <p>
+              When you are viewing the models you have selected, a place you can
+              access by clicking on the View Selected Models icon, clicking the
+              Select All icon will deselect all the models you have selected. A
+              confirmation message will appear. By clicking "Yes," you are able
+              to clear the models you have selected.
+            </p>
+            <img
+              class="inline"
+              src="img/help/inViewSelected.jpg"
+              alt="Image of selected models in view selected models"
+            />
+            <img
+              class="inline"
+              src="img/help/deselectConfirmExZ.jpg"
+              alt="Image of the confirmation message"
+            />
+            <p>
+              In the example to the left, one is viewing vertebral models they
+              have selected. The example on the right demonstrates the
+              confirmation message that will appear if you click on the Select
+              All icon when viewing the models you have selected.
+            </p>
+            <h3 id="The_View_Selected_Models_Icon">
+              The View Selected Models Icon
+            </h3>
+            <p>
+              After selecting models, you may want to view all the models you
+              have selected before downloading their files. To do so, find the
+              view selected models icon, the top right icon, in the menu bar and
+              click on it.
+            </p>
+            <p>The number on the icon is how many models you have selected.</p>
+            <img
+              class="inline"
+              src="img/help/afterSelectingAll.jpg"
+              alt="Image of gallery after selecting models"
+            />
+            <img
+              class="inline"
+              src="img/help/viewSelectedIcon.jpg"
+              alt="Image of the view selected icon"
+            />
+            <p>
+              Once you click on this icon, you can unclick it or apply new
+              filters to return to the gallery.
+            </p>
+            <p>
+              When you are viewing the models you have selected, you can see how
+              many you have selected on the top-middle of the screen.
+            </p>
+            <img
+              class="inline"
+              src="img/help/viewSelectedPlace.jpg"
+              alt="Image of selected models in view selected models"
+            />
+            <img
+              class="inline"
+              src="img/help/headerViewSelected.jpg"
+              alt="Image of header when viewing selected models"
+            />
+            <p>
+              In the example above, one knows that they are viewing the four
+              models they have selected.
+            </p>
+            <p>
+              In this page, by clicking the Select All icon, you can deselect
+              all the models you have selected.
+            </p>
+            <h3 id="The_Download_All_Icon">The Download All Icon</h3>
+            <p>
+              Once you are ready to download your models, click on the download
+              icon in the menu bar.
+            </p>
+            <img
+              class="inline"
+              src="img/help/downloadIconZ.png"
+              alt="Image of download icon zoomed in."
+            />
+            <img
+              class="inline"
+              src="img/help/readyToDownload.jpg"
+              alt="Image of someone ready to download models"
+            />
+            <p>
+              When you click on the download icon, a window will appear. This
+              message will ask for confirmation before downloading, as well as
+              ask you to specify which file type you would like to download.
+            </p>
+            <p>
+              If you click on the drop down menu under "Choose file type:" you
+              are currently able to choose between downloading
+              <code>.zip</code>, <code>.vtp</code>, and <code>.vtu</code> files.
+            </p>
+            <p>
+              The <code>.vtp</code> and <code>.vtu</code> files are simulation
+              results we have ran for the models.
+            </p>
+            <img
+              class="inline"
+              src="img/help/downloadAllConfirmation.jpg"
+              alt="Image of download confirmation"
+            />
+            <img
+              class="inline"
+              src="img/help/downloadAllSelectTypeZ.jpg"
+              alt="Image of types you can choose from"
+            />
+            <p>
+              Not all models have simulation results. If you choose to download
+              the files from our simulation results, the box will inform you how
+              many of the models you have selected have simulation results to
+              download.
+            </p>
+            <img
+              class="smaller"
+              src="img/help/downloadAllConfirmationSimResultsZNotAllSim.png"
+              alt="Image of warning"
+            />
+            <p>
+              In the example above, 2 out of the 3 models selected have
+              simulation results to donwload.
+            </p>
+            <p>
+              The size displayed under the drop down menu changes dynamically
+              with the file type you have chosen. It represents the total sizes
+              of the models you have selected to download.
+            </p>
+            <img
+              class="smaller"
+              src="img/help/downloadAllConfirmationSize.png"
+              alt="Image of warning"
+            />
+            <p>
+              Once you are ready to download the models of the file type you
+              have selected, click "Yes" and the files will begin downloading.
+            </p>
+            <h3 id="The_Share_Icon">The Share Icon</h3>
+            <p>
+              If you have selected models and now want to share them with
+              someone, click on the Get Shareable Link icon in the menu bar.
+            </p>
+            <img
+              class="smaller"
+              src="img/help/shareAllIcon.jpg"
+              alt="Image of Share Icon"
+            />
+            <p>
+              By clicking this icon, you can copy the link to a page that
+              displays the model(s) you have selected.
+            </p>
+            <p>
+              To learn more about this share page, go to the description on how
+              to <a href="#Sharing_Models">Share Models</a>.
+            </p>
+            <h2 class="title-documentation" id="Sharing_Models">
+              Sharing Models
+            </h2>
+            <h3 id="Sharing_a_model">Sharing a model</h3>
+            <h4 id="How_to_get_the_Link_for_One_Model">How to get the link</h4>
+            <p>There are two ways to get the link to share a model.</p>
+            <ol>
+              <li>
+                The first way to get a link to share one model is by clicking on
+                the share icon when viewing a model. To find how to view this
+                informational panel, go to
+                <a href="#Viewing_model_details">viewing model details</a>.
+
+                <img
+                  src="img/help/magnifyingGlassExPanelShare.png"
+                  alt="Image of panel with share icon"
+                />
+                By clicking on this icon, you will copy the link to share the
+                model. The link may look something like
+                <a
+                  style="word-wrap: break-word"
+                  href="https://www.vascularmodel.com/share.html?NzlOWTI3Tg__"
+                  target="_blank"
+                  >https://www.vascularmodel.com/share.html?NzlOWTI3Tg__</a
+                >.
+              </li>
+              <br />
+              <li>
+                The other way to get a link to share one model is to click on
+                the Get Shareable Link icon when you only have one model
+                selected.
+                <img
+                  class="smaller"
+                  src="img/help/shareIconOneModel.jpg"
+                  alt="Image of share all icon"
+                />
+                For more information about the Share icon, go to
+                <a href="#The_Share_Icon">The Share Icon</a>.
+              </li>
+            </ol>
+            <h4 id="Viewing_the_shared_model">Viewing the shared model</h4>
+            <p>
+              When you enter the link you have copied into a browser, a
+              descripton of the shared model will appear. The first displayed
+              information about the model is its name and image.
+            </p>
+            <img
+              class="inline"
+              src="img/help/openingPageOneShared.jpgName.png"
+              alt="Opening page when one model is shared"
+            />
+            <img
+              class="inline"
+              src="img/help/openingPageOneSharedImage.png"
+              alt="Opening page when one model is shared highlight image"
+            />
+            <p>In the example above, someone is viewing model 0082_0001.</p>
+            <p>
+              Below the name and image is more information about the model.
+              Here, you can also know the size of the model's SimVascular
+              Project <code>.zip</code> files. If the model has additional notes
+              or links, they can also be found here.
+            </p>
+            <img
+              src="img/help/openingPageOneSharedDetails.png"
+              alt="Details table under image and name"
+            />
+            <p>
+              When viewing this page, you can download the model's files by
+              clicking on the download icon on the top right.
+            </p>
+            <img
+              class="inline"
+              src="img/help/openingPageOneSharedDownloadIcon.png"
+              alt="Opening page when one model is shared highlight download icon"
+            />
+            <img
+              class="inline"
+              src="img/help/oneSharedDownloadConfirmDefault.jpg"
+              alt="Confirm download message"
+            />
+            <p>
+              If simulation results are avaliable for the model, the option will
+              appear in the dropdown menu under "Choose file type:"
+            </p>
+            <p>
+              As you change the file type, you are able to see the size of the
+              model files you are going to download under the dropdown menu.
+            </p>
+            <img
+              class="inline"
+              src="img/help/oneSharedDownloadConfirmSimResults.jpg"
+              alt="Confirm download message when sim results avaliable"
+            />
+            <img
+              class="inline"
+              src="img/help/oneSharedDownloadConfirmSize.jpg"
+              alt="Size of download before downloading"
+            />
+            <p>Once you are ready to download, click the "Yes" button.</p>
+            <p>
+              In addition to downloading the model files, you can also return to
+              the dataset by clicking on the View Gallery icon under the
+              download icon.
+            </p>
+            <img
+              src="img/help/openingPageOneSharedViewGalleryIcon.png"
+              alt="View gallery icon highlighted"
+            />
+            <h3>Sharing multiple models</h3>
+            <h4 id="How_to_get_the_Link_for_Multiple_Model">
+              How to get the link
+            </h4>
+            <p>
+              To share multiple models, select the models you want to share and
+              then click on the Select All icon in the menu bar.
+            </p>
+            <img
+              class="smaller"
+              src="img/help/shareAllIcon.jpg"
+              alt="Image of Share All Icon"
+            />
+            <p>
+              For more information about the Select icon, go to
+              <a href="#The_Select_and_Deselect_All_Icon"
+                >The Select and Deselect All Icon</a
+              >.
+            </p>
+            <h4 id="Viewing_the_shared_models">Viewing the shared models</h4>
+            <p>
+              When you create a link to share multiple models, you can then view
+              your selected models in a table.
+            </p>
+            <p>
+              Three functions are avaliable on this page. You can see how many
+              models you are viewing and view a brief summary of each model.
+            </p>
+            <img
+              class="inline"
+              src="img/help/shareModelsNumber.png"
+              alt="Image of table for shared models highlight number."
+            />
+            <img
+              class="inline"
+              src="img/help/sharedModelsTableDetails.png"
+              alt="Image of table for shared models highlight details."
+            />
+            <p>
+              Above is an example of what this page might look like. In this
+              case, someone has shared 107 models.
+            </p>
+            <p>
+              You can also download all of the files of the models by clicking
+              on the download button. Upon clicking download, a message will
+              appear.
+            </p>
+            <img
+              class="inline"
+              src="img/help/shareModelsDownloadButton.png"
+              alt="Image of table for shared models highlight download."
+            />
+            <img
+              class="inline"
+              src="img/help/tableConfirmation.jpg"
+              alt="Image of confirmation message"
+            />
+            <p>
+              If some of the models you have selected have simulation results,
+              the drop down menu under "Choose file type:" will allow you to
+              specify the file type.
+            </p>
+            <p>
+              A message will let you know if some of the models you want to
+              download simulation result files for do not have simulation
+              results.
+            </p>
+            <img
+              class="inline"
+              src="img/help/tableChooseType.jpg"
+              alt="Image of drop down menu to choose file type"
+            />
+            <img
+              class="inline"
+              src="img/help/tableSimResultsWarning.png"
+              alt="Image of warning"
+            />
+            <p>
+              Before downloading model files, you can see the size of the
+              download specified below the drop down menu.
+            </p>
+            <img
+              class="smaller"
+              src="img/help/tableSimResultsSize.png"
+              alt="Image of size"
+            />
+            <p>
+              To view models individually, click on the model's row, and a new
+              page will open viewing the individual model.
+            </p>
+            <img
+              class="inline"
+              src="img/help/tableHoverRow.jpg"
+              alt="Image of hovering above row"
+            />
+            <img
+              class="inline"
+              src="img/help/viewModelAfterOpeningPage.jpg"
+              alt="Image of page that appears"
+            />
+            <p>
+              For more information about viewing this page, go to
+              <a href="#Viewing_the_shared_model">viewing the shared model</a>.
+            </p>
+          </div>
+          <!-- end documentation-->
+        </div>
+        <!-- end column-->
+      </div>
+      <!-- end row-->
+    </div>
+    <!-- end container -->
+
+    <section id="contact-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-4 col-12">
+            <div style="text-align: left">
+              <div class="contact-info">
+                <ul class="contact-address">
+                  <li>
+                    <i class="fa fa-map-marker fa-lg"></i>&nbsp; Clark Center
+                    E1.3.<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 318
+                    Campus Drive,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Stanford, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    CA 94305-5428
+                  </li>
+                  <li><i class="fa fa-envelope"></i> simvascular@gmail.com</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="explore" style="text-align: left">
+              <h5>Explore</h5>
+              <div><a href="dataset.html">Dataset</a></div>
+              <div><a href="tutorial.html">Tutorial</a></div>
+              <div><a href="documentation.html">Documentation</a></div>
+              <div><a href="FAQs.html">FAQs</a></div>
+              <div><a href="contacts.html">Contact us</a></div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12" style="text-align: center">
+            <div class="social-media">
+              <div>Follow SimVascular on social media</div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-4">
+                    <div
+                      href="#"
+                      style="
+                        display: flex;
+                        justify-content: center;
+                        font-size: 20px;
+                      "
+                    >
+                      <a
+                        href="https://www.facebook.com/groups/835227759855853"
+                        target="_blank"
+                        class="social-logo"
+                        ><i class="fa fa-facebook fa-lg"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div
+                      href="#"
+                      style="
+                        display: flex;
+                        justify-content: center;
+                        font-size: 20px;
+                      "
+                    >
+                      <a
+                        href="https://twitter.com/simvascular"
+                        target="_blank"
+                        class="social-logo"
+                        ;
+                        ><i class="fa fa-twitter fa-lg"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div
+                      href="#"
+                      style="
+                        display: flex;
+                        justify-content: center;
+                        font-size: 20px;
+                      "
+                    >
+                      <a
+                        href="https://www.youtube.com/channel/UCT61XgTRqpfb39Hyio9IqGQ"
+                        target="_blank"
+                        class="social-logo"
+                        ><i class="fa fa-youtube fa-lg"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
+    <!-- <script src="js/jquery-2.1.1.js"></script> -->
+    <script src="js/jquery.mixitup.min.js"></script>
+    <script src="js/documentation.js"></script>
+  </body>
+</html>

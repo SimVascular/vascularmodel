@@ -23,16 +23,8 @@ $("#clearAllButton").click(function() {
 });
 
 function clearAllFilters(){
-  //checks if project or results button is checked
-  var proOrReStatus = document.getElementById("switch-input").checked;
   //deselects all checkboxes (including the projects or results button)
   $('input:checkbox').removeAttr('checked');
-  //checks status
-  if(proOrReStatus)
-  {
-    //reverts if checkbox was wrongfully unchecked
-    document.getElementById("switch-input").checked = true;
-  }
   
   //reset age filter
   document.getElementById("min-age").value = 0;
@@ -70,6 +62,8 @@ function deselectAll()
 {
   //if at least one model has been selected
   if(selectedModels.filter(value => value === true).length > 0){
+
+    clearDoConfirm();
 
     //sends a "confirm action" notification
     doConfirm("Are you sure you want to deselect all selected models?", function yes() {
@@ -140,92 +134,76 @@ function selectAllFilteredData()
 
 //downloading model in modalText
 $('.download-button-modal').click(function() {
-  downloadModel(viewingModel["Name"]);
+  clearDoConfirm();
+
+  var message = "Are you sure you want to download " + viewingModel["Name"] + "?";
+
+  //resets downloadtype as well
+  if(viewingModel["Results"] == "1")
+  {
+    dropDown(putDropDownHere, "all");
+  }
+  else
+  {
+    dropDown(putDropDownHere, "no results");
+  }
+
+  //updates size with individual model
+  var sizeWarning = document.getElementById("downloadSize");
+  sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel["Name"])[1];
+
+  doConfirm(message, function (){
+    downloadModel(viewingModel["Name"]);
+  });
 });
 
 //downloading all selected models
 $("#download-all").click(function () {
+  clearDoConfirm();
+  
   //counts number of selected models
-  var countModels = selectedModels.filter(value => value === true).length;
+  countModels = selectedModels.filter(value => value === true).length;
 
   //modelsWithResults is a boolean array of all the models with results and that are selected
-  var modelsWithResults = selectedModelsWithResults();
-  var countResults = modelsWithResults.filter(value => value === true).length;
-  
-  var message = "";
+  modelsWithResults = selectedModelsWithResults();
+  countResults = modelsWithResults.filter(value => value === true).length;
 
   //if nothing to download, download-all button has no function
   if (countModels > 0)
   {
-    //informs user what they are downloading depending on their mode
-    if(modeIsResults)
+    //dropDown defines downloadType
+    if(countResults == 0)
     {
-      if(countResults != 0)
-      {
-        //calculates how many models do not have results
-        var difference = countModels - countResults;
-
-        //grammar with plural
-        //informs user of simulation results that they cannot havwe
-        if(difference == 1)
-        {
-          message = "One model does not have simulation results to download.\\n";
-        }
-        else if(difference != 0)
-        {
-          message = difference + " models do not have simulation results to download.\\n";
-        }
-
-        //download confirmation
-        message += "Are you sure you want to download ";
-
-        //grammar with plural
-        if(countResults == 1)
-        {
-          message += "one simulation result?";
-        }
-        else if(countResults != 0)
-        {
-          message += countResults + " simulation results?";
-        }
-
-        //if the user clicks "yes," downloads all simulation results
-        doConfirm(message, function yes() {
-          downloadAllModels(modelsWithResults);
-        });
-      }
-      else
-      {
-        //lets the user know that they cannot download anything
-        message = "Your selected models do not have simulation results to download."
-
-        //specifies that the message is lower and has an Okay button
-        informUser(message, "lower", true);
-      }
+      dropDown(putDropDownHere, "no results");
     }
     else
     {
-      //confirmation to download when user is not viewing simulation results
-      message = "Are you sure you want to download ";
-      if(countModels == 1)
-      {
-        message += "one model?";
-      }
-      else
-      {
-        message += countModels + " models?";
-      }
-
-      //if the user clicks "yes," downloads all selected models
-      doConfirm(message, function yes() {
-        downloadAllModels(selectedModels);
-      });
+      dropDown(putDropDownHere, "all");
     }
+
+    var message = downloadConfirmation(countModels, "model", selectedModels);
+
+    //if the user clicks "yes," downloads all selected models
+    doConfirm(message, function yes() {
+      downloadAllModels();
+    });
   }
 });
 
 //deals with downloading multiple models
-async function downloadAllModels(boolModels){
+async function downloadAllModels(){
+  var boolModels = selectedModels;
+  if(downloadType != "zip")
+  {
+    for(var i = 0 ; i < boolModels.length; i++)
+    {
+      if(boolModels[i] && preservedOrderData[i]["Results"] != "1") 
+      {
+        boolModels[i] = false;
+      }
+    }
+  }
+  
   listOfNames = []
 
   for(var i = 0; i < boolModels.length; i++)
@@ -259,40 +237,10 @@ async function downloadAllModels(boolModels){
 
   //brings user to viewingSelectedModels
   viewingSelectedModels = true;
+  document.getElementById("view-selected").classList.add("applied");
 
   //changes counter header to ""
   updateCounters(lastFapplied, filteredData, "justdownloaded");
-}
-
-//downloads individual models
-function downloadModel(modelToDownloadName)
-  {
-    //checks what the user wants to download
-    if(modeIsResults)
-    {
-      //different path to folder
-      var fileUrl = 'results/' + modelToDownloadName + '.zip';
-    }
-    else
-    {
-      //different path to folder
-      var fileUrl = 'svprojects/' + modelToDownloadName + '.zip';
-    }
-
-    //creates anchor tag to download
-    var a = document.createElement("a");
-    a.href = fileUrl;
-    a.setAttribute("download", modelToDownloadName);
-    //simulates click
-    a.click();
-    
-    //sends message to server with user's download
-    gtag('event', 'download_' + modelToDownloadName, {
-      'send_to': 'G-YVVR1546XJ',
-      'event_category': 'Model download',
-      'event_label': 'test',
-      'value': '1'
-  });
 }
 
 $("#returnToGalleryButton").click(function () {
@@ -331,10 +279,18 @@ $('.shareableLink-button-modal').click(function() {
 //share-all button
 //makes a shareable link for all selected models
 $('#sharelink-all').click(function() {
-  //makes selectedModels, in true/false, to array in Y/N
-  var binary = boolToYN(selectedModels);
-  copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
-  informUser("Link copied");
+  if(selectedModels.filter(value => value === true).length > 0)
+  {
+    //makes selectedModels, in true/false, to array in Y/N
+    var binary = boolToYN(selectedModels);
+    copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
+    informUser("Link copied");
+  }
+  else
+  {
+    informUser("No models selected to share.");
+  }
+  
 });
 
 //brings user to view-selected page
@@ -420,6 +376,11 @@ function viewSelected(flipViewingSelectedModels, moveToTop = true) {
 
 //works with menu bar
 $("#menu-bar").click(function() {
+  toggleMenuBar();
+});
+
+function toggleMenuBar()
+{
   //allows user to click and unclick
   menuBarShowing = !menuBarShowing;
 
@@ -438,104 +399,88 @@ $("#menu-bar").click(function() {
     features.classList.remove("features-is-visible");
     menuBar.classList.remove("features-is-visible");
   }
-});
-
-//proOrRe: projects or results slider
-$('#proOrRe').click(function() {
-  var element = document.getElementById("switch-input");
-
-  //checks which mode is checked
-  if(element.checked)
-  {
-    //updates global variable modeIsResults 
-    modeIsResults = true;
-  }
-  else
-  {
-    modeIsResults = false;
-  }
-  
-  var selectIconStatus = selectAllIconApplied;
-  //resets filters
-  applyFilters();
-
-  if(selectIconStatus)
-  {
-    isSelectAllApplied(true);
-  }
-  
-});
+}
 
 // help button listener
 $("#help").click(function () {
-  viewVideo("https://www.youtube.com/embed/TCK3SmGwBa8");
+  window.open("tutorial.html");
 });
 
-//closes video
-$('#vidOverlay').click(function() {
-  closeVideo();
+$("#helpFilters").click(function () {
+  window.open("tutorial.html#Using_the_Filters");
 });
 
-//shows video with overlay
-function viewVideo(src)
-{
-  //embed video
-  if(!smallScreen)
-  {
-    //show overlay
-    document.getElementById("vidOverlay").style.display = "block";
-    isOverlayOn = true;
+$("#helpMenu").click(function () {
+  window.open("tutorial.html#Using_the_Menu_Bar");
+  menuBarShowing = true;
+  toggleMenuBar()
+});
+
+// //closes video
+// $('#vidOverlay').click(function() {
+//   closeVideo();
+// });
+
+// //shows video with overlay
+// function viewVideo(src)
+// {
+//   //embed video
+//   if(!smallScreen)
+//   {
+//     //show overlay
+//     document.getElementById("vidOverlay").style.display = "block";
+//     isOverlayOn = true;
   
-    var videoHolder = document.getElementById("holdsYTVideo");
-    videoHolder.setAttribute("style", "height:auto");
+//     var videoHolder = document.getElementById("holdsYTVideo");
+//     videoHolder.setAttribute("style", "height:auto");
 
-    var video = document.getElementById("video");
-    video.setAttribute("src", src);
+//     var video = document.getElementById("video");
+//     video.setAttribute("src", src);
   
-    //turns off scroll and sets height to auto
-    $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
-    $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+//     //turns off scroll and sets height to auto
+//     $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+//     $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
 
-    //sets listener for scroll
-    document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
-    document.body.style.position = '';
+//     //sets listener for scroll
+//     document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
+//     document.body.style.position = '';
 
-    //saves where the user was before overlay turned on
-    var prevBodyY = window.scrollY
-    document.body.style.top = `-${prevBodyY}px`
-  }
-  else
-  {
-    //opens video link in another window if smallScreen
-    window.open(src);
-  }
-}
+//     //saves where the user was before overlay turned on
+//     var prevBodyY = window.scrollY
+//     document.body.style.top = `-${prevBodyY}px`
+//   }
+//   else
+//   {
+//     //opens video link in another window if smallScreen
+//     window.open(src);
+//   }
+// }
 
-//closes video and overlay
-function closeVideo()
-{
-  //updates variables
-  document.getElementById("vidOverlay").style.display = "none";
-  isSafeSelected = false;
-  isOverlayOn = false;
+// //closes video and overlay
+// function closeVideo()
+// {
+//   //updates variables
+//   document.getElementById("vidOverlay").style.display = "none";
+//   isSafeSelected = false;
+//   isOverlayOn = false;
 
-  var videoHolder = document.getElementById("holdsYTVideo");
-  videoHolder.setAttribute("style", "height: 0px");
+//   var videoHolder = document.getElementById("holdsYTVideo");
+//   videoHolder.setAttribute("style", "height: 0px");
 
-  var video = document.getElementById("video");
-  video.removeAttribute("src");
+//   var video = document.getElementById("video");
+//   video.removeAttribute("src");
 
-  //resets html, body, modalDialog
-  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
-  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+//   //resets html, body, modalDialog
+//   $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+//   $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
 
-  //resets scrolling
-  const scrollY = document.body.style.top;
-  document.body.style.position = '';
-  document.body.style.top = '';
-  window.scrollTo(0, parseInt(scrollY || '0') * -1);
-  document.querySelector('.body').removeEventListener('scroll', preventScroll);
-}
+//   //resets scrolling
+//   const scrollY = document.body.style.top;
+//   document.body.style.position = '';
+//   document.body.style.top = '';
+//   window.scrollTo(0, parseInt(scrollY || '0') * -1);
+//   document.querySelector('.body').removeEventListener('scroll', preventScroll);
+// }
 
 //function to prevent user from scrolling
 function preventScroll(e){
@@ -547,25 +492,59 @@ function preventScroll(e){
 
 // listeners for ProjectMustContain and search bar
 $("#checkbox-Images").change(function () {
-    applyFilters();
+  applyFilters();
 });
-  
-  $("#checkbox-Paths").change(function () {
-    applyFilters();
+
+$("#checkbox-Paths").change(function () {
+  applyFilters();
 });
-  
-  $("#checkbox-Segmentations").change(function () {
-    applyFilters();
+
+$("#checkbox-Segmentations").change(function () {
+  applyFilters();
 });
-  
-  $("#checkbox-Models").change(function () {
-    applyFilters();
+
+$("#checkbox-Models").change(function () {
+  applyFilters();
 });
-  
-  $("#checkbox-Meshes").change(function () {
-    applyFilters();
+
+$("#checkbox-Meshes").change(function () {
+  applyFilters();
 });
+
+$("#checkbox-Simulations").change(function () {
+  applyFilters();
+});
+
+//proOrRe: projects or results slider
+$('#proOrRe').click(function() {
+  applyFilters();
+});
+
+//listener for change in drop down menu
+$("#putDropDownHere").click(function () {
+  downloadType = document.getElementById("chooseType").value;
+
+  //clear variables
+  warningHTML.innerHTML = "";
+  warningHTML.classList.remove("newParagraph");
   
-  $("#checkbox-Simulations").change(function () {
-    applyFilters();
+  //if viewing model
+  if(isOverlayOn)
+  {
+    updateSize(makeBooleanArray(preservedOrderData, viewingModel));
+  }
+  else
+  {
+    if(downloadType == "zip")
+    {
+      var msg = downloadConfirmation(countModels, "model", selectedModels);
+    }
+    else
+    {
+      var msg = downloadConfirmation(countResults, "simulation result", modelsWithResults);
+      difference(countModels, countResults, warningHTML)
+    }
+
+    updateMessage(msg);
+  }
 });

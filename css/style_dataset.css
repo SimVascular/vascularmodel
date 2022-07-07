@@ -111,10 +111,16 @@ Main Components
   float: center;
 }
 
-#help {
+#help, #helpFilters {
   float: right;
   margin-right: 15px;
   cursor: pointer;
+}
+
+#helpMenu {
+  font-size: 25px;
+  float: left;
+  transform: rotate(90deg);
 }
 
 #holdsYTVideo {
@@ -353,6 +359,10 @@ error msg block behavior
   margin-bottom: 15px;
 }
 
+.spaceBelow {
+  margin-bottom: 15px;
+}
+
 .sameLine {
   display: inline;
 }
@@ -497,9 +507,9 @@ error msg block behavior
 .menu-bar {
   position: fixed;
   /* position is different because of rotation */
-  top: calc(216px + 48px);
-  right: calc(-252.5px/2 + 32px);
-  width: 252.5px;
+  top: calc(216px + 33px);
+  right: calc(-222.5px/2 + 32px);
+  width: 222.5px;
   height: auto;
   z-index: 2;
   transform: rotate(-90deg);
@@ -528,7 +538,7 @@ error msg block behavior
 }
 
 .menu-bar.features-is-visible {
-  right: calc(-252.5px/2 + 32px + 214px);
+  right: calc(-222.5px/2 + 32px + 214px);
   -webkit-transition: right 0.3s;
   -moz-transition: right 0.3s;
   transition: right 0.3s;
@@ -539,7 +549,7 @@ error msg block behavior
   right: -300px;
   z-index: 1;
   position: fixed;
-  height: 252.5px;
+  height: 222.5px;
   width: 214px;
   background: white;
   border: 2px solid var(--darkgrey);
@@ -669,7 +679,7 @@ error msg block behavior
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
 
-#overlay, #vidOverlay{
+#overlay, #confirmOverlay, #vidOverlay{
   position: fixed;
   display: none;
   width: 100%;
@@ -683,9 +693,18 @@ error msg block behavior
   cursor: pointer;
 }
 
+#confirmOverlay {
+  z-index: 99998;
+  cursor: default;
+}
+
 #safeOfOverlayClick {
   padding: 20px 20px 20px 20px;
   cursor: default;
+}
+
+#chooseType {
+  padding: 5px;
 }
 
 /* styling for confirm box */
@@ -698,7 +717,7 @@ error msg block behavior
   border: 1px solid #aaa;
   position: fixed;
   width: 300px;
-  top: 300px;
+  top: 255px;
   left: 50%;
   margin-left: -150px;
   padding: 8px 10px 10px;
@@ -730,12 +749,12 @@ error msg block behavior
 
 #informUser
 {
-  /* display: none; */
+  display: none;
   background-color: var(--grey);
   border-radius: 5px;
   border: 2px solid var(--darkgrey);
   position: fixed;
-  /* top: 30px; */
+  top: 30px;
   padding: 8px 10px 10px;
   box-sizing: border-box;
   z-index: 99999;
@@ -767,4 +786,12 @@ error msg block behavior
   cursor: not-allowed;
   color: var(--applied);
   background-color: var(--select)
+}
+
+.hideElement{
+  opacity: 0;
+  height: 0px;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
 }

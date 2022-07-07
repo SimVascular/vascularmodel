@@ -75,15 +75,7 @@ function updateCounters(fApplied, fData, string)
   var counterPanel = document.getElementById("counterPanel");
 
   //totalLength is the total number of models possible in the current mode
-  var totalLength;
-  if(modeIsResults)
-  {
-    totalLength = hasResultsData.length;
-  }
-  else
-  {
-    totalLength = data.length;
-  }
+  var totalLength = data.length;
 
   //custom string for when someone just downloaded models
   if(string == "justdownloaded")
@@ -148,11 +140,6 @@ function updateCounters(fApplied, fData, string)
     viewSelectedIcon.classList.remove("applied");
   }
 } //end updateCounters
-
-function show3D(model)
-{
-  console.log("enters")
-}
 
 //code for modal-greeting
 function greetingText(data)
@@ -234,8 +221,8 @@ function greetingText(data)
   //adds details to window
   $('.details-text')[0].value = details
 
-  //deals with units for size
-  var size = parseInt(data['Size']) / 1000000
+  downloadType = "zip";
+  var size = getSizeIndiv(viewingModel["Name"]);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
@@ -285,14 +272,14 @@ function greetingText(data)
     //after notes, prints size
     var sizeText = document.createElement("div");
     sizeText.classList.add("newParagraph");
-    sizeText.textContent = '\n\nThe size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).';
+    sizeText.textContent = '\n\nThe size of this project is ' + sizeConverter(size);
 
     modalclosure.appendChild(sizeText);
   }
   else
   {
     //if no notes, only prints size
-    modalclosure.innerText = 'The size of this project is ' + size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB).'
+    modalclosure.innerText = 'The size of this project is ' + sizeConverter(size);
   }
 } //end greetingText()
 
@@ -452,10 +439,10 @@ function generateContent(modelData) {
   //creates ID for hook to open modalDialog
   detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
-  let threeD = document.createElement("i");
-  threeD.textContent = "3D"
-  threeD.classList.add("bottom-left");
-  threeD.setAttribute("id", modelData['Name'] + "_3D")
+  // let threeD = document.createElement("i");
+  // threeD.textContent = "3D"
+  // threeD.classList.add("bottom-left");
+  // threeD.setAttribute("id", modelData['Name'] + "_3D")
   
   //creates image of model
   let innerImg = document.createElement("img");
@@ -465,7 +452,7 @@ function generateContent(modelData) {
 
   divModelImage.appendChild(innerImg);
   divModelImage.appendChild(detailsImg);
-  divModelImage.appendChild(threeD);
+  // divModelImage.appendChild(threeD);
   div.appendChild(divModelImage);
 
   return div
@@ -473,12 +460,14 @@ function generateContent(modelData) {
 
 //function to add listeners to each model and its magnifying glass
 function addClickListener(model) {
+  modelName =  model['Name'];
   //magnifying glass --> modalgreeting and overlay
-  $('#' + model['Name']  + "_details").click(function() {greetingText(model); checkOverlay();});
+  $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
   // selects model if you click on it
-  $('#' + model['Name']).click(function() {updatedSelectedList(model);});
-  //show 3D version of model if you click on it
-  $("#" + model['Name'] + "_3D").click(function() {show3D(model);});
+  $('#' + modelName).click(function() {updatedSelectedList(model);});
+
+  // //show 3D version of model if you click on it
+  // $("#" + modelName + "_3D").click(function() {show3D(model);});
 }
 
 //removes models from gallery

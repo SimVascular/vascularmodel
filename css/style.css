@@ -20,6 +20,8 @@
   --applied: #07575b;
   --midpointSelectApplied: #64999D;
   --lighterselect: #e0dddd;
+  --darkSimRe: #666;
+  --lightSimRe: #9a9a9a;
 }
 
 body, html {
@@ -124,13 +126,6 @@ body, html {
 /* ============= end Hero image ============= */
 
 /* ============= About section ============= */
-
-/* allows the width to traverse the entire screen */
-@media only screen and (min-width: 1500px) {
-  .container {
-    max-width: 90%;
-  }
-}
 
 .about-section {
   padding-top: 50px;
@@ -331,24 +326,11 @@ ul.contact-address li i {
   text-decoration: none;
 }
 
-.social-media {
-
-}
-
 .social-media > div {
   padding-bottom: 10px;
 }
 
 /* ============= end Footer section ============= */
-
-/* ============= Documentation ============= */
-
-#documentation {
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
-/* ============= end Documentation ============= */
 
 /* ============= FAQs ============= */
 .license-faqs {
@@ -413,9 +395,9 @@ ul.contact-address li i {
   }
 
   .explore {
-    color: var(--black);
+    color: var(--white);
     padding-left: 30px;
-    border-left: 1px solid var(--dark1);
+    border-left: 0px;
     padding-top:20px;
     padding-bottom:20px;
   }

@@ -1,0 +1,202 @@
+#documentation {
+    /* padding-top: 50px; */
+    padding-bottom: 50px;
+}
+
+p {
+    text-align: justify;
+}
+
+.main-content {
+    position: relative;
+    min-height: 75vh;
+    height: auto;
+}
+
+body {
+    background-color: #e7e7e7;
+}
+
+.centerBox {
+    box-shadow: 0px 0px 2px var(--black);
+    background-color: white;
+    position: relative;
+    width: 95%;
+    height: 65%;
+    height: auto;
+    padding: 5%;
+    margin: 2%;
+}
+
+@media screen and (min-width: 800px) {
+    .centerBox {
+        padding: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .centerBox {
+        padding: 30px;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 1.75rem;
+    margin-top: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+h4 {
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.tab {
+    display: block;
+    margin-left: 40px;
+}
+
+.toTop {
+    float: right;
+    margin-left: 0px;
+    margin-right: 40px;
+}
+
+a {
+    color: var(--light1);
+}
+
+.tOC {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.tOC form {
+    padding: 15px;
+    position: fixed;
+    width: 20%;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    max-width: 1200px;
+    max-height: 750px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    display: block;
+}
+
+.inline {
+    display: inline;
+    width: 45%;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 15px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* MENU */
+.accordion {
+    background-color: var(--grey);
+    color: black;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    display: block;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .selected, .accordion:hover {
+    background-color: var(--lightgrey);
+  }
+
+  a.accordion:hover, #opening_filter:hover {
+    text-decoration: none;
+    color: var(--light1shade)
+  }
+  
+  a.accordion, #opening_filter {
+    display: block;
+  }
+
+  /* Style the accordion panel. Note: hidden by default */
+  .panel {
+    padding: 0 0 0 20px;
+    background-color: white;
+    display: none;
+    float: left;
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 1180px) {
+    .tOC form {
+        position: relative;
+        width: 100%;
+    }
+    .inline {
+        display: block;
+        width: 100%;
+    }
+}
+
+.smaller {
+    height: 500px; 
+    width: 500px;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.skiptoTop {
+    height: 64px;
+    width: 150px;
+    bottom: 0px;
+    margin: 1%;
+    background-color: white;
+    border: 2px solid var(--grey);
+    position: fixed;
+    z-index: 3;
+}
+
+.text {
+    margin: 0;
+    float: center;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+a.noDec:hover {
+    text-decoration: none;
+}
