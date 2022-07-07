@@ -43,21 +43,27 @@ body {
 h1 {
     font-size: 2rem;
     text-align: center;
-    /* word-wrap: break-word; */
+    margin-top: 15px;
+    margin-bottom: 5px;
 }
 
 h2 {
     font-size: 1.75rem;
     margin-top: 30px;
-    /* margin-bottom: 10px; */
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 h3 {
     font-size: 1.25rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 h4 {
     font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .tab {
@@ -136,7 +142,7 @@ img {
     background-color: var(--lightgrey);
   }
 
-  a.accordion:hover, #opening_filter:hover{
+  a.accordion:hover, #opening_filter:hover {
     text-decoration: none;
     color: var(--light1shade)
   }
@@ -166,5 +172,31 @@ img {
 }
 
 .smaller {
-    height: 300px; width: 300px
+    height: 500px; 
+    width: 500px;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.skiptoTop {
+    height: 64px;
+    width: 150px;
+    bottom: 0px;
+    margin: 1%;
+    background-color: white;
+    border: 2px solid var(--grey);
+    position: fixed;
+    z-index: 3;
+}
+
+.text {
+    margin: 0;
+    float: center;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+a.noDec:hover {
+    text-decoration: none;
 }
