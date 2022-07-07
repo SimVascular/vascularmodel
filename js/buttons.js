@@ -230,6 +230,10 @@ async function downloadAllModels(){
   populate([]);
   doneDownloading = true;
 
+  //menuBarShowing will be changed to false
+  menuBarShowing = true;
+  toggleMenuBar();
+
   //not really an error message
   //shows screen with Thank you for downloading!
   errorMessage(true, "justdownloaded");

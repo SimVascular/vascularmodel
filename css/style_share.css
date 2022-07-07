@@ -156,3 +156,8 @@ table {
   .iconRow {
     background-color: transparent !important;
   }
+
+  #helpIndiv, #helpTable {
+    margin-right: 15px;
+    cursor: pointer;
+  }

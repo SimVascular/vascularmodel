@@ -477,3 +477,12 @@ $("#putDropDownHere").click(function () {
       updateMessage(msg);
     }
   });
+
+//listeners for help buttons
+$("#helpIndiv").click(function () {
+    window.open("tutorial.html#Viewing_the_shared_model");
+});
+
+$("#helpTable").click(function () {
+    window.open("tutorial.html#Viewing_the_shared_models");
+});
