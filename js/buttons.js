@@ -406,7 +406,7 @@ function toggleMenuBar()
 
 // help button listener
 $("#help").click(function () {
-  window.open("tutorial.html");
+  window.open("gallerytutorial.html");
 });
 
 $("#helpFilters").click(function () {

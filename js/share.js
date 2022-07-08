@@ -480,9 +480,9 @@ $("#putDropDownHere").click(function () {
 
 //listeners for help buttons
 $("#helpIndiv").click(function () {
-    window.open("tutorial.html#Viewing_the_shared_model");
+    window.open("sharingtutorial.html#Viewing_the_shared_model");
 });
 
 $("#helpTable").click(function () {
-    window.open("tutorial.html#Viewing_the_shared_models");
+    window.open("sharingtutorial.html#Viewing_the_shared_models");
 });
