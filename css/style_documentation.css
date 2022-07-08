@@ -135,6 +135,7 @@ img {
     outline: none;
     transition: 0.4s;
     display: block;
+    font-size: 1rem;
   }
   
   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -168,6 +169,15 @@ img {
     .inline {
         display: block;
         width: 100%;
+    }
+    .accordion {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 1300px){
+    .accordion {
+        font-size: 1.25rem;
     }
 }
 
