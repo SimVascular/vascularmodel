@@ -224,9 +224,7 @@ function getDescription()
             }
             else if(categoryName[d] == "Size")
             {
-                //deals with units for size
-                var size = parseInt(model['Size']) / 1000000
-                details += size.toFixed(2) + ' MB (' + (size/1000).toFixed(2) + ' GB)';
+                details += getSizeIndiv(model["Name"])[1];
             }
             else
             {
