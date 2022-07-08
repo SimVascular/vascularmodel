@@ -410,11 +410,11 @@ $("#help").click(function () {
 });
 
 $("#helpFilters").click(function () {
-  window.open("tutorial.html#Using_the_Filters");
+  window.open("filtertutorial.html");
 });
 
 $("#helpMenu").click(function () {
-  window.open("tutorial.html#Using_the_Menu_Bar");
+  window.open("menututorial.html");
   menuBarShowing = true;
   toggleMenuBar()
 });

@@ -160,10 +160,10 @@ img {
     overflow: hidden;
   }
 
-  @media screen and (max-width: 1180px) {
+@media (max-width: 991px){
     .tOC form {
-        position: relative;
         width: 100%;
+        position: relative;
     }
     .inline {
         display: block;
@@ -186,7 +186,7 @@ img {
     background-color: white;
     border: 2px solid var(--grey);
     position: fixed;
-    z-index: 3;
+    z-index: 2;
 }
 
 .text {
@@ -199,4 +199,8 @@ img {
 
 a.noDec:hover {
     text-decoration: none;
+}
+
+.inline:nth-child(even) {
+    margin-right: 5%;
 }

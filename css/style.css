@@ -101,8 +101,8 @@ body, html {
 /* The hero image */
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-  background-image: linear-gradient(rgb(2 59 89 / 22%), rgba(2, 59, 89, 0.5)), url("../img/hero_img.jpg");
-
+  background-image: url("../img/hero_img.jpg");
+  box-shadow: inset 0 0 0 1000px rgb(2 59 89 / 22%);
   /* Set a specific height */
   height: 50%;
 
@@ -124,6 +124,37 @@ body, html {
 }
 
 /* ============= end Hero image ============= */
+
+/* ============= Tutorial section ============= */
+
+.mainCat {
+  font-size: 1.5rem;
+  color: var(--dark1);
+  background-color: var(--grey);
+}
+
+.subCat {
+  font-size: 1.35rem;
+  margin-left: 30px;
+  color: var(--dark2)
+}
+
+.subsubCat {
+  font-size: 1.1rem;
+  margin-left: 60px;
+  color: var(--dark3)
+}
+
+.mainCat, .subCat, .subsubCat {
+  display: block;
+  padding: 10px;
+}
+
+.mainCat:hover, .subCat:hover, .subsubCat:hover {
+  text-decoration: none;
+}
+
+/* ============= end Tutorial section ============= */
 
 /* ============= About section ============= */
 
