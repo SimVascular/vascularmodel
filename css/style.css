@@ -389,7 +389,7 @@ ul.contact-address li i {
 .contact-us {
   color: var(--black);
   width:100%;
-  height:700px;
+  height: auto;
   overflow-y: auto;
   resize: none;
   min-height: 75vh;
@@ -401,6 +401,10 @@ ul.contact-address li i {
 
 .contact-form {
   text-align: center;
+}
+
+.btn {
+  margin-bottom: 20px;
 }
 
 /* ============= end Contact us =============*/
