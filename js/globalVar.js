@@ -502,7 +502,7 @@ function doConfirm(msg, yesFn, noFn) {
   overlay.style.display = "block";
 
   //work with scroll
-  if(window.location.pathname == "/dataset.html")
+  if(window.location.pathname.includes("/dataset.html"))
   {
     //turns off scroll and sets height to auto
     if (smallScreen) {
@@ -533,7 +533,7 @@ function doConfirm(msg, yesFn, noFn) {
       confirmBox.hide();
       overlay.style.display = "none";
 
-      if(window.location.pathname == "/dataset.html")
+      if(window.location.includes("/dataset.html"))
       {
         $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
         $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
