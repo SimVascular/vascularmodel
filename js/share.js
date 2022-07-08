@@ -1,4 +1,4 @@
-//two global variables of share.js
+//global variables of share.js
 var models = []
 var simModels = []
 var boolArray = []
@@ -24,6 +24,7 @@ $(document).ready(function($){
     getVariable();
 });
 
+//reads after ? and sets up page accordingly
 function getVariable()
 {
     //reads what is after the ?
@@ -38,15 +39,18 @@ function getVariable()
     //searches for which are selected
     for(var i = 0; i < encodedNames.length; i++)
     {
+        //if Y, records model
         if(encodedNames[i] == "Y")
         {
             models.push(data[i]);
             boolArray.push(true);
             found = true;
+
+            //saves different arrays for later
             if(preservedOrderData[i]["Results"] == "1")
             {
-                boolArrayWResults.push(true);
                 simModels.push(data[i]);
+                boolArrayWResults.push(true);
             }
             else
             {
@@ -62,27 +66,27 @@ function getVariable()
 
     if(!found)
     {
-        //error message if no model
-        displayErrorMessage(1);
+        //error message if no models selected/url not found
+        displayRelevant(1);
     }
     else if (models.length == 1)
     {
-        singleModel = true;
         //display for one model
-        displayErrorMessage(2);
+        singleModel = true;
+        displayRelevant(2);
         model = models[0];
         displayModel(model);
     }
     else{
         multiModel = true;
         // multiple model display
-        displayErrorMessage(3);
+        displayRelevant(3);
         displayTableModels();
     }
 }
 
 //deals with which page to show
-function displayErrorMessage(num) {
+function displayRelevant(num) {
     var errorMsg = document.getElementById("errorBlock");
     errorMsg.textContent = "It looks like there are no models to exhibit!";
     
@@ -272,6 +276,7 @@ function displayTableModels()
     }
 }
 
+//creates table when multiple models are selected
 function createMultiModelTable()
 {
     var table = document.createElement("table");
@@ -365,7 +370,9 @@ function createIcons()
     goToGallery.appendChild(icon);
 }
 
+//listener to download all models when viewing table
 $("#download-all-models").click(function () {
+    //clears confirm message
     clearDoConfirm();
 
     //counts number of selected models
@@ -394,15 +401,19 @@ $("#download-all-models").click(function () {
     }
 });
 
+//deals with downloading all models
 async function downloadAll()
 {
     listOfNames = []
 
     for(var i = 0; i < array.length; i++)
     {
+        //only keeps what will be downloaded
         if(downloadType == "zip" || array[i]["Results"] == "1")
-        //takes in list of names of all the models to download
-        listOfNames.push(array[i]["Name"])
+        {
+            //takes in list of names of all the models to download
+            listOfNames.push(array[i]["Name"])
+        }
     }
 
     //sends to download all models
@@ -415,6 +426,7 @@ async function downloadAll()
 
 //icon to download model
 $("#downloadModel").click(function () {
+    //clear confirmation message
     clearDoConfirm();
 
     //resets downloadtype as well
@@ -457,13 +469,14 @@ $("#putDropDownHere").click(function () {
     warningHTML.innerHTML = "";
     warningHTML.classList.remove("newParagraph");
     
-    //if viewing model
     if(singleModel)
     {
-      updateSize(makeBooleanArray(preservedOrderData, model));
+        //if viewing one model, calculates size for one model
+        updateSize(makeBooleanArray(preservedOrderData, model));
     }
     else
     {
+      //different confirmation message depending on downloadType
       if(downloadType == "zip")
       {
         var msg = downloadConfirmation(countModels, "model", boolArray);
@@ -476,7 +489,7 @@ $("#putDropDownHere").click(function () {
   
       updateMessage(msg);
     }
-  });
+});
 
 //listeners for help buttons
 $("#helpIndiv").click(function () {

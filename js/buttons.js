@@ -193,6 +193,8 @@ $("#download-all").click(function () {
 //deals with downloading multiple models
 async function downloadAllModels(){
   var boolModels = selectedModels;
+
+  //if downloadType != zip, takes selectedModels and only works with those that have results
   if(downloadType != "zip")
   {
     for(var i = 0 ; i < boolModels.length; i++)
@@ -223,6 +225,7 @@ async function downloadAllModels(){
     await new Promise(r => setTimeout(r, 3));
   }
 
+  //selected models not cleared
 
   //resets page
   scrollToTop();
@@ -246,6 +249,7 @@ async function downloadAllModels(){
   updateCounters(lastFapplied, filteredData, "justdownloaded");
 }
 
+//listener for button that appears after someone downloaded models
 $("#returnToGalleryButton").click(function () {
     //update select all icon
     isSelectAllApplied(false);
@@ -282,18 +286,14 @@ $('.shareableLink-button-modal').click(function() {
 //share-all button
 //makes a shareable link for all selected models
 $('#sharelink-all').click(function() {
+  //only copies something if models are selected
   if(selectedModels.filter(value => value === true).length > 0)
   {
     //makes selectedModels, in true/false, to array in Y/N
     var binary = boolToYN(selectedModels);
     copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(binary)));
     informUser("Link copied");
-  }
-  else
-  {
-    informUser("No models selected to share.");
-  }
-  
+  }  
 });
 
 //brings user to view-selected page
@@ -301,6 +301,7 @@ $("#view-selected").click(function() {
   viewSelected(true);
 });
 
+//function to view selected models
 function viewSelected(flipViewingSelectedModels, moveToTop = true) {
   if (flipViewingSelectedModels)
   {
@@ -382,6 +383,7 @@ $("#menu-bar").click(function() {
   toggleMenuBar();
 });
 
+//turns menu bar on and off
 function toggleMenuBar()
 {
   //allows user to click and unclick
@@ -404,7 +406,7 @@ function toggleMenuBar()
   }
 }
 
-// help button listener
+// help button listeners
 $("#help").click(function () {
   window.open("gallerytutorial.html");
 });
@@ -418,72 +420,6 @@ $("#helpMenu").click(function () {
   menuBarShowing = true;
   toggleMenuBar()
 });
-
-// //closes video
-// $('#vidOverlay').click(function() {
-//   closeVideo();
-// });
-
-// //shows video with overlay
-// function viewVideo(src)
-// {
-//   //embed video
-//   if(!smallScreen)
-//   {
-//     //show overlay
-//     document.getElementById("vidOverlay").style.display = "block";
-//     isOverlayOn = true;
-  
-//     var videoHolder = document.getElementById("holdsYTVideo");
-//     videoHolder.setAttribute("style", "height:auto");
-
-//     var video = document.getElementById("video");
-//     video.setAttribute("src", src);
-  
-//     //turns off scroll and sets height to auto
-//     $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
-//     $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
-
-//     //sets listener for scroll
-//     document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
-//     document.body.style.position = '';
-
-//     //saves where the user was before overlay turned on
-//     var prevBodyY = window.scrollY
-//     document.body.style.top = `-${prevBodyY}px`
-//   }
-//   else
-//   {
-//     //opens video link in another window if smallScreen
-//     window.open(src);
-//   }
-// }
-
-// //closes video and overlay
-// function closeVideo()
-// {
-//   //updates variables
-//   document.getElementById("vidOverlay").style.display = "none";
-//   isSafeSelected = false;
-//   isOverlayOn = false;
-
-//   var videoHolder = document.getElementById("holdsYTVideo");
-//   videoHolder.setAttribute("style", "height: 0px");
-
-//   var video = document.getElementById("video");
-//   video.removeAttribute("src");
-
-//   //resets html, body, modalDialog
-//   $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
-//   $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
-
-//   //resets scrolling
-//   const scrollY = document.body.style.top;
-//   document.body.style.position = '';
-//   document.body.style.top = '';
-//   window.scrollTo(0, parseInt(scrollY || '0') * -1);
-//   document.querySelector('.body').removeEventListener('scroll', preventScroll);
-// }
 
 //function to prevent user from scrolling
 function preventScroll(e){
@@ -531,13 +467,15 @@ $("#putDropDownHere").click(function () {
   warningHTML.innerHTML = "";
   warningHTML.classList.remove("newParagraph");
   
-  //if viewing model
+  //if viewing model (and therefore the modal greeting's overlay is on)
   if(isOverlayOn)
   {
+    //updates size with one model
     updateSize(makeBooleanArray(preservedOrderData, viewingModel));
   }
   else
   {
+    //asks to confirm download differently depending on type selected
     if(downloadType == "zip")
     {
       var msg = downloadConfirmation(countModels, "model", selectedModels);
@@ -545,9 +483,11 @@ $("#putDropDownHere").click(function () {
     else
     {
       var msg = downloadConfirmation(countResults, "simulation result", modelsWithResults);
+      //difference tells the user how many models have simulation results to download
       difference(countModels, countResults, warningHTML)
     }
 
+    //updates message with download confirmation
     updateMessage(msg);
   }
 });

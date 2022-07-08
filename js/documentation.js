@@ -20,6 +20,7 @@ function offsetAnchor() {
   var acc = document.getElementsByClassName("tOCDropDown");
   var i;
   
+  //opens the panels corresponding to the drop down menu that was clicked
   for (i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function() {
       /* Toggle between adding and removing the "active" class,

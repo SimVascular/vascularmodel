@@ -612,6 +612,7 @@ function checkFileExist(url) {
   }
 }
 
+//creates url to download models depending on download type and model name
 function craftURL(modelName)
 {
   if(downloadType == "zip")
@@ -672,6 +673,7 @@ function getSumOfSizes(boolArray)
   return count;
 }
 
+//gets size of individual models given their name
 function getSizeIndiv(modelName)
 {
   var key = modelName + "." + downloadType;
@@ -710,18 +712,22 @@ function getFileSize(url, key)
   http.send();
 }
 
+//updates where the size is defined in the confirmbox
 function updateSize(boolArray)
 {
   var sizeWarning = document.getElementById("downloadSize");
   sizeWarning.textContent = "Size: " + getSumOfSizes(boolArray);
 }
 
+//updates confirmation message
 function updateMessage(msg)
 {
   var confirmBox = $("#confirmBox");
   confirmBox.find(".message").text(msg);
 }
 
+//creates the download confirmation message given the number of models
+//also updates the size given which models are selected
 function downloadConfirmation(count, type, boolArray)
 {
   updateSize(boolArray)
@@ -742,6 +748,7 @@ function downloadConfirmation(count, type, boolArray)
   return message; 
 }
 
+//calculates warning to tell user which models dont have simulation results
 function difference(countModels, countResults, warningHTML)
 {
   //calculates how many models do not have results
@@ -762,6 +769,7 @@ function difference(countModels, countResults, warningHTML)
   warningHTML.textContent = warning;
 }
 
+//creates drop down menu for file types
 function dropDown(putDropDownHere, string)
 {
   //labels the drop down menu
@@ -820,13 +828,12 @@ function dropDown(putDropDownHere, string)
 
   putDropDownHere.appendChild(select);
 }
-var count = 0;
+
 //downloads individual models
 function downloadModel(modelName)
   {
     //creates link of what the user wants to download
-    var fileUrl = craftURL(modelName)
-    console.log(fileUrl);
+    var fileUrl = craftURL(modelName);
 
     //creates anchor tag to download
     var a = document.createElement("a");
