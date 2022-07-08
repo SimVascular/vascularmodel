@@ -159,5 +159,6 @@ table {
 
   #helpIndiv, #helpTable {
     margin-right: 15px;
+    margin-bottom: 10px;
     cursor: pointer;
   }

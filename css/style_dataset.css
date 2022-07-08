@@ -504,10 +504,10 @@ error msg block behavior
 
 /* FORMAT FOR FEATURES BOX */
 
+/* position is different because of rotation */
 .menu-bar {
   position: fixed;
-  /* position is different because of rotation */
-  top: calc(216px + 33px);
+  top: 249px;
   right: calc(-222.5px/2 + 32px);
   width: 222.5px;
   height: auto;
@@ -545,8 +545,11 @@ error msg block behavior
 }
 
 .features {
-  top: calc(115px + 48px);
+  top: 163px;
+
+  /* hides until showing */
   right: -300px;
+  
   z-index: 1;
   position: fixed;
   height: 222.5px;
