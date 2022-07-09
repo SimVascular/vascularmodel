@@ -25,7 +25,7 @@ xtab-filter
     text-align: center;
     line-height: 50px;
     background-color: #ffffff;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid var(--grey);
   }
   .cd-tab-filter::after {
     /* small arrow icon */
@@ -165,10 +165,29 @@ xtab-filter
 xfilter
 
 -------------------------------- */
+.insideFilterBar {
+  top: 0px;
+}
+
+.outsideFilterBar {
+  top: 59.5px;
+  
+}
+
+.outsideFilterBar:hover {
+  text-decoration: none;
+  color: #3d8a99;
+}
+
+.outsideFilterBar.filter-is-visible{
+  /* top: 59.5px; */
+  margin-left: -150px;
+}
+
 .cd-filter {
     top: 59.5px;
     left: 0;
-    width: 280px;
+    width: 100%;
     height: 100%;
     background: #ffffff;
     box-shadow: 4px 4px 20px transparent;
@@ -192,6 +211,23 @@ xfilter
     font-size: 17px;
     position: fixed;
   }
+
+  @media only screen and (min-width: 1400px) {
+    .cd-filter {
+      width: 20% !important;
+    }
+    .cd-filter form {
+      padding: 70px 10%;
+      resize: horizontal;
+    }
+  }
+
+  @media only screen and (min-width: 576px) {
+    .cd-filter {
+      width: 280px;
+    }
+  }
+
   .cd-filter::before {
     /* top colored bar */
     content: '';
@@ -254,20 +290,9 @@ xfilter
   .cd-filter.filter-is-visible .cd-close {
     opacity: 1;
   }
-  @media only screen and (min-width: 1170px) {
-    .cd-filter {
-      width: 20%;
-    }
-    .cd-filter form {
-      padding: 70px 10%;
-      resize: horizontal;
-    }
-  }
   
   .cd-filter-trigger {
     position: fixed;
-    top: 59.5px;
-    left: 0;
     height: 50px;
     line-height: 50px;
     width: 60px;
@@ -282,12 +307,11 @@ xfilter
   .cd-filter-trigger.filter-is-visible {
     pointer-events: none;
     position: fixed;
-    top: 59.5px;
   }
   @media only screen and (min-width: 1170px) {
     .cd-filter-trigger {
       width: auto;
-      left: 2%;
+      left: 30px;
       text-indent: 0;
       color: #9a9a9a;
       text-transform: uppercase;
@@ -298,10 +322,12 @@ xfilter
       -webkit-transition: color 0.3s;
       -moz-transition: color 0.3s;
       transition: color 0.3s;
+      
     }
-    .no-touch .cd-filter-trigger:hover {
+    /* .no-touch .cd-filter-trigger:hover {
       color: var(--dark2);
-    }
+      text-decoration: none;
+    } */
     .cd-filter-trigger.filter-is-visible, .cd-filter-trigger.filter-is-visible:hover {
       color: #ffffff;
     }
@@ -556,4 +582,147 @@ xcustom form elements
     .cd-filter-block .cd-select::after {
       display: none;
     }
+  }
+
+  /* CODE FOR TOGGLE SWTICH */
+
+  .switch {
+    position: relative;
+    display: block;
+    vertical-align: top;
+    width: 170px;
+    height: 30px;
+    background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+    box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    box-sizing: content-box;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .switch-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    box-sizing:content-box;
+  }
+
+  .switch-label {
+    position: relative;
+    display: block;
+    height: inherit;
+    font-size: 10px;
+    text-transform: uppercase;
+    background: var(--lightSimRe);
+    border-radius: inherit;
+    /* box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15); */
+    box-sizing:content-box;
+  }
+  .switch-label:before, .switch-label:after {
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    margin-top: -.5em;
+    line-height: 1;
+    -webkit-transition: inherit;
+    -moz-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+    box-sizing:content-box;
+  }
+  .switch-label:before {
+    content: attr(data-off);
+    right: 11px;
+    color: var(--lightSimRe);
+    text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+  }
+  .switch-label:after {
+    content: attr(data-on);
+    left: 11px;
+    color: #FFFFFF;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+  }
+  .switch-input:checked ~ .switch-label {
+    background: #E1B42B;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+  .switch-input:checked ~ .switch-label:before {
+    opacity: 0;
+  }
+  .switch-input:checked ~ .switch-label:after {
+    opacity: 1;
+  }
+  .switch-handle {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+    background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+    border-radius: 100%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  }
+  .switch-handle:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -6px 0 0 -6px;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+    border-radius: 6px;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+  }
+  .switch-input:checked ~ .switch-handle {
+    left: 74px;
+    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+  }
+   
+  /* Transition
+  ========================== */
+  .switch-label, .switch-handle {
+    transition: All 0.3s ease;
+    -webkit-transition: All 0.3s ease;
+    -moz-transition: All 0.3s ease;
+    -o-transition: All 0.3s ease;
+  }
+
+  .switch-flat {
+    padding: 0;
+    background: #FFF;
+    background-image: none;
+  }
+  .switch-flat .switch-label {
+    background: #FFF;
+    box-shadow: none;
+    border: 1px solid var(--lightSimRe);
+  }
+  .switch-flat .switch-label:after {
+    color: var(--darkSimRe);
+  }
+  .switch-flat .switch-handle {
+    top: 6px;
+    left: 6px;
+    background: var(--lightSimRe);
+    width: 22px;
+    height: 22px;
+    box-shadow: none;
+  }
+  .switch-flat .switch-handle:before {
+    background: white;
+  }
+  .switch-flat .switch-input:checked ~ .switch-label {
+    background: #FFF;
+    border-color: var(--darkSimRe);
+  }
+  .switch-flat .switch-input:checked ~ .switch-handle {
+    left: 140px;
+    background: var(--darkSimRe);
+    box-shadow: none;
   }

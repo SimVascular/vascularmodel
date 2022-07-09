@@ -23,6 +23,7 @@ body {
   font-family: "Open Sans", sans-serif; */
   color: #331d35;
   background-color: #e7e7e7;
+  overflow-x: hidden;
 }
 
 a {
@@ -76,11 +77,11 @@ Main Components
 }
 .cd-main-content.is-fixed .cd-filter {
   position: fixed;
-  height: 100vh;
+  height: 75vh;
   overflow: hidden;
 }
 .cd-main-content.is-fixed .cd-filter form {
-  height: 100vh;
+  height: 75vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -110,7 +111,34 @@ Main Components
   float: center;
 }
 
-/* --------------------------------
+#help, #helpFilters {
+  float: right;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+#helpMenu {
+  font-size: 25px;
+  float: left;
+  transform: rotate(90deg);
+}
+
+#holdsYTVideo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30%;
+}
+
+#video {
+  border: 2px solid var(--grey);
+}
+
+@media only screen and (min-width: 1170px) {
+  #holdsYTVideo {
+    margin-top: 351px;
+  }
+}
 
 xgallery
 
@@ -197,6 +225,7 @@ gallery
   background-position: center;
   aspect-ratio: 1432 / 859;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
 }
 
 .model-image img {
@@ -242,8 +271,25 @@ gallery
   padding: 5px;
 }
 
-.top-left:hover {
+.top-left:hover, bottom-left:hover{
   color: var(--midpointSelectApplied);
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  object-fit: cover;
+  font-size: 150%;
+  padding: 5px;
+}
+
+.top-right {
+  position: absolute;
+  top: 0px;
+  right: 34px;
+  width: 0px;
+  padding: 0px;
 }
 
 .animate {
@@ -295,12 +341,13 @@ error msg block behavior
   bottom: 0;
   left: 0;
   /* background: rgba(0, 0, 0, 0.8); */
-  z-index: 99999;
+  z-index: 99998;
   opacity:0;
   -webkit-transition: opacity 0ms ease-in;
   -moz-transition: opacity 0ms ease-in;
   transition: opacity 0ms ease-in;
   pointer-events: none;
+  overflow: auto;
 }
 
 #modal-greeting {
@@ -309,6 +356,15 @@ error msg block behavior
 
 .newParagraph {
   margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.spaceBelow {
+  margin-bottom: 15px;
+}
+
+.sameLine {
+  display: inline;
 }
 
 .modalDialog:target {
@@ -319,6 +375,7 @@ error msg block behavior
   width: 300px;
   position: relative;
   margin-top: 125px;
+  margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
   /* padding: 20px 20px 13px 20px; */
@@ -366,6 +423,7 @@ error msg block behavior
   -webkit-box-shadow: 1px 1px 3px #000;
   box-shadow: 1px 1px 3px #000;
 }
+
 .close:hover {
   background: #00d9ff;
 }
@@ -374,7 +432,8 @@ error msg block behavior
   background-color: var(--dark2);
   border: none;
   color: white !important;
-  padding: 10px 10px;
+  padding-left: 3px;
+  padding-right: 3px;
   text-align: center;
   text-decoration: none !important;
   display: inline-block;
@@ -393,21 +452,42 @@ error msg block behavior
   background-color: var(--dark2shade);
 }
 
-.download-button-modal {
-  background-color: var(--light1);
+.fa-xmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.button-modal {
   border: none;
   color: white !important;
-  padding: 10px 10px;
+  padding: 6px 10px;
   text-align: center;
   text-decoration: none !important;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 5px !important;
   border-collapse: separate;
   font-weight: 400;
-  cursor: pointer;
-  margin-top: 10px;
+  margin-top:10px;
   margin-bottom:10px;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.shareableLink-button-modal {
+  background-color: var(--dark2);
+}
+
+.shareableLink-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--dark2shade);
+}
+
+.download-button-modal {
+  background-color: var(--light1);
 }
 
 .download-button-modal:hover {
@@ -424,15 +504,70 @@ error msg block behavior
 
 /* FORMAT FOR FEATURES BOX */
 
+/* position is different because of rotation */
+.menu-bar {
+  position: fixed;
+  top: 249px;
+  right: calc(-222.5px/2 + 32px);
+  width: 222.5px;
+  height: auto;
+  z-index: 2;
+  transform: rotate(-90deg);
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--applied);
+  background-color: var(--select);
+  border: 2px solid var(--darkgrey);
+  padding-right: 5px;
+
+  border-top-left-radius: 30%;
+  border-top-right-radius: 30%;
+
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+
+  cursor: pointer;
+}
+
+.menu-bar div {
+  float: right;
+  padding: 5px;
+  font-size: 25px;
+}
+
+.menu-bar.features-is-visible {
+  right: calc(-222.5px/2 + 32px + 214px);
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
 .features {
-  top: 130px;
-  right: 15px;
-  width: 135px;
-  height: 300px;
-  box-shadow: 4px 4px 20px transparent;
+  top: 163px;
+
+  /* hides until showing */
+  right: -300px;
+  
   z-index: 1;
   position: fixed;
-  /* background-color:rgba(0, 0, 0, 0.1); */
+  height: 222.5px;
+  width: 214px;
+  background: white;
+  border: 2px solid var(--darkgrey);
+  box-shadow:rgba(0, 0, 0, 0.1);
+
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
+.features.features-is-visible {
+  right: 3px;
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  transition: right 0.3s;
 }
 
 .features form {
@@ -462,7 +597,7 @@ error msg block behavior
   /* border: 2px solid black; */
 }
 
-@media only screen and (min-width: 400px) {
+@media only screen and (min-width: 767px) {
   .spanForIcons:hover {
     color: var(--select);
     background-color: var(--applied);
@@ -486,10 +621,10 @@ error msg block behavior
   margin-top: 2px;
   color: white;
   z-index: 2;
-  text-shadow: 2px 2px 5px black;
+  text-shadow: 2px 2px 5px var(--black);
 }
 
-@-webkit-keyframes animateBucket {  
+@-webkit-keyframes animateMenu {  
   0% { 
     background-color: var(--select);
     color: var(--applied);
@@ -504,9 +639,8 @@ error msg block behavior
   }
 }
 
-.spanForIcons.selected {
-  /* color: var(--select); */
-  -webkit-animation-name: animateBucket;
+.menu-bar.selected {
+  -webkit-animation-name: animateMenu;
   -webkit-animation-iteration-count: 1;  
   -webkit-animation-duration: 0.75s; 
 } 
@@ -520,12 +654,23 @@ error msg block behavior
   border: 2px solid var(--grey);
   float: right;
   padding: 10px;
-  margin-left: 10px;
   cursor: pointer;
 }
 
-.closeAllButton:hover .returnToGalleryButton:hover{
+.closeAllButton:hover, .clearAllButton:hover, .returnToGalleryButton:hover{
   background-color: #ebebeb;
+}
+
+.filterButtons {
+  margin-bottom: 20px;
+  height: 60px;
+}
+
+.clearAllButton {
+  border: 2px solid var(--grey);
+  float: left;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .returnToGalleryButton {
@@ -537,7 +682,7 @@ error msg block behavior
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
 
-#overlay {
+#overlay, #confirmOverlay, #vidOverlay{
   position: fixed;
   display: none;
   width: 100%;
@@ -547,13 +692,22 @@ error msg block behavior
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.5);
-  z-index: 99998;
+  z-index: 99997;
   cursor: pointer;
+}
+
+#confirmOverlay {
+  z-index: 99998;
+  cursor: default;
 }
 
 #safeOfOverlayClick {
   padding: 20px 20px 20px 20px;
   cursor: default;
+}
+
+#chooseType {
+  padding: 5px;
 }
 
 /* styling for confirm box */
@@ -566,13 +720,13 @@ error msg block behavior
   border: 1px solid #aaa;
   position: fixed;
   width: 300px;
-  top: 300px;
+  top: 255px;
   left: 50%;
   margin-left: -150px;
-  padding: 8px 10px 10px;
+  padding: 10px 15px 15px;
   box-sizing: border-box;
   text-align: center;
-  z-index: 2;
+  z-index: 99999;
 }
 #confirmBox .button {
   background-color: #ccc;
@@ -593,10 +747,57 @@ error msg block behavior
   text-align: center;
   margin-bottom: 8px;
 }
+#downloadSize {
+  margin-top: 0;
+}
+
+/* styling for inform user box */
+
+#informUser
+{
+  display: none;
+  background-color: var(--grey);
+  border-radius: 5px;
+  border: 2px solid var(--darkgrey);
+  position: fixed;
+  top: 30px;
+  padding: 8px 10px 10px;
+  box-sizing: border-box;
+  z-index: 99999;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+}
+
+#informUser .button {
+  background-color: #ccc;
+  display: inline-block;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+  padding: 2px;
+  text-align: center;
+  width: 80px;
+  cursor: pointer;
+  margin-top: 15px;
+  float: right;
+}
+
+#informUser .message
+{
+  text-align: center;
+}
 
 .cannotSelect
 {
   cursor: not-allowed;
   color: var(--applied);
   background-color: var(--select)
+}
+
+.hideElement{
+  opacity: 0;
+  height: 0px;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
 }

@@ -1,0 +1,164 @@
+.share-main {
+    position: relative;
+    min-height: 75vh;
+    height: auto;
+}
+
+.centerBox {
+    box-shadow: 0px 0px 2px var(--black);
+    background-color: white;
+    position: relative;
+    width: 95%;
+    height: 65%;
+    height: auto;
+    padding: 20px;
+    margin: 2%;
+}
+
+.imgContainer {
+    height: 50%;
+    width: 50%;
+    object-fit: contain;
+    margin: 15px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+
+table {
+    font-family: "Poppins", sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 576px) {
+    table {
+      font-size: 4vw;
+    }
+
+    .buttonDownload {
+      font-size: 4vw;
+      padding: 2vw !important;
+      margin-bottom: 2vw !important;
+    }
+  }
+  
+  td, th {
+    border: 2px solid var(--darkgrey);
+    text-align: left;
+    padding: 8px;
+  }
+
+  .tdClear {
+    border: 0px;
+    padding: 0px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: var(--grey);
+  }
+  
+  .buttonDownload {
+    border: 2px solid var(--grey);
+    padding: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    display: block;
+  }
+
+  .buttonDownload:hover{
+    background-color: var(--darkgrey);
+  }
+
+  .noStyle {
+    color: var(--black);
+  }
+
+  .noStyle:hover {
+    color: var(--black);
+    text-decoration: none;
+  }
+  
+  .features {
+    position: absolute;
+    top: calc(5vw + 50px);
+    right: 5px;
+    width: auto;
+    height: auto;
+    border: none;
+    background: transparent;
+  }
+
+  h1 {
+    font-size: 5vw;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .titleForTableModels {
+    padding-bottom: 2%;
+  }
+
+  @media screen and (min-width: 1500px) {
+    h1 {
+        font-size: 75px;
+      }
+  }
+
+  .spanForIcons {
+    border-radius: 0%;
+    background-color: var(--grey);
+    color: var(--darkdarkgrey);
+    border: 2px solid var(--darkgrey);
+  }
+
+  .spanForIcons:hover {
+    border-radius: 0%;
+    background-color: var(--darkdarkgrey) ;
+    color: var(--grey);
+    border: 2px solid var(--darkgrey);
+  }
+
+  .featuresIcons {
+    padding: 0px;
+    float: none;
+  }
+
+  .centerIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hide {
+    opacity: 0;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+    width: 0px;
+    border: none;
+  }
+
+  .show {
+    opacity: 1;
+  }
+
+  .modelRow:hover {
+    background-color: var(--darkgrey);
+    cursor: pointer;
+  }
+
+  .iconRow {
+    background-color: transparent !important;
+  }
+
+  #helpIndiv, #helpTable {
+    margin-right: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }

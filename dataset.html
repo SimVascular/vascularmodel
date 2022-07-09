@@ -7,18 +7,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="preconnect" href="http://fonts.googleapis.com">
-  <link rel="preconnect" href="http://fonts.gstatic.com" crossorigin>
-  <link href="http://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="http://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=1.0.0">
-  <link rel="stylesheet" href="css/style_dataset.css?v=1.0.0">
-  <link rel="stylesheet" href="css/style_filter.css">
+  <link rel="stylesheet" href="css/style.css?v=1.0.1">
+  <link rel="stylesheet" href="css/style_dataset.css?v=1.0.1">
+  <link rel="stylesheet" href="css/style_filter.css?v=1.0.1">
 
   <title>Vascular Model Repository</title>
 
@@ -51,8 +51,11 @@
                 Repository
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item custom-active" href="dataset.html">Dataset</a>
-                <a class="dropdown-item" href="documentation.html">Documentation</a>
+                <a class="dropdown-item" href="dataset.html">Dataset</a>
+                <a class="dropdown-item" href="tutorial.html">Tutorial</a>
+                <a class="dropdown-item" href="documentation.html"
+                  >Documentation</a
+                >
                 <a class="dropdown-item" href="FAQs.html">FAQs</a>
               </div>
             </li>
@@ -66,33 +69,25 @@
 
     <main class="cd-main-content">
       <div class="cd-tab-filter-wrapper">
-        <div class="cd-tab-filter">
+        <div class="cd-tab-filter" style = "height: auto;">
           <div>
             <span id="counterPanel"></span>
-            <!-- <span id="model-counter"></span>
-            <span id="selected-counter-display"></span> -->
+            <span id="help"><span id ="putHelpWordHere"></span><i class="fa-regular fa-circle-question"></i></span>
           </div>
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
-
-      <div id="confirmBox">
-        <div class="message"></div>
-        <span class="button yes">Yes</span>
-        <span class="button no">No</span>
-      </div>
-
-      <!-- As a trick, we load the loading_image first but keep it 0px to not display it -->
-      <!-- <img src="img/loading_image.jpg" style="width:0px; height:0px"> -->
 
       <section class="gallery">
         <div id = "errorBlock" class="error-msg-block">
           <span id="error-msg"></span>
           <div>
+            <!-- return to gallery after downloading -->
             <button style = "opacity: 0;" id = "returnToGalleryButton" class = "returnToGalleryButton">Return to Gallery</button>
           </div>
         </div>
         <div class="container-fluid">
           <div class="row" id="model-gallery">
+            <!-- models generated here -->
           </div>
         </div>
       </section> <!-- cd-gallery -->
@@ -100,16 +95,31 @@
       <section class="cd-filter">
         <form>
           <!-- <div style="text-align: center;"><a role="button" class="btn btn-primary" id="apply-btn">Apply Filters</a></div> -->
-
-          <button class = "closeAllButton" id="closeAllButton" type="button">Collapse All</button><br><br>
-
+          <!-- buttons to help with filtering -->
+          <div class="filterButtons">
+            <button class = "closeAllButton" id="closeAllButton" type="button">Collapse All</button>
+            <button class = "clearAllButton" id="clearAllButton" type="button">Clear All</button>
+          </div>
+          
           <div class="cd-filter-block">
             <h4 title = "Search Bar">Search</h4>
-
             <div class="cd-filter-content">
               <input type="search" placeholder="Search" id="search-field">
             </div> <!-- cd-filter-content -->
           </div> <!-- cd-filter-block -->
+          
+          <div class="cd-filter-block">
+            <h4>Simulation results</h4>
+            <div class="cd-filter-content" style = "display: block;">
+              <div>
+                <label class="switch switch-flat" id = "proOrRe">
+                  <input id = "switch-input" class="switch-input" type="checkbox" />
+                  <span class="switch-label" data-on="Must Have" data-off="Optional"></span> 
+                  <span class="switch-handle"></span> 
+                </label>
+              </div>
+            </div>
+          </div>
            
           <div class="cd-filter-block">
               <h4>Age</h4>
@@ -137,7 +147,7 @@
                   <!-- generated in js -->
                 </select>
               </div>
-            </div>
+            </div> <!-- cd-filter-block -->
 
             <div class="cd-filter-block">
               <h4>Species</h4>
@@ -146,7 +156,7 @@
                   <!-- generated in js -->
                 </select>
               </div>
-            </div>
+            </div> <!-- cd-filter-block -->
 
             <div class="cd-filter-block">
               <h4 class="closed">Anatomy</h4>
@@ -160,14 +170,14 @@
               <ul id = "DiseaseUl" class="cd-filter-content cd-filters list" style="display: none;">
                 <!-- generated in js -->
               </ul>
-            </div>
+            </div> <!-- cd-filter-block -->
             
             <div class="cd-filter-block">
               <h4 class="closed">Procedure</h4>
               <ul id = "ProcedureUl" class="cd-filter-content cd-filters list" style="display: none;">
                 <!-- generated in js -->
               </ul>
-            </div>
+            </div> <!-- cd-filter-block -->
 
             <div class="cd-filter-block">
               <h4 class="closed">Project Must Contain</h4>
@@ -197,38 +207,84 @@
                   <label class="checkbox-label" for="checkbox-Simulations">Simulations</label>
                 </li>
               </ul>
+            </div> <!-- cd-filter-block --> 
+            
+            <div class="cd-filter-block">
+              <span id="helpFilters">Help  <i class="fa-regular fa-circle-question"></i></span>
             </div>
-          
-          <!-- <div id = "filterCheckboxes"></div> -->
-          
       </form>
-
-      <a href="#0" class="cd-close">Close</a>
+      <!-- button to Close and Filters header -->
+        <a href="#0" class="cd-filter-trigger insideFilterBar">Filters</a>
+        <a href="#0" class="cd-close">Close</a>
       </section> <!-- cd-filter -->
+      <!-- Filters header for when filter bar not open -->
+      <a href="#0" class="cd-filter-trigger outsideFilterBar">Filters</a>
 
-      <a href="#0" class="cd-filter-trigger">Filters</a>
+      <!-- section for menu -->
+      <section class="menu-bar" id = "menu-bar">
+        <div>Menu</div>
+        <div id="helpMenu"><i class="fa-regular fa-circle-question"></i></div>
+      </section>
 
-      <section class="features">
+      <section class="features" id = "features">
         <form>
-          <div title = "Select All" class = "spanForIcons">
-            <i id = "select-all" class="fa-regular fa-square-check featuresIcons"></i>
-          </div>
-          <div title="View Selected" id = "view-selected" class = "spanForIcons">
-            <span class="fa-stack fa-lg">
-              <i id = "selected-counter" class="fa fa-stack-1x"></i>
-              <i class="fa fa-solid fa-box-archive fa-stack-2x featuresIcons"></i>
-            </span>
-          </div>
-          <div title="Download Selected" class = "spanForIcons">
-            <i id = "download-all" class="fa-solid fa-download featuresIcons"></i>
-          </div>
+          <table>
+            <tr>
+              <td>
+                <div title = "Select All" class = "spanForIcons">
+                  <i id = "select-all" class="fa-regular fa-square-check featuresIcons"></i>
+                </div>
+              </td> <!-- end select-all icon -->
+              <td>
+                <div title="View Selected" id = "view-selected" class = "spanForIcons">
+                  <span class="fa-stack fa-lg">
+                    <i id = "selected-counter" class="fa fa-stack-1x"></i>
+                    <i class="fa fa-solid fa-box-archive fa-stack-2x featuresIcons"></i>
+                  </span>
+                </div>
+              </td> <!-- end view-selected icon -->
+            </tr> <!-- end row -->
+            <tr> 
+              <td>
+                <div title="Download Selected" class = "spanForIcons">
+                  <i id = "download-all" class="fa-solid fa-download featuresIcons"></i>
+                </div>
+              </td> <!-- end download-all icon -->
+              <td>
+                <div title="Get Shareable Link" class = "spanForIcons">
+                  <i id = "sharelink-all" class="fa-solid fa-share featuresIcons"></i>
+                </div>
+              </td> <!-- end sharelink-all icon -->
+            </tr> <!-- end row -->
+          </table> <!-- table to arrange icons -->
         </form>
       </section> <!-- features -->
     </main> <!-- cd-main-content -->
+
+<div id = "confirmOverlay">
+  <!-- box to confirm user actions -->
+  <div id="confirmBox">
+    <div id="warning"></div>
+    <div class="message newParagraph" id="message"></div>
+    <div id="putDropDownHere"></div>
+    <div id="downloadSize" class = "newParagraph"></div>
+    <span class="button yes">Yes</span>
+    <span class="button no">No</span>
+  </div>
+</div>
+
+<!-- box to inform user of actions -->
+<div id="informUser">
+  <div class="message"></div>
+  <div id="okayGoesHere"></div>
+</div>
+
+<!-- overlay for detailsModal -->
 <div id="overlay">
   <div class="container">
     <div id="openModal" class="modalDialog">
-      <div> 
+      <div>
+        <!-- safeOfOverlayClick is where the user can click and the detailsModal does not close -->
         <div id ="safeOfOverlayClick">
           <p id="modal-greeting">Placeholder</p>
           <textarea class="details-text" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dolor elementum, malesuada est in, molestie libero. Morbi in nibh est. Quisque venenatis cursus augue, in pellentesque est. Nam placerat finibus sapien, venenatis placerat nibh tincidunt sed. Curabitur vehicula vulputate leo ac suscipit. Pellentesque sollicitudin, justo sed maximus porttitor, tellus orci ornare sem, et finibus augue leo vitae libero. Morbi vitae diam dui. Donec ac mollis felis, vel ornare quam. Nam risus elit, semper sed nulla vitae, vulputate ultrices dolor. Donec interdum molestie eros nec facilisis. Integer vel pretium magna, non tempor lorem. Aliquam semper est in odio condimentum ultricies. Maecenas non nulla viverra, cursus tellus ut, posuere ligula. Praesent massa eros, rutrum eget eros in, rhoncus scelerisque justo. Cras lacus diam, congue vitae elit ut, convallis rhoncus diam.
@@ -238,13 +294,15 @@
               Mauris elit leo, semper et lobortis eget, iaculis at erat. Nulla vulputate purus in rhoncus semper. Donec dolor ante, hendrerit eget ullamcorper sed, egestas ac libero. Morbi vestibulum nulla nec enim pretium, eu tincidunt tortor suscipit. Integer porta fringilla nunc, ut pulvinar enim lobortis ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas pellentesque ligula orci, sed aliquam enim ultrices quis. Nunc imperdiet imperdiet lorem, at tempus elit tincidunt facilisis. Donec vitae pharetra lectus, ac tempus odio. Integer vitae pellentesque ipsum, id semper velit. Etiam sapien arcu, rutrum vitae sapien quis, semper tincidunt elit. Ut placerat urna nec enim imperdiet gravida. Aliquam eget odio at lorem tempus pharetra. Pellentesque pellentesque turpis vel nibh consequat dictum.</textarea>
           <div id="modal-closure" style="margin-bottom:10px;">Placeholder</div>
           <div class="row">
+            <!-- three buttons: close, download, share -->
             <div class="col-xs-12 col-sm-6 text-center">
-              <a class="button close-button-modal">Close</a>
+              <a title = "Get Shareable Link" class="button button-modal shareableLink-button-modal"><i class="fa-solid fa-share"></i></a>
             </div>
             <div class="col-xs-12 col-sm-6 text-center">
-              <!-- <a class="button download-button-modal" data-sitekey="6LedB9gdAAAAAEB4uWHC-H5OS1Xuj8_WZGT2HdIt"
-                data-callback='onDownload' data-action='submit'>Download</a> -->
-            <a class="button download-button-modal">Download</a>
+              <a title = "Download Model" class="button button-modal download-button-modal"><i class="fa-solid fa-download"></i></a>
+            </div>
+            <div class="col-xs-12 col-sm-6 top-right">
+              <a title = "Close" class="button close-button-modal"><i class="fa-solid fa-xmark"></i></a>
             </div>
             <!-- 6LedB9gdAAAAANK8mQLhxsR7-mpeDlxzPdm9fQkV secret key -->
           </div>
@@ -253,10 +311,10 @@
     </div>
   </div>
 </div>
+<!-- footer with contacts -->
 <section id="contact-section">
   <div class="container">
     <div class="row align-items-center">
-
       <div class="col-md-4 col-12">
         <div style="text-align: left;">
           <div class="contact-info">
@@ -271,6 +329,7 @@
         <div class="explore"  style="text-align: left;">
           <h5>Explore</h5>
           <div><a href="dataset.html">Dataset</a></div>
+          <div><a href="tutorial.html">Tutorial</a></div>
           <div><a href="documentation.html">Documentation</a></div>
           <div><a href="FAQs.html">FAQs</a></div>
           <div><a href="contacts.html">Contact us</a></div>
@@ -307,14 +366,15 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-<script src="js/globalVar.js?v=1.0.1"></script>
+<script src="js/globalVar.js?v=1.0.2"></script>
 <script src="js/jquery-2.1.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
 <!-- <script src="js/jquery-2.1.1.js"></script> -->
 <script src="js/jquery.mixitup.min.js"></script>
-<script src="js/main.js?v=1.1.2"></script>
-<script src="js/filters.js?v=1.0.1"></script>
+<script src="js/main.js?v=1.1.3"></script>
+<script src="js/filters.js?v=1.0.2"></script>
+<script src="js/buttons.js?v=1.0.1"></script>
 </body>
 </html>
