@@ -405,7 +405,7 @@ error msg block behavior
   border: 1px #c9c9c9 solid;
 }
 
-.close {
+/* .close {
   background: #606061;
   color: #FFFFFF;
   line-height: 25px;
@@ -422,11 +422,11 @@ error msg block behavior
   -moz-box-shadow: 1px 1px 3px #000;
   -webkit-box-shadow: 1px 1px 3px #000;
   box-shadow: 1px 1px 3px #000;
-}
+} */
 
-.close:hover {
+/* .close:hover {
   background: #00d9ff;
-}
+} */
 
 .close-button-modal {
   background-color: var(--dark2);
@@ -715,7 +715,7 @@ error msg block behavior
 #confirmBox
 {
   display: none;
-  background-color: #eee;
+  background-color: white;
   border-radius: 5px;
   border: 1px solid #aaa;
   position: fixed;
@@ -724,24 +724,44 @@ error msg block behavior
   left: 50%;
   margin-left: -150px;
   padding: 10px 15px 15px;
+  padding-top: 30px;
   box-sizing: border-box;
   text-align: center;
   z-index: 99999;
 }
-#confirmBox .button {
-  background-color: #ccc;
+#confirmBox .download-button {
+  background-color: var(--light1);
   display: inline-block;
   border-radius: 3px;
-  border: 1px solid #aaa;
   padding: 2px;
   text-align: center;
-  width: 80px;
+  color: white;
+  width: 120px;
   cursor: pointer;
 }
-#confirmBox .button:hover
+#confirmBox .download-button:hover
 {
-  background-color: #ddd;
+  background-color: var(--light1shade);
 }
+
+#confirmBox .button-disabled
+{
+  background-color: var(--grey);
+  cursor: default;
+  color: black;
+}
+
+#confirmBox .button-disabled:hover
+{
+  background-color: var(--grey);
+}
+
+#confirmBox .button-disabled
+{
+  background-color: var(--grey);
+  cursor: default;
+}
+
 #confirmBox .message
 {
   text-align: center;

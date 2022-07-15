@@ -76,6 +76,15 @@ function deselectAll()
       errorMessage(true, "viewingselected");
       //updates select-all icon to unclickable state
       document.getElementById("select-all").classList.add("cannotSelect");
+      if (smallScreen) {
+        // padding is not necessary on mobile
+        $('.html').css({"height": "auto", "overflow-y": "auto"})
+        $('.body').css({"height": "auto", "overflow-y": "auto"})
+      }
+      else {
+        $('.html').css({"height": "auto", "overflow-y": "auto", "padding-right": "0px"})
+        $('.body').css({"height": "auto", "overflow-y": "auto", "padding-right": "0px"})
+      }
     });
   }
 }
@@ -152,9 +161,8 @@ $('.download-button-modal').click(function() {
   var sizeWarning = document.getElementById("downloadSize");
   sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel["Name"])[1];
 
-  doConfirm(message, function (){
-    downloadModel(viewingModel["Name"]);
-  });
+  downloadFunction = function download() {downloadModel(viewingModel["Name"])};
+  doConfirm(message, downloadFunction);
 });
 
 //downloading all selected models
@@ -183,10 +191,9 @@ $("#download-all").click(function () {
 
     var message = downloadConfirmation(countModels, "model", selectedModels);
 
-    //if the user clicks "yes," downloads all selected models
-    doConfirm(message, function yes() {
-      downloadAllModels();
-    });
+    downloadFunction = function download() {downloadAllModels()};
+    //if the user clicks "download," downloads all selected models
+    doConfirm(message, downloadFunction);
   }
 });
 
@@ -460,7 +467,10 @@ $('#proOrRe').click(function() {
 });
 
 //listener for change in drop down menu
-$("#putDropDownHere").click(function () {
+$("#putDropDownHere").change(function () {
+  var downloadButton = document.getElementById("download-confirm-button");
+  bindsButtonConfirmation(".download", downloadFunction);
+  downloadButton.classList.remove("button-disabled");
   downloadType = document.getElementById("chooseType").value;
 
   //clear variables
@@ -483,8 +493,20 @@ $("#putDropDownHere").click(function () {
     else
     {
       var msg = downloadConfirmation(countResults, "simulation result", modelsWithResults);
-      //difference tells the user how many models have simulation results to download
-      difference(countModels, countResults, warningHTML)
+      var maxResults = 10
+      if (countResults > 10)
+      {
+        maxDownloadMessage(countModels, countResults, maxResults, warningHTML)
+        msg = "Please select fewer models."
+        downloadButton.classList.add("button-disabled");
+        $("#confirmBox").find(".download").unbind()
+      }
+      else 
+      {
+        // difference tells the user how many models have simulation 
+        // results to download
+        difference(countResults, countModels, countResults, warningHTML)
+      }
     }
 
     //updates message with download confirmation

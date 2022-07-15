@@ -83,8 +83,8 @@ a {
 
 .tOC form {
     padding: 15px;
-    position: fixed;
-    width: 20%;
+    position: static;
+    width: 100%;
 }
 
 img {
@@ -120,11 +120,13 @@ img {
 
 /* MENU */
 .accordion {
-    background-color: var(--grey);
+    background-color: var(--lightgrey);
     color: black;
     cursor: pointer;
     padding: 10px;
     width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: left;
     border: none;
     outline: none;
@@ -132,6 +134,7 @@ img {
     display: block;
     font-size: 1rem;
     z-index: 5;
+    border-radius: 7px;
   }
   
   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -141,7 +144,7 @@ img {
 
   a.accordion:hover, #opening_filter:hover {
     text-decoration: none;
-    color: var(--light1shade)
+    color: var(--light1)
   }
   
   a.accordion, #opening_filter {
@@ -184,14 +187,28 @@ img {
 }
 
 .skiptoTop {
-    height: 64px;
-    width: 150px;
+    font-size: 70px;
+    height: 100px;
+    width: 100px;
     bottom: 0px;
-    margin: 15px;
-    background-color: var(--grey);
-    border: 2px solid var(--darkgrey);
+    margin-bottom: 15px;
+    padding-bottom:15px;
+    padding-left:15px;
     position: fixed;
-    z-index: 2;
+    z-index: 99999;
+    text-align: center;
+    border-radius: 100%;
+    vertical-align: middle;
+    opacity: 0.3;
+}
+
+.skiptoTop a{
+    color: var(--dark2);
+}
+
+.skiptoTop:hover {
+    opacity: 1.0;
+    transition: 0.4s;
 }
 
 .text {
@@ -205,6 +222,7 @@ img {
 
 a.noDec:hover {
     text-decoration: none;
+    z-index: 99999;
 }
 
 .inline:nth-child(even) {

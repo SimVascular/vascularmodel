@@ -31,6 +31,8 @@
   //dictionary with the sizes of all the files
   var sizes = {};
 
+  var downloadFunction;
+
   var countModels;
   var modelsWithResults;
   var countResults;
@@ -496,7 +498,7 @@ function clearDoConfirm()
 }
 
 //lets us confirm actions with users
-function doConfirm(msg, yesFn, noFn) {
+function doConfirm(msg, downloadFn, closeFn) {
   //show overlay
   var overlay = document.getElementById("confirmOverlay");
   overlay.style.display = "block";
@@ -528,29 +530,34 @@ function doConfirm(msg, yesFn, noFn) {
   var confirmBox = $("#confirmBox");
   confirmBox.find(".message").text(msg);
 
-  //hides confirmation after button is clicked
-  confirmBox.find(".yes,.no").unbind().click(function () {
-      confirmBox.hide();
-      overlay.style.display = "none";
+  bindsButtonConfirmation(".download", downloadFn)
+  bindsButtonConfirmation(".no", closeFn)
+  confirmBox.show()
+}
 
-      if(window.location.includes("/dataset.html"))
-      {
-        $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
-        $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+function bindsButtonConfirmation(id, fn)
+{
+  var overlay = document.getElementById("confirmOverlay");
+  var confirmBox = $("#confirmBox");
+  confirmBox.find(id).unbind().click(function () {
+    confirmBox.hide();
+    overlay.style.display = "none";
 
-        //resets scrolling
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        document.querySelector('.body').removeEventListener('scroll', preventScroll);
-      }
+    if(window.location.pathname.includes("/dataset.html"))
+    {
+      $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+      $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+
+      //resets scrolling
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      document.querySelector('.body').removeEventListener('scroll', preventScroll);
+    }
   });
 
-  //deals with which function to call depending on user input
-  confirmBox.find(".yes").click(yesFn);
-  confirmBox.find(".no").click(noFn);
-  confirmBox.show();
+  confirmBox.find(id).click(fn);
 }
 
 //informs user of a message
@@ -764,6 +771,19 @@ function difference(countModels, countResults, warningHTML)
   {
     var warning = difference + " models do not have simulation results to download.";
   }
+
+  warningHTML.classList.add("newParagraph");
+  warningHTML.textContent = warning;
+}
+
+//calculates warning to tell user which models dont have simulation results
+function maxDownloadMessage(countModels, countResults, maxResults, warningHTML)
+{
+
+  var warning = "Out of " + countModels + " models, " + countResults + " have "
+  warning += "simulation results. ";
+  warning += "Currently, we only support downloads of up to " + maxResults
+  warning += " simulation results."
 
   warningHTML.classList.add("newParagraph");
   warningHTML.textContent = warning;
