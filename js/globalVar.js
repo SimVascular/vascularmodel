@@ -628,7 +628,7 @@ function craftURL(modelName)
   }
   else
   {
-    var url = "svresults/"
+    var url = "svresults/" + modelName + "/"
   }
 
   url += modelName + "." + downloadType;
