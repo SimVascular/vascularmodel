@@ -625,13 +625,13 @@ function craftURL(modelName)
   if(downloadType == "zip")
   {
     var url = "svprojects/"
+    url += modelName + "." + downloadType;
   }
   else
   {
     var url = "svresults/" + modelName + "/"
+    url += modelName + "." + downloadType + ".zip";
   }
-
-  url += modelName + "." + downloadType;
 
   return url;
 }
