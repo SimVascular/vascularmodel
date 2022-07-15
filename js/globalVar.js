@@ -862,7 +862,7 @@ function downloadModel(modelName)
     //simulates click
     a.click();
     
-    if(downloadType == "zip")
+    if(downloadType != "zip")
     {
       //sends message to server with user's download
       gtag('event', 'download_results_' + modelName + "." + downloadType, {
