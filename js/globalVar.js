@@ -636,6 +636,20 @@ function craftURL(modelName)
   return url;
 }
 
+function craftDownloadName(modelName)
+{
+  if(downloadType == "zip")
+  {
+    return modelName
+  }
+  else
+  {
+    return modelName + "_" + downloadType
+  }
+
+  return url;
+}
+
 //deals with units for size
 function sizeConverter(size)
 {
@@ -699,7 +713,7 @@ function getSizeIndiv(modelName)
 }
 
 //returns file size given a URL
-function getFileSize(url, key)
+async function getFileSize(url, key)
 {
   var fileSize = '';
   var http = new XMLHttpRequest();
@@ -858,7 +872,7 @@ function downloadModel(modelName)
     //creates anchor tag to download
     var a = document.createElement("a");
     a.href = fileUrl;
-    a.setAttribute("download", modelName);
+    a.setAttribute("download", craftDownloadName(modelName));
     //simulates click
     a.click();
     
