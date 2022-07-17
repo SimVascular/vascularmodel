@@ -29,7 +29,7 @@
   //default is always "zip"
   var downloadType = "zip";
   //dictionary with the sizes of all the files
-  var sizes = {};
+  var fileSizes;
 
   var downloadFunction;
 
@@ -697,17 +697,14 @@ function getSumOfSizes(boolArray)
 //gets size of individual models given their name
 function getSizeIndiv(modelName)
 {
-  var key = modelName + "." + downloadType;
-
   var url = craftURL(modelName);
 
   //updates dictionary "sizes" with size of file if the file has not already been added
-  if(checkFileExist(url) && !(key in sizes))
+  if (checkFileExist(url))
   {
-    getFileSize(url, key);
+    var size = parseInt(fileSizes[url]);
   }
 
-  var size = parseInt(sizes[key]);
   //returns bytes and readable version of size
   return [size, sizeConverter(size)];
 }
