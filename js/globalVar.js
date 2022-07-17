@@ -713,24 +713,10 @@ function getSizeIndiv(modelName)
 }
 
 //returns file size given a URL
-async function getFileSize(url, key)
+function getFileSize(url, key)
 {
-  var fileSize = '';
-  var http = new XMLHttpRequest();
-  http.open('HEAD', url, false);
-
-  http.onreadystatechange = function() {
-    if (this.readyState == this.DONE) {
-      if (this.status === 200) {
-        fileSize = this.getResponseHeader('content-length');
-
-        //saves size in dictionary sizes
-        sizes[key] = fileSize;
-      }
-    }
-  };
-
-  http.send();
+  var xhr = $.ajax({type:"HEAD", url: url, async: false})
+  sizes[key] = xhr.getResponseHeader("Content-Length")
 }
 
 //updates where the size is defined in the confirmbox
