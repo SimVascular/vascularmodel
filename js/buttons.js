@@ -229,7 +229,7 @@ async function downloadAllModels(){
   for(var i = 0; i < listOfNames.length; i++)
   {
     downloadModel(listOfNames[i]);
-    await new Promise(r => setTimeout(r, 3));
+    await new Promise(r => setTimeout(r, 15));
   }
 
   //selected models not cleared
@@ -493,10 +493,12 @@ $("#putDropDownHere").change(function () {
     else
     {
       var msg = downloadConfirmation(countResults, "simulation result", modelsWithResults);
-      var maxResults = 10
-      if (countResults > 10)
+    
+      var sumOfSizes = getSumOfSizes(modelsWithResults) / 1000000000
+      var maxGb = 30;
+      if (sumOfSizes > maxGb)
       {
-        maxDownloadMessage(countModels, countResults, maxResults, warningHTML)
+        maxDownloadMessage(sumOfSizes, maxGb, warningHTML)
         msg = "Please select fewer models."
         downloadButton.classList.add("button-disabled");
         $("#confirmBox").find(".download").unbind()
@@ -505,7 +507,7 @@ $("#putDropDownHere").change(function () {
       {
         // difference tells the user how many models have simulation 
         // results to download
-        difference(countResults, countModels, countResults, warningHTML)
+        difference(countModels, countResults, warningHTML)
       }
     }
 

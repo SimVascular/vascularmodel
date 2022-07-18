@@ -606,18 +606,19 @@ function informUser(msg, hasOk = false) {
   }
 }
 
+// this is too slow. We give it for granted to improve ux
 //checks if a file exists given url
-function checkFileExist(url) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('HEAD', url, false);
-  xhr.send();
+// function checkFileExist(url) {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open('HEAD', url, false);
+//   xhr.send();
    
-  if (xhr.status == "404") {
-      return false;
-  } else {
-      return true;
-  }
-}
+//   if (xhr.status == "404") {
+//       return false;
+//   } else {
+//       return true;
+//   }
+// }
 
 //creates url to download models depending on download type and model name
 function craftURL(modelName)
@@ -684,12 +685,16 @@ function getSumOfSizes(boolArray)
   for(var i = 0 ; i < names.length; i++)
   {
     var size = getSizeIndiv(names[i]);
-    //saves size in bytes
-    count += size[0];
+    // then the fileSize exists (it's not nan)
+    if (size[0] == size[0])
+    {
+      //saves size in bytes
+      count += size[0];
+    }
   }
 
   //count is size in bytes
-  count = sizeConverter(count)
+  // count = sizeConverter(count)
 
   return count;
 }
@@ -699,28 +704,24 @@ function getSizeIndiv(modelName)
 {
   var url = craftURL(modelName);
 
-  //updates dictionary "sizes" with size of file if the file has not already been added
-  if (checkFileExist(url))
-  {
-    var size = parseInt(fileSizes[url]);
-  }
+  var size = parseInt(fileSizes[url]);
 
   //returns bytes and readable version of size
   return [size, sizeConverter(size)];
 }
 
 //returns file size given a URL
-function getFileSize(url, key)
-{
-  var xhr = $.ajax({type:"HEAD", url: url, async: false})
-  sizes[key] = xhr.getResponseHeader("Content-Length")
-}
+// function getFileSize(url, key)
+// {
+//   var xhr = $.ajax({type:"HEAD", url: url, async: false})
+//   sizes[key] = xhr.getResponseHeader("Content-Length")
+// }
 
 //updates where the size is defined in the confirmbox
 function updateSize(boolArray)
 {
   var sizeWarning = document.getElementById("downloadSize");
-  sizeWarning.textContent = "Size: " + getSumOfSizes(boolArray);
+  sizeWarning.textContent = "Size: " + sizeConverter(getSumOfSizes(boolArray));
 }
 
 //updates confirmation message
@@ -774,13 +775,12 @@ function difference(countModels, countResults, warningHTML)
 }
 
 //calculates warning to tell user which models dont have simulation results
-function maxDownloadMessage(countModels, countResults, maxResults, warningHTML)
+function maxDownloadMessage(downloadGb, maxGb, warningHTML)
 {
 
-  var warning = "Out of " + countModels + " models, " + countResults + " have "
-  warning += "simulation results. ";
-  warning += "Currently, we only support downloads of up to " + maxResults
-  warning += " simulation results."
+  var warning = "The total size of the download is " + downloadGb.toFixed(2) + 
+                " GB, " + 
+                " but we currently support downloads of up to " + maxGb + " GB."
 
   warningHTML.classList.add("newParagraph");
   warningHTML.textContent = warning;
