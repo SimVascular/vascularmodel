@@ -66,7 +66,7 @@ function deselectAll()
     clearDoConfirm();
 
     //sends a "confirm action" notification
-    doConfirm("Are you sure you want to deselect all selected models?", function yes() {
+    doConfirm("Are you sure you want to deselect all selected models?", "Yes", function yes() {
       //if user confirms, clears selectedModels array
       selectedModels.fill(false);
       //removes displayed models
@@ -162,7 +162,7 @@ $('.download-button-modal').click(function() {
   sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel["Name"])[1];
 
   downloadFunction = function download() {downloadModel(viewingModel["Name"])};
-  doConfirm(message, downloadFunction);
+  doConfirm(message, "Download", downloadFunction);
 });
 
 //downloading all selected models
@@ -193,7 +193,7 @@ $("#download-all").click(function () {
 
     downloadFunction = function download() {downloadAllModels()};
     //if the user clicks "download," downloads all selected models
-    doConfirm(message, downloadFunction);
+    doConfirm(message, "Download", downloadFunction);
   }
 });
 
