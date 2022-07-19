@@ -631,7 +631,7 @@ function craftURL(modelName)
   else
   {
     var url = "svresults/" + modelName + "/"
-    url += modelName + "." + downloadType + ".zip";
+    url += modelName + "_" + downloadType + ".zip";
   }
 
   return url;
