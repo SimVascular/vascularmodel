@@ -498,7 +498,7 @@ function clearDoConfirm()
 }
 
 //lets us confirm actions with users
-function doConfirm(msg, confirmText, downloadFn, closeFn) {
+function doConfirm(msg, confirmText, downloadFn) {
   //show overlay
   var overlay = document.getElementById("confirmOverlay");
   overlay.style.display = "block";
@@ -532,7 +532,11 @@ function doConfirm(msg, confirmText, downloadFn, closeFn) {
 
   $('#download-confirm-button').text(confirmText)
   bindsButtonConfirmation(".download", downloadFn)
-  bindsButtonConfirmation(".no", closeFn)
+  bindsButtonConfirmation(".no", function no() {
+    // make download button visible again if menu is closed
+    var downloadButton = document.getElementById("download-confirm-button")
+    downloadButton.classList.remove("button-disabled")
+  });
   confirmBox.show()
 }
 
