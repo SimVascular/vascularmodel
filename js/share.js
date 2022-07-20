@@ -409,7 +409,7 @@ $("#download-all-models").click(function () {
         var message = downloadConfirmation(countModels, "model", boolArray);
 
         //if the user clicks "yes," downloads all selected models
-        doConfirm(message, function yes() {
+        doConfirm(message, "Download", function yes() {
             downloadAll();
         });
     }
@@ -457,7 +457,7 @@ $("#downloadModel").click(function () {
     var sizeWarning = document.getElementById("downloadSize");
     sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
 
-    doConfirm("Are you sure you want to download " + model["Name"] + "?", function yes(){
+    doConfirm("Are you sure you want to download " + model["Name"] + "?", "Download", function yes(){
         downloadModel(model["Name"]);
     })
 });
@@ -475,35 +475,85 @@ function goToGallery() {
     a.click();
 }
 
+// //listener for change in drop down menu
+// $("#putDropDownHere").click(function () {
+//     downloadType = document.getElementById("chooseType").value;
+  
+//     //clear variables
+//     warningHTML.innerHTML = "";
+//     warningHTML.classList.remove("newParagraph");
+    
+//     if(singleModel)
+//     {
+//         //if viewing one model, calculates size for one model
+//         updateSize(makeBooleanArray(preservedOrderData, model));
+//     }
+//     else
+//     {
+//       //different confirmation message depending on downloadType
+//       if(downloadType == "zip")
+//       {
+//         var msg = downloadConfirmation(countModels, "model", boolArray);
+//       }
+//       else
+//       {
+//         var msg = downloadConfirmation(countResults, "simulation result", boolArrayWResults);
+//         difference(countModels, countResults, warningHTML);
+//       }
+  
+//       updateMessage(msg);
+//     }
+// });
+
 //listener for change in drop down menu
-$("#putDropDownHere").click(function () {
+$("#putDropDownHere").change(function () {
+    var downloadButton = document.getElementById("download-confirm-button");
+    bindsButtonConfirmation(".download", downloadFunction);
+    downloadButton.classList.remove("button-disabled");
     downloadType = document.getElementById("chooseType").value;
   
     //clear variables
     warningHTML.innerHTML = "";
     warningHTML.classList.remove("newParagraph");
     
-    if(singleModel)
+    //if viewing model (and therefore the modal greeting's overlay is on)
+    if(isOverlayOn)
     {
-        //if viewing one model, calculates size for one model
-        updateSize(makeBooleanArray(preservedOrderData, model));
+      //updates size with one model
+      updateSize(makeBooleanArray(preservedOrderData, viewingModel));
     }
     else
     {
-      //different confirmation message depending on downloadType
+      //asks to confirm download differently depending on type selected
       if(downloadType == "zip")
       {
-        var msg = downloadConfirmation(countModels, "model", boolArray);
+        var msg = downloadConfirmation(countModels, "model", selectedModels);
       }
       else
       {
         var msg = downloadConfirmation(countResults, "simulation result", boolArrayWResults);
-        difference(countModels, countResults, warningHTML);
+      
+        var sumOfSizes = getSumOfSizes(boolArrayWResults) / 1000000000
+        var maxGb = 30;
+        if (sumOfSizes > maxGb)
+        {
+          maxDownloadMessage(sumOfSizes, maxGb, warningHTML)
+          msg = "Please change download format."
+          downloadButton.classList.add("button-disabled");
+          $("#confirmBox").find(".download").unbind()
+        }
+        else 
+        {
+          // difference tells the user how many models have simulation 
+          // results to download
+          difference(countModels, countResults, warningHTML)
+        }
       }
   
+      //updates message with download confirmation
       updateMessage(msg);
     }
-});
+  });
 
 //listeners for help buttons
 $("#helpIndiv").click(function () {
