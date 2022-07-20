@@ -520,7 +520,7 @@ $("#putDropDownHere").change(function () {
     if(singleModel)
     {
       //updates size with one model
-      updateSize(makeBooleanArray(preservedOrderData, viewingModel));
+      updateSize(makeBooleanArray(preservedOrderData, model));
     }
     else
     {
