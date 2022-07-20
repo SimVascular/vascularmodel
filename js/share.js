@@ -20,6 +20,22 @@ $(document).ready(function($){
       }
     });
 
+    $.ajax({
+        type: "GET",
+        url: "dataset/file_sizes.csv",
+        dataType: "text",
+        async: false,
+        success: function(fdata) {
+          fileSizes = {};
+          fileSizesCsv = $.csv.toObjects(fdata);
+          var arrayLength = fileSizesCsv.length;
+          for (var i = 0; i < arrayLength; i++) 
+          {
+            fileSizes[fileSizesCsv[i]['Name']] = fileSizesCsv[i]['Size']
+          }
+        }
+      });
+
     //deals with URL input
     getVariable();
 });
