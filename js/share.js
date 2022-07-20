@@ -517,7 +517,7 @@ $("#putDropDownHere").change(function () {
     warningHTML.classList.remove("newParagraph");
     
     //if viewing model (and therefore the modal greeting's overlay is on)
-    if(isOverlayOn)
+    if(singleModel)
     {
       //updates size with one model
       updateSize(makeBooleanArray(preservedOrderData, viewingModel));
@@ -527,7 +527,7 @@ $("#putDropDownHere").change(function () {
       //asks to confirm download differently depending on type selected
       if(downloadType == "zip")
       {
-        var msg = downloadConfirmation(countModels, "model", selectedModels);
+        var msg = downloadConfirmation(countModels, "model", boolArray);
       }
       else
       {
