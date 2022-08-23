@@ -290,6 +290,17 @@ $('.shareableLink-button-modal').click(function() {
   informUser("Link copied");
 });
 
+//share button inside modalText
+$('.pdf-button-modal').click(function() {
+  //creates anchor tag to download
+  var a = document.createElement("a");
+  a.href = "VMR_PDFs/" + viewingModel['Name'] + ".pdf";
+  // a.setAttribute("download", viewingModel['Name']);
+  a.setAttribute("target", "_blank");
+  //simulates click
+  a.click();
+});
+
 //share-all button
 //makes a shareable link for all selected models
 $('#sharelink-all').click(function() {
