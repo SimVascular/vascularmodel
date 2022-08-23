@@ -50,6 +50,7 @@ print("")
 HEADING_1_COLOR = (16, 122, 194)
 HEADING_2_COLOR = (80, 142, 199)
 BLACK_TEXT_COLOR = (15, 15, 15)
+URL_COLOR = (0, 0, 255)
 
 
 class PDF(FPDF):
@@ -71,7 +72,7 @@ class PDF(FPDF):
         self.multi_cell(w = 0, h = 0.75, txt = 'Vascular Model Repository\nSpecifications Document',
                         border = 0, align = 'C')
         self.set_y(6.25)
-        self.set_font('Arial', size = 45)
+        self.set_font('Arial', size = 40)
         self.multi_cell(w = 0, h = 0.75, txt = model['name'], border = 0, align = 'C')
 
 
@@ -79,7 +80,7 @@ class PDF(FPDF):
         """ Title page image of the model """
 
         self.image(os.path.join(IMAGE_FILE_PATH, '%s.png' % (model['name'])), x = 1, y = 2.5,
-                   w = 6.5, h = 3.9)
+                   w = 6.5, h = 3.7)
 
 
     def title_table(self, model):
@@ -152,10 +153,6 @@ class PDF(FPDF):
         if model['anatomy'] != '-':
             anatomy_list = model['anatomy'].split('_')
             for anatomy in anatomy_list:
-                self.set_font('Arial', size = 13)
-                self.set_text_color(HEADING_2_COLOR[0], HEADING_2_COLOR[1], HEADING_2_COLOR[2])
-                self.cell(w = 2, h = 0.5, txt = anatomy, border = 0, ln = 1)
-
                 anatomytxt = ''
                 # Open a csv reader called DictReader
                 with open(ANATOMY_FILE_PATH, encoding='utf-8-sig') as csvf:
@@ -164,18 +161,21 @@ class PDF(FPDF):
                         if rows['Anatomy'] == anatomy:
                             anatomytxt = rows['Background']
 
-                self.set_font('Arial', size = 12)
-                self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1], BLACK_TEXT_COLOR[2])
-                self.multi_cell(w = 0, h = 0.25, txt = anatomytxt, border = 0, align = 'L')
+                    if anatomytxt != '':
+                        self.set_font('Arial', size = 13)
+                        self.set_text_color(HEADING_2_COLOR[0], HEADING_2_COLOR[1],
+                                            HEADING_2_COLOR[2])
+                        self.cell(w = 2, h = 0.5, txt = anatomy, border = 0, ln = 1)
+
+                        self.set_font('Arial', size = 12)
+                        self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1],
+                                            BLACK_TEXT_COLOR[2])
+                        self.multi_cell(w = 0, h = 0.25, txt = anatomytxt, border = 0, align = 'L')
 
 
         if model['disease'] != 'Healthy':
             disease_list = model['disease'].split('_')
             for disease in disease_list:
-                self.set_font('Arial', size = 13)
-                self.set_text_color(HEADING_2_COLOR[0], HEADING_2_COLOR[1], HEADING_2_COLOR[2])
-                self.cell(w = 2, h = 0.5, txt = disease, border = 0, ln = 1)
-
                 diseasetxt = ''
                 # Open a csv reader called DictReader
                 with open(DISEASE_FILE_PATH, encoding='utf-8-sig') as csvf:
@@ -184,17 +184,21 @@ class PDF(FPDF):
                         if rows['Disease'] == disease:
                             diseasetxt = rows['Background']
 
-                self.set_font('Arial', size = 12)
-                self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1], BLACK_TEXT_COLOR[2])
-                self.multi_cell(w = 0, h = 0.25, txt = diseasetxt, border = 0, align = 'L')
+                    if diseasetxt != '':
+                        self.set_font('Arial', size = 13)
+                        self.set_text_color(HEADING_2_COLOR[0], HEADING_2_COLOR[1],
+                                            HEADING_2_COLOR[2])
+                        self.cell(w = 2, h = 0.5, txt = disease, border = 0, ln = 1)
+
+                        self.set_font('Arial', size = 12)
+                        self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1],
+                                            BLACK_TEXT_COLOR[2])
+                        self.multi_cell(w = 0, h = 0.25, txt = diseasetxt, border = 0, align = 'L')
+
 
         if model['procedure'] != '-':
             procedure_list = model['procedure'].split('_')
             for procedure in procedure_list:
-                self.set_font('Arial', size = 13)
-                self.set_text_color(HEADING_2_COLOR[0], HEADING_2_COLOR[1], HEADING_2_COLOR[2])
-                self.cell(w = 2, h = 0.5, txt = procedure, border = 0, ln = 1)
-
                 proceduretxt = ''
                 # Open a csv reader called DictReader
                 with open(PROCEDURE_FILE_PATH, encoding='utf-8-sig') as csvf:
@@ -203,9 +207,16 @@ class PDF(FPDF):
                         if rows['Procedure'] == procedure:
                             proceduretxt = rows['Background']
 
-                self.set_font('Arial', size = 12)
-                self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1], BLACK_TEXT_COLOR[2])
-                self.multi_cell(w = 0, h = 0.25, txt = proceduretxt, border = 0, align = 'L')
+                    if proceduretxt != '':
+                        self.set_font('Arial', size = 13)
+                        self.set_text_color(HEADING_2_COLOR[0], HEADING_2_COLOR[1],
+                                            HEADING_2_COLOR[2])
+                        self.cell(w = 2, h = 0.5, txt = procedure, border = 0, ln = 1)
+                        self.set_font('Arial', size = 12)
+                        self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1],
+                                            BLACK_TEXT_COLOR[2])
+                        self.multi_cell(w = 0, h = 0.25, txt = proceduretxt, border = 0,
+                                        align = 'L')
 
         self.ln(h = 0.1)
 
@@ -243,9 +254,15 @@ class PDF(FPDF):
 
                 self.set_font('Arial', size = 12)
                 self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1], BLACK_TEXT_COLOR[2])
+
+                cellwidth = 2
+
+                for key in row.keys():
+                    cellwidth = max(cellwidth, len(key)*0.1)
+
                 for key in row.keys():
                     if key not in ('name', 'sex', 'age'):
-                        self.cell(w = 2, h = 0.25, txt = key, border = 1, ln = 0)
+                        self.cell(w = cellwidth, h = 0.25, txt = key, border = 1, ln = 0)
                         self.cell(w = 2, h = 0.25, txt = row[key], border = 1, ln = 1)
 
         self.ln(h = 0.25)
@@ -260,24 +277,39 @@ class PDF(FPDF):
         self.cell(w = 2, h = 0.5, txt = 'Notes', border = 0, ln = 0)
         self.ln(h = 0.5)
 
-        # Description of model
-        #if model['description'] != '-':
-            #self.set_x(1.9)
-            #self.set_font('Arial', style = 'B', size = 12)
-            #self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1], BLACK_TEXT_COLOR[2])
-            #self.cell(w = 1, h = 0.25, txt = 'Model Description: ', border = 0, align = 'R')
-            #self.set_x(3)
-            #self.set_font('Arial', size = 12)
-            #self.multi_cell(w = 0, h = 0.25, txt = '%s' % (model['description']),
-            #                border = 0, align = 'L')
-            #self.ln(h = 0.1)
+        # Finds the chunk of string that starts with /url(...) and extracts it
+        url_data = re.findall('\\\\url[(].*?[)]', model['notes'])
+
+        # Creates a list that takes the URL string as well as the string for what to write
+        # in place of the URL
+        url_list = []
+        for chunk in url_data:
+            url_single = []
+            for info in re.findall('".*?"', chunk):
+                url_single.append(info.replace('"', ''))
+            url_list.append(url_single)
+
+        notes_txt = re.split('\\\\url[(].*?[)]', model['notes'])
+        counter = 0
+        for url in url_list:
+            self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1], BLACK_TEXT_COLOR[2])
+            self.set_font('Arial', size = 12)
+            self.write(h = 0.25, txt = notes_txt[counter])
+            counter += 1
+
+            self.set_text_color(URL_COLOR[0], URL_COLOR[1], URL_COLOR[2])
+            self.set_font('Arial', style = 'U', size = 12)
+            self.write(h = 0.25, txt = url[1], link = url[0])
+
         self.set_text_color(BLACK_TEXT_COLOR[0], BLACK_TEXT_COLOR[1], BLACK_TEXT_COLOR[2])
         self.set_font('Arial', size = 12)
-        self.multi_cell(w = 0, h = 0.25, txt =
-            'See below for information on the image data and boundary conditions associated with ' +
-            'the model.', border = 0, align = 'L')
+        self.write(h = 0.25, txt = notes_txt[-1])
 
-        self.ln(h = 0.25)
+        self.write(h = 0.25, txt = ' See below for information on the image data and boundary ' +
+                                   'conditions associated with the model.')
+        self.ln(h = 0.4)
+
+
 
         # Image modality of model
         if model['img_mod'] != '-':
@@ -428,7 +460,6 @@ class PDF(FPDF):
         self.license()
         #self.appendix(model)
 
-
 # Open a csv reader called DictReader
 with open(CSV_FILE_PATH, encoding='utf-8-sig') as csvf1:
     csv_reader1 = csv.DictReader(csvf1)
@@ -439,12 +470,14 @@ with open(CSV_FILE_PATH, encoding='utf-8-sig') as csvf1:
                   'anatomy': rows1['Anatomy'],
                   'disease': rows1['Disease'],
                   'procedure': rows1['Procedure'],
+                  'notes': rows1['Notes'],
                   'img_mod': rows1['Image Modality'],
                   'img_manu': rows1['Image Manufacturer'],
                   'img_type': rows1['Image Type'],
                   'img_src': rows1['Image Source'],
                   'pubs': rows1['Citation'],
                   'results': rows1['Results']}
+
 
         # save FPDF() class into a variable
         pdf = PDF('P', 'in', 'Letter')
@@ -454,18 +487,34 @@ with open(CSV_FILE_PATH, encoding='utf-8-sig') as csvf1:
         print('Generating: ' + (rows1['Name']) + '.pdf')
 
 
+
 """
-model1 = {'name': '0157_0000',
-          'species': 'Animal',
-          'animal': '14 W',
-          'anatomy': 'Aortofemoral Peripheral Occlusive Diseasease_W_W',
-          'disease': 'Aortofemoral Peripheral Occlusive Disease_W',
-          'procedure': 'WWWWWWWWWWWWWWWWWWWWW',
-          'img_mod': 'MRI Test',
-          'img_type': 'DICOM',
-          'img_src': 'LPCH',
-          'img_manu': '-',
-          'results': '1'}
+# For testing one file at a time and for debugging
+model1 = {'name': 'AS1_SU0308_prestent',
+    'species': 'Animal',
+    'animal': '14 W',
+    'anatomy': 'Aortofemoral Peripheral Occlusive Diseasease',
+    'disease': 'Aortofemoral Peripheral Occlusive Disease_W',
+    'procedure': 'Awdvslkjsdfsfsd asbed',
+    'notes': 'This is a test note',
+    'img_mod': 'MRI Test',
+    'img_type': 'DICOM',
+    'img_src': 'LPCH',
+    'img_manu': '-',
+    'pubs': r'Menon, A., Wendell, D. C., Wang, H., Eddinger, T. J., Toth, J. M., ' +
+            r'Dholakia, R. J., ... & LaDisa Jr, J. F. (2012). A coupled experimental ' +
+            r'and computational approach to quantify deleterious hemodynamics, vascular ' +
+            r'alterations, and mechanisms of long-term morbidity in response to aortic ' +
+            r'coarctation. Journal of pharmacological and toxicological methods, 65(1), ' +
+            r'18-28. ' + '\n' + r'http://www.doi.org/10.1016/j.vascn.2011.10.003',
+    'results': '1'}
+
+# save FPDF() class into a variable
+pdf = PDF('P', 'in', 'Letter')
+pdf.set_margins(1, 1)
+pdf.print_doc(model1)
+pdf.output(os.path.join(PDF_FILE_PATH, model1['name'] + '.pdf'), 'F')
+print('Generating: ' + (model1['name']) + '.pdf')
 """
 
 
