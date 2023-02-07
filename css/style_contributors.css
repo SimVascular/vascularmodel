@@ -1,0 +1,275 @@
+p {
+    text-align: justify;
+}
+
+.main-content {
+    position: relative;
+    min-height: 75vh;
+    height: auto;
+}
+
+body {
+    background-color: #e7e7e7;
+}
+
+.centerBox {
+    box-shadow: 0px 0px 8px var(--darkdarkgrey);
+    background-color: white;
+    position: relative;
+    width: 95%;
+    height: 65%;
+    height: auto;
+    padding: 5%;
+    margin: 2%;
+}
+
+@media screen and (min-width: 800px) {
+    .centerBox {
+        padding: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .centerBox {
+        padding: 30px;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 1.65rem;
+    margin-top: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+h4 {
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.tab {
+    display: block;
+    margin-left: 40px;
+}
+
+.toTop {
+    float: right;
+    margin-left: 0px;
+    margin-right: 40px;
+}
+
+a {
+    color: var(--light1);
+}
+
+.tOC {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.tOC form {
+    padding: 15px;
+    position: static;
+    width: 100%;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    max-width: 1200px;
+    max-height: 750px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    display: block;
+}
+
+.inline {
+    display: inline;
+    width: 45%;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 15px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* MENU */
+.accordion {
+    background-color: var(--lightgrey);
+    color: black;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    display: block;
+    font-size: 1rem;
+    z-index: 5;
+    border-radius: 7px;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .selected, .accordion:hover {
+    background-color: var(--lightgrey);
+  }
+
+  a.accordion:hover, #opening_filter:hover {
+    text-decoration: none;
+    color: var(--light1)
+  }
+  
+  a.accordion, #opening_filter {
+    display: block;
+  }
+
+  /* Style the accordion panel. Note: hidden by default */
+  .panel {
+    padding: 0 0 0 20px;
+    background-color: white;
+    display: none;
+    float: left;
+    overflow: hidden;
+  }
+
+@media (max-width: 991px){
+    .tOC form {
+        width: 100%;
+        position: relative;
+    }
+    .inline {
+        display: block;
+        width: 100%;
+    }
+    .accordion {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 1300px){
+    .accordion {
+        font-size: 1.25rem;
+    }
+}
+
+.smaller {
+    width: 500px;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.skiptoTop {
+    font-size: 70px;
+    height: 100px;
+    width: 100px;
+    bottom: 0px;
+    margin-bottom: 15px;
+    padding-bottom:15px;
+    padding-left:15px;
+    position: fixed;
+    z-index: 99999;
+    text-align: center;
+    border-radius: 100%;
+    vertical-align: middle;
+    opacity: 0.3;
+}
+
+.skiptoTop a{
+    color: var(--dark2);
+}
+
+.skiptoTop:hover {
+    opacity: 1.0;
+    transition: 0.4s;
+}
+
+.text {
+    margin: 0;
+    float: center;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 15px;
+    color: var(--black);
+}
+
+a.noDec:hover {
+    text-decoration: none;
+    z-index: 99999;
+}
+
+.inline:nth-child(even) {
+    margin-right: 5%;
+}
+
+li {
+    line-height: 2; 
+}
+
+.contributor-box {
+    border-radius: 5px;
+    border: 2px solid var(--darkgrey);
+    text-align: center;
+    vertical-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 20px;
+    /* margin: 10px; */
+}
+
+.group-name {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+#contributors {
+    margin-top: 2rem;
+}
+
+.group-description {
+    font-size: 0.8rem;
+    text-align: left;
+    justify-content: center;
+    padding-bottom: 1rem;
+}
+
+.institution {
+    color: var(--darkgrey);
+    padding-top: 1rem;
+}
+
+.group-logo {
+    width: 100%;
+    height: 80%;
+    /* border: 2px solid var(--darkgrey); */
+    object-fit: cover;
+    /* margin-top: 10px; */
+}
