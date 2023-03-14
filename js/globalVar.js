@@ -22,6 +22,7 @@
   var viewingSelectedModels = false;
   var doneDownloading = false;
   var isOverlayOn = false;
+  var is3DOverlayOn = false;
   var isSafeSelected = false;
   var menuBarShowing = false;
   // var modeIsResults = false;

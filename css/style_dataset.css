@@ -414,9 +414,19 @@ error msg block behavior
   background: -o-linear-gradient(#fff, #999); */
 }
 
+#threeDOverlay .modalDialog > div {
+  width: 1000px;
+}
+
 @media only screen and (min-width: 576px) {
   .modalDialog > div {
     width: 500px;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  #threeDOverlay .modalDialog > div {
+    width: 1000px;
   }
 }
 
@@ -721,7 +731,7 @@ error msg block behavior
 
 /* ATTEMPT AT OVERLAY FOR DETAILS  */
 
-#overlay, #confirmOverlay, #vidOverlay{
+#overlay, #threeDOverlay, #confirmOverlay, #vidOverlay{
   position: fixed;
   display: none;
   width: 100%;
