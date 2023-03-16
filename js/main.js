@@ -538,18 +538,24 @@ function generateContent(modelData) {
   //creates ID for hook to open modalDialog
   detailsImg.setAttribute("id",modelData['Name'] + "_details");
 
-  let microscapeButton = document.createElement("i");
-  microscapeButton.classList.add("microscape-button");
-  //microscapeButton.href = "http://vascularmodelrepository.s3-website-us-east-1.amazonaws.com/";
-  microscapeButton.setAttribute("id",modelData['Name'] + "_3D");
+  if(modelData['Name'] == "0005_1001"){
+    let microscapeButton = document.createElement("i");
+    microscapeButton.classList.add("microscape-button");
+    //microscapeButton.href = "http://vascularmodelrepository.s3-website-us-east-1.amazonaws.com/";
+    microscapeButton.setAttribute("id",modelData['Name'] + "_3D");
 
-  let mcpImgHover = document.createElement("img");
-  mcpImgHover.classList.add("icon-hover");
-  mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
+    let mcpImgHover = document.createElement("img");
+    mcpImgHover.classList.add("icon-hover");
+    mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
 
-  let mcpImg = document.createElement("img");
-  mcpImg.classList.add("icon");
-  mcpImg.src = 'img/group-logos/MCP_Icon_GreyOverAlpha.png'
+    let mcpImg = document.createElement("img");
+    mcpImg.classList.add("icon");
+    mcpImg.src = 'img/group-logos/MCP_Icon_GreyOverAlpha.png'
+
+    divModelImage.appendChild(microscapeButton);
+    microscapeButton.appendChild(mcpImg);
+    microscapeButton.appendChild(mcpImgHover);
+  }
   
   //creates image of model
   let innerImg = document.createElement("img");
@@ -559,9 +565,7 @@ function generateContent(modelData) {
 
   divModelImage.appendChild(innerImg);
   divModelImage.appendChild(detailsImg);
-  divModelImage.appendChild(microscapeButton);
-  microscapeButton.appendChild(mcpImg);
-  microscapeButton.appendChild(mcpImgHover);
+
   div.appendChild(divModelImage);
 
   return div
