@@ -229,9 +229,6 @@ a.noDec:hover {
     margin-right: 5%;
 }
 
-li {
-    line-height: 2; 
-}
 
 .contributor-box {
     border-radius: 5px;
@@ -241,7 +238,7 @@ li {
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 20px;
-    /* margin: 10px; */
+    /* margin: 10px; 
 }
 
 .group-name {
@@ -273,4 +270,4 @@ li {
     border: 2px solid var(--light1);
     object-fit: cover;
     /* margin-top: 10px; */
-}
+} 
