@@ -94,7 +94,6 @@ color="#000000">
         <div class="cd-tab-filter" style = "height: auto;">
           <div>
             <span id="counterPanel"></span>
-            <span id="help"><span id ="putHelpWordHere"></span><i class="fa-regular fa-circle-question"></i></span>
           </div>
         </div> <!-- cd-tab-filter -->
       </div> <!-- cd-tab-filter-wrapper -->
@@ -129,111 +128,6 @@ color="#000000">
               <input type="search" placeholder="Search" id="search-field">
             </div> <!-- cd-filter-content -->
           </div> <!-- cd-filter-block -->
-          
-          <div class="cd-filter-block">
-            <h4>Simulation results</h4>
-            <div class="cd-filter-content" style = "display: block;">
-              <div>
-                <label class="switch switch-flat" id = "proOrRe">
-                  <input id = "switch-input" class="switch-input" type="checkbox" />
-                  <span class="switch-label" data-on="Must Have" data-off="Optional"></span> 
-                  <span class="switch-handle"></span> 
-                </label>
-              </div>
-            </div>
-          </div>
-           
-          <div class="cd-filter-block">
-              <h4>Age</h4>
-              <div class="cd-filter-content" style = "display: block;">
-                <div>
-                  <label class = "ageSearch minSearch" for="quantity">Minimum</label>
-                  <input class = "ageSearch" type="number" id="min-age" min="0" max="120">
-                </div> <!-- end min block -->
-
-                <div>
-                  <label class = "ageSearch" for="quantity">Maximum</label>
-                  <input class = "ageSearch" type="number" id="max-age" min="0" max="120">
-                </div> <!-- end max block -->
-
-                <div>
-                  <label class = "descriptive_label">In Years</label>
-                </div> <!-- end max block -->
-              </div> <!-- cd-filter-content -->
-            </div>  <!-- cd-filter-block -->
-          
-            <div class="cd-filter-block">
-              <h4>Sex</h4>
-              <div class="cd-filter-content cd-select cd-filters list" style="display: block">
-                <select class="filter" id="select-Sex">
-                  <!-- generated in js -->
-                </select>
-              </div>
-            </div> <!-- cd-filter-block -->
-
-            <div class="cd-filter-block">
-              <h4>Species</h4>
-              <div class="cd-filter-content cd-select cd-filters list" style="display: block">
-                <select class="filter" id="select-Species">
-                  <!-- generated in js -->
-                </select>
-              </div>
-            </div> <!-- cd-filter-block -->
-
-            <div class="cd-filter-block">
-              <h4 class="closed">Anatomy</h4>
-              <ul id = "AnatomyUl" class="cd-filter-content cd-filters list" style="display: none;">
-                <!-- generated in js -->
-              </ul>
-            </div>
-
-            <div class="cd-filter-block">
-              <h4 class="closed">Disease</h4>
-              <ul id = "DiseaseUl" class="cd-filter-content cd-filters list" style="display: none;">
-                <!-- generated in js -->
-              </ul>
-            </div> <!-- cd-filter-block -->
-            
-            <div class="cd-filter-block">
-              <h4 class="closed">Procedure</h4>
-              <ul id = "ProcedureUl" class="cd-filter-content cd-filters list" style="display: none;">
-                <!-- generated in js -->
-              </ul>
-            </div> <!-- cd-filter-block -->
-
-            <div class="cd-filter-block">
-              <h4 class="closed">Project Must Contain</h4>
-              <ul class="cd-filter-content cd-filters list">
-                <li>
-                  <input class="filter" data-filter="Images" type="checkbox" id="checkbox-Images">
-                  <label class="checkbox-label" for="checkbox-Images">Images</label>
-                </li>
-                <li>
-                  <input class="filter" data-filter="Paths" type="checkbox" id="checkbox-Paths">
-                  <label class="checkbox-label" for="checkbox-Paths">Paths</label>
-                </li>
-                <li>
-                  <input class="filter" data-filter="Segmentations" type="checkbox" id="checkbox-Segmentations">
-                  <label class="checkbox-label" for="checkbox-Segmentations">Segmentations</label>
-                </li>
-                <li>
-                  <input class="filter" data-filter="Models" type="checkbox" id="checkbox-Models">
-                  <label class="checkbox-label" for="checkbox-Models">Models</label>
-                </li>
-                <li>
-                  <input class="filter" data-filter="Meshes" type="checkbox" id="checkbox-Meshes">
-                  <label class="checkbox-label" for="checkbox-Meshes">Meshes</label>
-                </li>
-                <li>
-                  <input class="filter" data-filter="Simulations" type="checkbox" id="checkbox-Simulations">
-                  <label class="checkbox-label" for="checkbox-Simulations">Simulations</label>
-                </li>
-              </ul>
-            </div> <!-- cd-filter-block --> 
-            
-            <div class="cd-filter-block">
-              <span id="helpFilters">Help  <i class="fa-regular fa-circle-question"></i></span>
-            </div>
       </form>
       <!-- button to Close and Filters header -->
         <a href="#0" class="cd-filter-trigger insideFilterBar">Filters</a>
@@ -241,12 +135,6 @@ color="#000000">
       </section> <!-- cd-filter -->
       <!-- Filters header for when filter bar not open -->
       <a href="#0" class="cd-filter-trigger outsideFilterBar">Filters</a>
-
-      <!-- section for menu -->
-      <section class="menu-bar" id = "menu-bar">
-        <div>Menu</div>
-        <div id="helpMenu"><i class="fa-regular fa-circle-question"></i></div>
-      </section>
 
       <section class="features" id = "features">
         <form>
@@ -319,24 +207,16 @@ color="#000000">
         <!-- safeOfOverlayClick is where the user can click and the detailsModal does not close -->
         <div id ="safeOfOverlayClick">
           <p id="modal-greeting">Placeholder</p>
-          <textarea class="details-text" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dolor elementum, malesuada est in, molestie libero. Morbi in nibh est. Quisque venenatis cursus augue, in pellentesque est. Nam placerat finibus sapien, venenatis placerat nibh tincidunt sed. Curabitur vehicula vulputate leo ac suscipit. Pellentesque sollicitudin, justo sed maximus porttitor, tellus orci ornare sem, et finibus augue leo vitae libero. Morbi vitae diam dui. Donec ac mollis felis, vel ornare quam. Nam risus elit, semper sed nulla vitae, vulputate ultrices dolor. Donec interdum molestie eros nec facilisis. Integer vel pretium magna, non tempor lorem. Aliquam semper est in odio condimentum ultricies. Maecenas non nulla viverra, cursus tellus ut, posuere ligula. Praesent massa eros, rutrum eget eros in, rhoncus scelerisque justo. Cras lacus diam, congue vitae elit ut, convallis rhoncus diam.
-
-              Pellentesque non faucibus tortor, ut ornare tortor. Etiam nisl nulla, lacinia nec nulla quis, vestibulum fermentum magna. Aliquam ullamcorper, ipsum vitae varius luctus, ligula velit vehicula purus, sed aliquam dui libero eget ipsum. Curabitur tristique ex at tortor ullamcorper laoreet. Suspendisse consectetur ligula at commodo bibendum. Donec tempor mauris risus, non auctor tellus dapibus sit amet. Sed in malesuada dolor. Praesent scelerisque consequat elementum. Proin congue ipsum maximus est congue, at elementum magna eleifend.
-
-              Mauris elit leo, semper et lobortis eget, iaculis at erat. Nulla vulputate purus in rhoncus semper. Donec dolor ante, hendrerit eget ullamcorper sed, egestas ac libero. Morbi vestibulum nulla nec enim pretium, eu tincidunt tortor suscipit. Integer porta fringilla nunc, ut pulvinar enim lobortis ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas pellentesque ligula orci, sed aliquam enim ultrices quis. Nunc imperdiet imperdiet lorem, at tempus elit tincidunt facilisis. Donec vitae pharetra lectus, ac tempus odio. Integer vitae pellentesque ipsum, id semper velit. Etiam sapien arcu, rutrum vitae sapien quis, semper tincidunt elit. Ut placerat urna nec enim imperdiet gravida. Aliquam eget odio at lorem tempus pharetra. Pellentesque pellentesque turpis vel nibh consequat dictum.</textarea>
           <div id="modal-closure" style="margin-bottom:10px;">Placeholder</div>
           <div class="row">
             <!-- three buttons: close, download, share -->
-            <div class="col-xs-4 col-sm-4 text-center">
-              <a title = "Get Shareable Link" class="button button-modal shareableLink-button-modal"><i class="fa-solid fa-share"></i></a>
-            </div>
-            <div class="col-xs-4 col-sm-4 text-center">
+            <div class="col-xs-6 col-sm-6 text-center">
               <a title = "Download PDF" class="button button-modal pdf-button-modal"><i class="fa-solid fa-file-pdf"></i></a>
             </div>
-            <div class="col-xs-4 col-sm-4 text-center">
+            <div class="col-xs-6 col-sm-6 text-center">
               <a title = "Download Model" class="button button-modal download-button-modal"><i class="fa-solid fa-download"></i></a>
             </div>
-            <div class="col-xs-4 col-sm-4 top-right">
+            <div class="col-xs-6 col-sm-6 top-right">
               <a title = "Close" class="button close-button-modal"><i class="fa-solid fa-xmark"></i></a>
             </div>
             <!-- 6LedB9gdAAAAANK8mQLhxsR7-mpeDlxzPdm9fQkV secret key -->
@@ -408,8 +288,8 @@ color="#000000">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
 <!-- <script src="js/jquery-2.1.1.js"></script> -->
 <script src="js/jquery.mixitup.min.js"></script>
-<script src="js/main.js?v=1.1.5"></script>
-<script src="js/filters.js?v=1.0.4"></script>
+<script src="js/main_additionaldata.js"></script>
+<script src="js/filters.js?v=1.0.5"></script>
 <script src="js/buttons.js?v=1.0.3"></script>
 </body>
 </html>

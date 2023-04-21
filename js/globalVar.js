@@ -633,6 +633,11 @@ function craftURL(modelName)
     var url = "svprojects/"
     url += modelName + "." + downloadType;
   }
+  else if (downloadType == 'additionaldata')
+  {
+    var url = "additionaldata/"
+    url += modelName + ".zip";
+  }
   else
   {
     var url = "svresults/" + modelName + "/"
@@ -652,8 +657,6 @@ function craftDownloadName(modelName)
   {
     return modelName + "_" + downloadType
   }
-
-  return url;
 }
 
 //deals with units for size
@@ -707,8 +710,11 @@ function getSumOfSizes(boolArray)
 //gets size of individual models given their name
 function getSizeIndiv(modelName)
 {
+  console.log('----')
+  console.log(modelName);
   var url = craftURL(modelName);
 
+  console.log(url);
   var size = parseInt(fileSizes[url]);
 
   //returns bytes and readable version of size

@@ -2,7 +2,7 @@ $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
-    url: "dataset/dataset.csv",
+    url: "dataset/additionaldata.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -12,13 +12,14 @@ $(document).ready(function($){
       {
         preservedOrderData.push(data[i]);
       }
-      // we shuffle array to make it always different
-      data.sort(() => (Math.random() > .5) ? 1 : -1);
+    // we don't shuffle the additional data
+    //   // we shuffle array to make it always different
+    //   data.sort(() => (Math.random() > .5) ? 1 : -1);
     }
   });
   $.ajax({
     type: "GET",
-    url: "dataset/file_sizes.csv",
+    url: "dataset/file_sizes_additionaldata.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -136,10 +137,10 @@ function updateCounters(fApplied, fData, string)
     }
     else {
       if (fApplied) {
-        counterPanel.textContent = "Filters applied: " + fData.length + '/' + totalLength + ' models'
+        counterPanel.textContent = "Filters applied: " + fData.length + '/' + totalLength + ' files'
       }
       else {
-        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
+        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' files'
       }
       
       if(document.getElementById("putHelpWordHere") !== null)
@@ -164,79 +165,12 @@ function greetingText(data)
   $('.details-text').scrollTop(0);
 
   //modal's first line
-  $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the details:'
+  $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the associated notes:\n\n'
 
-  //details inside window
-  var details = "";
-  //all categories displayed in window
-  var categoryName = getCategoryName();
-
-  for(var d = 0; d < categoryName.length; d++)
-  {
-    //valInCat is the value in the category
-    var valInCat = data[categoryName[d]];
-
-    //accounts for when value is not specified
-    if(valInCat == "-")
-    {
-      details += categoryName[d] + ": N/A";
-    }
-    else{
-      //deals with age for most relevant unit
-      if(categoryName[d] == "Age")
-      {
-        details += categoryName[d] + ": " + ageCalculator(valInCat);
-      }
-      //specifies species if can be more specific
-      else if(categoryName[d] == "Species" && valInCat == "Animal")
-      {
-        details += categoryName[d] + ": " + data["Animal"];
-      }
-      else
-      {
-        //accounts for when there are multiple details, separated by a "_"
-        if(valInCat.indexOf("_") == -1)
-        {
-          details += categoryName[d] + ": " + valInCat;
-        }
-        else
-        {
-          //formats multiple details
-          details += categoryName[d] + "s: ";
-
-          details += listFormater(valInCat)
-        }
-      } //end else if more than one detail
-    }
-
-    //adds new line per detail
-    details += '\n';
-
-  } //end for-loop through categoryName
-
-  //formatting for whether or not each fdr is avaliable
-  var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
-  for (var i = 0; i < fdrs.length; i++) {
-    //changes "1" to "yes" and "0" to "no"
-    if (data[fdrs[i]] == '1') {
-      details = details + fdrs[i] + ' available: yes'
-    }
-    else {
-      if (data[fdrs[i]] == '0') {
-        details = details + fdrs[i] + ' available: no'
-      }
-    }
-    //adds new line after everything except the last detail
-    if (i != fdrs.length - 1)
-    {
-      details += '\n'
-    }
-  }
-  //adds details to window
-  $('.details-text')[0].value = details
-
-  downloadType = "zip";
+  downloadType = "additionaldata";
+  console.log(viewingModel);
   var size = getSizeIndiv(viewingModel["Name"]);
+  console.log(size);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
@@ -325,14 +259,14 @@ function checkOverlay(){
       overlayOn();
     }
     else{
-      // overlayOff();
+      overlayOff();
     }
   }
 }
 
 //turns overlay and all accompanying elements on
 function overlayOn(){
-  // updates display and global variable isOverlayOn
+  //updates displat and global variable isOverlayOn
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
@@ -361,7 +295,7 @@ function overlayOn(){
 
 //deals with turning overlay off
 function overlayOff(){
-  //updates variables
+  // //updates variables
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
   isOverlayOn = false;
@@ -460,7 +394,7 @@ function generateContent(modelData) {
   
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
+  innerImg.src = 'img/additionaldata-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id",modelData['Name']);
 
@@ -476,8 +410,7 @@ function generateContent(modelData) {
 function addClickListener(model) {
   modelName =  model['Name'];
   //magnifying glass --> modalgreeting and overlay
-  $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();
-  });
+  $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
   // selects model if you click on it
   $('#' + modelName).click(function() {updatedSelectedList(model);});
 

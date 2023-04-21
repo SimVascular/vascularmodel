@@ -4,38 +4,90 @@ JavaScript for Filter Bar
 
 ----------------------------*/
 
+var availableFilters = {}
 function getFilterMenu()
 {
   var allHooks = []
   
   //sets default values for Age
-  document.getElementById("min-age").value = 0;
-  document.getElementById("max-age").value = 120;
+  if (document.getElementById("min-age"))
+  {
+    availableFilters['Age'] = true
+    document.getElementById("min-age").value = 0;
+  }
+  else
+  {
+    availableFilters["Age"] = false
+  }
+  if (document.getElementById("max-age"))
+  {
+    document.getElementById("max-age").value = 120;
+  }
 
   //generates html of Sex dropdown menu
   var sexSelect = document.getElementById("select-Sex");
-  generateDropDownMenu("Sex", sexSelect)
-  allHooks.push(["select-Sex"])
+  if (sexSelect)
+  {
+    availableFilters["Sex"] = true
+    generateDropDownMenu("Sex", sexSelect)
+    allHooks.push(["select-Sex"])
+  }
+  else
+  {
+    availableFilters["Sex"] = false
+  }
 
   //generates html of Species dropdown menu
   var speciesSelect = document.getElementById("select-Species");
-  generateDropDownMenu("Species", speciesSelect)
-  allHooks.push(["select-Species"])
+  if (speciesSelect)
+  {
+    availableFilters["Species"] = true
+    generateDropDownMenu("Species", speciesSelect)
+    allHooks.push(["select-Species"])
+  }
+  else
+  {
+    availableFilters["Species"] = false
+  }
 
   //generates html of Anatomy checkboxes
   var anatomyUl = document.getElementById("AnatomyUl");
-  var hooks = generateCheckboxUl("Anatomy", anatomyUl)
-  allHooks.push(hooks)
+  if (anatomyUl)
+  {
+    availableFilters["Anatomy"] = true
+    var hooks = generateCheckboxUl("Anatomy", anatomyUl)
+    allHooks.push(hooks)
+  }
+  else
+  {
+    availableFilters["Anatomy"] = false
+  }
 
   //generates html of Disease checkboxes
   var diseaseUl = document.getElementById("DiseaseUl");
-  var hooks = generateCheckboxUl("Disease", diseaseUl)
-  allHooks.push(hooks)
+  if (diseaseUl)
+  {
+    availableFilters["Disease"] = true
+    var hooks = generateCheckboxUl("Disease", diseaseUl)
+    allHooks.push(hooks)
+  }
+  else
+  {
+    availableFilters["Disease"] = false
+  }
 
   //generates html of Procedure checkboxes
   var procedureUl = document.getElementById("ProcedureUl");
-  var hooks = generateCheckboxUl("Procedure", procedureUl)
-  allHooks.push(hooks)
+  if (procedureUl)
+  {
+    availableFilters["Procedure"] = true
+    var hooks = generateCheckboxUl("Procedure", procedureUl)
+    allHooks.push(hooks)
+  }
+  else
+  {
+    availableFilters["Procedure"] = false
+  }
 
   //loops through all hooks saved above
   for (var i = 0; i < allHooks.length; i++)
@@ -180,46 +232,48 @@ function applyFilters()
 
   //per type of filter
   for(var t = 0; t < titles.length; t++){
-    
-    if(titles[t] == "Age")
+    if (availableFilters[titles[t]])
     {
-      filterOutput = ageFilter(filteredData)
-      filteredData = filterOutput[0]
-      filterApplied = filterApplied || filterOutput[1]
-    }
-    else if (titles[t] == "Sex" || titles[t] == "Species")
-    {
-      filterOutput = dropDownFilter(titles[t], filteredData)
-      filteredData = filterOutput[0]
-      filterApplied = filterApplied || filterOutput[1]
-    }
-    else {
-      //takes union, not intersection between checkboxes
-      var whichToKeep = new Array(filteredData.length)
-      //if a box is checked in the category
-      if (isChecked(titles[t]))
-      {    
-        whichToKeep.fill(false);
+      if(titles[t] == "Age")
+      {
+        filterOutput = ageFilter(filteredData)
+        filteredData = filterOutput[0]
+        filterApplied = filterApplied || filterOutput[1]
+      }
+      else if (titles[t] == "Sex" || titles[t] == "Species")
+      {
+        filterOutput = dropDownFilter(titles[t], filteredData)
+        filteredData = filterOutput[0]
+        filterApplied = filterApplied || filterOutput[1]
+      }
+      else {
+        //takes union, not intersection between checkboxes
+        var whichToKeep = new Array(filteredData.length)
+        //if a box is checked in the category
+        if (isChecked(titles[t]))
+        {    
+          whichToKeep.fill(false);
 
-        for(var i = 0; i < nTimes[t]; i++)
-        {
-          //ID is related to the hook. Key is the value in the CSV
-          IDs = checkboxNamesPerCategory(titles[t], false)
-          keys = checkboxNamesPerCategory(titles[t], true)
-          //sends each checkbox into the filter
-          filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData, whichToKeep)
-          //saves changes in whichToKeep
-          whichToKeep = filterOutput[0]
-          filterApplied = filterApplied || filterOutput[1]
+          for(var i = 0; i < nTimes[t]; i++)
+          {
+            //ID is related to the hook. Key is the value in the CSV
+            IDs = checkboxNamesPerCategory(titles[t], false)
+            keys = checkboxNamesPerCategory(titles[t], true)
+            //sends each checkbox into the filter
+            filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData, whichToKeep)
+            //saves changes in whichToKeep
+            whichToKeep = filterOutput[0]
+            filterApplied = filterApplied || filterOutput[1]
+          }
         }
-      }
-      else{
-        //if not checked, return all values
-        whichToKeep.fill(true);
-      }
+        else{
+          //if not checked, return all values
+          whichToKeep.fill(true);
+        }
 
-      //keeps the ones set to be kept
-      filteredData = updatedFilteredData(whichToKeep, filteredData);
+        //keeps the ones set to be kept
+        filteredData = updatedFilteredData(whichToKeep, filteredData);
+      }
     }
   }
   //filters for search bar
@@ -369,9 +423,16 @@ JavaScript for Filter Bar:
 function ageFilter(partialData)
 {
   //takes in input from filter
-  var minVal = parseFloat(document.getElementById("min-age").value);
-  var maxVal = parseFloat(document.getElementById("max-age").value);
-
+  var minAgeFilter = document.getElementById("min-age")
+  var maxAgeFilter = document.getElementById("max-age")
+  if (minAgeFilter != null)
+  {
+    var minVal = parseFloat(minAgeFilter.value);
+  }
+  if (maxAgeFilter != null)
+  {
+    var maxVal = parseFloat(maxAgeFilter.value);
+  }
   //checks if input has no impact on filtering
   if((isNaN(minVal) || minVal == 0) && (isNaN(maxVal) || maxVal == 120))
   {
@@ -419,31 +480,35 @@ function ageFilter(partialData)
 function dropDownFilter(categoryName, partialData)
 {
   //reads which is selected in dropdown menu
-  var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
+  if (document.getElementById("select-" + categoryName))
+    {
+    var valueToSearch = document.getElementById("select-" + categoryName).value.toLowerCase()
 
-  //if nothing specified
-  if(valueToSearch == 'all')
-  {
-    return [partialData, false];
-  }
-  else
-  {
-    var filteredData = []
-
-    for (var i = 0; i < partialData.length; i++) {
-      //only searches under category
-      var element = partialData[i][categoryName].toLowerCase();
-
-      //if valueToSearch and current element align
-      if (element == valueToSearch) 
-      {
-        //saves element in filteredData
-        filteredData.push(partialData[i]);
-      }
+    //if nothing specified
+    if(valueToSearch == 'all')
+    {
+      return [partialData, false];
     }
+    else
+    {
+      var filteredData = []
 
-    return [filteredData, true];
+      for (var i = 0; i < partialData.length; i++) {
+        //only searches under category
+        var element = partialData[i][categoryName].toLowerCase();
+
+        //if valueToSearch and current element align
+        if (element == valueToSearch) 
+        {
+          //saves element in filteredData
+          filteredData.push(partialData[i]);
+        }
+      }
+
+      return [filteredData, true];
+    }
   }
+  return partialData;
 }
 
 function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
@@ -606,7 +671,8 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
 }
 
 function hasResults(partialData){
-  if(document.getElementById("switch-input").checked)
+  if(document.getElementById("switch-input") && 
+     document.getElementById("switch-input").checked)
   {
     var filteredData = []
 
