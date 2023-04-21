@@ -232,13 +232,13 @@ a.noDec:hover {
 
 .contributor-box {
     border-radius: 5px;
-    border: 0.5px solid var(--light1);
-    text-align: center;
+    /* border: 0.5px solid var(--light1); */
+    text-align: left;
     vertical-align: center;
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 20px;
-    /* margin: 10px; 
+    /* margin: 10px; */
 }
 
 .group-name {
