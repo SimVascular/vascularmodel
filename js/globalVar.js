@@ -70,9 +70,13 @@ function getDetailsTitles()
 //excludes titles that aren't filtered in the filter bar
 function getFilterTitles()
 {
-  var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
+  if (useAllFilters)
+  {
+    var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
 
-  return output;
+    return output;
+  }
+  return [];
 }
 
 //returns the different categories someone can filter through

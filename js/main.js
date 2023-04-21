@@ -1,3 +1,5 @@
+var useAllFilters = false;
+
 $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
@@ -49,6 +51,8 @@ $(document).ready(function($){
 
   //populates gallery with all models
   populate(data);
+
+  useAllFilters = true;
 });
 
 //checks width of screen and updates counters as needed

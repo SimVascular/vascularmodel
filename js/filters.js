@@ -535,6 +535,8 @@ function searchBarFilter(partialData)
   //checks for input in search bar
   var valueToSearch = document.getElementById('search-field').value.toLowerCase()
 
+  console.log(valueToSearch);
+
   //if no input, returns array
   if (valueToSearch == '')
   {
@@ -583,13 +585,19 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
   //categoriesWith1s is an array with i.e. "Images", "Simulations"
   var categoriesWith1s = []
   
-  for(var i = 0; i < allCategories.length; i++)
+  // if we only have one element we put all categories which is not right
+  if (data.length > 1)
   {
-    if (getNTimesPerCategory(allCategories[i]) == 1)
+    for(var i = 0; i < allCategories.length; i++)
     {
-      categoriesWith1s.push(allCategories[i].toLowerCase())
+      if (getNTimesPerCategory(allCategories[i]) == 1)
+      {
+        categoriesWith1s.push(allCategories[i].toLowerCase())
+      }
     }
   }
+
+  console.log(categoriesWith1s);
    
   //filtering part
   for (var i = 0; i < partialData.length; i++) {
