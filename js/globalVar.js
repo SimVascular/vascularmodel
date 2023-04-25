@@ -714,11 +714,8 @@ function getSumOfSizes(boolArray)
 //gets size of individual models given their name
 function getSizeIndiv(modelName)
 {
-  console.log('----')
-  console.log(modelName);
   var url = craftURL(modelName);
 
-  console.log(url);
   var size = parseInt(fileSizes[url]);
 
   //returns bytes and readable version of size

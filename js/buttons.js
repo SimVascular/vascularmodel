@@ -290,11 +290,22 @@ $('.shareableLink-button-modal').click(function() {
   informUser("Link copied");
 });
 
-//share button inside modalText
+//PDF button inside modalText
 $('.pdf-button-modal').click(function() {
   //creates anchor tag to download
   var a = document.createElement("a");
   a.href = "VMR_PDFs/" + viewingModel['Name'] + ".pdf";
+  // a.setAttribute("download", viewingModel['Name']);
+  a.setAttribute("target", "_blank");
+  //simulates click
+  a.click();
+});
+
+//PDF button inside modalText
+$('.download-button-additionaldata').click(function() {
+  //creates anchor tag to download
+  var a = document.createElement("a");
+  a.href = "additionaldata/" + viewingModel['Name'] + ".vtp";
   // a.setAttribute("download", viewingModel['Name']);
   a.setAttribute("target", "_blank");
   //simulates click

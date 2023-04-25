@@ -173,9 +173,7 @@ function greetingText(data)
   $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the associated notes:\n\n'
 
   downloadType = "additionaldata";
-  console.log(viewingModel);
   var size = getSizeIndiv(viewingModel["Name"]);
-  console.log(size);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
@@ -370,6 +368,7 @@ function generateContent(modelData) {
   var divModelImage = document.createElement("div");
   //formatting of box holding image
   divModelImage.classList.add("model-image");
+  divModelImage.style.cursor = "auto";
   //hover animation
   divModelImage.classList.add("animate");
   //ID for hook to select model
@@ -416,8 +415,6 @@ function addClickListener(model) {
   modelName =  model['Name'];
   //magnifying glass --> modalgreeting and overlay
   $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
-  // selects model if you click on it
-  $('#' + modelName).click(function() {updatedSelectedList(model);});
 
   // //show 3D version of model if you click on it
   // $("#" + modelName + "_3D").click(function() {show3D(model);});

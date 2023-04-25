@@ -508,6 +508,17 @@ error msg block behavior
   /* text-decoration: underline !important; */
 }
 
+.download-button-additionaldata {
+  background-color: var(--light1);
+}
+
+.download-button-additionaldata:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--light1shade); 
+  /* text-decoration: underline !important; */
+}
+
 .descriptions
 {
   float: center;

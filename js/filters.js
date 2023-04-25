@@ -535,8 +535,6 @@ function searchBarFilter(partialData)
   //checks for input in search bar
   var valueToSearch = document.getElementById('search-field').value.toLowerCase()
 
-  console.log(valueToSearch);
-
   //if no input, returns array
   if (valueToSearch == '')
   {
@@ -596,8 +594,6 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
       }
     }
   }
-
-  console.log(categoriesWith1s);
    
   //filtering part
   for (var i = 0; i < partialData.length; i++) {
