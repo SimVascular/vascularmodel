@@ -305,7 +305,7 @@ $('.pdf-button-modal').click(function() {
 $('.download-button-additionaldata').click(function() {
   //creates anchor tag to download
   var a = document.createElement("a");
-  a.href = "additionaldata/" + viewingModel['Name'] + ".vtp";
+  a.href = "additionaldata/" + viewingModel['Name'] + ".zip";
   // a.setAttribute("download", viewingModel['Name']);
   a.setAttribute("target", "_blank");
   //simulates click
