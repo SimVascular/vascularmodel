@@ -265,9 +265,9 @@ a.noDec:hover {
 }
 
 .group-logo {
-    width: 90px;
-    height: 90px;
-    border: 2px solid var(--light1);
+    width: 120px;
+    height: 120px;
+    border: 1px solid var(--light1);
     object-fit: cover;
     /* margin-top: 10px; */
 } 
