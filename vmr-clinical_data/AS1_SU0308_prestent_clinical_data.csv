@@ -1,0 +1,2 @@
+﻿name,sex,age,Heart Rate (bpm),BSA (m^2),Cardiac Index (L/min/m^2),Wedge Pressure (mmHg),MPA pressures: systolic/diastolic (mmHg),MPA mean pressure (mmHg),RPA pressures: systolic/diastolic (mmHg),RPA mean pressure (mmHg),RLPA pressures: systolic/diastolic (mmHg),RLPA mean pressure (mmHg),LPA pressures: systolic/diastolic (mmHg),LPA mean pressure (mmHg),"PA flow split, percentage right"
+AS1_SU0308_prestent,Female,16.8,68,1.39,4.2,20,90/18,42,50/18,32,35/15,23,50/18,32,52%
