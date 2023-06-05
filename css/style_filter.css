@@ -239,9 +239,14 @@ xfilter
     background-color: var(--dark2);
     z-index: 2;
   }
+
   .cd-filter form {
-    padding: 70px 20px;
+    padding: 0px 20px;
+    overflow-y: auto;
+    resize: none;
+    height: 72vh;
   }
+
   .cd-filter .cd-close {
     position: absolute;
     top: 0;
@@ -284,7 +289,8 @@ xfilter
     -o-transform: translateX(0);
     transform: translateX(0);
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
-    overflow: auto;
+    /* overflow: auto; */
+    height: 100%;
   }
   
   .cd-filter.filter-is-visible .cd-close {
