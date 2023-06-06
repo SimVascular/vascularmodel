@@ -251,7 +251,7 @@ gallery
   border-width: inset;
   border: 3px solid;
   background-color: white;
-  border-color: var(--applied);
+  border-color: var(--midpointSelectApplied);
 }
 
 /* FORMATING TEXT OVER GALLERY IMAGES */
@@ -265,10 +265,19 @@ gallery
 .top-left {
   position: absolute;
   top: 30px;
-  left: 30px;
   object-fit: cover;
-  font-size: 150%;
+  font-size: 200%;
   padding: 5px;
+}
+
+.top-left.selected {
+  color: var(--midpointSelectApplied);
+  left: 13px;
+}
+
+.top-left.notSelected {
+  color: var(--dark1);
+  left: 30px;
 }
 
 .top-left:hover, bottom-left:hover{
