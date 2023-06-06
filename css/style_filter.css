@@ -240,12 +240,42 @@ xfilter
     z-index: 2;
   }
 
-  .cd-filter form {
-    padding: 0px 20px;
+  .filterOptions{
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     overflow-y: auto;
     resize: none;
-    height: 72vh;
   }
+
+  @media only screen and (max-height: 800px) {
+    .filterOptions{
+      height: 70%;
+    }
+  }
+
+  @media only screen and (min-height: 800px) {
+    .filterOptions{
+      height: 75%;
+    }
+  }
+
+  @media only screen and (min-height: 950px) {
+    .filterOptions{
+      height: 78%;
+    }
+  }
+
+  @media only screen and (min-height: 1120px) {
+    .filterOptions{
+      height: 82%;
+    }
+  }
+
+
+
+  
 
   .cd-filter .cd-close {
     position: absolute;
