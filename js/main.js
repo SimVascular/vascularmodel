@@ -313,7 +313,7 @@ $('#overlay').click(function() {
 });
 
 //turns off the overlay when the X is clicked
-$('.close-button-modal').click(function() {
+$('.close-button-modal').click(function() {  
   overlayOff();
 });
 
@@ -339,6 +339,10 @@ function overlayOn(){
   // updates display and global variable isOverlayOn
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
+
+  //border when viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.add("viewingModel");
 
   //opens modalDialog
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
@@ -369,6 +373,10 @@ function overlayOff(){
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
   isOverlayOn = false;
+
+  //remove border when no longer viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.remove("viewingModel");
 
   //resets html, body, modalDialog
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
@@ -438,24 +446,35 @@ function generateContent(modelData) {
   //hover animation
   divModelImage.classList.add("animate");
   //ID for hook to select model
-  divModelImage.setAttribute("id",modelData['Name'] + "_isSelected");
-  divModelImage.setAttribute("title", "Select " + modelData["Name"]);
+  divModelImage.setAttribute("id", modelData['Name']);
+  divModelImage.setAttribute("title", "View details for " + modelData["Name"]);
+
+  //creates box to select model on top left
+  let selectBox = document.createElement("i");
+  selectBox.classList.add("fa-regular");
+  selectBox.classList.add("top-left");
+  selectBox.classList.add("selectingIndivModelsIcon");
 
   //if model is selected, show that upon loading
   if(selectedModels[preservedOrderData.indexOf(modelData)])
   {
     divModelImage.classList.add("selected");
+
+    selectBox.classList.add("fa-square-check");
+    //lingering mouse over icon will say "Deselect Model"
+    selectBox.setAttribute("title", "Deselect Model");
+    selectBox.classList.add("selected");
+  }
+  else
+  {
+    selectBox.classList.add("fa-square");
+    //lingering mouse over icon will say "Select Model"
+    selectBox.setAttribute("title", "Select Model");
+    selectBox.classList.add("notSelected");
   }
 
-  //creates magnifying glass icon on the top-left
-  let detailsImg = document.createElement("i");
-  detailsImg.classList.add("fa-solid");
-  detailsImg.classList.add("fa-magnifying-glass");
-  detailsImg.classList.add("top-left");
-  //lingering mouse over icon will say "View Details"
-  detailsImg.setAttribute("title", "View Details");
   //creates ID for hook to open modalDialog
-  detailsImg.setAttribute("id",modelData['Name'] + "_details");
+  selectBox.setAttribute("id", modelData['Name'] + "_selects");
 
   // let threeD = document.createElement("i");
   // threeD.textContent = "3D"
@@ -466,10 +485,10 @@ function generateContent(modelData) {
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
-  innerImg.setAttribute("id",modelData['Name']);
+  innerImg.setAttribute("id", modelData['Name'] + "_details");
 
   divModelImage.appendChild(innerImg);
-  divModelImage.appendChild(detailsImg);
+  divModelImage.appendChild(selectBox);
   // divModelImage.appendChild(threeD);
   div.appendChild(divModelImage);
 
@@ -479,11 +498,11 @@ function generateContent(modelData) {
 //function to add listeners to each model and its magnifying glass
 function addClickListener(model) {
   modelName =  model['Name'];
-  //magnifying glass --> modalgreeting and overlay
-  $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();
-  });
-  // selects model if you click on it
-  $('#' + modelName).click(function() {updatedSelectedList(model);});
+  // selects model if you click on the box
+  $("#" + modelName + "_selects").click(function() {updatedSelectedList(model);});
+
+  //click on model --> modalgreeting and overlay
+  $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
 
   // //show 3D version of model if you click on it
   // $("#" + modelName + "_3D").click(function() {show3D(model);});
@@ -497,6 +516,39 @@ function removeContent() {
   }
 }
 
+function formatSelectedModels(wholeModel, selectBox, isSelected)
+{
+  if(isSelected)
+  {
+    //outlines model
+    wholeModel.classList.add("selected");
+
+    //changes select box and switch attributes
+    selectBox.setAttribute("title", "Deselect Model");
+
+    selectBox.classList.add("fa-square-check");
+    selectBox.classList.remove("fa-square");
+
+    selectBox.classList.add("selected");
+    selectBox.classList.remove("notSelected");
+  }
+  else
+  {
+    wholeModel.classList.remove("selected");
+
+    //changes select box and switch attributes
+    selectBox.setAttribute("title", "Select Model");
+
+    selectBox.classList.add("fa-square");
+    selectBox.classList.remove("fa-square-check");
+    
+    selectBox.classList.add("notSelected");
+    selectBox.classList.remove("selected");
+
+  }
+
+}
+
 //updates selectedModels when a change has been made
 function updatedSelectedList(model)
 {
@@ -504,21 +556,20 @@ function updatedSelectedList(model)
   selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
   //gets element to animate it after a model is selected
   var menu = document.getElementById("menu-bar");
+  var wholeModel = document.getElementById(model['Name']);
+  var selectBox = document.getElementById(model['Name'] + "_selects");
 
   //selectedModels index depends on preservedOrderData
   if(selectedModels[preservedOrderData.indexOf(model)])
   {
-    //selects model
-    var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.add("selected");
-    //adds animation class
+    formatSelectedModels(wholeModel, selectBox, true)
+
+    //adds animation for menu bar
     menu.classList.add("selected");
   }
   else
   {
-    //deselects model
-    var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.remove("selected");
+    formatSelectedModels(wholeModel, selectBox, false)
   }
 
   //updates counters

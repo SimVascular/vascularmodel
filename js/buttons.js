@@ -96,9 +96,12 @@ function deselectModel(model)
   //index corresponds to preservedOrderData for shareable links
   selectedModels[preservedOrderData.indexOf(model)] = false;
 
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.remove("selected");
+  var selectBox = document.getElementById(model['Name'] + "_selects");
+  if (selectBox)
+  {
+    var wholeModel = document.getElementById(model['Name']);
+    formatSelectedModels(wholeModel, selectBox, false)
+  }
 }
 
 //selects given model
@@ -107,9 +110,14 @@ function selectModel(model)
   //sets value to true in selectedModels
   //index corresponds to preservedOrderData for shareable links
   selectedModels[preservedOrderData.indexOf(model)] = true;
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.add("selected");
+
+  var selectBox = document.getElementById(model['Name'] + "_selects");
+  if (selectBox)
+  {
+    var wholeModel = document.getElementById(model['Name']);
+    formatSelectedModels(wholeModel, selectBox, true)
+  }
+  
 }
 
 //selects everything the user is viewing in gallery (filteredData)

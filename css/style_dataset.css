@@ -9,9 +9,6 @@ Primary style
   box-sizing: border-box;
 }
 
-/* html {
-font-size: 62.5%;
-} */
 
 html * {
   -webkit-font-smoothing: antialiased;
@@ -244,6 +241,15 @@ gallery
   transition: 0.3s;
 }
 
+.model-image.viewingModel img{
+  /* box-shadow: inset 0px 0px 50px 10px var(--select); */
+  box-sizing: border-box;
+  border-width: inset;
+  border: 3px solid;
+  background-color: white;
+  border-color: var(--dark2);
+}
+
 .model-image.selected img {
   /* box-shadow: inset 0px 0px 50px 10px var(--select); */
   box-sizing: border-box;
@@ -251,7 +257,7 @@ gallery
   border-width: inset;
   border: 3px solid;
   background-color: white;
-  border-color: var(--applied);
+  border-color: var(--midpointSelectApplied);
 }
 
 /* FORMATING TEXT OVER GALLERY IMAGES */
@@ -265,10 +271,19 @@ gallery
 .top-left {
   position: absolute;
   top: 30px;
-  left: 30px;
   object-fit: cover;
-  font-size: 150%;
+  font-size: 200%;
   padding: 5px;
+}
+
+.top-left.selected {
+  color: var(--midpointSelectApplied);
+  left: 13px;
+}
+
+.top-left.notSelected {
+  color: var(--dark1);
+  left: 30px;
 }
 
 .top-left:hover, bottom-left:hover{
@@ -636,6 +651,11 @@ error msg block behavior
   padding-right: 22.5px;
 }
 
+.fa-square-check.selectingIndivModelsIcon {
+  padding-left: 22.5px;
+  padding-right: 22.5px;
+}
+
 #selected-counter {
   float: right;
   right: 0px;
@@ -684,8 +704,9 @@ error msg block behavior
 }
 
 .filterButtons {
-  margin-bottom: 20px;
   height: 60px;
+  padding: 70px 20px;
+  border-bottom: 2px solid var(--darkgrey);
 }
 
 .clearAllButton {
