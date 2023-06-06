@@ -9,9 +9,6 @@ Primary style
   box-sizing: border-box;
 }
 
-/* html {
-font-size: 62.5%;
-} */
 
 html * {
   -webkit-font-smoothing: antialiased;
@@ -242,6 +239,15 @@ gallery
   box-shadow: inset 0px 0px 35px 10px var(--white);
   box-sizing: border-box;
   transition: 0.3s;
+}
+
+.model-image.viewingModel img{
+  /* box-shadow: inset 0px 0px 50px 10px var(--select); */
+  box-sizing: border-box;
+  border-width: inset;
+  border: 3px solid;
+  background-color: white;
+  border-color: var(--dark2);
 }
 
 .model-image.selected img {
@@ -641,6 +647,11 @@ error msg block behavior
 }
 
 .fa-square-check {
+  padding-left: 22.5px;
+  padding-right: 22.5px;
+}
+
+.fa-square-check.selectingIndivModelsIcon {
   padding-left: 22.5px;
   padding-right: 22.5px;
 }

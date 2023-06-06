@@ -313,7 +313,7 @@ $('#overlay').click(function() {
 });
 
 //turns off the overlay when the X is clicked
-$('.close-button-modal').click(function() {
+$('.close-button-modal').click(function() {  
   overlayOff();
 });
 
@@ -339,6 +339,10 @@ function overlayOn(){
   // updates display and global variable isOverlayOn
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
+
+  //border when viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.add("viewingModel");
 
   //opens modalDialog
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
@@ -369,6 +373,10 @@ function overlayOff(){
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
   isOverlayOn = false;
+
+  //remove border when no longer viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.remove("viewingModel");
 
   //resets html, body, modalDialog
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
@@ -445,6 +453,7 @@ function generateContent(modelData) {
   let selectBox = document.createElement("i");
   selectBox.classList.add("fa-regular");
   selectBox.classList.add("top-left");
+  selectBox.classList.add("selectingIndivModelsIcon");
 
   //if model is selected, show that upon loading
   if(selectedModels[preservedOrderData.indexOf(modelData)])
@@ -490,10 +499,10 @@ function generateContent(modelData) {
 function addClickListener(model) {
   modelName =  model['Name'];
   // selects model if you click on the box
-  $("#" + modelName + "_selects").click(function() {console.log("select"); updatedSelectedList(model);});
+  $("#" + modelName + "_selects").click(function() {updatedSelectedList(model);});
 
   //click on model --> modalgreeting and overlay
-  $('#' + modelName  + "_details").click(function() {console.log("details"); greetingText(model); checkOverlay();});
+  $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
 
   // //show 3D version of model if you click on it
   // $("#" + modelName + "_3D").click(function() {show3D(model);});
@@ -505,6 +514,39 @@ function removeContent() {
   while (modelList.firstChild) {
     modelList.removeChild(modelList.firstChild);
   }
+}
+
+function formatSelectedModels(wholeModel, selectBox, isSelected)
+{
+  if(isSelected)
+  {
+    //outlines model
+    wholeModel.classList.add("selected");
+
+    //changes select box and switch attributes
+    selectBox.setAttribute("title", "Deselect Model");
+
+    selectBox.classList.add("fa-square-check");
+    selectBox.classList.remove("fa-square");
+
+    selectBox.classList.add("selected");
+    selectBox.classList.remove("notSelected");
+  }
+  else
+  {
+    wholeModel.classList.remove("selected");
+
+    //changes select box and switch attributes
+    selectBox.setAttribute("title", "Select Model");
+
+    selectBox.classList.add("fa-square");
+    selectBox.classList.remove("fa-square-check");
+    
+    selectBox.classList.add("notSelected");
+    selectBox.classList.remove("selected");
+
+  }
+
 }
 
 //updates selectedModels when a change has been made
@@ -520,25 +562,14 @@ function updatedSelectedList(model)
   //selectedModels index depends on preservedOrderData
   if(selectedModels[preservedOrderData.indexOf(model)])
   {
-    //outlines model
-    wholeModel.classList.add("selected");
+    formatSelectedModels(wholeModel, selectBox, true)
 
     //adds animation for menu bar
     menu.classList.add("selected");
-
-    //changes select box
-    selectBox.classList.add("fa-square-check");
-    selectBox.setAttribute("title", "Deselect Model");
-    selectBox.classList.add("selected");
-
   }
   else
   {
-    wholeModel.classList.remove("selected");
-
-    selectBox.classList.add("fa-square");
-    selectBox.setAttribute("title", "Select Model");
-    selectBox.classList.add("notSelected");
+    formatSelectedModels(wholeModel, selectBox, false)
   }
 
   //updates counters
