@@ -282,7 +282,7 @@ gallery
 }
 
 .top-left.notSelected {
-  color: var(--dark1);
+  color: var(--darkgrey);
   left: 30px;
 }
 
