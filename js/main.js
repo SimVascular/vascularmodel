@@ -329,7 +329,7 @@ function checkOverlay(){
       overlayOn();
     }
     else{
-      // overlayOff();
+      overlayOff();
     }
   }
 }

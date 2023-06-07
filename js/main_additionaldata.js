@@ -273,6 +273,10 @@ function overlayOn(){
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
+  //border when viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.add("viewingModel");
+
   //opens modalDialog
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
 
@@ -302,6 +306,10 @@ function overlayOff(){
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
   isOverlayOn = false;
+
+  //remove border when no longer viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.remove("viewingModel");
 
   //resets html, body, modalDialog
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
