@@ -374,38 +374,6 @@ function generateContent(modelData) {
   divModelImage.setAttribute("id", modelData['Name']);
   divModelImage.setAttribute("title", "View details for " + modelData["Name"]);
 
-  //creates box to select model on top left
-  let selectBox = document.createElement("i");
-  selectBox.classList.add("fa-regular");
-  selectBox.classList.add("top-left");
-  selectBox.classList.add("selectingIndivModelsIcon");
-
-  //if model is selected, show that upon loading
-  if(selectedModels[preservedOrderData.indexOf(modelData)])
-  {
-    divModelImage.classList.add("selected");
-
-    selectBox.classList.add("fa-square-check");
-    //lingering mouse over icon will say "Deselect Model"
-    selectBox.setAttribute("title", "Deselect Model");
-    selectBox.classList.add("selected");
-  }
-  else
-  {
-    selectBox.classList.add("fa-square");
-    //lingering mouse over icon will say "Select Model"
-    selectBox.setAttribute("title", "Select Model");
-    selectBox.classList.add("notSelected");
-  }
-
-  //creates ID for hook to open modalDialog
-  selectBox.setAttribute("id", modelData['Name'] + "_selects");
-
-  // let threeD = document.createElement("i");
-  // threeD.textContent = "3D"
-  // threeD.classList.add("bottom-left");
-  // threeD.setAttribute("id", modelData['Name'] + "_3D")
-  
   //creates image of model
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
@@ -413,7 +381,6 @@ function generateContent(modelData) {
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 
   divModelImage.appendChild(innerImg);
-  divModelImage.appendChild(selectBox);
   // divModelImage.appendChild(threeD);
   div.appendChild(divModelImage);
 
@@ -423,8 +390,6 @@ function generateContent(modelData) {
 //function to add listeners to each model and its magnifying glass
 function addClickListener(model) {
   modelName =  model['Name'];
-  // selects model if you click on the box
-  $("#" + modelName + "_selects").click(function() {updatedSelectedList(model);});
 
   //click on model --> modalgreeting and overlay
   $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
@@ -442,70 +407,69 @@ function removeContent() {
   }
 }
 
-function formatSelectedModels(wholeModel, selectBox, isSelected)
-{
-  if(isSelected)
-  {
-    //outlines model
-    wholeModel.classList.add("selected");
+// function formatSelectedModels(wholeModel, selectBox, isSelected)
+// {
+//   if(isSelected)
+//   {
+//     //outlines model
+//     wholeModel.classList.add("selected");
 
-    //changes select box and switch attributes
-    selectBox.setAttribute("title", "Deselect Model");
+//     //changes select box and switch attributes
+//     selectBox.setAttribute("title", "Deselect Model");
 
-    selectBox.classList.add("fa-square-check");
-    selectBox.classList.remove("fa-square");
+//     selectBox.classList.add("fa-square-check");
+//     selectBox.classList.remove("fa-square");
 
-    selectBox.classList.add("selected");
-    selectBox.classList.remove("notSelected");
-  }
-  else
-  {
-    wholeModel.classList.remove("selected");
+//     selectBox.classList.add("selected");
+//     selectBox.classList.remove("notSelected");
+//   }
+//   else
+//   {
+//     wholeModel.classList.remove("selected");
 
-    //changes select box and switch attributes
-    selectBox.setAttribute("title", "Select Model");
+//     //changes select box and switch attributes
+//     selectBox.setAttribute("title", "Select Model");
 
-    selectBox.classList.add("fa-square");
-    selectBox.classList.remove("fa-square-check");
+//     selectBox.classList.add("fa-square");
+//     selectBox.classList.remove("fa-square-check");
     
-    selectBox.classList.add("notSelected");
-    selectBox.classList.remove("selected");
+//     selectBox.classList.add("notSelected");
+//     selectBox.classList.remove("selected");
 
-  }
+//   }
+// }
 
-}
+// //updates selectedModels when a change has been made
+// function updatedSelectedList(model)
+// {
+//   //allows user to click and unclick model
+//   selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
+//   //gets element to animate it after a model is selected
+//   var menu = document.getElementById("menu-bar");
+//   var wholeModel = document.getElementById(model['Name']);
+//   var selectBox = document.getElementById(model['Name'] + "_selects");
 
-//updates selectedModels when a change has been made
-function updatedSelectedList(model)
-{
-  //allows user to click and unclick model
-  selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
-  //gets element to animate it after a model is selected
-  var menu = document.getElementById("menu-bar");
-  var wholeModel = document.getElementById(model['Name']);
-  var selectBox = document.getElementById(model['Name'] + "_selects");
+//   //selectedModels index depends on preservedOrderData
+//   if(selectedModels[preservedOrderData.indexOf(model)])
+//   {
+//     formatSelectedModels(wholeModel, selectBox, true)
 
-  //selectedModels index depends on preservedOrderData
-  if(selectedModels[preservedOrderData.indexOf(model)])
-  {
-    formatSelectedModels(wholeModel, selectBox, true)
+//     //adds animation for menu bar
+//     menu.classList.add("selected");
+//   }
+//   else
+//   {
+//     formatSelectedModels(wholeModel, selectBox, false)
+//   }
 
-    //adds animation for menu bar
-    menu.classList.add("selected");
-  }
-  else
-  {
-    formatSelectedModels(wholeModel, selectBox, false)
-  }
+//   //updates counters
+//   updateCounters(lastFapplied, filteredData);
 
-  //updates counters
-  updateCounters(lastFapplied, filteredData);
-
-  //remove class that allows for animation of menu bar
-  setTimeout(() => {
-    menu.classList.remove("selected");
-  }, 750);
-}
+//   //remove class that allows for animation of menu bar
+//   setTimeout(() => {
+//     menu.classList.remove("selected");
+//   }, 750);
+// }
 
 // this function is called whenever "Filters" is pressed. It applies the
 // "filter-is-visible" class to all elements in elementsToTrigger. The behavior

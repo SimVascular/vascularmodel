@@ -467,6 +467,8 @@ function generateContent(modelData) {
   }
   else
   {
+    divModelImage.classList.remove("selected");
+
     selectBox.classList.add("fa-square");
     //lingering mouse over icon will say "Select Model"
     selectBox.setAttribute("title", "Select Model");
