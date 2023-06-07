@@ -706,7 +706,7 @@ error msg block behavior
 .filterButtons {
   height: 60px;
   padding: 70px 20px;
-  border-bottom: 2px solid var(--darkgrey);
+  border-bottom: 2px solid var(--grey);
 }
 
 .clearAllButton {
