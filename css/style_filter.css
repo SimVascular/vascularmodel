@@ -377,6 +377,7 @@ xcustom form elements
 .cd-filter-block {
     margin-bottom: 0.75em;
     overflow: auto;
+    height: fit-content;
   }
   .cd-filter-block h4 {
     /* filter block title */
