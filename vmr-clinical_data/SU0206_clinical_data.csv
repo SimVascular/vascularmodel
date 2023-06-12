@@ -1,0 +1,2 @@
+﻿name,sex,age,BSA (m^2),RV End Diastolic Vol. (ml),RV End Systolic Vol. (ml),Pulmonary Artery Flow (L/min),End Diastolic Volume Index (ml/m^2),Ejection Fraction (%),Pulmonary Artery Pressure (mmHg),Pulmonary Vascular Resistance Index (Wum^2),Cardiac Index (L/min/m^2)
+SU0206,Male,10.6,1,100,45,4.3,101,55,38/15/26,6.4,4.3

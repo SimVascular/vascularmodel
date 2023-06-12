@@ -1,0 +1,2 @@
+name,sex,age,BSA (m^2),CI (L/min/m^2),P IVC MP cath,P SVC MP cath,P LPA MP cath,P RPA MP cath,P aorta SP cath,P aorta DP cath,P aorta MP cath
+0063_0001,Male,3,0.63,3.8,11,11,10,10,80,50,63

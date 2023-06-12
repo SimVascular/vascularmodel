@@ -1,0 +1,7 @@
+﻿name,sex,age,notes,BSA (m^2),HR (bpm),BP (mmHg),CO (L/min),EF (%),CAA Sizes (Z-scores)
+RCKD24,Male,18,"Summary of patient data. 
+BSA: Body surface area. HR: Heart rate. BP: Blood pressure (systolic/diastolic).
+CO: Cardiac output. EF: Ejection fraction. 
+LAD: Left anterior descending artery. LCX: Left circumflex artery.
+RCA: Right coronary artery. LM: Left main coronary artery.
+CAA: Coronary artery aneurysm.",1.5,76,88/56,4.4,57,"LAD: 5.5, RCA: 2.7"
