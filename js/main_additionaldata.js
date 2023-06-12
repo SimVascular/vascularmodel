@@ -273,6 +273,10 @@ function overlayOn(){
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
+  //border when viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.add("viewingModel");
+
   //opens modalDialog
   $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
 
@@ -302,6 +306,10 @@ function overlayOff(){
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
   isOverlayOn = false;
+
+  //remove border when no longer viewing model
+  var borderOutline = document.getElementById(viewingModel['Name']);
+  borderOutline.classList.remove("viewingModel");
 
   //resets html, body, modalDialog
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
@@ -368,42 +376,19 @@ function generateContent(modelData) {
   var divModelImage = document.createElement("div");
   //formatting of box holding image
   divModelImage.classList.add("model-image");
-  divModelImage.style.cursor = "auto";
   //hover animation
   divModelImage.classList.add("animate");
   //ID for hook to select model
-  divModelImage.setAttribute("id",modelData['Name'] + "_isSelected");
-  divModelImage.setAttribute("title", "Select " + modelData["Name"]);
+  divModelImage.setAttribute("id", modelData['Name']);
+  divModelImage.setAttribute("title", "View details for " + modelData["Name"]);
 
-  //if model is selected, show that upon loading
-  if(selectedModels[preservedOrderData.indexOf(modelData)])
-  {
-    divModelImage.classList.add("selected");
-  }
-
-  //creates magnifying glass icon on the top-left
-  let detailsImg = document.createElement("i");
-  detailsImg.classList.add("fa-solid");
-  detailsImg.classList.add("fa-magnifying-glass");
-  detailsImg.classList.add("top-left");
-  //lingering mouse over icon will say "View Details"
-  detailsImg.setAttribute("title", "View Details");
-  //creates ID for hook to open modalDialog
-  detailsImg.setAttribute("id",modelData['Name'] + "_details");
-
-  // let threeD = document.createElement("i");
-  // threeD.textContent = "3D"
-  // threeD.classList.add("bottom-left");
-  // threeD.setAttribute("id", modelData['Name'] + "_3D")
-  
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'img/additionaldata-images/' + modelData['Name'] + '.png'
+  innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
-  innerImg.setAttribute("id",modelData['Name']);
+  innerImg.setAttribute("id", modelData['Name'] + "_details");
 
   divModelImage.appendChild(innerImg);
-  divModelImage.appendChild(detailsImg);
   // divModelImage.appendChild(threeD);
   div.appendChild(divModelImage);
 
@@ -413,12 +398,14 @@ function generateContent(modelData) {
 //function to add listeners to each model and its magnifying glass
 function addClickListener(model) {
   modelName =  model['Name'];
-  //magnifying glass --> modalgreeting and overlay
+
+  //click on model --> modalgreeting and overlay
   $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
 
   // //show 3D version of model if you click on it
   // $("#" + modelName + "_3D").click(function() {show3D(model);});
 }
+
 
 //removes models from gallery
 function removeContent() {
@@ -428,38 +415,69 @@ function removeContent() {
   }
 }
 
-//updates selectedModels when a change has been made
-function updatedSelectedList(model)
-{
-  //allows user to click and unclick model
-  selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
-  //gets element to animate it after a model is selected
-  var menu = document.getElementById("menu-bar");
+// function formatSelectedModels(wholeModel, selectBox, isSelected)
+// {
+//   if(isSelected)
+//   {
+//     //outlines model
+//     wholeModel.classList.add("selected");
 
-  //selectedModels index depends on preservedOrderData
-  if(selectedModels[preservedOrderData.indexOf(model)])
-  {
-    //selects model
-    var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.add("selected");
-    //adds animation class
-    menu.classList.add("selected");
-  }
-  else
-  {
-    //deselects model
-    var element = document.getElementById(model['Name'] + "_isSelected");
-    element.classList.remove("selected");
-  }
+//     //changes select box and switch attributes
+//     selectBox.setAttribute("title", "Deselect Model");
 
-  //updates counters
-  updateCounters(lastFapplied, filteredData);
+//     selectBox.classList.add("fa-square-check");
+//     selectBox.classList.remove("fa-square");
 
-  //remove class that allows for animation of menu bar
-  setTimeout(() => {
-    menu.classList.remove("selected");
-  }, 750);
-}
+//     selectBox.classList.add("selected");
+//     selectBox.classList.remove("notSelected");
+//   }
+//   else
+//   {
+//     wholeModel.classList.remove("selected");
+
+//     //changes select box and switch attributes
+//     selectBox.setAttribute("title", "Select Model");
+
+//     selectBox.classList.add("fa-square");
+//     selectBox.classList.remove("fa-square-check");
+    
+//     selectBox.classList.add("notSelected");
+//     selectBox.classList.remove("selected");
+
+//   }
+// }
+
+// //updates selectedModels when a change has been made
+// function updatedSelectedList(model)
+// {
+//   //allows user to click and unclick model
+//   selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
+//   //gets element to animate it after a model is selected
+//   var menu = document.getElementById("menu-bar");
+//   var wholeModel = document.getElementById(model['Name']);
+//   var selectBox = document.getElementById(model['Name'] + "_selects");
+
+//   //selectedModels index depends on preservedOrderData
+//   if(selectedModels[preservedOrderData.indexOf(model)])
+//   {
+//     formatSelectedModels(wholeModel, selectBox, true)
+
+//     //adds animation for menu bar
+//     menu.classList.add("selected");
+//   }
+//   else
+//   {
+//     formatSelectedModels(wholeModel, selectBox, false)
+//   }
+
+//   //updates counters
+//   updateCounters(lastFapplied, filteredData);
+
+//   //remove class that allows for animation of menu bar
+//   setTimeout(() => {
+//     menu.classList.remove("selected");
+//   }, 750);
+// }
 
 // this function is called whenever "Filters" is pressed. It applies the
 // "filter-is-visible" class to all elements in elementsToTrigger. The behavior

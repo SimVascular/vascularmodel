@@ -115,15 +115,26 @@ function namesOfValuesPerKey(categoryName)
     }
     else
     {
-      if (data[d][categoryName] != "-")
+      if (data[d][categoryName] != "-" && data[d][categoryName] != "Healthy" && data[d][categoryName] != "None"){
         checkboxNameSet.add(data[d][categoryName]);
+      }
     }
   }
 
-  categoryName = Array.from(checkboxNameSet);
-  categoryName.sort();
+  finalArray = Array.from(checkboxNameSet);
+  finalArray.sort();
 
-  return categoryName;
+
+  if(categoryName == "Disease")
+  {
+    finalArray.unshift("Healthy");
+  }
+  else if (categoryName == "Procedure")
+  {
+    finalArray.unshift("None");
+  }
+
+  return finalArray;
 }
 
 //returns an array taking in a string
