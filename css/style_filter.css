@@ -377,11 +377,13 @@ xcustom form elements
 .cd-filter-block {
     margin-bottom: 0.75em;
     overflow: auto;
+    height: fit-content;
   }
+
   .cd-filter-block h4 {
     /* filter block title */
     position: relative;
-    margin-bottom: .2em;
+    /* margin-bottom: .2em; */
     padding: 10px 0 10px 20px;
     color: #9a9a9a;
     text-transform: uppercase;
