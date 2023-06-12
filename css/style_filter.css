@@ -239,9 +239,44 @@ xfilter
     background-color: var(--dark2);
     z-index: 2;
   }
-  .cd-filter form {
-    padding: 70px 20px;
+
+  .filterOptions{
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    overflow-y: auto;
+    resize: none;
   }
+
+  @media only screen and (max-height: 800px) {
+    .filterOptions{
+      height: 70%;
+    }
+  }
+
+  @media only screen and (min-height: 800px) {
+    .filterOptions{
+      height: 75%;
+    }
+  }
+
+  @media only screen and (min-height: 950px) {
+    .filterOptions{
+      height: 78%;
+    }
+  }
+
+  @media only screen and (min-height: 1120px) {
+    .filterOptions{
+      height: 82%;
+    }
+  }
+
+
+
+  
+
   .cd-filter .cd-close {
     position: absolute;
     top: 0;
@@ -284,7 +319,8 @@ xfilter
     -o-transform: translateX(0);
     transform: translateX(0);
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
-    overflow: auto;
+    /* overflow: auto; */
+    height: 100%;
   }
   
   .cd-filter.filter-is-visible .cd-close {
