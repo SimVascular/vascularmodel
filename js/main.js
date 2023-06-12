@@ -4,7 +4,7 @@ $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
-    url: "dataset/dataset.csv",
+    url: "dataset/dataset-svprojects.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
