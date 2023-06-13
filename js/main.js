@@ -33,6 +33,19 @@ $(document).ready(function($){
       }
     }
   });
+  $.ajax({
+    type: "GET",
+    url: "dataset/dataset-diseaseTree.csv",
+    dataType: "text",
+    async: false,
+    success: function(fdata) {
+      tree = {};
+      tree = $.csv.toObjects(fdata);
+    }
+  });
+
+  console.log(tree);
+
   //create copy of data
   filteredData = data;
 

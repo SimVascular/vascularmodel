@@ -214,7 +214,7 @@ xfilter
 
   @media only screen and (min-width: 1400px) {
     .cd-filter {
-      width: 20% !important;
+      width: 22.8% !important;
     }
     .cd-filter form {
       padding: 70px 10%;
@@ -224,7 +224,7 @@ xfilter
 
   @media only screen and (min-width: 576px) {
     .cd-filter {
-      width: 280px;
+      width: 320px;
     }
   }
 
@@ -398,6 +398,7 @@ xcustom form elements
   .no-touch .cd-filter-block h4:hover {
     color: var(--dark2);
   }
+  
   .cd-filter-block h4::before {
     /* arrow */
     content: '';

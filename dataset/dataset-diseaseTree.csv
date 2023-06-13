@@ -1,0 +1,14 @@
+Disease Name,Parent Category
+Disease,
+Coronary Artery Disease,Disease
+Saphenous Vein Graft Disease,Coronary Artery Disease
+Kawasaki Disease,Coronary Artery Disease
+Single Ventricle Defect,Disease
+Hypoplastic Left Heart Syndrome,Single Ventricle Defect
+Pulmonary Atresia,Single Ventricle Defect
+Tricuspid Atresia,Single Ventricle Defect
+Abdominal Aortic Aneurysm,Disease
+Aortoiliac Occlusive Disease,Disease
+Pulmonary Arterial Hypertension,Disease
+Alagille Syndrome,Pulmonary Arterial Hypertension
+Williams Syndrome,Pulmonary Arterial Hypertension
