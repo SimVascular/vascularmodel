@@ -89,6 +89,19 @@ function getFilterMenu()
     availableFilters["Procedure"] = false
   }
 
+  //generates html of Modality checkboxes
+  var modalityUl = document.getElementById("ModalityUl");
+  if (modalityUl)
+  {
+    availableFilters["Image Modality"] = true
+    var hooks = generateCheckboxUl("Image Modality", modalityUl)
+    allHooks.push(hooks)
+  }
+  else
+  {
+    availableFilters["Image Modality"] = false
+  }
+
   //loops through all hooks saved above
   for (var i = 0; i < allHooks.length; i++)
   {

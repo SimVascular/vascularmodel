@@ -62,7 +62,7 @@ function getBareMinimum()
 //returns titles for the share.html table
 function getDetailsTitles()
 {
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Size"]
+  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
 
   return output;
 }
@@ -72,7 +72,7 @@ function getFilterTitles()
 {
   if (useAllFilters)
   {
-    var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
+    var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
 
     return output;
   }
@@ -82,7 +82,7 @@ function getFilterTitles()
 //returns the different categories someone can filter through
 function getCategoryName()
 {
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"];
+  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
 
   return output;
 }
