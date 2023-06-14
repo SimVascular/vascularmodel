@@ -146,9 +146,21 @@ function generateCheckboxUl(category, ul, fromParent = false)
     }
     else if((!childrenArray.includes(checkboxNames[i]) || fromParent) && checkboxNames[i] != "")
     {
-      //sends to create checkbox
-      var newLi = generateCheckboxLi(checkboxNames[i]);
+      if(fromParent)
+      {
+        var newLi = generateCheckboxLi(checkboxNames[i], category);
+      }
+      else
+      {
+        var newLi = generateCheckboxLi(checkboxNames[i]);
+      }
+
       ul.appendChild(newLi);
+    }
+
+    if(fromParent)
+    {
+      ul.setAttribute("id", codifyHookandID(category));
     }
 
     //creates code version of csv string
@@ -234,7 +246,7 @@ function codifyHookandID(checkboxName)
   }
 }
 
-function generateCheckboxLi(checkboxName) 
+function generateCheckboxLi(checkboxName, categoryName = "-") 
 {
   //creates checkbox li element
   let li = document.createElement('li');
@@ -243,6 +255,10 @@ function generateCheckboxLi(checkboxName)
 
   let input = document.createElement('input');
   input.classList.add("filter");
+  if(categoryName != "-")
+  {
+    input.classList.add(codifyHookandID(categoryName));
+  }
   input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
   //sets id that is the same as the hook later created
@@ -296,17 +312,42 @@ function addHook(hook) {
   $("#" + hook).change(function() {applyFilters();});
 }
 
+
 function headerHooks()
 {
   //close filter dropdown inside lateral .cd-filter
   $('.checkbox-label h4').on('click', function(){
+    console.log("clicked in h4")
     $(this).parent().next('.cd-filter-content').slideToggle(300);
+
+    var categoryName = codifyHookandID(this.textContent);
+    var childrenOfCategory = document.getElementsByClassName(categoryName);
+
+    for(var i = 0; i < childrenOfCategory.length; i++)
+    {
+      if($(this).parent().siblings()[0].checked)
+      {
+        childrenOfCategory[i].checked = false;
+      }
+      else
+      {
+        childrenOfCategory[i].checked = true;
+      }
+    }
+
+    applyFilters();
   })
 
   //close filter dropdown inside lateral .cd-filter
   $('.cd-filter-block h4').on('click', function(){
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
   })
+
+  //if parent is clicked
+  //click all children
+
+  //if parent is unclicked
+  //unclick all children
 
 }
 
