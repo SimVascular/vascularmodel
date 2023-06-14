@@ -121,22 +121,22 @@ function generateCheckboxUl(category, ul, fromParent = false)
   //array of the possible options in that category
   checkboxNames = namesOfValuesPerKey(category);
 
-  var hooks = []
+  var hooks = [];
 
   //loops through options
   for (var i = 0; i < checkboxNames.length; i++) {
     getChildrenOfTree();
 
-    if(checksIfParent(checkboxNames[i]))
-    {
-      //sends back all the children so it can be removed
+    //if it is a parent and not a child
+    //if it is both a parent and a child then it will act as a child
+    if(checksIfParent(checkboxNames[i]) && (!childrenArray.includes(checkboxNames[i]) || fromParent))
+    {      
       var output = makeEmbeddedParent(checkboxNames, checkboxNames[i]);
 
       var parentHooks = output[0];
       checkboxNames = output[1];
       var parentLi = output[2];
       ul.appendChild(parentLi);
-
 
       //adds hooks from parent element
       for(var j = 0; j < parentHooks.length; j++)
