@@ -97,33 +97,47 @@ function getMustContainFilterTitles()
 
 function checksIfParent(categoryName)
 {
-  var isParent = false;
+  // for(var i = 0; i < tree.length; i++)
+  // {
+  //   if(typeof tree[i][categoryName] != "undefined")
+  //   {
+  //     return true;
+  //   }
+  // }
 
-  for(var i = 0; i < tree.length; i++)
+  if(parentArray.includes(categoryName))
   {
-    if(typeof tree[i][categoryName] != "undefined")
-    {
-      isParent = true;
-    }
+    return true;
   }
 
-  return isParent;
+  return false;
 }
 
 function checksIfChildofParent(parent, categoryName)
 {
-  var isChildOfParent = false;
-
   for(var i = 0; i < tree.length; i++)
   {
     if(tree[i][parent] == categoryName)
     {
-      isChildOfParent = true;
+      return true;
     }
   }
 
-  return isChildOfParent;
+  return false;
 
+}
+
+var childrenArray = [];
+
+function getChildrenOfTree()
+{
+  for(var i = 0; i < tree.length; i++)
+  {
+    for(var p = 0; p < parentArray.length; p++)
+    {
+        childrenArray.push(tree[i][parentArray[p]]);
+    }
+  }
 }
 
 //returns all possible options under each category

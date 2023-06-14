@@ -1,4 +1,5 @@
 var useAllFilters = false;
+var parentArray = [];
 
 $(document).ready(function($){
   //reads csv file and sets it to the global variable data
@@ -40,6 +41,7 @@ $(document).ready(function($){
     async: false,
     success: function(fdata) {
       tree = $.csv.toObjects(fdata);
+      parentArray = Object.keys(tree[0]);
       console.log(tree);
     }
   });
@@ -698,17 +700,6 @@ $('.cd-filter-trigger').on('click', function(){
 $('.cd-filter .cd-close').on('click', function(){
   triggerFilter(false);
 });
-
-//close filter dropdown inside lateral .cd-filter
-$('.cd-filter-block h4').on('click', function(){
-	$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-})
-
-//close filter dropdown inside lateral .cd-filter
-$('.checkbox-label h4').on('click', function(){
-  $(this).parent().next('.cd-filter-content').slideToggle(300);
-})
-
 
 // we apply the filter when enter is pressed on the search field
 $('#search-field').keydown(function (e) {

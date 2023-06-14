@@ -112,11 +112,12 @@ function getFilterMenu()
       addHook(allHooks[i][j]);
     }
   }
+
+  headerHooks();
 }
 
-function generateCheckboxUl(category, ul)
+function generateCheckboxUl(category, ul, fromParent = false)
 {
-  console.log("category: " + category);
   //array of the possible options in that category
   checkboxNames = namesOfValuesPerKey(category);
 
@@ -124,41 +125,32 @@ function generateCheckboxUl(category, ul)
 
   //loops through options
   for (var i = 0; i < checkboxNames.length; i++) {
-
-    console.log(
-      "i: " + i + "\n" +
-      "checkboxNames: " + checkboxNames + "\n" +
-      "checkboxNames[i]: " + checkboxNames[i]
-    );
+    getChildrenOfTree();
 
     if(checksIfParent(checkboxNames[i]))
     {
-      console.log("i: " + i);
-
       //sends back all the children so it can be removed
       var output = makeEmbeddedParent(checkboxNames, checkboxNames[i]);
+
       var parentHooks = output[0];
       checkboxNames = output[1];
       var parentLi = output[2];
       ul.appendChild(parentLi);
 
-      console.log("checkboxNames[i]: " + checkboxNames[i]);
 
       //adds hooks from parent element
       for(var j = 0; j < parentHooks.length; j++)
       {
         hooks.push(parentHooks[j]);
-        console.log("parentHooks: " + parentHooks[j]);
-        console.log("checkboxNames[i]: " + checkboxNames[i])
       }
     }
-    else
+    else if((!childrenArray.includes(checkboxNames[i]) || fromParent) && checkboxNames[i] != "")
     {
       //sends to create checkbox
       var newLi = generateCheckboxLi(checkboxNames[i]);
       ul.appendChild(newLi);
-      console.log("notParent checkboxNames[i]:" + checkboxNames[i]);
     }
+
     //creates code version of csv string
     var codifyCBN = codifyHookandID(checkboxNames[i]);
     
@@ -188,6 +180,7 @@ function makeEmbeddedParent(checkboxNames, parentName)
 
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
+  label.classList.add("adjustCheckboxForEmbed");
   label.setAttribute("for", "checkbox-" + codifiedName);
 
   let h4 = document.createElement("h4");
@@ -199,7 +192,12 @@ function makeEmbeddedParent(checkboxNames, parentName)
   label.appendChild(h4);
 
   var parentUl = document.createElement("ul");
-  var hooks = generateCheckboxUl(parentName, parentUl);
+  parentUl.classList.add("cd-filter-content");
+  parentUl.classList.add("cd-filters");
+  parentUl.classList.add("list");
+  parentUl.style.display = "none";
+  // parentUl.style.display = "block";
+  var hooks = generateCheckboxUl(parentName, parentUl, true);
 
   //changes made to element
   div.appendChild(input);
@@ -296,6 +294,20 @@ function generateOptions(optionName)
 function addHook(hook) { 
   //takes in hook and creates a listener 
   $("#" + hook).change(function() {applyFilters();});
+}
+
+function headerHooks()
+{
+  //close filter dropdown inside lateral .cd-filter
+  $('.checkbox-label h4').on('click', function(){
+    $(this).parent().next('.cd-filter-content').slideToggle(300);
+  })
+
+  //close filter dropdown inside lateral .cd-filter
+  $('.cd-filter-block h4').on('click', function(){
+	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
+  })
+
 }
 
 /*----------------------------
