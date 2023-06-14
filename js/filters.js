@@ -5,6 +5,7 @@ JavaScript for Filter Bar
 ----------------------------*/
 
 var availableFilters = {}
+
 function getFilterMenu()
 {
   var allHooks = []
@@ -115,24 +116,98 @@ function getFilterMenu()
 
 function generateCheckboxUl(category, ul)
 {
+  console.log("category: " + category);
   //array of the possible options in that category
-  checkboxName = namesOfValuesPerKey(category);
+  checkboxNames = namesOfValuesPerKey(category);
 
   var hooks = []
 
   //loops through options
-  for (var i = 0; i < checkboxName.length; i++) {
+  for (var i = 0; i < checkboxNames.length; i++) {
+
+    console.log(
+      "i: " + i + "\n" +
+      "checkboxNames: " + checkboxNames + "\n" +
+      "checkboxNames[i]: " + checkboxNames[i]
+    );
+
+    if(checksIfParent(checkboxNames[i]))
+    {
+      console.log("i: " + i);
+
+      //sends back all the children so it can be removed
+      var output = makeEmbeddedParent(checkboxNames, checkboxNames[i]);
+      var parentHooks = output[0];
+      checkboxNames = output[1];
+      var parentLi = output[2];
+      ul.appendChild(parentLi);
+
+      console.log("checkboxNames[i]: " + checkboxNames[i]);
+
+      //adds hooks from parent element
+      for(var j = 0; j < parentHooks.length; j++)
+      {
+        hooks.push(parentHooks[j]);
+        console.log("parentHooks: " + parentHooks[j]);
+        console.log("checkboxNames[i]: " + checkboxNames[i])
+      }
+    }
+    else
+    {
+      //sends to create checkbox
+      var newLi = generateCheckboxLi(checkboxNames[i]);
+      ul.appendChild(newLi);
+      console.log("notParent checkboxNames[i]:" + checkboxNames[i]);
+    }
     //creates code version of csv string
-    var codifyCBN = codifyHookandID(checkboxName[i]);
-    //sends to create checkbox
-    var newLi = generateCheckboxLi(checkboxName[i]);
-    ul.appendChild(newLi);
+    var codifyCBN = codifyHookandID(checkboxNames[i]);
+    
     //creates hooks for each checkbox
     hooks.push("checkbox-" + codifyCBN)
   }
 
   //saves hooks; changes were appended to ul
   return hooks;
+}
+
+function makeEmbeddedParent(checkboxNames, parentName)
+{
+  var li = document.createElement("li")
+  
+  var div = document.createElement("div");
+  div.classList.add("cd-filter-block");
+
+  let codifiedName = codifyHookandID(parentName);
+
+  let input = document.createElement('input');
+  input.classList.add("filter");
+  input.setAttribute("data-filter", codifiedName);
+  input.type = "checkbox";
+  //sets id that is the same as the hook later created
+  input.setAttribute("id", "checkbox-" + codifiedName);
+
+  let label = document.createElement('label');
+  label.classList.add("checkbox-label");
+  label.setAttribute("for", "checkbox-" + codifiedName);
+
+  let h4 = document.createElement("h4");
+  h4.classList.add("closed");
+  h4.classList.add("embedded");
+  //displays un-codified name
+  h4.textContent = parentName;
+
+  label.appendChild(h4);
+
+  var parentUl = document.createElement("ul");
+  var hooks = generateCheckboxUl(parentName, parentUl);
+
+  //changes made to element
+  div.appendChild(input);
+  div.appendChild(label);
+  div.appendChild(parentUl);
+  li.appendChild(div);
+
+  return [hooks, checkboxNames, li];
 }
 
 function codifyHookandID(checkboxName)

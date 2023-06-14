@@ -95,28 +95,73 @@ function getMustContainFilterTitles()
   return output;
 }
 
+function checksIfParent(categoryName)
+{
+  var isParent = false;
+
+  for(var i = 0; i < tree.length; i++)
+  {
+    if(typeof tree[i][categoryName] != "undefined")
+    {
+      isParent = true;
+    }
+  }
+
+  return isParent;
+}
+
+function checksIfChildofParent(parent, categoryName)
+{
+  var isChildOfParent = false;
+
+  for(var i = 0; i < tree.length; i++)
+  {
+    if(tree[i][parent] == categoryName)
+    {
+      isChildOfParent = true;
+    }
+  }
+
+  return isChildOfParent;
+
+}
+
 //returns all possible options under each category
 function namesOfValuesPerKey(categoryName)
 {
   var checkboxNameSet = new Set();
 
-  //does not add element if "-"
-  for(var d = 0; d < data.length; d++)
+  if(checksIfParent(categoryName))
   {
-    if(data[d][categoryName].indexOf("_") != -1)
+    for(var i = 0; i < tree.length; i++)
     {
-      //if multiple categories to add separated by "_", different code
-      var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
-      for(var a = 0; a < toAdd.length; a++)
+      var child = tree[i][categoryName]
+      if(checksIfChildofParent(categoryName, child))
       {
-        if (toAdd[a] != "-")
-          checkboxNameSet.add(toAdd[a]);
+        checkboxNameSet.add(child);
       }
     }
-    else
+  }
+  else
+  {
+    //does not add element if "-"
+    for(var d = 0; d < data.length; d++)
     {
-      if (data[d][categoryName] != "-" && data[d][categoryName] != "Healthy" && data[d][categoryName] != "None"){
-        checkboxNameSet.add(data[d][categoryName]);
+      if(data[d][categoryName].indexOf("_") != -1)
+      {
+        //if multiple categories to add separated by "_", different code
+        var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
+        for(var a = 0; a < toAdd.length; a++)
+        {
+          if (toAdd[a] != "-")
+            checkboxNameSet.add(toAdd[a]);
+        }
+      }
+      else
+      {
+        if (data[d][categoryName] != "-" && data[d][categoryName] != "Healthy" && data[d][categoryName] != "None"){
+          checkboxNameSet.add(data[d][categoryName]);
+        }
       }
     }
   }

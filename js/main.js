@@ -39,12 +39,10 @@ $(document).ready(function($){
     dataType: "text",
     async: false,
     success: function(fdata) {
-      tree = {};
       tree = $.csv.toObjects(fdata);
+      console.log(tree);
     }
   });
-
-  console.log(tree);
 
   //create copy of data
   filteredData = data;
@@ -707,7 +705,7 @@ $('.cd-filter-block h4').on('click', function(){
 })
 
 //close filter dropdown inside lateral .cd-filter
-$('#slay').on('click', function(){
+$('.checkbox-label h4').on('click', function(){
   $(this).parent().next('.cd-filter-content').slideToggle(300);
 })
 
