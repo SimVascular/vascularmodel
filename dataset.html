@@ -188,12 +188,25 @@ color="#000000">
               <ul id="test" class="cd-filter-content cd-filters list" style="display: none;">
                 <li>
                   <div class="cd-filter-block">
-                    <h4 class="closed embedded">Embedded</h4>
-                    <ul id="embedded" class="cd-filter-content cd-filters list" style="display: none;">
-                      <li><input class="filter" data-filter="Abdominal-Aorta" type="checkbox" id="checkbox-Abdominal-Aorta"><label class="checkbox-label" for="checkbox-Abdominal-Aorta">Abdominal Aorta</label></li>
-                      <li><input class="filter" data-filter="Aorta" type="checkbox" id="checkbox-Aorta"><label class="checkbox-label" for="checkbox-Aorta">Aorta</label></li>
-                      <li><input class="filter" data-filter="Cerebral" type="checkbox" id="checkbox-Cerebral"><label class="checkbox-label" for="checkbox-Cerebral">Cerebral</label></li>
-                    </ul>
+                    <input class="filter" data-filter="Abdominal-Aorta" type="checkbox" id="checkbox-Abdominal-Aorta">
+                      <label class="checkbox-label adjustCheckboxForEmbed" for="checkbox-Abdominal-Aorta">
+                        <h4 id="slay" class="closed embedded">Embedded</h4>
+                      </label>
+
+                      <ul id="embedded" class="cd-filter-content cd-filters list" style="display: none;">
+                        <li>
+                          <input class="filter" data-filter="Abdominal-Aorta" type="checkbox" id="checkbox-Abdominal-Aorta">
+                          <label class="checkbox-label" for="checkbox-Abdominal-Aorta">Abdominal Aorta</label>
+                        </li>
+                        <li>
+                          <input class="filter" data-filter="Aorta" type="checkbox" id="checkbox-Aorta">
+                          <label class="checkbox-label" for="checkbox-Aorta">Aorta</label>
+                        </li>
+                        <li>
+                          <input class="filter" data-filter="Cerebral" type="checkbox" id="checkbox-Cerebral">
+                          <label class="checkbox-label" for="checkbox-Cerebral">Cerebral</label>
+                        </li>
+                      </ul>
                   </div>
                 </li>
                 <li><input class="filter" data-filter="Coronary" type="checkbox" id="checkbox-Coronary"><label class="checkbox-label" for="checkbox-Coronary">Coronary</label></li>

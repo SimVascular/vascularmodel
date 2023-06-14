@@ -706,6 +706,12 @@ $('.cd-filter-block h4').on('click', function(){
 	$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
 })
 
+//close filter dropdown inside lateral .cd-filter
+$('#slay').on('click', function(){
+  $(this).parent().next('.cd-filter-content').slideToggle(300);
+})
+
+
 // we apply the filter when enter is pressed on the search field
 $('#search-field').keydown(function (e) {
   if (e.keyCode == 13) {

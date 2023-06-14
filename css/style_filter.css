@@ -273,9 +273,10 @@ xfilter
     }
   }
 
-
-
-  
+  .embedded {
+    /* left: 25px; */
+    /* width: 85%; */
+  }
 
   .cd-filter .cd-close {
     position: absolute;
@@ -540,6 +541,7 @@ xcustom form elements
   }
   .cd-filter-block .checkbox-label,
   .cd-filter-block .radio-label {
+    /* display: block; */
     padding-left: 24px;
     font-size: 1rem;
     -webkit-user-select: none;
@@ -563,6 +565,11 @@ xcustom form elements
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
   }
+
+  .cd-filter-block .checkbox-label.adjustCheckboxForEmbed::before {
+    top: 20px;
+  }
+
   .cd-filter-block .checkbox-label::before,
   .cd-filter-block .radio-label::before {
     width: 16px;
