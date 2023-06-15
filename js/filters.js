@@ -326,8 +326,8 @@ function headerHooks()
 {
   //manually checks and unchecks because now the check is a div
   $(".label-before").on('click', function(){
-    if(!$(this).hasClass("parent"))
-    {
+    // if(!$(this).hasClass("parent"))
+    // {
       var labelElement = $(this).siblings()[0];
       if(labelElement.checked)
       {
@@ -338,11 +338,28 @@ function headerHooks()
         labelElement.checked = true;
       }
       applyFilters();
-    }
+    // }
   });
 
   $(".label-before.parent").on('click', function(){
-    selectChildren($(this), true);
+    var labelElement = $(this).siblings()[1];
+  
+    var categoryName = codifyHookandID(labelElement.textContent);
+    var childrenOfCategory = document.getElementsByClassName(categoryName);
+    var isParentChecked = $(this).siblings()[0].checked;
+
+    for(var i = 0; i < childrenOfCategory.length; i++)
+    {
+      if(isParentChecked)
+      {
+        childrenOfCategory[i].checked = true;
+      }
+      else
+      {
+        childrenOfCategory[i].checked = false;
+      }
+    }
+    applyFilters();
   });
 
   $('.cd-filter-block h4').on('click', function(){
@@ -352,43 +369,9 @@ function headerHooks()
   //close filter dropdown inside lateral .cd-filter
   $('.checkbox-label h4').on('click', function(){
     $(this).parent().next('.cd-filter-content').slideToggle(300);
-    console.log("enters .checkbox-label h4")
-    if($(this).hasClass("embedded") && !$(this).hasClass("closed"))
-    {
-      console.log("enters if statemnet")
-      $(this).parent().siblings()[0].checked = true;
-      var labelBeforeElement = $(this).parent().siblings();
-      selectChildren(labelBeforeElement, false);
-    }
+
+    $(this).parent().siblings()[0].checked = !$(this).parent().siblings()[0].checked;
   })
-}
-
-function selectChildren(labelBeforeElement, toggleParent)
-{
-  var isParentChecked = labelBeforeElement.siblings()[0].checked;
-  var labelElement = labelBeforeElement.siblings()[2];
-  if(toggleParent)
-  {
-    isParentChecked = !isParentChecked;
-  }
-  var categoryName = codifyHookandID(labelElement.textContent);
-  var childrenOfCategory = document.getElementsByClassName(categoryName);
-
-  for(var i = 0; i < childrenOfCategory.length; i++)
-  {
-    console.log(isParentChecked)
-
-    if(isParentChecked)
-    {
-      childrenOfCategory[i].checked = true;
-    }
-    else
-    {
-      childrenOfCategory[i].checked = false;
-    }
-  }
-
-  applyFilters();
 }
 
 /*----------------------------
