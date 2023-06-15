@@ -185,10 +185,15 @@ function makeEmbeddedParent(checkboxNames, parentName)
 
   let input = document.createElement('input');
   input.classList.add("filter");
+  input.classList.add(codifiedName);
   input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
   //sets id that is the same as the hook later created
   input.setAttribute("id", "checkbox-" + codifiedName);
+
+  let checkBox = document.createElement("div");
+  checkBox.classList.add("label-before");
+  checkBox.classList.add("parent");
 
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
@@ -213,6 +218,7 @@ function makeEmbeddedParent(checkboxNames, parentName)
 
   //changes made to element
   div.appendChild(input);
+  div.appendChild(checkBox);
   div.appendChild(label);
   div.appendChild(parentUl);
   li.appendChild(div);
@@ -264,6 +270,9 @@ function generateCheckboxLi(checkboxName, categoryName = "-")
   //sets id that is the same as the hook later created
   input.setAttribute("id", "checkbox-" + codifiedName);
 
+  let checkBox = document.createElement("div");
+  checkBox.classList.add("label-before");
+
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
   label.setAttribute("for", "checkbox-" + codifiedName);
@@ -271,6 +280,7 @@ function generateCheckboxLi(checkboxName, categoryName = "-")
   label.textContent = checkboxName;
 
   li.appendChild(input);
+  li.appendChild(checkBox);
   li.appendChild(label);
 
   return li;
@@ -312,43 +322,67 @@ function addHook(hook) {
   $("#" + hook).change(function() {applyFilters();});
 }
 
-
 function headerHooks()
 {
-  //close filter dropdown inside lateral .cd-filter
-  $('.checkbox-label h4').on('click', function(){
-    console.log("clicked in h4")
-    $(this).parent().next('.cd-filter-content').slideToggle(300);
-
-    var categoryName = codifyHookandID(this.textContent);
-    var childrenOfCategory = document.getElementsByClassName(categoryName);
-
-    for(var i = 0; i < childrenOfCategory.length; i++)
+  //manually checks and unchecks because now the check is a div
+  $(".label-before").on('click', function(){
+    if(!$(this).hasClass("parent"))
     {
-      if($(this).parent().siblings()[0].checked)
+      var labelElement = $(this).siblings()[0];
+      if(labelElement.checked)
       {
-        childrenOfCategory[i].checked = false;
+        labelElement.checked = false;
       }
       else
       {
-        childrenOfCategory[i].checked = true;
+        labelElement.checked = true;
       }
+      applyFilters();
     }
+  });
 
-    applyFilters();
-  })
+  $(".label-before.parent").on('click', function(){
+    selectChildren($(this));
+  });
+
 
   //close filter dropdown inside lateral .cd-filter
+  $('.checkbox-label h4').on('click', function(){
+    $(this).parent().next('.cd-filter-content').slideToggle(300);
+    if($(this).hasClass("embedded") && !$(this).hasClass("closed"))
+    {
+      $(this).parent().siblings()[0].checked = true;
+
+      selectChildren($(this).parent().siblings()[1]);
+    }
+  })
+
   $('.cd-filter-block h4').on('click', function(){
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
   })
+}
 
-  //if parent is clicked
-  //click all children
+function selectChildren(labelBeforeElement)
+{
+  var isParentChecked = labelBeforeElement.siblings()[0].checked;
+  var labelElement = labelBeforeElement.siblings()[1];
+  isParentChecked = !isParentChecked;
+  var categoryName = codifyHookandID(labelElement.textContent);
+  var childrenOfCategory = document.getElementsByClassName(categoryName);
 
-  //if parent is unclicked
-  //unclick all children
+  for(var i = 0; i < childrenOfCategory.length; i++)
+  {
+    if(isParentChecked)
+    {
+      childrenOfCategory[i].checked = true;
+    }
+    else
+    {
+      childrenOfCategory[i].checked = false;
+    }
+  }
 
+  applyFilters();
 }
 
 /*----------------------------
