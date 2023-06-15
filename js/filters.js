@@ -342,36 +342,42 @@ function headerHooks()
   });
 
   $(".label-before.parent").on('click', function(){
-    selectChildren($(this));
+    selectChildren($(this), true);
   });
-
-
-  //close filter dropdown inside lateral .cd-filter
-  $('.checkbox-label h4').on('click', function(){
-    $(this).parent().next('.cd-filter-content').slideToggle(300);
-    if($(this).hasClass("embedded") && !$(this).hasClass("closed"))
-    {
-      $(this).parent().siblings()[0].checked = true;
-
-      selectChildren($(this).parent().siblings()[1]);
-    }
-  })
 
   $('.cd-filter-block h4').on('click', function(){
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
   })
+
+  //close filter dropdown inside lateral .cd-filter
+  $('.checkbox-label h4').on('click', function(){
+    $(this).parent().next('.cd-filter-content').slideToggle(300);
+    console.log("enters .checkbox-label h4")
+    if($(this).hasClass("embedded") && !$(this).hasClass("closed"))
+    {
+      console.log("enters if statemnet")
+      $(this).parent().siblings()[0].checked = true;
+      var labelBeforeElement = $(this).parent().siblings();
+      selectChildren(labelBeforeElement, false);
+    }
+  })
 }
 
-function selectChildren(labelBeforeElement)
+function selectChildren(labelBeforeElement, toggleParent)
 {
   var isParentChecked = labelBeforeElement.siblings()[0].checked;
-  var labelElement = labelBeforeElement.siblings()[1];
-  isParentChecked = !isParentChecked;
+  var labelElement = labelBeforeElement.siblings()[2];
+  if(toggleParent)
+  {
+    isParentChecked = !isParentChecked;
+  }
   var categoryName = codifyHookandID(labelElement.textContent);
   var childrenOfCategory = document.getElementsByClassName(categoryName);
 
   for(var i = 0; i < childrenOfCategory.length; i++)
   {
+    console.log(isParentChecked)
+
     if(isParentChecked)
     {
       childrenOfCategory[i].checked = true;
