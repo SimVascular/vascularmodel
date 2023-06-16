@@ -146,14 +146,7 @@ function generateCheckboxUl(category, ul, fromParent = false)
     }
     else if((!childrenArray.includes(checkboxNames[i]) || fromParent) && checkboxNames[i] != "")
     {
-      if(fromParent)
-      {
-        var newLi = generateCheckboxLi(checkboxNames[i], category);
-      }
-      else
-      {
-        var newLi = generateCheckboxLi(checkboxNames[i]);
-      }
+        var newLi = generateCheckboxLi(checkboxNames[i], getParentsOfChild(checkboxNames[i]));
 
       ul.appendChild(newLi);
     }
@@ -186,6 +179,13 @@ function makeEmbeddedParent(checkboxNames, parentName)
   let input = document.createElement('input');
   input.classList.add("filter");
   input.classList.add(codifiedName);
+
+  var parents = getParentsOfChild(parentName);
+  for(var i = 0; i < parents.length; i++)
+  {
+    input.classList.add(codifyHookandID(parents[i]));
+  }
+
   input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
   //sets id that is the same as the hook later created
@@ -252,7 +252,7 @@ function codifyHookandID(checkboxName)
   }
 }
 
-function generateCheckboxLi(checkboxName, categoryName = "-") 
+function generateCheckboxLi(checkboxName, categoryNames = []) 
 {
   //creates checkbox li element
   let li = document.createElement('li');
@@ -261,9 +261,12 @@ function generateCheckboxLi(checkboxName, categoryName = "-")
 
   let input = document.createElement('input');
   input.classList.add("filter");
-  if(categoryName != "-")
+  if(categoryNames != "orphan")
   {
-    input.classList.add(codifyHookandID(categoryName));
+    for(var i = 0; i < categoryNames.length; i++)
+    {
+      input.classList.add(codifyHookandID(categoryNames[i]));
+    }
   }
   input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
@@ -348,6 +351,7 @@ function headerHooks()
     var childrenOfCategory = document.getElementsByClassName(categoryName);
     var isParentChecked = $(this).siblings()[0].checked;
 
+    console.log(childrenOfCategory);
     for(var i = 0; i < childrenOfCategory.length; i++)
     {
       if(isParentChecked)
@@ -359,8 +363,39 @@ function headerHooks()
         childrenOfCategory[i].checked = false;
       }
     }
+
     applyFilters();
   });
+
+  for(var i = 0; i < parentArray.length; i++)
+  {
+    var parentNameIncode = codifyHookandID(parentArray[i]);
+    $('.' + parentNameIncode).on('click', function(){
+      console.log("enters this")
+      var current = $(this);
+
+      for(var maxParents = true; maxParents;)
+      {
+        console.log(current);
+        current = current.parent().parent().siblings()[0].checked;
+        
+        console.log(current);
+        if(typeof (current == "undefined"))
+        {
+          maxParents = false;
+        }
+        else
+        {
+          current = false;
+        }
+      }
+    })
+
+    $('.label-before').on('click', function(){
+      console.log("enters this")
+      $(this).parent().parent().siblings()[0].checked = false;
+    })
+  }
 
   $('.cd-filter-block h4').on('click', function(){
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);

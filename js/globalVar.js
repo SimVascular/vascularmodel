@@ -140,6 +140,38 @@ function getChildrenOfTree()
   }
 }
 
+function getParentsOfChild(child)
+{
+  var orphan = true;
+  var finalArray = [];
+  for(var i = 0; i < tree.length; i++)
+  {
+    for(var p = 0; p < parentArray.length; p++)
+    {
+      if(tree[i][parentArray[p]] == child)
+      {
+        finalArray.push(parentArray[p])
+        var nestedParents = getParentsOfChild(parentArray[p]);
+        if(nestedParents != ["orphan"])
+        {
+          for (var n = 0; n < nestedParents.length; n++)
+          {
+            finalArray.push(nestedParents[n]);
+          }
+        }
+        orphan = false;
+      }
+    }
+  }
+
+  if(orphan)
+  {
+    return "orphan";
+  }
+
+  return finalArray;
+}
+
 //returns all possible options under each category
 function namesOfValuesPerKey(categoryName)
 {
