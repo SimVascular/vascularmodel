@@ -97,14 +97,6 @@ function getMustContainFilterTitles()
 
 function checksIfParent(categoryName)
 {
-  // for(var i = 0; i < tree.length; i++)
-  // {
-  //   if(typeof tree[i][categoryName] != "undefined")
-  //   {
-  //     return true;
-  //   }
-  // }
-
   if(parentArray.includes(categoryName))
   {
     return true;

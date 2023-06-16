@@ -329,8 +329,6 @@ function headerHooks()
 {
   //manually checks and unchecks because now the check is a div
   $(".label-before").on('click', function(){
-    // if(!$(this).hasClass("parent"))
-    // {
       var labelElement = $(this).siblings()[0];
       if(labelElement.checked)
       {
@@ -341,7 +339,6 @@ function headerHooks()
         labelElement.checked = true;
       }
       applyFilters();
-    // }
   });
 
   $(".label-before.parent").on('click', function(){
@@ -351,7 +348,6 @@ function headerHooks()
     var childrenOfCategory = document.getElementsByClassName(categoryName);
     var isParentChecked = $(this).siblings()[0].checked;
 
-    console.log(childrenOfCategory);
     for(var i = 0; i < childrenOfCategory.length; i++)
     {
       if(isParentChecked)
@@ -367,67 +363,39 @@ function headerHooks()
     applyFilters();
   });
 
-  for(var i = 0; i < parentArray.length; i++)
-  {
-    // var parentNameIncode = codifyHookandID(parentArray[i]);
-    // $('.' + parentNameIncode).on('click', function(){
-    //   console.log("enters this")
-    //   var current = $(this);
-
-    //   if(!current[0].checked)
-    //   {
-    //     for(var maxParents = true; maxParents;)
-    //     {
-    //       console.log(current);
-    //       current = current.parent().parent().siblings();
-    //       console.log(current);
-    //       if(typeof (current[0].checked == "undefined"))
-    //       {
-    //         maxParents = false;
-    //       }
-    //       else
-    //       {
-    //         current = false;
-    //       }
-    //     }
-    //   }
-    // })
-
-    $('.label-before').on('click', function(){
-      console.log("enters this")
-      // $(this).parent().parent().siblings()[0].checked = false;
+  $('.label-before').on('click', function(){
       
-      var current = $(this).siblings();
+    var current = $(this).siblings();
 
-      if(!current[0].checked)
+    if(!current[0].checked)
+    {
+      for(var maxParents = true; maxParents;)
       {
-        for(var maxParents = true; maxParents;)
+        var parentToParent = current.parent().parent().parent().parent().children()
+
+        var childToParent = current.parent().parent().siblings();
+
+        if(typeof (parentToParent[0].checked) == "undefined")
         {
-          var parentToParent = current.parent().parent().parent().parent().children()
-
-          var childToParent = current.parent().parent().siblings();
-
-          if(typeof (parentToParent[0].checked) == "undefined")
+          if (typeof (childToParent[0].checked) == "undefined")
           {
-            if (typeof (childToParent[0].checked) == "undefined")
-            {
-              maxParents = false;
-            }
-            else
-            {
-              current = childToParent;
-              current[0].checked = false;
-            }
+            maxParents = false;
           }
           else
           {
-            current = parentToParent;
+            current = childToParent;
             current[0].checked = false;
           }
         }
+        else
+        {
+          current = parentToParent;
+          current[0].checked = false;
+        }
       }
-    })
-  }
+    }
+  });
+
 
   $('.cd-filter-block h4').on('click', function(){
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);

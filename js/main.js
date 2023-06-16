@@ -42,7 +42,6 @@ $(document).ready(function($){
     success: function(fdata) {
       tree = $.csv.toObjects(fdata);
       parentArray = Object.keys(tree[0]);
-      console.log(tree);
     }
   });
 
