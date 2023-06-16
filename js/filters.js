@@ -329,42 +329,19 @@ function headerHooks()
 {
   //manually checks and unchecks because now the check is a div
   $(".label-before").on('click', function(){
-      var labelElement = $(this).siblings()[0];
-      if(labelElement.checked)
-      {
-        labelElement.checked = false;
-      }
-      else
-      {
-        labelElement.checked = true;
-      }
-      applyFilters();
-  });
+    console.log('.label-before')
 
-  $(".label-before.parent").on('click', function(){
-    var labelElement = $(this).siblings()[1];
-  
-    var categoryName = codifyHookandID(labelElement.textContent);
-    var childrenOfCategory = document.getElementsByClassName(categoryName);
-    var isParentChecked = $(this).siblings()[0].checked;
-
-    for(var i = 0; i < childrenOfCategory.length; i++)
+    var labelElement = $(this).siblings()[0];
+    
+    if(labelElement.checked)
     {
-      if(isParentChecked)
-      {
-        childrenOfCategory[i].checked = true;
-      }
-      else
-      {
-        childrenOfCategory[i].checked = false;
-      }
+      labelElement.checked = false;
+    }
+    else
+    {
+      labelElement.checked = true;
     }
 
-    applyFilters();
-  });
-
-  $('.label-before').on('click', function(){
-      
     var current = $(this).siblings();
 
     if(!current[0].checked)
@@ -394,19 +371,83 @@ function headerHooks()
         }
       }
     }
+
+    applyFilters();
+  });
+
+  $(".label-before.parent").on('click', function(){
+    console.log('enters .label-before.parent')
+
+    var labelElement = $(this).siblings()[1];
+  
+    var categoryName = codifyHookandID(labelElement.textContent);
+    var childrenOfCategory = document.getElementsByClassName(categoryName);
+    var isParentChecked = $(this).siblings()[0].checked;
+
+    for(var i = 0; i < childrenOfCategory.length; i++)
+    {
+      if(isParentChecked)
+      {
+        childrenOfCategory[i].checked = true;
+      }
+      else
+      {
+        childrenOfCategory[i].checked = false;
+      }
+    }
+
+    applyFilters();
   });
 
 
   $('.cd-filter-block h4').on('click', function(){
+    console.log('enters .cd-filter-block h4')
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-  })
+  });
 
+  $('label.checkbox-label').on('click', function(){
+    console.log('enters .checkbox-label label')
+
+    var current = $(this).siblings();
+
+    if(current[0].checked)
+    {
+      for(var maxParents = true; maxParents;)
+      {
+        var parentToParent = current.parent().parent().parent().parent().children()
+
+        var childToParent = current.parent().parent().siblings();
+
+        if(typeof (parentToParent[0].checked) == "undefined")
+        {
+          if (typeof (childToParent[0].checked) == "undefined")
+          {
+            maxParents = false;
+          }
+          else
+          {
+            current = childToParent;
+            current[0].checked = false;
+          }
+        }
+        else
+        {
+          current = parentToParent;
+          current[0].checked = false;
+        }
+      }
+    }
+  });
+  
   //close filter dropdown inside lateral .cd-filter
   $('.checkbox-label h4').on('click', function(){
+    console.log('enters .checkbox-label h4')
+
     $(this).parent().next('.cd-filter-content').slideToggle(300);
 
+    //cancels out clicking so opening and closing menu has no effect on checkbox
     $(this).parent().siblings()[0].checked = !$(this).parent().siblings()[0].checked;
-  })
+  });
 }
 
 /*----------------------------
