@@ -369,31 +369,63 @@ function headerHooks()
 
   for(var i = 0; i < parentArray.length; i++)
   {
-    var parentNameIncode = codifyHookandID(parentArray[i]);
-    $('.' + parentNameIncode).on('click', function(){
-      console.log("enters this")
-      var current = $(this);
+    // var parentNameIncode = codifyHookandID(parentArray[i]);
+    // $('.' + parentNameIncode).on('click', function(){
+    //   console.log("enters this")
+    //   var current = $(this);
 
-      for(var maxParents = true; maxParents;)
-      {
-        console.log(current);
-        current = current.parent().parent().siblings()[0].checked;
-        
-        console.log(current);
-        if(typeof (current == "undefined"))
-        {
-          maxParents = false;
-        }
-        else
-        {
-          current = false;
-        }
-      }
-    })
+    //   if(!current[0].checked)
+    //   {
+    //     for(var maxParents = true; maxParents;)
+    //     {
+    //       console.log(current);
+    //       current = current.parent().parent().siblings();
+    //       console.log(current);
+    //       if(typeof (current[0].checked == "undefined"))
+    //       {
+    //         maxParents = false;
+    //       }
+    //       else
+    //       {
+    //         current = false;
+    //       }
+    //     }
+    //   }
+    // })
 
     $('.label-before').on('click', function(){
       console.log("enters this")
-      $(this).parent().parent().siblings()[0].checked = false;
+      // $(this).parent().parent().siblings()[0].checked = false;
+      
+      var current = $(this).siblings();
+
+      if(!current[0].checked)
+      {
+        for(var maxParents = true; maxParents;)
+        {
+          var parentToParent = current.parent().parent().parent().parent().children()
+
+          var childToParent = current.parent().parent().siblings();
+
+          if(typeof (parentToParent[0].checked) == "undefined")
+          {
+            if (typeof (childToParent[0].checked) == "undefined")
+            {
+              maxParents = false;
+            }
+            else
+            {
+              current = childToParent;
+              current[0].checked = false;
+            }
+          }
+          else
+          {
+            current = parentToParent;
+            current[0].checked = false;
+          }
+        }
+      }
     })
   }
 
