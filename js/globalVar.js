@@ -220,6 +220,7 @@ function namesOfValuesPerKey(categoryName)
   return finalArray;
 }
 
+
 //returns an array taking in a string
 //delimiter = "_"
 function checkboxNameInArrayForm(checkboxNameArr)

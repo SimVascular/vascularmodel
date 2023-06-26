@@ -885,33 +885,76 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
 //allows user to search for multiple entries
 function searchBarFilterMultipleEntries(partialData, valueToSearch)
 {
-  //translates string with " " into an array
-  var valuesToSearch = valueToSearchInArrayForm(valueToSearch);
   var filter = []
-  
-  for(var v = 0; v < valuesToSearch.length; v++)
+
+  var hadSubCategories = false;
+  var moreThanOn = false;
+  var categories = getCategoryName();
+
+  for(var f = 0; f < categories.length; f++)
   {
-    //sends each value individually to be searched
-    var output = searchBarFilterOneEntry(partialData, valuesToSearch[v])
+    var subCategories = namesOfValuesPerKey(categories[f]);
 
-    tempFilter = output[0];
-
-    //if first iteration
-    if (v == 0)
+    for(var s = 0; s < subCategories.length; s++)
     {
-      filter = tempFilter;
-    }
-    else
-    {
-      for(var f = 0; f < filter.length; f++)
+      if(subCategories[s].indexOf(" ") != -1 && valueToSearch.indexOf(subCategories[s].toLowerCase()) != -1)
       {
-        //takes intersection
-        filter[f] = tempFilter[f] && filter[f];
+        hadSubCategories = true;
+        valueToSearch.replace(subCategories[s], "");
+        var output = searchBarFilterOneEntry(partialData, subCategories[s].toLowerCase());
+
+        var tempFilter = output[0];
+
+        //if first iteration
+        if (!moreThanOn)
+        {
+          moreThanOn = true;
+          filter = tempFilter;
+        }
+        else
+        {
+          for(var f = 0; f < filter.length; f++)
+          {
+            //takes intersection
+            filter[f] = tempFilter[f] && filter[f];
+          }
+        }
       }
     }
   }
-  //returns array of booleans of which to keep
-  return [filter, true];
+
+  if (valueToSearch != '')
+  {
+    //if no pair of words matched the subcategory titles:
+
+    //translates string with " " into an array
+    var valuesToSearch = valueToSearchInArrayForm(valueToSearch);
+    
+    for(var v = 0; v < valuesToSearch.length; v++)
+    {
+      //sends each value individually to be searched
+      var output = searchBarFilterOneEntry(partialData, valuesToSearch[v])
+
+      tempFilter = output[0];
+
+      //if first iteration
+      if (v == 0 && !hadSubCategories)
+      {
+        filter = tempFilter;
+      }
+      else
+      {
+        for(var f = 0; f < filter.length; f++)
+        {
+          //takes intersection
+          filter[f] = tempFilter[f] && filter[f];
+        }
+      }
+    }
+
+    //returns array of booleans of which to keep
+    return [filter, true];
+  }
 }
 
 function hasResults(partialData){
