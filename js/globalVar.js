@@ -97,9 +97,12 @@ function getMustContainFilterTitles()
 
 function checksIfParent(categoryName)
 {
-  if(parentArray.includes(categoryName))
+  for(var p = 0; p < parentArray.length; p++)
   {
-    return true;
+    if(parentArray[p].toLowerCase() == categoryName.toLowerCase())
+    {
+      return true;
+    }
   }
 
   return false;
@@ -116,7 +119,33 @@ function checksIfChildofParent(parent, categoryName)
   }
 
   return false;
+}
 
+function getChildrenOfParent(parent)
+{
+  var children = [];
+
+  if(parent.toLowerCase() == parent)
+  {
+    for(var p = 0; p < parentArray.length; p++)
+    {
+      if (parentArray[p].toLowerCase() == parent)
+      {
+        parent = parentArray[p];
+        break;
+      }
+    }
+  }
+
+  for(var i = 0; i < tree.length; i++)
+  {
+    if(typeof (tree[i][parent]) != "undefined")
+    {
+      children.push(tree[i][parent])
+    }
+  }
+
+  return children;
 }
 
 var childrenArray = [];

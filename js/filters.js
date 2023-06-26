@@ -329,8 +329,6 @@ function headerHooks()
 {
   //manually checks and unchecks because now the check is a div
   $(".label-before").on('click', function(){
-    console.log('.label-before')
-
     var labelElement = $(this).siblings()[0];
     
     if(labelElement.checked)
@@ -376,8 +374,6 @@ function headerHooks()
   });
 
   $(".label-before.parent").on('click', function(){
-    console.log('enters .label-before.parent')
-
     var labelElement = $(this).siblings()[1];
   
     var categoryName = codifyHookandID(labelElement.textContent);
@@ -401,13 +397,10 @@ function headerHooks()
 
 
   $('.cd-filter-block h4').on('click', function(){
-    console.log('enters .cd-filter-block h4')
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
   });
 
   $('label.checkbox-label').on('click', function(){
-    console.log('enters .checkbox-label label')
-
     var current = $(this).siblings();
 
     if(current[0].checked)
@@ -441,8 +434,6 @@ function headerHooks()
   
   //close filter dropdown inside lateral .cd-filter
   $('.checkbox-label h4').on('click', function(){
-    console.log('enters .checkbox-label h4')
-
     $(this).parent().next('.cd-filter-content').slideToggle(300);
 
     //cancels out clicking so opening and closing menu has no effect on checkbox
@@ -812,72 +803,72 @@ function searchBarFilter(partialData)
   }
 }
 
-function searchBarFilterOneEntry(partialData, valueToSearch)
+function searchBarFilterOneEntry(partialData, valueEntered)
 {
   //set up variables
   var filter = new Array(partialData.length);
   filter.fill(false);
 
-  var allCategories = getAllCategories();
-  
-  //categoriesWith1s is an array with i.e. "Images", "Simulations"
-  var categoriesWith1s = []
-  
-  // if we only have one element we put all categories which is not right
-  if (data.length > 1)
+  var toSearch = [];
+
+  toSearch[0] = valueEntered;
+  console.log("filtering in single entry search bar: " + valueEntered)
+
+  if(checksIfParent(valueEntered))
   {
-    for(var i = 0; i < allCategories.length; i++)
+    var toAdd = getChildrenOfParent(valueEntered);
+    for(var a = 0; a < toAdd.length; a++)
     {
-      if (getNTimesPerCategory(allCategories[i]) == 1)
+      if(toAdd[a] != "")
       {
-        categoriesWith1s.push(allCategories[i].toLowerCase())
+        toSearch.push(toAdd[a].toLowerCase());
       }
     }
+    console.log(toSearch)
   }
-   
+
+  var counterInSingle = 0;
   //filtering part
   for (var i = 0; i < partialData.length; i++) {
-    //traverses through all keys and values
-    for (const [key, value] of Object.entries(partialData[i])) {
-      var category = key.toLowerCase();
-      var subCategory = value.toLowerCase();
-      
-      if (!categoriesWith1s.includes(category))
-      {
-        //excludes "size" and "age" becaue they interfere with "name"
-        if (subCategory.includes(valueToSearch) && category != "size" && category != "age")
-        {
-          //if includes, saves
+
+    var categories = getCategoryName();
+
+    for(var c = 0; c < categories.length; c++)
+    {
+      var modelsubCategoryValue = partialData[i][categories[c]].toLowerCase();
+
+      var category = categories[c].toLowerCase();
+
+      //differences for age
+      if(category == "age"){
+        //allows user to search pediatric and adult
+        if (valueEntered == "pediatric" && parseInt(modelsubCategoryValue) < 18) {
           filter[i] = true;
-          
-          //accounts that female .includes() male is true
-          if (valueToSearch == "male" && subCategory == "female")
-          {
-            filter[i] = false;
-          }
         }
-        
-        //differences for age
-        if(category == "age"){
-          //allows user to search pediatric and adult
-          if (valueToSearch == "pediatric" && parseInt(subCategory) < 18) {
-            filter[i] = true;
-          }
-          else if (valueToSearch == "adult" && parseInt(subCategory) >= 18){
-            filter[i] = true;
-          }
+        else if (valueEntered == "adult" && parseInt(modelsubCategoryValue) >= 18){
+          filter[i] = true;
         }
       }
       else
       {
-        //if categoryWith1s, search is different
-        if (category == valueToSearch && subCategory == '1') {
+        //excludes "size" and "age" becaue they interfere with "name"
+        if ((modelsubCategoryValue.includes(toSearch[0]) || toSearch.includes(modelsubCategoryValue)) && category != "size" && category != "age")
+        {
+          //if includes, saves
           filter[i] = true;
+          counterInSingle++;
+          console.log("counterInSingle: " + counterInSingle + "\n subCategoryValue: " + modelsubCategoryValue)
+          
+          //accounts that female .includes() male is true
+          if (valueEntered == "male" && modelsubCategoryValue == "female")
+          {
+            filter[i] = false;
+          }
         }
       }
     }
   }
-  
+
   //returns array with booleans of which to keep
   return [filter, true];
 }
@@ -885,6 +876,9 @@ function searchBarFilterOneEntry(partialData, valueToSearch)
 //allows user to search for multiple entries
 function searchBarFilterMultipleEntries(partialData, valueToSearch)
 {
+  console.log("inMultipleEntries: " + valueToSearch)
+
+  var counterInMultiple = 0;
   var filter = []
 
   var hadSubCategories = false;
@@ -897,10 +891,16 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
 
     for(var s = 0; s < subCategories.length; s++)
     {
-      if(subCategories[s].indexOf(" ") != -1 && subCategories[s].toLowerCase().includes(valueToSearch))
+      if(subCategories[s].indexOf(" ") != -1 && (subCategories[s].toLowerCase().includes(valueToSearch) || valueToSearch.includes(subCategories[s].toLowerCase())))
       {
+        counterInMultiple++;
+        console.log("counterInMultiple: " + counterInMultiple + "\n subCategories[s]" + subCategories[s] + "\n valueToSearch: " + valueToSearch);
         hadSubCategories = true;
-        valueToSearch.replace(subCategories[s], "");
+        valueToSearch = valueToSearch.replace(subCategories[s].toLowerCase(), "");
+        if(valueToSearch == "")
+        {
+          valueToSearch = "already filtered"
+        }
         var output = searchBarFilterOneEntry(partialData, subCategories[s].toLowerCase());
 
         var tempFilter = output[0];
@@ -923,7 +923,7 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
     }
   }
 
-  if (valueToSearch != '')
+  if (valueToSearch != "already filtered")
   {
     //if no pair of words matched the subcategory titles:
 
@@ -951,10 +951,10 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
         }
       }
     }
-
-    //returns array of booleans of which to keep
-    return [filter, true];
   }
+
+  //returns array of booleans of which to keep
+  return [filter, true];
 }
 
 function hasResults(partialData){
