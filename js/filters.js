@@ -831,7 +831,7 @@ function searchBarFilterOneEntry(partialData, valueEntered)
   //filtering part
   for (var i = 0; i < partialData.length; i++) {
 
-    var categories = getCategoryName();
+    var categories = searchBarCategories();
 
     for(var c = 0; c < categories.length; c++)
     {
@@ -883,7 +883,7 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
 
   var hadSubCategories = false;
   var moreThanOn = false;
-  var categories = getCategoryName();
+  var categories = searchBarCategories();
 
   for(var f = 0; f < categories.length; f++)
   {

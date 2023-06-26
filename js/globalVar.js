@@ -87,6 +87,13 @@ function getCategoryName()
   return output;
 }
 
+function searchBarCategories()
+{
+  var output = ["Name", "Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "General Disease Classifier", "Ethnicity", "Animal", "Image Type", "Model Creator"];
+
+  return output;
+}
+
 //returns the titles under ProjectMustContain
 function getMustContainFilterTitles()
 {
@@ -194,7 +201,7 @@ function getParentsOfChild(child)
 }
 
 //returns all possible options under each category
-function namesOfValuesPerKey(categoryName)
+function namesOfValuesPerKey(categoryName, returnSet = false)
 {
   var checkboxNameSet = new Set();
 
@@ -211,7 +218,10 @@ function namesOfValuesPerKey(categoryName)
   }
   else
   {
-    //does not add element if "-"
+    if(categoryName == "Disease")
+    {
+      checkboxNameSet = namesOfValuesPerKey("General Disease Classifier", true)
+    }
     for(var d = 0; d < data.length; d++)
     {
       if(data[d][categoryName].indexOf("_") != -1)
@@ -220,8 +230,11 @@ function namesOfValuesPerKey(categoryName)
         var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
         for(var a = 0; a < toAdd.length; a++)
         {
+          //does not add element if "-"
           if (toAdd[a] != "-")
+          {
             checkboxNameSet.add(toAdd[a]);
+          }
         }
       }
       else
@@ -231,6 +244,10 @@ function namesOfValuesPerKey(categoryName)
         }
       }
     }
+  }
+  if(returnSet)
+  {
+    return checkboxNameSet;
   }
 
   finalArray = Array.from(checkboxNameSet);
