@@ -897,7 +897,7 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
 
     for(var s = 0; s < subCategories.length; s++)
     {
-      if(subCategories[s].indexOf(" ") != -1 && valueToSearch.indexOf(subCategories[s].toLowerCase()) != -1)
+      if(subCategories[s].indexOf(" ") != -1 && subCategories[s].toLowerCase().includes(valueToSearch))
       {
         hadSubCategories = true;
         valueToSearch.replace(subCategories[s], "");
