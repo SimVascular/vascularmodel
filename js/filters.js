@@ -105,6 +105,8 @@ function getFilterMenu()
     availableFilters["Image Modality"] = false
   }
 
+  findModeOfListOfCheckboxLiMade();
+
   //loops through all hooks saved above
   for (var i = 0; i < allHooks.length; i++)
   {
@@ -332,6 +334,7 @@ function generateOptions(optionName)
   return option;
 }
 
+var mode = -1;
 
 function findModeOfListOfCheckboxLiMade(){
   var names = [];
@@ -349,45 +352,70 @@ function findModeOfListOfCheckboxLiMade(){
     }
   }
 
-  return max;
+  mode = max;
 }
 
-function addHook(hook) { 
-  var mode = findModeOfListOfCheckboxLiMade();
-
-  for(var i = 2; i <= mode.length; i++)
+function addHook(hook) {
+  for(var i = 1; i <= mode; i++)
   {
-    addSimilarHooks(i, hook + "_");
+    $("#" + hook + "_" + i).click(function() {
+      checkSimilarCheckboxes($(this)[0], hook);
+    });
   }
-
-  $("#" + hook + "_1").change(function() {applyFilters();});
-
 }
 
-function addSimilarHooks(i, hook){
-  $("#" + hook + i).change(function() {
-    document.getElementById(hook + "_1").checked = true;
-  });
-}
-
-function headerHooks()
-{
-  //manually checks and unchecks because now the check is a div
-  $(".label-before").on('click', function(){
-    var labelElement = $(this).siblings()[0];
-    
-    if(labelElement.checked)
+function checkSimilarCheckboxes(inputElementChecked, hook){
+  for(var m = 1; m <= mode; m++)
+  {
+    var otherSimilarElement = document.getElementById(hook + "_" + m);
+    if(otherSimilarElement != null)
     {
-      labelElement.checked = false;
+      if(inputElementChecked.checked == true)
+      {
+        otherSimilarElement.checked = true;
+      }
+      else
+      {
+        otherSimilarElement.checked = false;
+        deselectHeaders(otherSimilarElement.parentNode.childNodes, true);
+      }
+    } 
+  }
+  applyFilters();
+}
+
+function deselectHeaders(current, isNode = false)
+{
+  if(!current[0].checked)
+  {
+    if(isNode)
+    {
+      for(var maxParents = true; maxParents;)
+      {
+        var parentToParent = current[0].parentNode.parentNode.parentNode.parentNode.childNodes
+
+        var childToParent = current[0].parentNode.parentNode.parentNode.childNodes;
+
+        if(typeof (parentToParent[0].checked) == "undefined")
+        {
+          if (typeof (childToParent[0].checked) == "undefined")
+          {
+            maxParents = false;
+          }
+          else
+          {
+            current = childToParent;
+            current[0].checked = false;
+          }
+        }
+        else
+        {
+          current = parentToParent;
+          current[0].checked = false;
+        }
+      }
     }
     else
-    {
-      labelElement.checked = true;
-    }
-
-    var current = $(this).siblings();
-
-    if(!current[0].checked)
     {
       for(var maxParents = true; maxParents;)
       {
@@ -413,7 +441,19 @@ function headerHooks()
           current[0].checked = false;
         }
       }
-    }
+    } 
+  }
+}
+
+function headerHooks()
+{
+  //manually checks and unchecks because now the check is a div
+  $(".label-before").on('click', function(){
+    var inputElement = $(this).siblings()[0];
+    inputElement.click();
+
+    var current = $(this).parent().children();
+    deselectHeaders(current);
 
     applyFilters();
   });
@@ -422,7 +462,7 @@ function headerHooks()
     var labelElement = $(this).siblings()[1];
   
     var categoryName = codifyHookandID(labelElement.textContent);
-    var childrenOfCategory = document.getElementsByClassName(categoryName);
+    var childrenOfCategory = $("." + categoryName);
     var isParentChecked = $(this).siblings()[0].checked;
 
     for(var i = 0; i < childrenOfCategory.length; i++)
@@ -434,6 +474,7 @@ function headerHooks()
       else
       {
         childrenOfCategory[i].checked = false;
+        deselectHeaders(childrenOfCategory[i].parentNode.childNodes, true);
       }
     }
 
