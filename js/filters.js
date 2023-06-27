@@ -4,7 +4,9 @@ JavaScript for Filter Bar
 
 ----------------------------*/
 
-var availableFilters = {}
+var availableFilters = {};
+var listOfCheckboxLiMade = [];
+
 
 function getFilterMenu()
 {
@@ -146,8 +148,7 @@ function generateCheckboxUl(category, ul, fromParent = false)
     }
     else if((!childrenArray.includes(checkboxNames[i]) || fromParent) && checkboxNames[i] != "")
     {
-        var newLi = generateCheckboxLi(checkboxNames[i], getParentsOfChild(checkboxNames[i]));
-
+      var newLi = generateCheckboxLi(checkboxNames[i], getParentsOfChild(checkboxNames[i]));
       ul.appendChild(newLi);
     }
 
@@ -175,21 +176,28 @@ function makeEmbeddedParent(checkboxNames, parentName)
   div.classList.add("cd-filter-block");
 
   let codifiedName = codifyHookandID(parentName);
+  listOfCheckboxLiMade.push(codifiedName);
 
   let input = document.createElement('input');
   input.classList.add("filter");
   input.classList.add(codifiedName);
 
   var parents = getParentsOfChild(parentName);
-  for(var i = 0; i < parents.length; i++)
+  if(parents != "orphan")
   {
-    input.classList.add(codifyHookandID(parents[i]));
+    for(var i = 0; i < parents.length; i++)
+    {
+      input.classList.add(codifyHookandID(parents[i]));
+    }
   }
 
   input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
-  //sets id that is the same as the hook later created
-  input.setAttribute("id", "checkbox-" + codifiedName);
+
+  //unique ID even if the same checkbox
+  var count = listOfCheckboxLiMade.filter(x => x == codifiedName).length;
+
+  input.setAttribute("id", "checkbox-" + codifiedName + "_" + count);
 
   let checkBox = document.createElement("div");
   checkBox.classList.add("label-before");
@@ -198,7 +206,7 @@ function makeEmbeddedParent(checkboxNames, parentName)
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
   label.classList.add("adjustCheckboxForEmbed");
-  label.setAttribute("for", "checkbox-" + codifiedName);
+  label.setAttribute("for", "checkbox-" + codifiedName + "_" + count);
 
   let h4 = document.createElement("h4");
   h4.classList.add("closed");
@@ -258,6 +266,7 @@ function generateCheckboxLi(checkboxName, categoryNames = [])
   let li = document.createElement('li');
   
   let codifiedName = codifyHookandID(checkboxName);
+  listOfCheckboxLiMade.push(codifiedName);
 
   let input = document.createElement('input');
   input.classList.add("filter");
@@ -270,15 +279,18 @@ function generateCheckboxLi(checkboxName, categoryNames = [])
   }
   input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
-  //sets id that is the same as the hook later created
-  input.setAttribute("id", "checkbox-" + codifiedName);
+  
+  //unique ID even if the same checkbox
+  var count = listOfCheckboxLiMade.filter(x => x == codifiedName).length;
+
+  input.setAttribute("id", "checkbox-" + codifiedName + "_" + count);
 
   let checkBox = document.createElement("div");
   checkBox.classList.add("label-before");
 
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
-  label.setAttribute("for", "checkbox-" + codifiedName);
+  label.setAttribute("for", "checkbox-" + codifiedName + "_" + count);
   //displays un-codified name
   label.textContent = checkboxName;
 
@@ -320,9 +332,42 @@ function generateOptions(optionName)
   return option;
 }
 
+
+function findModeOfListOfCheckboxLiMade(){
+  var names = [];
+  var max = -1;
+  for(var i = 0; i < listOfCheckboxLiMade.length; i++)
+  {
+    if(names.includes(listOfCheckboxLiMade[i]))
+    {
+      max = Math.max(max,(listOfCheckboxLiMade.filter(x => x == listOfCheckboxLiMade[i]).length));
+    }
+    else
+    {
+      names.push(listOfCheckboxLiMade[i]);
+      max = Math.max(max, 1);
+    }
+  }
+
+  return max;
+}
+
 function addHook(hook) { 
-  //takes in hook and creates a listener 
-  $("#" + hook).change(function() {applyFilters();});
+  var mode = findModeOfListOfCheckboxLiMade();
+
+  for(var i = 2; i <= mode.length; i++)
+  {
+    addSimilarHooks(i, hook + "_");
+  }
+
+  $("#" + hook + "_1").change(function() {applyFilters();});
+
+}
+
+function addSimilarHooks(i, hook){
+  $("#" + hook + i).change(function() {
+    document.getElementById(hook + "_1").checked = true;
+  });
 }
 
 function headerHooks()
@@ -589,7 +634,7 @@ function isChecked(title)
   for(var i = 0; i < IDs.length; i++)
   {
     //if any of the checkboxes are checked, return true
-    if (document.getElementById("checkbox-" + IDs[i]).checked)
+    if (document.getElementById("checkbox-" + IDs[i] + "_1").checked)
     {
       return true;
     }
@@ -745,7 +790,7 @@ function dropDownFilter(categoryName, partialData)
 function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
 {
   //checks if checkbox is checked
-  if (document.getElementById(checkboxID).checked)
+  if (document.getElementById(checkboxID + "_1").checked)
   {  
     for (var i = 0; i < partialData.length; i++) {
       if (partialData[i][category].includes(key)) {

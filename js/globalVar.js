@@ -89,7 +89,7 @@ function getCategoryName()
 
 function searchBarCategories()
 {
-  var output = ["Name", "Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "General Disease Classifier", "Ethnicity", "Animal", "Image Type", "Model Creator"];
+  var output = ["Name", "VMR Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "General Disease Classifier", "Ethnicity", "Animal", "Image Type", "Model Creator"];
 
   return output;
 }
