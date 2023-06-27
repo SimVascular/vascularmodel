@@ -11,7 +11,7 @@ $(document).ready(function($){
     //reads CSV for data
     $.ajax({
       type: "GET",
-      url: "dataset/dataset.csv",
+      url: "dataset/dataset-svprojects.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
