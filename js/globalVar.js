@@ -102,6 +102,30 @@ function getMustContainFilterTitles()
   return output;
 }
 
+function getSubCategoriesForMultiEntrySearch()
+{
+  var finalArray = [];
+  var categories = searchBarCategories();
+
+  for(var f = 0; f < categories.length; f++)
+  {
+    var subCategories = namesOfValuesPerKey(categories[f]);
+
+    for(var s = 0; s < subCategories.length; s++)
+    {
+      if(subCategories[s].indexOf(" ") != -1)
+      {
+        finalArray.push(subCategories[s]);
+      }
+    }
+  }
+
+  finalArray.sort(function(a, b){return b.length - a.length});
+
+  return finalArray;
+  
+}
+
 function checksIfParent(categoryName)
 {
   for(var p = 0; p < parentArray.length; p++)
@@ -130,7 +154,7 @@ function checksIfChildofParent(parent, categoryName)
 
 function getChildrenOfParent(parent)
 {
-  var children = [];
+  var children = new Set();
 
   if(parent.toLowerCase() == parent)
   {
@@ -148,9 +172,11 @@ function getChildrenOfParent(parent)
   {
     if(typeof (tree[i][parent]) != "undefined")
     {
-      children.push(tree[i][parent])
+      children.add(tree[i][parent])
     }
   }
+
+  children = Array.from(children);
 
   return children;
 }
@@ -159,13 +185,25 @@ var childrenArray = [];
 
 function getChildrenOfTree()
 {
-  for(var i = 0; i < tree.length; i++)
+  if(childrenArray.length == 0)
   {
-    for(var p = 0; p < parentArray.length; p++)
+    var childrenSet = new Set();
+
+    for(var i = 0; i < tree.length; i++)
     {
-        childrenArray.push(tree[i][parentArray[p]]);
+      for(var p = 0; p < parentArray.length; p++)
+      {
+        if(tree[i][parentArray[p]] != "")
+        {
+          childrenSet.add(tree[i][parentArray[p]]);
+        }
+      }
     }
+    
+    childrenArray = Array.from(childrenSet);
   }
+
+  return childrenArray;
 }
 
 function getParentsOfChild(child)

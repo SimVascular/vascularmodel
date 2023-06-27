@@ -356,10 +356,20 @@ function findModeOfListOfCheckboxLiMade(){
 }
 
 function addHook(hook) {
-  for(var i = 1; i <= mode; i++)
+  if(hook.includes("checkbox"))
   {
-    $("#" + hook + "_" + i).click(function() {
-      checkSimilarCheckboxes($(this)[0], hook);
+    for(var i = 1; i <= mode; i++)
+    {
+      $("#" + hook + "_" + i).click(function() {
+        checkSimilarCheckboxes($(this)[0], hook);
+        applyFilters();
+      });
+    }
+  }
+  else
+  {
+    $("#" + hook).change(function() {
+      applyFilters();
     });
   }
 }
@@ -381,7 +391,6 @@ function checkSimilarCheckboxes(inputElementChecked, hook){
       }
     } 
   }
-  applyFilters();
 }
 
 function deselectHeaders(current, isNode = false)
@@ -894,26 +903,7 @@ function searchBarFilterOneEntry(partialData, valueEntered)
   //set up variables
   var filter = new Array(partialData.length);
   filter.fill(false);
-
-  var toSearch = [];
-
-  toSearch[0] = valueEntered;
-  console.log("filtering in single entry search bar: " + valueEntered)
-
-  if(checksIfParent(valueEntered))
-  {
-    var toAdd = getChildrenOfParent(valueEntered);
-    for(var a = 0; a < toAdd.length; a++)
-    {
-      if(toAdd[a] != "")
-      {
-        toSearch.push(toAdd[a].toLowerCase());
-      }
-    }
-    console.log(toSearch)
-  }
-
-  var counterInSingle = 0;
+  
   //filtering part
   for (var i = 0; i < partialData.length; i++) {
 
@@ -921,35 +911,47 @@ function searchBarFilterOneEntry(partialData, valueEntered)
 
     for(var c = 0; c < categories.length; c++)
     {
-      var modelsubCategoryValue = partialData[i][categories[c]].toLowerCase();
-
+      var modelSubCategory = partialData[i][categories[c]].toLowerCase();
       var category = categories[c].toLowerCase();
 
-      //differences for age
-      if(category == "age"){
+      if(category != "size" && category != "age" && category != "sex")
+      {
+        if (modelSubCategory.includes(valueEntered) || valueEntered.includes(modelSubCategory))
+        {
+          filter[i] = true;
+          break;
+        }
+
+        var parents = getParentsOfChild(partialData[i][categories[c]])
+
+        if(parents !== "orphan")
+        {
+          for(var p = 0; p < parents.length; p++)
+          {
+            parents[p] = parents[p].toLowerCase();
+            if (parents[p].includes(valueEntered) || valueEntered.includes(parents[p]))
+            {
+              filter[i] = true;
+              break;
+            }
+          }
+        }
+      }
+      else if (category == "age")
+      {
         //allows user to search pediatric and adult
-        if (valueEntered == "pediatric" && parseInt(modelsubCategoryValue) < 18) {
+        if (valueEntered == "pediatric" && parseInt(modelSubCategory) < 18) {
           filter[i] = true;
         }
-        else if (valueEntered == "adult" && parseInt(modelsubCategoryValue) >= 18){
+        else if (valueEntered == "adult" && parseInt(modelSubCategory) >= 18){
           filter[i] = true;
         }
       }
-      else
+      else if(category == "sex")
       {
-        //excludes "size" and "age" becaue they interfere with "name"
-        if ((modelsubCategoryValue.includes(toSearch[0]) || toSearch.includes(modelsubCategoryValue)) && category != "size" && category != "age")
+        if (valueEntered == modelSubCategory)
         {
-          //if includes, saves
           filter[i] = true;
-          counterInSingle++;
-          console.log("counterInSingle: " + counterInSingle + "\n subCategoryValue: " + modelsubCategoryValue)
-          
-          //accounts that female .includes() male is true
-          if (valueEntered == "male" && modelsubCategoryValue == "female")
-          {
-            filter[i] = false;
-          }
         }
       }
     }
@@ -962,79 +964,26 @@ function searchBarFilterOneEntry(partialData, valueEntered)
 //allows user to search for multiple entries
 function searchBarFilterMultipleEntries(partialData, valueToSearch)
 {
-  console.log("inMultipleEntries: " + valueToSearch)
-
-  var counterInMultiple = 0;
-  var filter = []
-
-  var hadSubCategories = false;
-  var moreThanOn = false;
-  var categories = searchBarCategories();
-
-  for(var f = 0; f < categories.length; f++)
+  //translates string with " " into an array
+  var valuesToSearch = valueToSearchInArrayForm(valueToSearch);
+  for(var v = 0; v < valuesToSearch.length; v++)
   {
-    var subCategories = namesOfValuesPerKey(categories[f]);
+    //sends each value individually to be searched
+    var output = searchBarFilterOneEntry(partialData, valuesToSearch[v])
 
-    for(var s = 0; s < subCategories.length; s++)
+    tempFilter = output[0];
+
+    //if first iteration
+    if (v == 0)
     {
-      if(subCategories[s].indexOf(" ") != -1 && (subCategories[s].toLowerCase().includes(valueToSearch) || valueToSearch.includes(subCategories[s].toLowerCase())))
-      {
-        counterInMultiple++;
-        console.log("counterInMultiple: " + counterInMultiple + "\n subCategories[s]" + subCategories[s] + "\n valueToSearch: " + valueToSearch);
-        hadSubCategories = true;
-        valueToSearch = valueToSearch.replace(subCategories[s].toLowerCase(), "");
-        if(valueToSearch == "")
-        {
-          valueToSearch = "already filtered"
-        }
-        var output = searchBarFilterOneEntry(partialData, subCategories[s].toLowerCase());
-
-        var tempFilter = output[0];
-
-        //if first iteration
-        if (!moreThanOn)
-        {
-          moreThanOn = true;
-          filter = tempFilter;
-        }
-        else
-        {
-          for(var f = 0; f < filter.length; f++)
-          {
-            //takes intersection
-            filter[f] = tempFilter[f] && filter[f];
-          }
-        }
-      }
+      filter = tempFilter;
     }
-  }
-
-  if (valueToSearch != "already filtered")
-  {
-    //if no pair of words matched the subcategory titles:
-
-    //translates string with " " into an array
-    var valuesToSearch = valueToSearchInArrayForm(valueToSearch);
-    
-    for(var v = 0; v < valuesToSearch.length; v++)
+    else
     {
-      //sends each value individually to be searched
-      var output = searchBarFilterOneEntry(partialData, valuesToSearch[v])
-
-      tempFilter = output[0];
-
-      //if first iteration
-      if (v == 0 && !hadSubCategories)
+      for(var f = 0; f < filter.length; f++)
       {
-        filter = tempFilter;
-      }
-      else
-      {
-        for(var f = 0; f < filter.length; f++)
-        {
-          //takes intersection
-          filter[f] = tempFilter[f] && filter[f];
-        }
+        //takes intersection
+        filter[f] = tempFilter[f] && filter[f];
       }
     }
   }
