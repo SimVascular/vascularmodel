@@ -494,7 +494,7 @@ function headerHooks()
   $('.cd-filter-block h4').on('click', function(){
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
   });
-
+  
   $('label.checkbox-label').on('click', function(){
     var current = $(this).siblings();
 
