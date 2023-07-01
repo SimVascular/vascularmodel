@@ -87,6 +87,7 @@ function getCategoryName()
   return output;
 }
 
+//returns categories that you can search for in the search bar
 function searchBarCategories()
 {
   var output = ["Name", "VMR Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "General Disease Classifier", "Ethnicity", "Animal", "Image Type", "Model Creator"];
@@ -102,32 +103,10 @@ function getMustContainFilterTitles()
   return output;
 }
 
-function getSubCategoriesForMultiEntrySearch()
-{
-  var finalArray = [];
-  var categories = searchBarCategories();
-
-  for(var f = 0; f < categories.length; f++)
-  {
-    var subCategories = namesOfValuesPerKey(categories[f]);
-
-    for(var s = 0; s < subCategories.length; s++)
-    {
-      if(subCategories[s].indexOf(" ") != -1)
-      {
-        finalArray.push(subCategories[s]);
-      }
-    }
-  }
-
-  finalArray.sort(function(a, b){return b.length - a.length});
-
-  return finalArray;
-  
-}
-
+//returns if the categoryName is a parent in the diseaseTree.csv
 function checksIfParent(categoryName)
 {
+  //searches for the categoryName in the parentArray
   for(var p = 0; p < parentArray.length; p++)
   {
     if(parentArray[p].toLowerCase() == categoryName.toLowerCase())
@@ -139,6 +118,7 @@ function checksIfParent(categoryName)
   return false;
 }
 
+//returns if an element is a child of a specific parent in the diseaseTree.csv
 function checksIfChildofParent(parent, categoryName)
 {
   for(var i = 0; i < tree.length; i++)
@@ -152,47 +132,20 @@ function checksIfChildofParent(parent, categoryName)
   return false;
 }
 
-function getChildrenOfParent(parent)
-{
-  var children = new Set();
-
-  if(parent.toLowerCase() == parent)
-  {
-    for(var p = 0; p < parentArray.length; p++)
-    {
-      if (parentArray[p].toLowerCase() == parent)
-      {
-        parent = parentArray[p];
-        break;
-      }
-    }
-  }
-
-  for(var i = 0; i < tree.length; i++)
-  {
-    if(typeof (tree[i][parent]) != "undefined")
-    {
-      children.add(tree[i][parent])
-    }
-  }
-
-  children = Array.from(children);
-
-  return children;
-}
-
+//spawns elements in childrenArray that pushes all names that have a parent in the diseaseTree.csv
 var childrenArray = [];
-
 function getChildrenOfTree()
 {
   if(childrenArray.length == 0)
   {
+    //the child only appears once in the set if there were duplicates
     var childrenSet = new Set();
 
     for(var i = 0; i < tree.length; i++)
     {
       for(var p = 0; p < parentArray.length; p++)
       {
+        //removes empty children names
         if(tree[i][parentArray[p]] != "")
         {
           childrenSet.add(tree[i][parentArray[p]]);
@@ -206,6 +159,7 @@ function getChildrenOfTree()
   return childrenArray;
 }
 
+//returns the parents of a child
 function getParentsOfChild(child)
 {
   var orphan = true;
@@ -216,15 +170,22 @@ function getParentsOfChild(child)
     {
       if(tree[i][parentArray[p]] == child)
       {
+        //adds the name of the parent if it has that child
         finalArray.push(parentArray[p])
+
+        //adds the parents of that parent if the child has it
         var nestedParents = getParentsOfChild(parentArray[p]);
-        if(nestedParents != ["orphan"])
+
+        //nestedParents would return "orphan" if the child has no more parents
+        if(nestedParents != "orphan")
         {
           for (var n = 0; n < nestedParents.length; n++)
           {
+            //adds the praents of the parent as necessary
             finalArray.push(nestedParents[n]);
           }
         }
+
         orphan = false;
       }
     }
@@ -235,7 +196,26 @@ function getParentsOfChild(child)
     return "orphan";
   }
 
+  //returns array of what parents the child has
   return finalArray;
+}
+
+//gets the children of a parent
+function getChildrenOfParent(parent)
+{
+  var children = new Set();
+
+  for(var i = 0; i < tree.length; i++)
+  {
+    if(typeof (tree[i][parent]) != "undefined" && tree[i][parent] != "")
+    {
+      children.add(tree[i][parent])
+    }
+  }
+
+  children = Array.from(children);
+
+  return children;
 }
 
 //returns all possible options under each category
@@ -243,25 +223,29 @@ function namesOfValuesPerKey(categoryName, returnSet = false)
 {
   var checkboxNameSet = new Set();
 
+  //if the categoryName is a parent, then the options under it are its children
   if(checksIfParent(categoryName))
   {
-    for(var i = 0; i < tree.length; i++)
+
+    //returns an array containing the children of a parent
+    var children = getChildrenOfParent(categoryName);
+    
+    for(var i = 0; i < children.length; i++)
     {
-      var child = tree[i][categoryName]
-      if(checksIfChildofParent(categoryName, child))
-      {
-        checkboxNameSet.add(child);
-      }
+      checkboxNameSet.add(children[i]);
     }
   }
   else
   {
     if(categoryName == "Disease")
     {
+      //includes the general disease classifier as potential options for Disease
       checkboxNameSet = namesOfValuesPerKey("General Disease Classifier", true)
     }
+    //goes through the data and gets all the possibilities the models offer
     for(var d = 0; d < data.length; d++)
     {
+      //if the model has multiple tags separated by an underscore
       if(data[d][categoryName].indexOf("_") != -1)
       {
         //if multiple categories to add separated by "_", different code
@@ -292,6 +276,8 @@ function namesOfValuesPerKey(categoryName, returnSet = false)
   finalArray.sort();
 
 
+  //adds category-specific options
+  //unshift() places the option at the beginning of the array
   if(categoryName == "Disease")
   {
     finalArray.unshift("Healthy");
@@ -669,6 +655,7 @@ function isSelectAllApplied(bool)
   }
 }
 
+//clears the code in the download confirmation box
 function clearDoConfirm()
 {
   document.getElementById("downloadSize").innerHTML = "";

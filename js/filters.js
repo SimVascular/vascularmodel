@@ -117,6 +117,7 @@ function getFilterMenu()
     }
   }
 
+  //adds listeners for embedded headers
   headerHooks();
 }
 
@@ -129,18 +130,21 @@ function generateCheckboxUl(category, ul, fromParent = false)
 
   //loops through options
   for (var i = 0; i < checkboxNames.length; i++) {
+    //fills the childrenArray variable in globalVar.js
     getChildrenOfTree();
 
-    //if it is a parent and not a child
-    //if it is both a parent and a child then it will act as a child
+    //if it is a parent and a child, then it acts as a parent
     if(checksIfParent(checkboxNames[i]) && (!childrenArray.includes(checkboxNames[i]) || fromParent))
-    {      
+    {  
+      //generates the parent element already with its children elements appended    
       var output = makeEmbeddedParent(checkboxNames, checkboxNames[i]);
 
+      //returned hooks and the li element
       var parentHooks = output[0];
+      ul.appendChild(output[2]);
+
+      //to reset any changes to checkboxNames
       checkboxNames = output[1];
-      var parentLi = output[2];
-      ul.appendChild(parentLi);
 
       //adds hooks from parent element
       for(var j = 0; j < parentHooks.length; j++)
@@ -148,12 +152,15 @@ function generateCheckboxUl(category, ul, fromParent = false)
         hooks.push(parentHooks[j]);
       }
     }
+    // if not a child or it is not both a child and a parent
     else if((!childrenArray.includes(checkboxNames[i]) || fromParent) && checkboxNames[i] != "")
     {
+      //generates the li element
       var newLi = generateCheckboxLi(checkboxNames[i], getParentsOfChild(checkboxNames[i]));
       ul.appendChild(newLi);
     }
 
+    //sets correct id for parent checkbox
     if(fromParent)
     {
       ul.setAttribute("id", codifyHookandID(category));
@@ -170,6 +177,7 @@ function generateCheckboxUl(category, ul, fromParent = false)
   return hooks;
 }
 
+//generates the complete parent li element
 function makeEmbeddedParent(checkboxNames, parentName)
 {
   var li = document.createElement("li")
@@ -177,13 +185,18 @@ function makeEmbeddedParent(checkboxNames, parentName)
   var div = document.createElement("div");
   div.classList.add("cd-filter-block");
 
+  //makes name compatible with the html id requirements
   let codifiedName = codifyHookandID(parentName);
+
+  //keeps track of which checkbox li have been made to track duplicates
   listOfCheckboxLiMade.push(codifiedName);
 
   let input = document.createElement('input');
   input.classList.add("filter");
   input.classList.add(codifiedName);
 
+  //adds the names of the parents to the class of the input element
+  //keeps track of the child's parents to access later
   var parents = getParentsOfChild(parentName);
   if(parents != "orphan")
   {
@@ -193,24 +206,28 @@ function makeEmbeddedParent(checkboxNames, parentName)
     }
   }
 
+  //creates the checkbox element for the parent
   input.setAttribute("data-filter", codifiedName);
   input.type = "checkbox";
 
   //unique ID even if the same checkbox
   var count = listOfCheckboxLiMade.filter(x => x == codifiedName).length;
-
   input.setAttribute("id", "checkbox-" + codifiedName + "_" + count);
 
+  //creates the box to click
   let checkBox = document.createElement("div");
   checkBox.classList.add("label-before");
   checkBox.classList.add("parent");
 
+  //creates the label to select
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
   label.classList.add("adjustCheckboxForEmbed");
   label.setAttribute("for", "checkbox-" + codifiedName + "_" + count);
 
+  //creates the label's h4 element with the parent's name
   let h4 = document.createElement("h4");
+  //default is that the children aren't showing 
   h4.classList.add("closed");
   h4.classList.add("embedded");
   //displays un-codified name
@@ -218,24 +235,29 @@ function makeEmbeddedParent(checkboxNames, parentName)
 
   label.appendChild(h4);
 
+  //creates the parent's ul element, which will contain its children li
   var parentUl = document.createElement("ul");
   parentUl.classList.add("cd-filter-content");
   parentUl.classList.add("cd-filters");
   parentUl.classList.add("list");
+  //default is that the children aren't showing 
   parentUl.style.display = "none";
-  // parentUl.style.display = "block";
+
+  //generates li elements to append children li with generateCheckboxUl()
   var hooks = generateCheckboxUl(parentName, parentUl, true);
 
-  //changes made to element
+  //appends changes made to element in the right order
   div.appendChild(input);
   div.appendChild(checkBox);
   div.appendChild(label);
   div.appendChild(parentUl);
   li.appendChild(div);
 
+  //returns necessary for hooks and the li element to append
   return [hooks, checkboxNames, li];
 }
 
+//makes the names compaitble for hooks and IDs
 function codifyHookandID(checkboxName)
 {
   //if no spaces to replace
@@ -262,20 +284,25 @@ function codifyHookandID(checkboxName)
   }
 }
 
+//creates li elements for filter bar
 function generateCheckboxLi(checkboxName, categoryNames = []) 
 {
   //creates checkbox li element
   let li = document.createElement('li');
   
+  //tracks which checkboxes have been made for duplicates
   let codifiedName = codifyHookandID(checkboxName);
   listOfCheckboxLiMade.push(codifiedName);
 
   let input = document.createElement('input');
   input.classList.add("filter");
+
+  //categoryNames contains the parents of the li element if it is a child
   if(categoryNames != "orphan")
   {
     for(var i = 0; i < categoryNames.length; i++)
     {
+      //adds the parents to the classes of the input element
       input.classList.add(codifyHookandID(categoryNames[i]));
     }
   }
@@ -284,18 +311,21 @@ function generateCheckboxLi(checkboxName, categoryNames = [])
   
   //unique ID even if the same checkbox
   var count = listOfCheckboxLiMade.filter(x => x == codifiedName).length;
-
   input.setAttribute("id", "checkbox-" + codifiedName + "_" + count);
 
+  //creates checkbox that comes before the li element
   let checkBox = document.createElement("div");
   checkBox.classList.add("label-before");
 
+  //creates the label where the name shows
   let label = document.createElement('label');
   label.classList.add("checkbox-label");
+  //adds the unique ID
   label.setAttribute("for", "checkbox-" + codifiedName + "_" + count);
   //displays un-codified name
   label.textContent = checkboxName;
 
+  //appends in the right html order
   li.appendChild(input);
   li.appendChild(checkBox);
   li.appendChild(label);
@@ -303,6 +333,7 @@ function generateCheckboxLi(checkboxName, categoryNames = [])
   return li;
 }
 
+//generates the dropdown menus
 function generateDropDownMenu(categoryName, select)
 {
   //creates option that selects all choices
@@ -322,6 +353,7 @@ function generateDropDownMenu(categoryName, select)
   }
 }
 
+//generates the options for the dropdown menus
 function generateOptions(optionName)
 {
   //creates option for dropdown menus
@@ -336,11 +368,14 @@ function generateOptions(optionName)
 
 var mode = -1;
 
+//finds the mode for the listOfCheckboxLiMade array
+//returns maximum times a name appears in listOfCheckboxLiMade
 function findModeOfListOfCheckboxLiMade(){
   var names = [];
   var max = -1;
   for(var i = 0; i < listOfCheckboxLiMade.length; i++)
   {
+    //if there is a duplicate
     if(names.includes(listOfCheckboxLiMade[i]))
     {
       max = Math.max(max,(listOfCheckboxLiMade.filter(x => x == listOfCheckboxLiMade[i]).length));
@@ -352,15 +387,21 @@ function findModeOfListOfCheckboxLiMade(){
     }
   }
 
+  //sets the value of mode, a global variable
   mode = max;
 }
 
+//adds hooks after the html is generated
 function addHook(hook) {
+  //if the hook comes from a checkbox element
   if(hook.includes("checkbox"))
   {
+    //iterates as many times as there are duplicates in the checkboxes
+    //to set hooks for all of them
     for(var i = 1; i <= mode; i++)
     {
       $("#" + hook + "_" + i).click(function() {
+        //if there is a change in one duplicate, all are selected
         checkSimilarCheckboxes($(this)[0], hook);
         applyFilters();
       });
@@ -374,12 +415,18 @@ function addHook(hook) {
   }
 }
 
+//checks checkbox duplicates if one is checked
 function checkSimilarCheckboxes(inputElementChecked, hook){
+  //iterates for the max number of duplicates
   for(var m = 1; m <= mode; m++)
   {
+    //otherSimilarElement is a duplicate of what checkbox was checked
+    //it can also be the same as the checkbox that was checked
     var otherSimilarElement = document.getElementById(hook + "_" + m);
+
     if(otherSimilarElement != null)
     {
+      //checks otherSimilarElement is the checkbox was checked
       if(inputElementChecked.checked == true)
       {
         otherSimilarElement.checked = true;
@@ -387,95 +434,87 @@ function checkSimilarCheckboxes(inputElementChecked, hook){
       else
       {
         otherSimilarElement.checked = false;
+
+        //if a child is unchecked, it deselects the parent elements as well
         deselectHeaders(otherSimilarElement.parentNode.childNodes, true);
       }
     } 
   }
 }
 
-function deselectHeaders(current, isNode = false)
+//if a child element is unchecked, this deselects the parent element as well
+function deselectHeaders(current)
 {
+  //checks if the header should be deselected; if the child is no longer checked
   if(!current[0].checked)
   {
-    if(isNode)
+    //iterates until maxParents is false
+    //maxParents is false when there are no more parent headers to deselect 
+    for(var maxParents = true; maxParents;)
     {
-      for(var maxParents = true; maxParents;)
+      //takes the path from a parent header to a parent header
+      var parentToParent = current[0].parentNode.parentNode.parentNode.parentNode.childNodes
+
+      //takes the path from a child to a parent header
+      var childToParent = current[0].parentNode.parentNode.parentNode.childNodes;
+
+      if(typeof (parentToParent[0].checked) == "undefined")
       {
-        var parentToParent = current[0].parentNode.parentNode.parentNode.parentNode.childNodes
-
-        var childToParent = current[0].parentNode.parentNode.parentNode.childNodes;
-
-        if(typeof (parentToParent[0].checked) == "undefined")
+        if (typeof (childToParent[0].checked) == "undefined")
         {
-          if (typeof (childToParent[0].checked) == "undefined")
-          {
-            maxParents = false;
-          }
-          else
-          {
-            current = childToParent;
-            current[0].checked = false;
-          }
+          //if the parent to parent is undefined
+          //and the child to child is undefined
+          //then there are no more parent headers to deselect
+          maxParents = false;
         }
         else
         {
-          current = parentToParent;
+          //updates the current from a child element to a parent element
+          current = childToParent;
+          //unchecks parent
           current[0].checked = false;
         }
+      }
+      else
+      {
+        //updates the current element to the parent of that element
+        current = parentToParent;
+        //unchecks parent
+        current[0].checked = false;
       }
     }
-    else
-    {
-      for(var maxParents = true; maxParents;)
-      {
-        var parentToParent = current.parent().parent().parent().parent().children()
-
-        var childToParent = current.parent().parent().siblings();
-
-        if(typeof (parentToParent[0].checked) == "undefined")
-        {
-          if (typeof (childToParent[0].checked) == "undefined")
-          {
-            maxParents = false;
-          }
-          else
-          {
-            current = childToParent;
-            current[0].checked = false;
-          }
-        }
-        else
-        {
-          current = parentToParent;
-          current[0].checked = false;
-        }
-      }
-    } 
   }
 }
 
+//adds hooks for headers
 function headerHooks()
 {
   //manually checks and unchecks because now the check is a div
   $(".label-before").on('click', function(){
+
+    //simulates that the input element has been clicked
     var inputElement = $(this).siblings()[0];
     inputElement.click();
 
-    var current = $(this).parent().children();
-    deselectHeaders(current);
-
+    //applies filters for new checkboxes checked
     applyFilters();
   });
 
+  //listens for when the checkbox of a parent has been checked
   $(".label-before.parent").on('click', function(){
     var labelElement = $(this).siblings()[1];
   
     var categoryName = codifyHookandID(labelElement.textContent);
+
+    //gets all the children, who have a class with their parent's name
     var childrenOfCategory = $("." + categoryName);
+
+    //checks the status of the parent input element
     var isParentChecked = $(this).siblings()[0].checked;
 
     for(var i = 0; i < childrenOfCategory.length; i++)
     {
+      //checks or unchecks all children according to parent
       if(isParentChecked)
       {
         childrenOfCategory[i].checked = true;
@@ -483,50 +522,20 @@ function headerHooks()
       else
       {
         childrenOfCategory[i].checked = false;
+        //if a child is unchecked, it deselects its parent headers
         deselectHeaders(childrenOfCategory[i].parentNode.childNodes, true);
       }
     }
 
+    //applies filters for new checkboxes checked
     applyFilters();
   });
 
-
+  //closes a parent header when the label is checked
   $('.cd-filter-block h4').on('click', function(){
 	  $(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
   });
-  
-  $('label.checkbox-label').on('click', function(){
-    var current = $(this).siblings();
 
-    if(current[0].checked)
-    {
-      for(var maxParents = true; maxParents;)
-      {
-        var parentToParent = current.parent().parent().parent().parent().children()
-
-        var childToParent = current.parent().parent().siblings();
-
-        if(typeof (parentToParent[0].checked) == "undefined")
-        {
-          if (typeof (childToParent[0].checked) == "undefined")
-          {
-            maxParents = false;
-          }
-          else
-          {
-            current = childToParent;
-            current[0].checked = false;
-          }
-        }
-        else
-        {
-          current = parentToParent;
-          current[0].checked = false;
-        }
-      }
-    }
-  });
-  
   //close filter dropdown inside lateral .cd-filter
   $('.checkbox-label h4').on('click', function(){
     $(this).parent().next('.cd-filter-content').slideToggle(300);
@@ -898,15 +907,19 @@ function searchBarFilter(partialData)
   }
 }
 
+//valueEntered is a single value
 function searchBarFilterOneEntry(partialData, valueEntered)
 {
-  //set up variables
+  //filter is a boolean array that records with "true" which models will be selected
+  //its index corresponds to the partialData index
   var filter = new Array(partialData.length);
   filter.fill(false);
   
   //filtering part
   for (var i = 0; i < partialData.length; i++) {
 
+    //these are the categories the search bar filters through
+    //it can be updated in the globalVar.js file
     var categories = searchBarCategories();
 
     for(var c = 0; c < categories.length; c++)
@@ -916,27 +929,33 @@ function searchBarFilterOneEntry(partialData, valueEntered)
 
       if(category != "size" && category != "age" && category != "sex")
       {
-        if (modelSubCategory.includes(valueEntered) || valueEntered.includes(modelSubCategory))
+        //for example selects the valueEntered is "coron" and the model is "coronary"
+        if (modelSubCategory.includes(valueEntered))
         {
           filter[i] = true;
+          //once the model is selected as true, goes on to next model
           break;
         }
 
+        //includes children if the parent's name is searched
         var parents = getParentsOfChild(partialData[i][categories[c]])
 
+        //filters for similarities between the parents of the child and the valueEntered
         if(parents !== "orphan")
         {
           for(var p = 0; p < parents.length; p++)
           {
             parents[p] = parents[p].toLowerCase();
-            if (parents[p].includes(valueEntered) || valueEntered.includes(parents[p]))
+            if (parents[p].includes(valueEntered))
             {
               filter[i] = true;
+              //once the model is selected as true, goes on to next model
               break;
             }
           }
         }
       }
+      //specific searching for age
       else if (category == "age")
       {
         //allows user to search pediatric and adult
@@ -947,6 +966,8 @@ function searchBarFilterOneEntry(partialData, valueEntered)
           filter[i] = true;
         }
       }
+      //specific requirements for sex
+      //since "male".includes("female") is true when it should be false
       else if(category == "sex")
       {
         if (valueEntered == modelSubCategory)
@@ -971,11 +992,13 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
     //sends each value individually to be searched
     var output = searchBarFilterOneEntry(partialData, valuesToSearch[v])
 
+    //records the boolean filter array from the oneEntry function
     tempFilter = output[0];
 
     //if first iteration
     if (v == 0)
     {
+      //sets filter with tempFilter
       filter = tempFilter;
     }
     else
@@ -983,6 +1006,7 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
       for(var f = 0; f < filter.length; f++)
       {
         //takes intersection
+        //ex: "female coronary" will show up models that are both female and coronary
         filter[f] = tempFilter[f] && filter[f];
       }
     }
@@ -992,6 +1016,7 @@ function searchBarFilterMultipleEntries(partialData, valueToSearch)
   return [filter, true];
 }
 
+//searches for which models have simulation results
 function hasResults(partialData){
   if(document.getElementById("switch-input") && 
      document.getElementById("switch-input").checked)
