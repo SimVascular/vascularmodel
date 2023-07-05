@@ -1,10 +1,11 @@
 var useAllFilters = false;
+var parentArray = [];
 
 $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
-    url: "dataset/dataset.csv",
+    url: "dataset/dataset-svprojects.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -33,6 +34,17 @@ $(document).ready(function($){
       }
     }
   });
+  $.ajax({
+    type: "GET",
+    url: "dataset/dataset-diseaseTree.csv",
+    dataType: "text",
+    async: false,
+    success: function(fdata) {
+      tree = $.csv.toObjects(fdata);
+      parentArray = Object.keys(tree[0]);
+    }
+  });
+
   //create copy of data
   filteredData = data;
 
@@ -687,11 +699,6 @@ $('.cd-filter-trigger').on('click', function(){
 $('.cd-filter .cd-close').on('click', function(){
   triggerFilter(false);
 });
-
-//close filter dropdown inside lateral .cd-filter
-$('.cd-filter-block h4').on('click', function(){
-	$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-})
 
 // we apply the filter when enter is pressed on the search field
 $('#search-field').keydown(function (e) {
