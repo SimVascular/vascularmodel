@@ -73,7 +73,7 @@
   $('.pdf-button-modal').click(function() {
     //creates anchor tag to download
     var a = document.createElement("a");
-    a.href = "additionaldata-pdfs/" + viewingModel['Name'] + ".pdf";
+    a.href = "vmr-pdfs/" + viewingModel['Name'] + ".pdf";
     // a.setAttribute("download", viewingModel['Name']);
     a.setAttribute("target", "_blank");
     //simulates click
