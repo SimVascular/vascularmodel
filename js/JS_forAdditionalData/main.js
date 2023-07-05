@@ -368,35 +368,6 @@ function generateContent(modelData) {
   divModelImage.setAttribute("id", modelData['Name']);
   divModelImage.setAttribute("title", "View details for " + modelData["Name"]);
 
-  //creates box to select model on top left
-  let selectBox = document.createElement("i");
-  selectBox.classList.add("fa-regular");
-  selectBox.classList.add("top-left");
-  selectBox.classList.add("selectingIndivModelsIcon");
-
-  //if model is selected, show that upon loading
-  if(selectedModels[preservedOrderData.indexOf(modelData)])
-  {
-    divModelImage.classList.add("selected");
-
-    selectBox.classList.add("fa-square-check");
-    //lingering mouse over icon will say "Deselect Model"
-    selectBox.setAttribute("title", "Deselect Model");
-    selectBox.classList.add("selected");
-  }
-  else
-  {
-    divModelImage.classList.remove("selected");
-
-    selectBox.classList.add("fa-square");
-    //lingering mouse over icon will say "Select Model"
-    selectBox.setAttribute("title", "Select Model");
-    selectBox.classList.add("notSelected");
-  }
-
-  //creates ID for hook to open modalDialog
-  selectBox.setAttribute("id", modelData['Name'] + "_selects");
-
   // let threeD = document.createElement("i");
   // threeD.textContent = "3D"
   // threeD.classList.add("bottom-left");
@@ -404,12 +375,11 @@ function generateContent(modelData) {
   
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
+  innerImg.src = 'img/additionaldata-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 
   divModelImage.appendChild(innerImg);
-  divModelImage.appendChild(selectBox);
   // divModelImage.appendChild(threeD);
   div.appendChild(divModelImage);
 
