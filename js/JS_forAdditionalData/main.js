@@ -1,5 +1,5 @@
 var useAllFilters = false;
-var tree = [];
+var parentArray = [];
 
 $(document).ready(function($){
   //reads csv file and sets it to the global variable data
@@ -35,27 +35,19 @@ $(document).ready(function($){
       }
     }
   });
-  
+
   //create copy of data
   filteredData = data;
 
   //checks width of screen for smallScreen variable
   checkWidth();
 
-  //sets selectedModels all to false
-  initializeSelectedModels();
-
   //sets counters that defaults to "filter"
   updateCounters(false, data);
-
-  //creates html for filters
-  //this function is in filters.js
-  getFilterMenu();
 
   //populates gallery with all models
   populate(data);
 
-  // in additionaldata we only want the search bar
   useAllFilters = false;
 });
 
@@ -78,13 +70,6 @@ function checkWidth() {
       updateCounters(lastFapplied, filteredData);
     }
   }
-}
-
-//sets selectedModels all to false
-function initializeSelectedModels()
-{
-  selectedModels = new Array(data.length);
-  selectedModels.fill(false);
 }
 
 function updateCounters(fApplied, fData, string)
@@ -144,10 +129,10 @@ function updateCounters(fApplied, fData, string)
     }
     else {
       if (fApplied) {
-        counterPanel.textContent = "Filters applied: " + fData.length + '/' + totalLength + ' files'
+        counterPanel.textContent = "Filters applied: " + fData.length + '/' + totalLength + ' models'
       }
       else {
-        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' files'
+        document.getElementById("counterPanel").textContent = "Filters not applied: " + fData.length + '/' + totalLength + ' models'
       }
       
       if(document.getElementById("putHelpWordHere") !== null)
@@ -172,7 +157,7 @@ function greetingText(data)
   $('.details-text').scrollTop(0);
 
   //modal's first line
-  $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the associated notes:\n\n'
+  $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the associated notes:'
 
   downloadType = "additionaldata";
   var size = getSizeIndiv(viewingModel["Name"]);
@@ -235,7 +220,6 @@ function greetingText(data)
     modalclosure.innerText = 'The size of this project is ' + sizeConverter(size);
   }
 } //end greetingText()
-
 //function to prevent overlay from exiting when the user clicks on the modal
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
@@ -248,7 +232,7 @@ $('#overlay').click(function() {
 });
 
 //turns off the overlay when the X is clicked
-$('.close-button-modal').click(function() {
+$('.close-button-modal').click(function() {  
   overlayOff();
 });
 
@@ -271,7 +255,7 @@ function checkOverlay(){
 
 //turns overlay and all accompanying elements on
 function overlayOn(){
-  //updates displat and global variable isOverlayOn
+  // updates display and global variable isOverlayOn
   document.getElementById("overlay").style.display = "block";
   isOverlayOn = true;
 
@@ -304,7 +288,7 @@ function overlayOn(){
 
 //deals with turning overlay off
 function overlayOff(){
-  // //updates variables
+  //updates variables
   document.getElementById("overlay").style.display = "none";
   isSafeSelected = true;
   isOverlayOn = false;
@@ -384,6 +368,40 @@ function generateContent(modelData) {
   divModelImage.setAttribute("id", modelData['Name']);
   divModelImage.setAttribute("title", "View details for " + modelData["Name"]);
 
+  //creates box to select model on top left
+  let selectBox = document.createElement("i");
+  selectBox.classList.add("fa-regular");
+  selectBox.classList.add("top-left");
+  selectBox.classList.add("selectingIndivModelsIcon");
+
+  //if model is selected, show that upon loading
+  if(selectedModels[preservedOrderData.indexOf(modelData)])
+  {
+    divModelImage.classList.add("selected");
+
+    selectBox.classList.add("fa-square-check");
+    //lingering mouse over icon will say "Deselect Model"
+    selectBox.setAttribute("title", "Deselect Model");
+    selectBox.classList.add("selected");
+  }
+  else
+  {
+    divModelImage.classList.remove("selected");
+
+    selectBox.classList.add("fa-square");
+    //lingering mouse over icon will say "Select Model"
+    selectBox.setAttribute("title", "Select Model");
+    selectBox.classList.add("notSelected");
+  }
+
+  //creates ID for hook to open modalDialog
+  selectBox.setAttribute("id", modelData['Name'] + "_selects");
+
+  // let threeD = document.createElement("i");
+  // threeD.textContent = "3D"
+  // threeD.classList.add("bottom-left");
+  // threeD.setAttribute("id", modelData['Name'] + "_3D")
+  
   //creates image of model
   let innerImg = document.createElement("img");
   innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
@@ -391,6 +409,7 @@ function generateContent(modelData) {
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 
   divModelImage.appendChild(innerImg);
+  divModelImage.appendChild(selectBox);
   // divModelImage.appendChild(threeD);
   div.appendChild(divModelImage);
 
@@ -400,6 +419,8 @@ function generateContent(modelData) {
 //function to add listeners to each model and its magnifying glass
 function addClickListener(model) {
   modelName =  model['Name'];
+  // selects model if you click on the box
+  $("#" + modelName + "_selects").click(function() {updatedSelectedList(model);});
 
   //click on model --> modalgreeting and overlay
   $('#' + modelName  + "_details").click(function() {greetingText(model); checkOverlay();});
@@ -407,7 +428,6 @@ function addClickListener(model) {
   // //show 3D version of model if you click on it
   // $("#" + modelName + "_3D").click(function() {show3D(model);});
 }
-
 
 //removes models from gallery
 function removeContent() {
@@ -417,69 +437,70 @@ function removeContent() {
   }
 }
 
-// function formatSelectedModels(wholeModel, selectBox, isSelected)
-// {
-//   if(isSelected)
-//   {
-//     //outlines model
-//     wholeModel.classList.add("selected");
+function formatSelectedModels(wholeModel, selectBox, isSelected)
+{
+  if(isSelected)
+  {
+    //outlines model
+    wholeModel.classList.add("selected");
 
-//     //changes select box and switch attributes
-//     selectBox.setAttribute("title", "Deselect Model");
+    //changes select box and switch attributes
+    selectBox.setAttribute("title", "Deselect Model");
 
-//     selectBox.classList.add("fa-square-check");
-//     selectBox.classList.remove("fa-square");
+    selectBox.classList.add("fa-square-check");
+    selectBox.classList.remove("fa-square");
 
-//     selectBox.classList.add("selected");
-//     selectBox.classList.remove("notSelected");
-//   }
-//   else
-//   {
-//     wholeModel.classList.remove("selected");
+    selectBox.classList.add("selected");
+    selectBox.classList.remove("notSelected");
+  }
+  else
+  {
+    wholeModel.classList.remove("selected");
 
-//     //changes select box and switch attributes
-//     selectBox.setAttribute("title", "Select Model");
+    //changes select box and switch attributes
+    selectBox.setAttribute("title", "Select Model");
 
-//     selectBox.classList.add("fa-square");
-//     selectBox.classList.remove("fa-square-check");
+    selectBox.classList.add("fa-square");
+    selectBox.classList.remove("fa-square-check");
     
-//     selectBox.classList.add("notSelected");
-//     selectBox.classList.remove("selected");
+    selectBox.classList.add("notSelected");
+    selectBox.classList.remove("selected");
 
-//   }
-// }
+  }
 
-// //updates selectedModels when a change has been made
-// function updatedSelectedList(model)
-// {
-//   //allows user to click and unclick model
-//   selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
-//   //gets element to animate it after a model is selected
-//   var menu = document.getElementById("menu-bar");
-//   var wholeModel = document.getElementById(model['Name']);
-//   var selectBox = document.getElementById(model['Name'] + "_selects");
+}
 
-//   //selectedModels index depends on preservedOrderData
-//   if(selectedModels[preservedOrderData.indexOf(model)])
-//   {
-//     formatSelectedModels(wholeModel, selectBox, true)
+//updates selectedModels when a change has been made
+function updatedSelectedList(model)
+{
+  //allows user to click and unclick model
+  selectedModels[preservedOrderData.indexOf(model)] = !selectedModels[preservedOrderData.indexOf(model)];
+  //gets element to animate it after a model is selected
+  var menu = document.getElementById("menu-bar");
+  var wholeModel = document.getElementById(model['Name']);
+  var selectBox = document.getElementById(model['Name'] + "_selects");
 
-//     //adds animation for menu bar
-//     menu.classList.add("selected");
-//   }
-//   else
-//   {
-//     formatSelectedModels(wholeModel, selectBox, false)
-//   }
+  //selectedModels index depends on preservedOrderData
+  if(selectedModels[preservedOrderData.indexOf(model)])
+  {
+    formatSelectedModels(wholeModel, selectBox, true)
 
-//   //updates counters
-//   updateCounters(lastFapplied, filteredData);
+    //adds animation for menu bar
+    menu.classList.add("selected");
+  }
+  else
+  {
+    formatSelectedModels(wholeModel, selectBox, false)
+  }
 
-//   //remove class that allows for animation of menu bar
-//   setTimeout(() => {
-//     menu.classList.remove("selected");
-//   }, 750);
-// }
+  //updates counters
+  updateCounters(lastFapplied, filteredData);
+
+  //remove class that allows for animation of menu bar
+  setTimeout(() => {
+    menu.classList.remove("selected");
+  }, 750);
+}
 
 // this function is called whenever "Filters" is pressed. It applies the
 // "filter-is-visible" class to all elements in elementsToTrigger. The behavior
@@ -585,11 +606,6 @@ $('.cd-filter-trigger').on('click', function(){
 $('.cd-filter .cd-close').on('click', function(){
   triggerFilter(false);
 });
-
-//close filter dropdown inside lateral .cd-filter
-$('.cd-filter-block h4').on('click', function(){
-	$(this).toggleClass('closed').siblings('.cd-filter-content').slideToggle(300);
-})
 
 // we apply the filter when enter is pressed on the search field
 $('#search-field').keydown(function (e) {
