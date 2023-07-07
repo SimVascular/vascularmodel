@@ -13,8 +13,11 @@ $("#closeAllButton").click(function() {
   }
   //makes css adjustments to close all menus
   $(changeClass).addClass('closed').siblings(".cd-filter-content").slideToggle(300);
-  var contentH4 = document.getElementsByClassName(".cd-filter-content");
-  $(contentH4).css({ "display": "none" });
+  $(changeClass).addClass('closed').parent().siblings(".cd-filter-content").slideToggle(300);
+
+  // var contentH4 = document.getElementsByClassName(".cd-filter-content");
+  // console.log(contentH4)
+  // $(contentH4).css({ "display": "none" });
 });
 
 //clears all filters in filter bar

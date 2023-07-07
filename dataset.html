@@ -2,8 +2,7 @@
 <html lang="en" class="html">
 <head>
   <link rel="icon" type="image/x-icon" href="img/favicon.ico?v=2"/>
-  <link rel="mask-icon" href="{{ base_path }}/img/favicon.ico?v=M44lzPylqQ" 
-color="#000000">
+  <link rel="mask-icon" href="{{ base_path }}/img/favicon.ico?v=M44lzPylqQ" color="#000000">
   <!-- This corresponds to a fontawesome kit but can be customized -->
   <script src="https://kit.fontawesome.com/48644805cd.js" crossorigin="anonymous"></script>
   <!-- Required meta tags -->
@@ -124,7 +123,7 @@ color="#000000">
           <button class = "closeAllButton" id="closeAllButton" type="button">Collapse All</button>
           <button class = "clearAllButton" id="clearAllButton" type="button">Clear All</button>
         </div>
-        <div class="filterOptions">
+        <div class="filterOptions">          
           <div class="cd-filter-block">
             <h4 title = "Search Bar">Search</h4>
             <div class="cd-filter-content">
@@ -199,6 +198,13 @@ color="#000000">
             <div class="cd-filter-block">
               <h4 class="closed">Procedure</h4>
               <ul id = "ProcedureUl" class="cd-filter-content cd-filters list" style="display: none;">
+                <!-- generated in js -->
+              </ul>
+            </div> <!-- cd-filter-block -->
+
+            <div class="cd-filter-block">
+              <h4 class="closed">Modality</h4>
+              <ul id = "ModalityUl" class="cd-filter-content cd-filters list" style="display: none;">
                 <!-- generated in js -->
               </ul>
             </div> <!-- cd-filter-block -->
