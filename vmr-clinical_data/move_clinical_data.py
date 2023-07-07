@@ -15,7 +15,7 @@ print('')
 
 for files in os.listdir(PATH_OF_CSV):
     if files.endswith(EXT):
-        model_name = files.replace('_clinical_data.csv', '')
+        model_name = files.replace('_ClinicalData.csv', '')
         shutil.copy(files, os.path.join(PATH_OF_SVPROJ, model_name))
 
         print('Copied ' + model_name)
