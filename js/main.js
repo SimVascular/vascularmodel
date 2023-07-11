@@ -371,7 +371,7 @@ function greetingForSimulationResults()
   var details = "";
   
   //all categories displayed in window
-  var categoryName = ["Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator","Notes"]
+  var categoryName = ["Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"]
 
   for(var d = 0; d < categoryName.length; d++)
   {
@@ -398,8 +398,11 @@ function greetingForSimulationResults()
       }
     }
 
-    //adds new line per detail
-    details += '\n';
+    if(d != categoryName.length - 1)
+    {
+      //adds new line per detail except on last line
+      details += '\n';
+    }
 
   } //end for-loop through categoryName
 
