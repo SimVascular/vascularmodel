@@ -189,16 +189,11 @@ function greetingText(data)
   //sets global var viewingModel
   viewingModel = data;
 
-  var viewResultsButton = document.getElementById("results_button_container");
-  //if no simulation results
-  if(hasSimulationResults)
-  {
-    viewResultsButton.style.display = "block";
-  }
-  else
-  {
-    viewResultsButton.style.display = "none";  
-  }
+  //clear dropdown for simulation results if it was created
+  var dropdown = document.getElementById("modal_simResults_dropdown");
+  dropdown.innerHTML = "";
+
+  setUpResultsButton();
 
   $('.details-text').scrollTop(0);
 
@@ -336,9 +331,36 @@ function greetingText(data)
   }
 } //end greetingText()
 
-function greetingForSimulationResults(simulationResult)
+function setUpResultsButton()
 {
-  //viewingModel has already been defined with the right model
+  var viewResultsButton = document.getElementById("results_button_container");
+
+  if(hasSimulationResults(viewingModel['Name']))
+  {
+    viewResultsButton.style.display = "block";
+  }
+  else
+  {
+    viewResultsButton.style.display = "none";  
+  }
+
+  var iconPlace = document.getElementById("iconHere");
+  iconPlace.innerHTML = "";
+
+  var icon = document.createElement("i");
+  icon.classList.add("fa-solid");
+  icon.style.paddingRight = "15px";
+  icon.classList.add("fa-folder-open");
+  iconPlace.appendChild(icon);
+    
+  var textPlace = document.getElementById("textHere");  
+  textPlace.innerHTML = "";
+  textPlace.textContent = "View Simulation Results";
+}
+
+function greetingForSimulationResults()
+{
+  simulationResult = viewingThisSimulation;
 
   $('.details-text').scrollTop(0);
 
@@ -347,6 +369,7 @@ function greetingForSimulationResults(simulationResult)
 
   //details inside window
   var details = "";
+  
   //all categories displayed in window
   var categoryName = ["Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator","Notes"]
 
@@ -479,6 +502,10 @@ function checkOverlay(){
       resetFromSimulationResult()
     }
   }
+}
+
+function resetFromSimulationResult(){
+  viewingSimulations = false;
 }
 
 //turns overlay and all accompanying elements on

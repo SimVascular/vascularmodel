@@ -14,6 +14,7 @@
 
 //other global variables:
   var viewingModel = '';
+  var viewingThisSimulation = '';
   var viewingSimulations = false;
   var curIndex = 0;
   var smallScreen = false
@@ -1060,15 +1061,17 @@ function downloadModel(modelName)
     }
 }
 
-function hasSimulationResults(model)
+function hasSimulationResults(modelName)
 {
-  for(var i = 0; i < results.length; i++)
-  {
-    if(results[i]["Model Name"] == model["Name"])
-    {
-      return true;
-    }
-  }
+  var index = results.findIndex(p => p["Model Name"] == modelName);
 
-  return false;
+  return index != -1;
+}
+
+function returnDefaultSimulationResult()
+{
+  var index = results.findIndex(p => p["Model Name"] == viewingModel['Name']);
+  simulationResult = results[index];
+  
+  return simulationResult;
 }

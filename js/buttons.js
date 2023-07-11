@@ -308,74 +308,54 @@ var simulationResult;
 
 $('.results-button-modal').click(function() {
   viewingSimulations = !viewingSimulations;
-  var dropdown = document.getElementById("modal_simResults_dropdown");
-  
-  var icon = document.createElement("i");
-  icon.classList.add("fa-solid");
-  icon.style.paddingRight = "15px";
-
-  var iconPlace = document.getElementById("iconHere");
-  iconPlace.innerHTML = "";
-  
-
-  var textPlace = document.getElementById("textHere");  
-  textPlace.innerHTML = "";
 
   if(viewingSimulations)
   {
-    icon.classList.add("fa-left-long");
+    var iconPlace = document.getElementById("iconHere");
+    iconPlace.innerHTML = "";
 
+    var icon = document.createElement("i");
+    icon.classList.add("fa-solid");
+    icon.style.paddingRight = "15px";
+    icon.classList.add("fa-left-long");
+    iconPlace.appendChild(icon);
+
+    var textPlace = document.getElementById("textHere");  
+    textPlace.innerHTML = "";
     textPlace.textContent = "Return to Model";
 
-    dropdown.style.display = "block";
-    dropdown.innerHTML = "";
+    createDropDownForResults();
 
-    for(var i = 0; i < results.length; i++)
-    {
-      if(results[i]["Model Name"] == modelName)
-      {
-        simulationResult = results[i];
-        break;
-      }
-    }
+    //sets viewingThisSimulation to default
+    var first = returnDefaultSimulationResult();
+    viewingThisSimulation = first;
 
-    createDropDownForResults(dropdown);
-    greetingForSimulationResults(simulationResult);
+    greetingForSimulationResults();
   }
   else
   {
-    //create folder icon
-    icon.classList.add("fa-folder-open");
+    //greetingText resets the button
+    greetingText(viewingModel);
 
-    textPlace.textContent = "View Simulation Results";
-    dropdown.style.display = "none";
-    greetingText(viewingModel)
   }
-
-  iconPlace.appendChild(icon);
 });
-
-function resetFromSimulationResult()
-{
-  viewingSimulations = false;
-  var button = document.getElementsByClassName("results-button-modal")[0];
-  var dropdown = document.getElementById("modal_simResults_dropdown");
-  button.textContent = "View Simulation Results";
-  dropdown.style.display = "none";
-}
 
 $("#modal_simResults_dropdown").change(function () {
-  resultChosen = document.getElementById("chooseResult").value;
-
-  dropdown.innerHTML = "";
-
-  createDropDownForResults(dropdown);
-  greetingForSimulationResults(results[1]);
+  valueOfDropdown = document.getElementById("chooseResult").value;
+  var index = results.findIndex(p => p["Simulation File Name"] == valueOfDropdown);
+  viewingThisSimulation = results[index];
+  greetingForSimulationResults();
 });
 
-function createDropDownForResults(dropdown)
+function createDropDownForResults()
 {
+  //access and display dropdown element
+  var dropdown = document.getElementById("modal_simResults_dropdown");
+  dropdown.innerHTML = "";
+  dropdown.style.display = "block";
+
   modelName = viewingModel['Name'];
+  simulationResult = viewingThisSimulation;
 
   //labels the drop down menu
   var title = document.createElement("div");
