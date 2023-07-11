@@ -396,13 +396,9 @@ $("#download-all-models").click(function () {
     //if nothing to download, download-all button has no function
     if (countModels > 0)
     {
-        var simResults = document.getElementById("putDropDownHere");
+        // var putDropDownHere = document.getElementById("putDropDownHere");
 
-        if(countResults != 0)
-        {
-        simResults.textContent = "Simulation results for these models will be made available soon."
-        }
-        //dropDown defines downloadType
+        // // dropDown defines downloadType
         // if(countResults == 0)
         // {
         //     dropDown(putDropDownHere, "no results");
@@ -449,15 +445,13 @@ $("#downloadModel").click(function () {
     //clear confirmation message
     clearDoConfirm();
 
-    var simResults = document.getElementById("putDropDownHere");
+    // var putDropDownHere = document.getElementById("putDropDownHere");
 
-    //resets downloadtype as well
-    if(model["Results"] == "1")
-    {
-        simResults.textContent = "Simulation results for these models will be made available soon."
-
-        // dropDown(putDropDownHere, "all");
-    }
+    // //resets downloadtype as well
+    // if(model["Results"] == "1")
+    // {
+    //     dropDown(putDropDownHere, "all");
+    // }
     // else
     // {
     //     dropDown(putDropDownHere, "no results");
