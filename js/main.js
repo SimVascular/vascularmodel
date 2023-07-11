@@ -204,6 +204,7 @@ function greetingText(data)
   var details = "";
   //all categories displayed in window
   var categoryName = getCategoryName();
+  categoryName.unshift("Legacy Name")
 
   for(var d = 0; d < categoryName.length; d++)
   {
@@ -229,7 +230,7 @@ function greetingText(data)
       else
       {
         //accounts for when there are multiple details, separated by a "_"
-        if(valInCat.indexOf("_") == -1)
+        if(valInCat.indexOf("_") == -1 || categoryName[d] == "Legacy Name")
         {
           details += categoryName[d] + ": " + valInCat;
         }
