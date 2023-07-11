@@ -304,6 +304,116 @@ $("#returnToGalleryButton").click(function () {
     }
 });
 
+var simulationResult;
+
+$('.results-button-modal').click(function() {
+  viewingSimulations = !viewingSimulations;
+  var dropdown = document.getElementById("modal_simResults_dropdown");
+  
+  var icon = document.createElement("i");
+  icon.classList.add("fa-solid");
+  icon.style.paddingRight = "15px";
+
+  var iconPlace = document.getElementById("iconHere");
+  iconPlace.innerHTML = "";
+  
+
+  var textPlace = document.getElementById("textHere");  
+  textPlace.innerHTML = "";
+
+  if(viewingSimulations)
+  {
+    icon.classList.add("fa-left-long");
+
+    textPlace.textContent = "Return to Model";
+
+    dropdown.style.display = "block";
+    dropdown.innerHTML = "";
+
+    for(var i = 0; i < results.length; i++)
+    {
+      if(results[i]["Model Name"] == modelName)
+      {
+        simulationResult = results[i];
+        break;
+      }
+    }
+
+    createDropDownForResults(dropdown);
+    greetingForSimulationResults(simulationResult);
+  }
+  else
+  {
+    //create folder icon
+    icon.classList.add("fa-folder-open");
+
+    textPlace.textContent = "View Simulation Results";
+    dropdown.style.display = "none";
+    greetingText(viewingModel)
+  }
+
+  iconPlace.appendChild(icon);
+});
+
+function resetFromSimulationResult()
+{
+  viewingSimulations = false;
+  var button = document.getElementsByClassName("results-button-modal")[0];
+  var dropdown = document.getElementById("modal_simResults_dropdown");
+  button.textContent = "View Simulation Results";
+  dropdown.style.display = "none";
+}
+
+$("#modal_simResults_dropdown").change(function () {
+  resultChosen = document.getElementById("chooseResult").value;
+
+  dropdown.innerHTML = "";
+
+  createDropDownForResults(dropdown);
+  greetingForSimulationResults(results[1]);
+});
+
+function createDropDownForResults(dropdown)
+{
+  modelName = viewingModel['Name'];
+
+  //labels the drop down menu
+  var title = document.createElement("div");
+  title.textContent = "You are viewing:";
+  dropdown.appendChild(title)
+
+  //creates the select box
+  var select = document.createElement("select");
+  select.setAttribute("id", "chooseResult");
+  select.setAttribute("class", "spaceBelow");
+
+  var options = [];
+
+  for(var i = 0; i < results.length; i++)
+  {
+    if(results[i]["Model Name"] == modelName)
+    {
+      options.push(results[i]["Simulation File Name"]);
+    }
+  }
+
+  for(var i = 0; i < options.length; i++)
+  {
+    //create options under select
+    var option = document.createElement("option");
+    option.setAttribute("value", options[i]);
+    option.textContent = options[i];
+    select.appendChild(option);
+  }
+
+  dropdown.appendChild(select);
+}
+
+function checkName(modelName)
+{
+  return modelName == viewingModel['Name'];
+}
+
 //share button inside modalText
 $('.shareableLink-button-modal').click(function() {
   //creates array with all N except for the model

@@ -323,6 +323,7 @@
       <div>
         <!-- safeOfOverlayClick is where the user can click and the detailsModal does not close -->
         <div id ="safeOfOverlayClick">
+          <div id="modal_simResults_dropdown" style="display: none"></div>
           <p id="modal-greeting">Placeholder</p>
           <textarea class="details-text" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec dolor elementum, malesuada est in, molestie libero. Morbi in nibh est. Quisque venenatis cursus augue, in pellentesque est. Nam placerat finibus sapien, venenatis placerat nibh tincidunt sed. Curabitur vehicula vulputate leo ac suscipit. Pellentesque sollicitudin, justo sed maximus porttitor, tellus orci ornare sem, et finibus augue leo vitae libero. Morbi vitae diam dui. Donec ac mollis felis, vel ornare quam. Nam risus elit, semper sed nulla vitae, vulputate ultrices dolor. Donec interdum molestie eros nec facilisis. Integer vel pretium magna, non tempor lorem. Aliquam semper est in odio condimentum ultricies. Maecenas non nulla viverra, cursus tellus ut, posuere ligula. Praesent massa eros, rutrum eget eros in, rhoncus scelerisque justo. Cras lacus diam, congue vitae elit ut, convallis rhoncus diam.
 
@@ -330,8 +331,18 @@
 
               Mauris elit leo, semper et lobortis eget, iaculis at erat. Nulla vulputate purus in rhoncus semper. Donec dolor ante, hendrerit eget ullamcorper sed, egestas ac libero. Morbi vestibulum nulla nec enim pretium, eu tincidunt tortor suscipit. Integer porta fringilla nunc, ut pulvinar enim lobortis ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas pellentesque ligula orci, sed aliquam enim ultrices quis. Nunc imperdiet imperdiet lorem, at tempus elit tincidunt facilisis. Donec vitae pharetra lectus, ac tempus odio. Integer vitae pellentesque ipsum, id semper velit. Etiam sapien arcu, rutrum vitae sapien quis, semper tincidunt elit. Ut placerat urna nec enim imperdiet gravida. Aliquam eget odio at lorem tempus pharetra. Pellentesque pellentesque turpis vel nibh consequat dictum.</textarea>
           <div id="modal-closure" style="margin-bottom:10px;">Placeholder</div>
-          <div class="row">
             <!-- three buttons: close, download, share -->
+            <div class="text-center" id="results_button_container" style="display: block">
+              <a title = "View Simulation Results" class="button button-modal results-button-modal">
+                <span id="iconHere">
+                  <i class="fa-solid fa-folder-open" style="padding-right: 15px"></i>
+                </span>
+                <span id="textHere">
+                  View Simulation Results
+                </span>
+              </a>
+            </div>
+            <div class="row">
             <div class="col-xs-4 col-sm-4 text-center">
               <a title = "Get Shareable Link" class="button button-modal shareableLink-button-modal"><i class="fa-solid fa-share"></i></a>
             </div>

@@ -14,6 +14,7 @@
 
 //other global variables:
   var viewingModel = '';
+  var viewingSimulations = false;
   var curIndex = 0;
   var smallScreen = false
   var lastFapplied = 0;
@@ -1057,4 +1058,17 @@ function downloadModel(modelName)
         'value': '1'
       });
     }
+}
+
+function hasSimulationResults(model)
+{
+  for(var i = 0; i < results.length; i++)
+  {
+    if(results[i]["Model Name"] == model["Name"])
+    {
+      return true;
+    }
+  }
+
+  return false;
 }

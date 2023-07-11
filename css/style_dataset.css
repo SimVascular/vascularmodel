@@ -495,6 +495,20 @@ error msg block behavior
   width: 100px;
 }
 
+.results-button-modal.button-modal {
+  width: 90%;
+}
+
+.results-button-modal {
+  background-color: var(--darkSimRe);
+}
+
+.results-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--lightSimRe);
+}
+
 .shareableLink-button-modal {
   background-color: var(--dark2);
 }
