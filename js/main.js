@@ -247,7 +247,7 @@ function greetingText(data)
     //adds new line per detail
     details += '\n';
 
-  } //end for-loop through categoryName
+  } //end for-loop through categoryName array
 
   //formatting for whether or not each fdr is avaliable
   var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
