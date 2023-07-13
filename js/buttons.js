@@ -308,11 +308,12 @@ $("#modal_simResults_dropdown").change(function () {
 $(".tab_in_modal").click(function () {
   var model_tab = document.getElementById("model_tab");
   var results_tab = document.getElementById("results_tab");
-  
+
   if($(this).attr('id') == "model_tab")
   {
     model_tab.classList.add("selected_tab");
     results_tab.classList.remove("selected_tab");
+
     viewingSimulations = false;
     greetingText(viewingModel)
   }
@@ -320,6 +321,7 @@ $(".tab_in_modal").click(function () {
   {
     results_tab.classList.add("selected_tab");
     model_tab.classList.remove("selected_tab");
+
     viewingSimulations = true;
     viewSimulations()
   }

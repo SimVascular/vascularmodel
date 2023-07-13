@@ -784,7 +784,7 @@ error msg block behavior
   cursor: default;
 }
 
-.body_of_modal {
+#body_of_modal {
   padding: 20px 20px 20px 20px;
   cursor: default;
 }

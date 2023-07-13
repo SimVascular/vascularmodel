@@ -512,6 +512,7 @@ function resetFromSimulationResult(){
   viewingSimulations = false;
   var model_tab = document.getElementById("model_tab");
   var results_tab = document.getElementById("results_tab");
+
   model_tab.classList.add("selected_tab");
   results_tab.classList.remove("selected_tab");
 }
