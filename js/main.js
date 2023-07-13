@@ -361,7 +361,7 @@ function greetingForSimulationResults()
   var details = "";
   
   //all categories displayed in window
-  var categoryName = ["Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"]
+  var categoryName = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"]
 
   for(var d = 0; d < categoryName.length; d++)
   {
@@ -375,7 +375,7 @@ function greetingForSimulationResults()
     }
     else{
       //accounts for when there are multiple details, separated by a "_"
-      if(valInCat.indexOf("_") == -1)
+      if(valInCat.indexOf("_") == -1 || categoryName[d] == "Model Name")
       {
         details += categoryName[d] + ": " + valInCat;
       }
@@ -526,6 +526,12 @@ function toggleButtons()
     download_button.classList.remove("col-sm-4")
     download_button.classList.add("col-xs-6")
     download_button.classList.add("col-sm-6")
+
+    var download_anchor = download_button.childNodes[1];
+    download_anchor.setAttribute("title", "Download Simulation Result");
+
+    var share_anchor = share_button.childNodes[1];
+    share_anchor.setAttribute("title", "Share Simulation Result");
   }
   else
   {
@@ -543,6 +549,12 @@ function toggleButtons()
     download_button.classList.add("col-sm-4")
     download_button.classList.remove("col-xs-6")
     download_button.classList.remove("col-sm-6")
+
+    var download_anchor = download_button.childNodes[1];
+    download_anchor.setAttribute("title", "Download Model");
+
+    var share_anchor = share_button.childNodes[1];
+    share_anchor.setAttribute("title", "Share Model");
   }
 }
 

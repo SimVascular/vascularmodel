@@ -6,6 +6,9 @@ var boolArrayWResults = []
 var model;
 var multiModel = false;
 var singleModel = false;
+var arrayToSearch;
+var modelName;
+var viewingASimulationResult;
 
 $(document).ready(function($){
     //reads CSV for data
@@ -16,9 +19,18 @@ $(document).ready(function($){
       async: false,
       success: function(fdata) {
         data = $.csv.toObjects(fdata);
-        preservedOrderData = data;
       }
     });
+
+    $.ajax({
+        type: "GET",
+        url: "dataset/dataset-svresults.csv",
+        dataType: "text",
+        async: false,
+        success: function(fdata) {
+          results = $.csv.toObjects(fdata);
+        }
+      });
 
     $.ajax({
         type: "GET",
@@ -35,7 +47,6 @@ $(document).ready(function($){
           }
         }
       });
-
     //deals with URL input
     getVariable();
 });
@@ -50,6 +61,18 @@ function getVariable()
 
     //decodes the info from the URL
     var encodedNames = decodeRLE(encodeATOB(codedName));
+
+    if(encodedNames.length == data.length)
+    {
+        dataToSearch = data;
+        viewingASimulationResult = false;
+    }
+    else
+    {
+        dataToSearch = results;
+        viewingASimulationResult = true;
+    }
+
     var found = false;
 
     //searches for which are selected
@@ -58,20 +81,9 @@ function getVariable()
         //if Y, records model
         if(encodedNames[i] == "Y")
         {
-            models.push(data[i]);
+            models.push(dataToSearch[i]);
             boolArray.push(true);
             found = true;
-
-            //saves different arrays for later
-            if(preservedOrderData[i]["Results"] == "1")
-            {
-                simModels.push(data[i]);
-                boolArrayWResults.push(true);
-            }
-            else
-            {
-                boolArrayWResults.push(false);
-            }
         }
         else if (encodedNames[i] == "N")
         {
@@ -91,6 +103,15 @@ function getVariable()
         singleModel = true;
         displayRelevant(2);
         model = models[0];
+        if(viewingASimulationResult)
+        {
+            modelName = model["Short Simulation File Name"]
+        }
+        else
+        {
+            modelName = model["Name"]
+        }
+
         displayModel(model);
     }
     else{
@@ -151,17 +172,26 @@ function displayModel()
     //creates "header"
     var div = document.getElementById("displayedModel");
     var title = document.createElement("h1");
-    title.textContent = "You are viewing " + model["Name"] + ".";
+    title.textContent = "You are viewing " + modelName + ".";
 
     //creates image
     let img = document.createElement("img");
-    img.src = 'img/vmr-images/' + model['Name'] + '.png'
-    img.alt = model['Name'];
+    if(viewingASimulationResult)
+    {
+        img.src = 'img/vmr-images/' + model['Model Name'] + '.png';
+        img.alt = model['Model Name'];
+    }
+    else
+    {
+        img.src = 'img/vmr-images/' + model['Name'] + '.png';
+        img.alt = model['Name'];
+    }
+    
     img.classList.add("imgContainer");
     img.classList.add("center");
 
     //table of information on model
-    var desc = getDescription(model);
+    var desc = toggleDescription(model);
 
     //appends all to div
     div.appendChild(title);
@@ -173,10 +203,22 @@ function displayModel()
 }
 
 //deals with table of information
-function getDescription()
+function toggleDescription()
 {
+    if(!viewingASimulationResult)
+    {
+        return descriptionForModel();
+    }
+    else
+    {
+        return descriptionForResults();
+    }
+}
+
+function descriptionForModel() {
+    var categoryName = getDetailsTitlesForModel(); 
+
     var table = document.createElement("table");
-    var categoryName = getDetailsTitles();
 
     for(var d = 0; d < categoryName.length; d++)
     {
@@ -240,7 +282,7 @@ function getDescription()
             }
             else if(categoryName[d] == "Size")
             {
-                details += getSizeIndiv(model["Name"])[1];
+                details += getSizeIndiv(model['Name'])[1];
             }
             else
             {
@@ -259,9 +301,93 @@ function getDescription()
         newTR.appendChild(newHeader);
         newTR.appendChild(newColumn);
         table.appendChild(newTR)
-  }
+    }
 
-  return table;
+    return table;
+}
+
+function descriptionForResults() {
+    var categoryName = getDetailsTitlesForResults(); 
+    
+    var table = document.createElement("table");
+
+    for(var d = 0; d < categoryName.length; d++)
+    {
+        //new row for each detail
+        var newTR = document.createElement("tr");
+
+        //takes in title of detail
+        var newHeader = document.createElement("th");
+        newHeader.textContent = categoryName[d];
+        
+        //newColumn is the information on the model
+        var newColumn = document.createElement("td");
+        var details = "";
+        
+        var valInCat = model[categoryName[d]];
+        
+        //if no value is specified in the CSVs
+        if(valInCat == "-")
+        {
+            details += "N/A";
+        }
+        //deals differently with each information
+        else{
+            if(categoryName[d] == "Notes")
+            {
+                //works with URLs and \n for notes
+                if(model["Notes"] != '-')
+                {
+                    notes = model["Notes"];
+                    if(notes.includes("\\url"))
+                    {
+                        var string = notes;
+                        //allows for multiple URLs
+                        while(string.includes("\\url"))
+                        {
+                            var output = URLMaker(string);
+
+                            newColumn.appendChild(output[0]);
+                            newColumn.appendChild(output[1]);
+                            string = output[2].textContent;
+                        }
+                    
+                        newColumn.appendChild(output[2]);
+                    }
+                    else
+                    {
+                        //updates details if not dealing with URLs
+                        details += model["Notes"];
+                    }
+                }
+            }
+            else if(categoryName[d] == "Size")
+            {
+                details += getSizeIndiv(model)[1];
+            }
+            else if(categoryName[d] != "Model Name")
+            {
+                //formats multiple details with "," and "and"
+                details += listFormater(valInCat);
+            }
+            else{
+                details += valInCat;
+            }
+        } //end else
+
+        //details is "" if there was a URL
+        if(details != "")
+        {
+            newColumn.textContent = details;
+        }
+        
+        //appends new detail to table
+        newTR.appendChild(newHeader);
+        newTR.appendChild(newColumn);
+        table.appendChild(newTR)
+    }
+
+    return table;
 }
 
 //function to display multiple models in a table
@@ -358,7 +484,7 @@ function createHook(model)
 
 function goToModel(model){
     //creates shareable URL
-    var array = makeshiftSelectedModels(data, model)
+    var array = makeshiftSelectedModels(dataToSearch, model)
 
     //opens new window with encoded model
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
@@ -444,26 +570,27 @@ async function downloadAll()
 $("#downloadModel").click(function () {
     //clear confirmation message
     clearDoConfirm();
-
-    // var putDropDownHere = document.getElementById("putDropDownHere");
-
-    // //resets downloadtype as well
-    // if(model["Results"] == "1")
-    // {
-    //     dropDown(putDropDownHere, "all");
-    // }
-    // else
-    // {
-    //     dropDown(putDropDownHere, "no results");
-    // }
     
     //updates size with individual model
     var sizeWarning = document.getElementById("downloadSize");
-    sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
 
-    doConfirm("Are you sure you want to download " + model["Name"] + "?", "Download", function yes(){
-        downloadModel(model["Name"]);
-    })
+    if(viewingASimulationResult)
+    {
+        doConfirm("Are you sure you want to download " + model["Short Simulation File Name"] + "?", "Download", function yes(){
+            downloadModel(model["Full Simulation File Name"]);
+        })
+
+        sizeWarning.textContent = "Size: " + getSizeIndiv(model["Full Simulation File Name"])[1];
+    }
+    else
+    {
+        doConfirm("Are you sure you want to download " + model["Name"] + "?", "Download", function yes(){
+            downloadModel(model["Name"]);
+        })
+
+        sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
+    }
+    
 });
 
 //go to gallery icon
@@ -479,22 +606,27 @@ function goToGallery() {
     a.click();
 }
 
-// //listener for change in drop down menu
-// $("#putDropDownHere").click(function () {
+//listener for change in drop down menu
+
+// $("#putDropDownHere").change(function () {
+//     var downloadButton = document.getElementById("download-confirm-button");
+//     bindsButtonConfirmation(".download", downloadFunction);
+//     downloadButton.classList.remove("button-disabled");
 //     downloadType = document.getElementById("chooseType").value;
   
 //     //clear variables
 //     warningHTML.innerHTML = "";
 //     warningHTML.classList.remove("newParagraph");
     
+//     //if viewing model (and therefore the modal greeting's overlay is on)
 //     if(singleModel)
 //     {
-//         //if viewing one model, calculates size for one model
-//         updateSize(makeBooleanArray(preservedOrderData, model));
+//       //updates size with one model
+//       updateSize(makeBooleanArray(dataToSearch, model));
 //     }
 //     else
 //     {
-//       //different confirmation message depending on downloadType
+//       //asks to confirm download differently depending on type selected
 //       if(downloadType == "zip")
 //       {
 //         var msg = downloadConfirmation(countModels, "model", boolArray);
@@ -502,62 +634,28 @@ function goToGallery() {
 //       else
 //       {
 //         var msg = downloadConfirmation(countResults, "simulation result", boolArrayWResults);
-//         difference(countModels, countResults, warningHTML);
+      
+//         var sumOfSizes = getSumOfSizes(boolArrayWResults) / 1000000000
+//         var maxGb = 30;
+//         if (sumOfSizes > maxGb)
+//         {
+//           maxDownloadMessage(sumOfSizes, maxGb, warningHTML)
+//           msg = "Please change download format."
+//           downloadButton.classList.add("button-disabled");
+//           $("#confirmBox").find(".download").unbind()
+//         }
+//         else 
+//         {
+//           // difference tells the user how many models have simulation 
+//           // results to download
+//           difference(countModels, countResults, warningHTML)
+//         }
 //       }
   
+//       //updates message with download confirmation
 //       updateMessage(msg);
 //     }
-// });
-
-//listener for change in drop down menu
-$("#putDropDownHere").change(function () {
-    var downloadButton = document.getElementById("download-confirm-button");
-    bindsButtonConfirmation(".download", downloadFunction);
-    downloadButton.classList.remove("button-disabled");
-    downloadType = document.getElementById("chooseType").value;
-  
-    //clear variables
-    warningHTML.innerHTML = "";
-    warningHTML.classList.remove("newParagraph");
-    
-    //if viewing model (and therefore the modal greeting's overlay is on)
-    if(singleModel)
-    {
-      //updates size with one model
-      updateSize(makeBooleanArray(preservedOrderData, model));
-    }
-    else
-    {
-      //asks to confirm download differently depending on type selected
-      if(downloadType == "zip")
-      {
-        var msg = downloadConfirmation(countModels, "model", boolArray);
-      }
-      else
-      {
-        var msg = downloadConfirmation(countResults, "simulation result", boolArrayWResults);
-      
-        var sumOfSizes = getSumOfSizes(boolArrayWResults) / 1000000000
-        var maxGb = 30;
-        if (sumOfSizes > maxGb)
-        {
-          maxDownloadMessage(sumOfSizes, maxGb, warningHTML)
-          msg = "Please change download format."
-          downloadButton.classList.add("button-disabled");
-          $("#confirmBox").find(".download").unbind()
-        }
-        else 
-        {
-          // difference tells the user how many models have simulation 
-          // results to download
-          difference(countModels, countResults, warningHTML)
-        }
-      }
-  
-      //updates message with download confirmation
-      updateMessage(msg);
-    }
-  });
+//   });
 
 //listeners for help buttons
 $("#helpIndiv").click(function () {

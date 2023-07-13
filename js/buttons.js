@@ -402,8 +402,19 @@ function checkName(modelName)
 
 //share button inside modalText
 $('.shareableLink-button-modal').click(function() {
-  //creates array with all N except for the model
-  var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
+  //length of the array differentiates between models and arrays
+  if(viewingSimulations)
+  {
+    //creates array with all N except for the simulation result
+    //the results array is already unscrambled
+    var array = makeshiftSelectedModels(results, viewingThisSimulation);
+  }
+  else
+  {
+    //creates array with all N except for the model
+    var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
+  }
+  
   //copies encoded URL to clipboard
   copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
   informUser("Link copied");

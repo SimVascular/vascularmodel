@@ -61,10 +61,18 @@ function getBareMinimum()
   return output;
 }
 
-//returns titles for the share.html table
-function getDetailsTitles()
+//returns titles for the share.html table for data
+function getDetailsTitlesForModel()
 {
   var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
+
+  return output;
+}
+
+//returns titles for the share.html table for results
+function getDetailsTitlesForResults()
+{
+  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"]
 
   return output;
 }
