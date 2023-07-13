@@ -193,6 +193,7 @@ function greetingText(data)
   var dropdown = document.getElementById("modal_simResults_dropdown");
   dropdown.innerHTML = "";
 
+  toggleButtons();
   setUpResultsButton();
 
   $('.details-text').scrollTop(0);
@@ -344,24 +345,12 @@ function setUpResultsButton()
   {
     tabs.style.display = "none";  
   }
-
-  // var iconPlace = document.getElementById("iconHere");
-  // iconPlace.innerHTML = "";
-
-  // var icon = document.createElement("i");
-  // icon.classList.add("fa-solid");
-  // icon.style.paddingRight = "15px";
-  // icon.classList.add("fa-folder-open");
-  // iconPlace.appendChild(icon);
-    
-  // var textPlace = document.getElementById("textHere");  
-  // textPlace.innerHTML = "";
-  // textPlace.textContent = "View Simulation Results";
 }
 
 function greetingForSimulationResults()
 {
   simulationResult = viewingThisSimulation;
+  toggleButtons();
 
   $('.details-text').scrollTop(0);
 
@@ -515,6 +504,46 @@ function resetFromSimulationResult(){
 
   model_tab.classList.add("selected_tab");
   results_tab.classList.remove("selected_tab");
+
+  toggleButtons()
+}
+
+function toggleButtons()
+{
+  if(viewingSimulations)
+  {
+    var pdf_div = document.getElementById("pdf_button");
+    pdf_div.style.display = "none";
+
+    var share_button = document.getElementById("share_button");
+    share_button.classList.remove("col-xs-4")
+    share_button.classList.remove("col-sm-4")
+    share_button.classList.add("col-xs-6")
+    share_button.classList.add("col-sm-6")
+
+    var download_button = document.getElementById("download_button");
+    download_button.classList.remove("col-xs-4")
+    download_button.classList.remove("col-sm-4")
+    download_button.classList.add("col-xs-6")
+    download_button.classList.add("col-sm-6")
+  }
+  else
+  {
+    var pdf_div = document.getElementById("pdf_button");
+    pdf_div.style.display = "inline-block";
+
+    var share_button = document.getElementById("share_button");
+    share_button.classList.add("col-xs-4")
+    share_button.classList.add("col-sm-4")
+    share_button.classList.remove("col-xs-6")
+    share_button.classList.remove("col-sm-6")
+
+    var download_button = document.getElementById("download_button");
+    download_button.classList.add("col-xs-4")
+    download_button.classList.add("col-sm-4")
+    download_button.classList.remove("col-xs-6")
+    download_button.classList.remove("col-sm-6")
+  }
 }
 
 //turns overlay and all accompanying elements on
