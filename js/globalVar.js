@@ -64,7 +64,7 @@ function getBareMinimum()
 //returns titles for the share.html table for data
 function getDetailsTitlesForModel()
 {
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
+  var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
 
   return output;
 }
