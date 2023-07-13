@@ -296,42 +296,6 @@ $("#returnToGalleryButton").click(function () {
     }
 });
 
-var simulationResult;
-
-$('.results-button-modal').click(function() {
-  viewingSimulations = !viewingSimulations;
-
-  if(viewingSimulations)
-  {
-    var iconPlace = document.getElementById("iconHere");
-    iconPlace.innerHTML = "";
-
-    var icon = document.createElement("i");
-    icon.classList.add("fa-solid");
-    icon.style.paddingRight = "15px";
-    icon.classList.add("fa-left-long");
-    iconPlace.appendChild(icon);
-
-    var textPlace = document.getElementById("textHere");  
-    textPlace.innerHTML = "";
-    textPlace.textContent = "Return to Model";
-
-    createDropDownForResults();
-
-    //sets viewingThisSimulation to default
-    var first = returnDefaultSimulationResult();
-    viewingThisSimulation = first;
-
-    greetingForSimulationResults();
-  }
-  else
-  {
-    //greetingText resets the button
-    greetingText(viewingModel);
-
-  }
-});
-
 $("#modal_simResults_dropdown").change(function () {
   var valueOfDropdown = viewingModel['Name'] + "_"
   valueOfDropdown += document.getElementById("chooseResult").value;
@@ -340,6 +304,51 @@ $("#modal_simResults_dropdown").change(function () {
   viewingThisSimulation = results[index];
   greetingForSimulationResults();
 });
+
+$(".tab_in_modal").click(function () {
+  var model_tab = document.getElementById("model_tab");
+  var results_tab = document.getElementById("results_tab");
+  
+  if($(this).attr('id') == "model_tab")
+  {
+    model_tab.classList.add("selected_tab");
+    results_tab.classList.remove("selected_tab");
+    viewingSimulations = false;
+    greetingText(viewingModel)
+  }
+  else if($(this).attr('id') == "results_tab")
+  {
+    results_tab.classList.add("selected_tab");
+    model_tab.classList.remove("selected_tab");
+    viewingSimulations = true;
+    viewSimulations()
+  }
+});
+
+function viewSimulations()
+{
+  // var iconPlace = document.getElementById("iconHere");
+  // iconPlace.innerHTML = "";
+
+  // var icon = document.createElement("i");
+  // icon.classList.add("fa-solid");
+  // icon.style.paddingRight = "15px";
+  // icon.classList.add("fa-left-long");
+  // iconPlace.appendChild(icon);
+
+  // var textPlace = document.getElementById("textHere");  
+  // textPlace.innerHTML = "";
+  // textPlace.textContent = "Return to Model";
+
+  createDropDownForResults();
+
+  //sets viewingThisSimulation to default
+  var first = returnDefaultSimulationResult();
+  viewingThisSimulation = first;
+
+  greetingForSimulationResults();
+}
+
 
 function createDropDownForResults()
 {

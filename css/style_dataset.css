@@ -390,10 +390,32 @@ error msg block behavior
   opacity:1;
   pointer-events: auto;
 }
+
+#tab_for_modal {
+  width: 100%;
+  height: fit-content;
+  background-color: var(--grey);
+}
+
+.tab_in_modal {
+  display: inline-block;
+  width: fit-content;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 7px;
+  height: fit-content;
+  background-color: var(--grey);
+}
+
+.selected_tab {
+  background-color: white;
+}
+
 .containing_and_positioning_of_modal {
   width: 300px;
   position: relative;
-  margin-top: 175px;
+  margin-top: 125px;
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
@@ -762,7 +784,7 @@ error msg block behavior
   cursor: default;
 }
 
-#safeOfOverlayClick {
+.body_of_modal {
   padding: 20px 20px 20px 20px;
   cursor: default;
 }

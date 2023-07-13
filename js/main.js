@@ -334,29 +334,29 @@ function greetingText(data)
 
 function setUpResultsButton()
 {
-  var viewResultsButton = document.getElementById("results_button_container");
+  var tabs = document.getElementById("tab_for_modal");
 
   if(hasSimulationResults(viewingModel['Name']))
   {
-    viewResultsButton.style.display = "block";
+    tabs.style.display = "block";
   }
   else
   {
-    viewResultsButton.style.display = "none";  
+    tabs.style.display = "none";  
   }
 
-  var iconPlace = document.getElementById("iconHere");
-  iconPlace.innerHTML = "";
+  // var iconPlace = document.getElementById("iconHere");
+  // iconPlace.innerHTML = "";
 
-  var icon = document.createElement("i");
-  icon.classList.add("fa-solid");
-  icon.style.paddingRight = "15px";
-  icon.classList.add("fa-folder-open");
-  iconPlace.appendChild(icon);
+  // var icon = document.createElement("i");
+  // icon.classList.add("fa-solid");
+  // icon.style.paddingRight = "15px";
+  // icon.classList.add("fa-folder-open");
+  // iconPlace.appendChild(icon);
     
-  var textPlace = document.getElementById("textHere");  
-  textPlace.innerHTML = "";
-  textPlace.textContent = "View Simulation Results";
+  // var textPlace = document.getElementById("textHere");  
+  // textPlace.innerHTML = "";
+  // textPlace.textContent = "View Simulation Results";
 }
 
 function greetingForSimulationResults()
@@ -474,7 +474,7 @@ function greetingForSimulationResults()
 } //end greetingForSimulationResults()
 
 //function to prevent overlay from exiting when the user clicks on the modal
-$("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
+$(".safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
 //deals with clicking on the overlay
 $('#overlay').click(function() {
@@ -510,6 +510,10 @@ function checkOverlay(){
 
 function resetFromSimulationResult(){
   viewingSimulations = false;
+  var model_tab = document.getElementById("model_tab");
+  var results_tab = document.getElementById("results_tab");
+  model_tab.classList.add("selected_tab");
+  results_tab.classList.remove("selected_tab");
 }
 
 //turns overlay and all accompanying elements on
