@@ -412,7 +412,7 @@ function greetingForSimulationResults()
 
   // come back to size when the file is created for simulation results
   downloadType = "zip";
-  var size = getSizeIndiv(simulationResult["Simulation File Name"]);
+  var size = getSizeIndiv(simulationResult["Full Simulation File Name"]);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");

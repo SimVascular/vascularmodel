@@ -390,10 +390,10 @@ error msg block behavior
   opacity:1;
   pointer-events: auto;
 }
-.modalDialog > div {
+.containing_and_positioning_of_modal {
   width: 300px;
   position: relative;
-  margin-top: 125px;
+  margin-top: 175px;
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
@@ -406,7 +406,7 @@ error msg block behavior
 }
 
 @media only screen and (min-width: 576px) {
-  .modalDialog > div {
+  .containing_and_positioning_of_modal {
     width: 500px;
   }
 }

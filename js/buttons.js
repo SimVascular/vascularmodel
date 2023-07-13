@@ -333,8 +333,10 @@ $('.results-button-modal').click(function() {
 });
 
 $("#modal_simResults_dropdown").change(function () {
-  valueOfDropdown = document.getElementById("chooseResult").value;
-  var index = results.findIndex(p => p["Simulation File Name"] == valueOfDropdown);
+  var valueOfDropdown = viewingModel['Name'] + "_"
+  valueOfDropdown += document.getElementById("chooseResult").value;
+  valueOfDropdown += ".zip"
+  var index = results.findIndex(p => p["Full Simulation File Name"] == valueOfDropdown);
   viewingThisSimulation = results[index];
   greetingForSimulationResults();
 });
@@ -346,26 +348,27 @@ function createDropDownForResults()
   dropdown.innerHTML = "";
   dropdown.style.display = "block";
 
-  modelName = viewingModel['Name'];
   simulationResult = viewingThisSimulation;
 
   //labels the drop down menu
   var title = document.createElement("div");
+  title.style.display = "inline-block";
+  title.style.paddingRight = "5px";
   title.textContent = "You are viewing:";
   dropdown.appendChild(title)
 
   //creates the select box
   var select = document.createElement("select");
   select.setAttribute("id", "chooseResult");
-  select.setAttribute("class", "spaceBelow");
 
   var options = [];
+  modelName = viewingModel['Name'];
 
   for(var i = 0; i < results.length; i++)
   {
     if(results[i]["Model Name"] == modelName)
     {
-      options.push(results[i]["Simulation File Name"]);
+      options.push(results[i]["Short Simulation File Name"]);
     }
   }
 
