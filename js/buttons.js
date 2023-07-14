@@ -329,19 +329,6 @@ $(".tab_in_modal").click(function () {
 
 function viewSimulations()
 {
-  // var iconPlace = document.getElementById("iconHere");
-  // iconPlace.innerHTML = "";
-
-  // var icon = document.createElement("i");
-  // icon.classList.add("fa-solid");
-  // icon.style.paddingRight = "15px";
-  // icon.classList.add("fa-left-long");
-  // iconPlace.appendChild(icon);
-
-  // var textPlace = document.getElementById("textHere");  
-  // textPlace.innerHTML = "";
-  // textPlace.textContent = "Return to Model";
-
   createDropDownForResults();
 
   //sets viewingThisSimulation to default

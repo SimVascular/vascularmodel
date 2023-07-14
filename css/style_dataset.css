@@ -402,6 +402,7 @@ error msg block behavior
   padding-bottom: 7px;
   height: fit-content;
   background-color: var(--grey);
+  cursor: pointer;
 }
 
 .selected_tab {
