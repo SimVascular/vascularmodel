@@ -391,6 +391,7 @@ error msg block behavior
   width: 100%;
   height: fit-content;
   background-color: var(--grey);
+  border-radius: 8px 8px 0 0;
 }
 
 .tab_in_modal {
@@ -403,6 +404,11 @@ error msg block behavior
   height: fit-content;
   background-color: var(--grey);
   cursor: pointer;
+  border-radius: 8px 8px 0 0;
+}
+
+.tab_for_modal {
+  background-color: var(--grey);
 }
 
 .selected_tab {
@@ -410,18 +416,15 @@ error msg block behavior
 }
 
 .containing_and_positioning_of_modal {
+  border: 5px solid var(--darkgrey);
+  background-color: var(--grey);
   width: 300px;
   position: relative;
   margin-top: 125px;
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
-  /* padding: 20px 20px 13px 20px; */
   border-radius: 8px !important;
-  background: #fff;
-  /* background: -moz-linear-gradient(#fff, #999);
-  background: -webkit-linear-gradient(#fff, #999);
-  background: -o-linear-gradient(#fff, #999); */
 }
 
 @media only screen and (min-width: 576px) {
@@ -784,6 +787,8 @@ error msg block behavior
 #body_of_modal {
   padding: 20px 20px 20px 20px;
   cursor: default;
+  background-color: #fff;
+
 }
 
 #chooseType {
