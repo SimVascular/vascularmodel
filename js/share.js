@@ -234,7 +234,7 @@ function displayModel(fromDropdown = false)
     {
         //creates "header"
         var title = document.createElement("h1");
-        title.textContent = "You are viewing " + modelName + ".";
+        title.textContent = "You are viewing " + model["Name"] + ".";
         div.appendChild(title);
     }
 
@@ -533,7 +533,7 @@ $(".tab_in_modal").click(function () {
     //creates the select box
     var select = document.createElement("select");
     select.setAttribute("id", "chooseResult");
-    select.style.fontSize = "4vw";
+    select.classList.add("select_dropdown");
   
     var options = [];
 

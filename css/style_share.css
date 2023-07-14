@@ -133,6 +133,10 @@ table {
     padding-right: 25px;
   }
 
+  .select_dropdown {
+    font-size: 4vw;
+  }
+
   #modal_simResults_dropdown {
     text-align: center;
     padding-top: 25px;
@@ -143,9 +147,13 @@ table {
   }
 
   @media screen and (min-width: 1500px) {
-    h1 {
+    h1, .header_results {
         font-size: 65px;
       }
+      .select_dropdown {
+        font-size: 55px;
+      }
+
   }
 
   @media screen and (max-width: 1000px) {
