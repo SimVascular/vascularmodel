@@ -19,6 +19,20 @@ body {
   display: inline-block;
 }
 
+#goToGallery {
+  float: right;
+  display: inline;
+  font-size: 20px;
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 2.5px;
+  padding-bottom: 2.5px;
+  margin-top: 3.75px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 
 #displayedModel {
   background-color: white;

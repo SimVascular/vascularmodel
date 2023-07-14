@@ -213,8 +213,11 @@ function displayModel(fromDropdown = false)
         document.getElementById("tab_for_modal").style.display = "block";
     }
 
+    //clears div if it is full
     var div = document.getElementById("placeModelHere");
     div.innerHTML = "";
+
+    //shows or doesn't show dropdown depending on viewingSimulations
     if(fromDropdown)
     {
         toggleDropDown(true);
@@ -232,12 +235,51 @@ function displayModel(fromDropdown = false)
     }
     else if(!viewingSimulations)
     {
-        //creates "header"
         var title = document.createElement("h1");
         title.textContent = "You are viewing " + model["Name"] + ".";
         div.appendChild(title);
     }
 
+    div.appendChild(setUpDownload());
+      
+
+    //displays image for model but not simulation results
+    if(!viewingSimulations)
+    {
+        div.appendChild(setUpImage());
+    }
+    
+    div.appendChild(setUpHelpIcon());
+
+    //table of information on model
+    if(!viewingSimulations)
+    {
+        var desc = descriptionForModel();
+    }
+    else
+    {
+        var desc = descriptionForResults();
+    }
+
+    div.appendChild(desc);
+
+    downloadHook()
+}
+
+function setUpImage()
+{
+    //creates image
+    let img = document.createElement("img");
+    img.src = 'img/vmr-images/' + model['Name'] + '.png';
+    img.alt = model['Name'];
+    img.classList.add("imgContainer");
+    img.classList.add("center");
+
+    return img;
+}
+
+function setUpDownload()
+{
     var downloadButton = document.createElement("div");
     downloadButton.setAttribute("id", "downloadModel");
 
@@ -261,40 +303,11 @@ function displayModel(fromDropdown = false)
 
     downloadButton.appendChild(h2);
     downloadButton.appendChild(icon);
-
-    div.appendChild(downloadButton);
-
-    //displays image for model but not simulation results
-    if(!viewingSimulations)
-    {
-        //creates image
-        let img = document.createElement("img");
-        // img.src = 'img/vmr-images/' + model['Name'] + '.png';
-        img.src = 'img/vmr-images/' + "WS1_SU0267_prestent" + '.png';
-        img.alt = model['Name'];
-        img.classList.add("imgContainer");
-        img.classList.add("center");
-        div.appendChild(img);
-    }
     
-    div.appendChild(helpIcon());
-
-    //table of information on model
-    if(!viewingSimulations)
-    {
-        var desc = descriptionForModel();
-    }
-    else
-    {
-        var desc = descriptionForResults();
-    }
-
-    div.appendChild(desc);
-
-    downloadHook()
+    return downloadButton;
 }
 
-function helpIcon()
+function setUpHelpIcon()
 {
     var iconPlace = document.createElement("div");
     iconPlace.setAttribute("id", "helpIndiv")
