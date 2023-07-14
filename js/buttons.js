@@ -156,7 +156,14 @@ function selectAllFilteredData()
 $('.download-button-modal').click(function() {
   clearDoConfirm();
 
-  var message = "Are you sure you want to download " + viewingModel["Name"] + "?";
+  if(!viewingSimulations)
+  {
+    var message = "Are you sure you want to download the model " + viewingModel["Name"] + "?";
+  }
+  else
+  {
+    var message = "Are you sure you want to download the simulation result " + simulationResult["Short Simulation File Name"] + "?";
+  }
 
   // var putDropDownHere = document.getElementById("putDropDownHere");
 
