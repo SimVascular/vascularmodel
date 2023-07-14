@@ -72,7 +72,7 @@ function getDetailsTitlesForModel()
 //returns titles for the share.html table for results
 function getDetailsTitlesForResults()
 {
-  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"]
+  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator", "Notes", "Size"]
 
   return output;
 }
@@ -815,22 +815,21 @@ function informUser(msg, hasOk = false) {
 // }
 
 //creates url to download models depending on download type and model name
-function craftURL(modelName)
+function craftURL(model)
 {
-  if(downloadType == "zip")
+  if(viewingSimulations)
   {
-    var url = "svprojects/"
-    url += modelName + "." + downloadType;
+    var url = "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
   }
   else if (downloadType == 'additionaldata')
   {
     var url = "additionaldata/"
-    url += modelName + ".zip";
+    url += model["Name"] + ".zip";
   }
   else
   {
-    var url = "svresults/" + modelName + "/"
-    url += modelName + "_" + downloadType + ".zip";
+    var url = "svprojects/"
+    url += model["Name"] + ".zip";
   }
 
   return url;

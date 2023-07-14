@@ -179,7 +179,7 @@ $('.download-button-modal').click(function() {
 
   //updates size with individual model
   var sizeWarning = document.getElementById("downloadSize");
-  sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel["Name"])[1];
+  sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
 
   downloadFunction = function download() {downloadModel(viewingModel["Name"])};
   doConfirm(message, "Download", downloadFunction);

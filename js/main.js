@@ -272,7 +272,7 @@ function greetingText(data)
   $('.details-text')[0].value = details
 
   downloadType = "zip";
-  var size = getSizeIndiv(viewingModel["Name"]);
+  var size = getSizeIndiv(viewingModel);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
@@ -401,7 +401,7 @@ function greetingForSimulationResults()
 
   // come back to size when the file is created for simulation results
   downloadType = "zip";
-  var size = getSizeIndiv(simulationResult["Full Simulation File Name"]);
+  var size = getSizeIndiv(simulationResult);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");

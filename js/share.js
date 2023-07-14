@@ -25,6 +25,7 @@ $(document).ready(function($){
       async: false,
       success: function(fdata) {
         data = $.csv.toObjects(fdata);
+        preservedOrderData = data;
       }
     });
 
@@ -391,7 +392,7 @@ function descriptionForModel() {
             }
             else if(categoryName[d] == "Size")
             {
-                details += getSizeIndiv(model['Name'])[1];
+                details += getSizeIndiv(model)[1];
             }
             else if(categoryName[d] != "Legacy Name")
             {
@@ -788,7 +789,7 @@ function downloadHook(){
                 downloadModel(model["Full Simulation File Name"]);
             })
 
-            sizeWarning.textContent = "Size: " + getSizeIndiv(model["Full Simulation File Name"])[1];
+            sizeWarning.textContent = "Size: " + getSizeIndiv(model)[1];
         }
         else
         {
@@ -796,7 +797,7 @@ function downloadHook(){
                 downloadModel(model["Name"]);
             })
 
-            sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
+            sizeWarning.textContent = "Size: " + getSizeIndiv(model)[1];
         }
     }); 
 }
