@@ -440,14 +440,23 @@ function newLineNoURL(text, isBefore)
 {
   //creates div if \n
   var p = document.createElement("div");
-  p.classList.add("newParagraph");
-  
+  // p.classList.add("newParagraph");
+
+  var isFirst = true;
+
   //allows for multiple \n
   while(text.includes("\\n"))
   {
     var index = text.indexOf("\\n");
     var pDiv = document.createElement("div");
-    pDiv.classList.add("newParagraph");
+    if(isFirst)
+    {
+      isFirst = false;
+    }
+    else
+    {
+      pDiv.classList.add("newParagraph");
+    }
     
     //appends textContent between each \n
     pDiv.textContent = text.substring(0, index);

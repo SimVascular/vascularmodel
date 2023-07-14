@@ -30,6 +30,19 @@ body {
   margin: 0;
 }
 
+#whenModelsSelected {
+  border-width: 3px;
+  border-style: solid;
+  border-color: var(--border_darker_grey);
+  background-color: white;
+  position: relative;
+  width: 95%;
+  height: 65%;
+  height: auto;
+  padding: 20px;
+  margin: 2%;
+}
+
 .centerBox {
   border-width: 3px;
   border-style: solid;
@@ -188,19 +201,6 @@ table {
     align-items: center;
   }
 
-  .hide {
-    opacity: 0;
-    padding: 0px;
-    margin: 0px;
-    height: 0px;
-    width: 0px;
-    border: none;
-  }
-
-  .show {
-    opacity: 1;
-  }
-
   .modelRow:hover {
     background-color: var(--darkgrey);
     cursor: pointer;
@@ -221,4 +221,19 @@ table {
     width: fit-content;
     position: relative;
     z-index: 10;
+  }
+
+  .hide {
+    display: none;
+    opacity: 0;
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+    width: 0px;
+    border: none;
+  }
+
+  .show {
+    display: block;
+    opacity: 1;
   }
