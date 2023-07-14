@@ -54,6 +54,7 @@ body {
 
 .imgContainer {
     height: 50%;
+    max-height: 450px;
     width: 50%;
     object-fit: contain;
     margin: 15px;
@@ -78,11 +79,11 @@ table {
       font-size: 4vw;
     }
 
-    .buttonDownload {
+    /* .buttonDownload {
       font-size: 4vw;
       padding: 2vw !important;
       margin-bottom: 2vw !important;
-    }
+    } */
   }
   
   td, th {
@@ -100,7 +101,7 @@ table {
     background-color: var(--grey);
   }
   
-  .buttonDownload {
+  /* .buttonDownload {
     border: 2px solid var(--grey);
     padding: 10px;
     margin-bottom: 15px;
@@ -110,7 +111,7 @@ table {
 
   .buttonDownload:hover{
     background-color: var(--darkgrey);
-  }
+  } */
 
   .noStyle {
     color: var(--black);
@@ -160,13 +161,48 @@ table {
     padding-bottom: 2%;
   }
 
+  #downloadModel {
+    text-align: center;
+    color: var(--dark2);
+    font-size: 3.75vw;
+    cursor: pointer;
+  }
+
+  #downloadModel.viewingSim
+  {
+    font-size: 3vw;
+  }
+
+  #downloadModel:hover {
+    color: var(--dark3);
+  }
+
+  .h2_download_button {
+    padding-right: 15px;
+    display: inline;
+  }
+
+  .icon_download_button {
+    display: inline;
+  }
+
+
   @media screen and (min-width: 1500px) {
     h1, .header_results {
-        font-size: 65px;
-      }
-      .select_dropdown {
-        font-size: 45px;
-      }
+      font-size: 65px;
+    }
+
+    .select_dropdown {
+      font-size: 45px;
+    }
+
+    #downloadModel {
+      font-size: 40px;
+    }
+
+    #downloadModel.viewingSim {
+      font-size: 30px;
+    }
 
   }
 
