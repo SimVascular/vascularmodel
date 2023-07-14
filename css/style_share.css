@@ -63,7 +63,9 @@ body {
   height: 65%;
   height: auto;
   padding: 20px;
-  margin: 2%;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .centerBox {
@@ -72,7 +74,9 @@ body {
   border-color: var(--border_darker_grey);
   width: 95%;
   background-color: white;
-  margin: 2%;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .imgContainer {
@@ -102,11 +106,11 @@ table {
       font-size: 4vw;
     }
 
-    /* .buttonDownload {
+    .buttonDownload {
       font-size: 4vw;
       padding: 2vw !important;
       margin-bottom: 2vw !important;
-    } */
+    }
   }
   
   td, th {
@@ -124,7 +128,7 @@ table {
     background-color: var(--grey);
   }
   
-  /* .buttonDownload {
+  .buttonDownload {
     border: 2px solid var(--grey);
     padding: 10px;
     margin-bottom: 15px;
@@ -134,7 +138,7 @@ table {
 
   .buttonDownload:hover{
     background-color: var(--darkgrey);
-  } */
+  }
 
   .noStyle {
     color: var(--black);
@@ -229,10 +233,31 @@ table {
 
   }
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1200px) {
     h1 {
-        font-size: 6vw;
-      }
+      font-size: 7vw;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .header_results {
+      font-size: 24px;
+      padding-right: 10px;
+    }
+    
+    .select_dropdown {
+      padding: 2px;
+      font-size: 22px;
+    }
+  
+    #downloadModel {
+      font-size: 17px;
+    }
+  
+    #downloadModel.viewingSim {
+      font-size: 22px;
+      padding-bottom: 15px;
+    }
   }
 
   .spanForIcons {
