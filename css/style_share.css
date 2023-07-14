@@ -134,7 +134,8 @@ table {
   }
 
   .select_dropdown {
-    font-size: 4vw;
+    font-size: 3vw;
+    padding: 7px;
   }
 
   #modal_simResults_dropdown {
@@ -151,7 +152,7 @@ table {
         font-size: 65px;
       }
       .select_dropdown {
-        font-size: 55px;
+        font-size: 45px;
       }
 
   }
