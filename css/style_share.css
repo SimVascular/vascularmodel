@@ -13,6 +13,14 @@ body {
   height: auto;
 }
 
+.tab_in_modal {
+  border-radius: 0;
+}
+
+#tab_for_modal {
+  border-radius: 0;
+}
+
 #tab_container {
   width: fit-content;
   height: fit-content;
@@ -29,6 +37,7 @@ body {
   padding-top: 2.5px;
   padding-bottom: 2.5px;
   margin-top: 3.75px;
+  margin-right: 3.75px;
   border-radius: 8px;
   cursor: pointer;
 }
