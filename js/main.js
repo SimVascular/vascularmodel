@@ -451,14 +451,14 @@ function greetingForSimulationResults()
     //after notes, prints size
     var sizeText = document.createElement("div");
     sizeText.classList.add("newParagraph");
-    sizeText.textContent = '\n\nThe size of this simulation result is ' + sizeConverter(size);
+    sizeText.textContent = '\n\nThe size of this result is ' + sizeConverter(size);
 
     modalclosure.appendChild(sizeText);
   }
   else
   {
     //if no notes, only prints size
-    modalclosure.innerText = 'The size of this simulation result is ' + sizeConverter(size);
+    modalclosure.innerText = 'The size of this result is ' + sizeConverter(size);
   }
 } //end greetingForSimulationResults()
 

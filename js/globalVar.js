@@ -860,27 +860,22 @@ function sizeConverter(size)
 //returns sum of sizes of the arrays selected in the boolArray
 function getSumOfSizes(boolArray)
 {
-  //array with model names
-  var names = []
+  //array with models
+  var models = []
 
   for(var i = 0; i < boolArray.length; i++)
   {
     if(boolArray[i])
     {
-      //come back here
-      if(preservedOrderData[i]["Results"] == "1" || downloadType == "zip")
-      {
-        names.push(preservedOrderData[i]["Name"])
-      }
-      
+      models.push(preservedOrderData[i])
     }
   }
   
   var count = 0;
 
-  for(var i = 0 ; i < names.length; i++)
+  for(var i = 0 ; i < models.length; i++)
   {
-    var size = getSizeIndiv(names[i]);
+    var size = getSizeIndiv(models[i]);
     // then the fileSize exists (it's not nan)
     if (size[0] == size[0])
     {
