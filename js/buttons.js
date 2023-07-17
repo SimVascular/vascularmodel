@@ -353,12 +353,6 @@ function createDropDownForResults()
   var title = document.createElement("div");
   title.style.display = "inline-block";
   title.style.paddingRight = "5px";
-  title.textContent = "You are viewing:";
-  dropdown.appendChild(title)
-
-  //creates the select box
-  var select = document.createElement("select");
-  select.setAttribute("id", "chooseResult");
 
   var options = [];
   modelName = viewingModel['Name'];
@@ -371,16 +365,31 @@ function createDropDownForResults()
     }
   }
 
-  for(var i = 0; i < options.length; i++)
+  if(options.length == 1)
   {
-    //create options under select
-    var option = document.createElement("option");
-    option.setAttribute("value", options[i]);
-    option.textContent = options[i];
-    select.appendChild(option);
+    title.textContent = "You are viewing " + options[0] + ".";
+    dropdown.appendChild(title);
   }
+  else
+  {
+    title.textContent = "You are viewing";
+    dropdown.appendChild(title);
 
-  dropdown.appendChild(select);
+    //creates the select box
+    var select = document.createElement("select");
+    select.setAttribute("id", "chooseResult");
+
+    for(var i = 0; i < options.length; i++)
+    {
+      //create options under select
+      var option = document.createElement("option");
+      option.setAttribute("value", options[i]);
+      option.textContent = options[i];
+      select.appendChild(option);
+    }
+
+    dropdown.appendChild(select);
+  }
 }
 
 function checkName(modelName)

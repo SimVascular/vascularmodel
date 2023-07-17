@@ -562,18 +562,7 @@ $(".tab_in_modal").click(function () {
     var dropdown = document.getElementById("modal_simResults_dropdown");
 
     //access and display dropdown element
-    toggleDropDown(true)
-  
-    //labels the drop down menu
-    var title = document.createElement("div");
-    title.classList.add("header_results");
-    title.textContent = "You are viewing:";
-    dropdown.appendChild(title)
-  
-    //creates the select box
-    var select = document.createElement("select");
-    select.setAttribute("id", "chooseResult");
-    select.classList.add("select_dropdown");
+    toggleDropDown(true);
   
     var options = [];
 
@@ -581,21 +570,41 @@ $(".tab_in_modal").click(function () {
     {
         options.push(simulationResultsOfModel[i]["Short Simulation File Name"]);
     }
-  
-    for(var i = 0; i < options.length; i++)
+    if(options.length == 1)
     {
-        //create options under select
-        var option = document.createElement("option");
-        option.setAttribute("value", options[i]);
-        option.textContent = options[i];
-        if(options[i] == currentSimulation["Short Simulation File Name"])
-        {
-            option.selected = true;
-        }
-        select.appendChild(option);
+        var title = document.createElement("h1")
+        title.textContent = "You are viewing " + options[0] + ".";
+        dropdown.appendChild(title);
     }
-  
-    dropdown.appendChild(select);
+    else
+    {
+        //labels the drop down menu
+        var title = document.createElement("div");
+        title.classList.add("header_results");
+        title.textContent = "You are viewing";
+        dropdown.appendChild(title);
+
+        //creates the select box
+        var select = document.createElement("select");
+        select.setAttribute("id", "chooseResult");
+        select.classList.add("select_dropdown");
+
+        for(var i = 0; i < options.length; i++)
+        {
+            //create options under select
+            var option = document.createElement("option");
+            option.setAttribute("value", options[i]);
+            option.textContent = options[i];
+            if(options[i] == currentSimulation["Short Simulation File Name"])
+            {
+                option.selected = true;
+            }
+            select.appendChild(option);
+        }
+    
+        dropdown.appendChild(select);
+    }
+
   }
 
 //function to display multiple models in a table

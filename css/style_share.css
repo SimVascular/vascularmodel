@@ -239,10 +239,16 @@ table {
     }
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 900px) {
+    .header_results {
+      padding-right: 10px;
+    }
+  }
+
+  @media screen and (max-width: 416px) {
     .header_results {
       font-size: 24px;
-      padding-right: 10px;
+      padding-right: 0;
     }
     
     .select_dropdown {
