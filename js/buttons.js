@@ -216,26 +216,13 @@ $("#download-all").click(function () {
 
 //deals with downloading multiple models
 async function downloadAllModels(){
-  var boolModels = selectedModels;
+  //finds models from boolean array selectedModels
+  listOfModels = [];
 
-  //if downloadType != zip, takes selectedModels and only works with those that have results
-  if(downloadType != "zip")
+  for(var i = 0; i < selectedModels.length; i++)
   {
-    for(var i = 0 ; i < boolModels.length; i++)
-    {
-      if(boolModels[i] && preservedOrderData[i]["Results"] != "1") 
-      {
-        boolModels[i] = false;
-      }
-    }
-  }
-  
-  listOfModels = []
-
-  for(var i = 0; i < boolModels.length; i++)
-  {
-    //index of boolModels corresponds with preservedOrderData
-    if(boolModels[i])
+    //index of selectedModels corresponds with preservedOrderData
+    if(selectedModels[i])
     {
       //takes in list of names of all the models to download
       listOfModels.push(preservedOrderData[i])

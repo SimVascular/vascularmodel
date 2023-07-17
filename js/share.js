@@ -786,22 +786,10 @@ $("#download-all-models").click(function () {
 //deals with downloading all models
 async function downloadAll()
 {
-    listOfModels = []
-
-    for(var i = 0; i < array.length; i++)
-    {
-        //only keeps what will be downloaded
-        if(downloadType == "zip" || array[i]["Results"] == "1")
-        {
-            //takes in list of names of all the models to download
-            listOfModels.push(array[i])
-        }
-    }
-
     //sends to download all models
-    for(var i = 0; i < listOfModels.length; i++)
+    for(var i = 0; i < models.length; i++)
     {
-        downloadModel(listOfModels[i]);
+        downloadModel(models[i]);
         await new Promise(r => setTimeout(r, 3));
     }
 }
