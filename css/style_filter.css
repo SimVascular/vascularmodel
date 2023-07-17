@@ -584,7 +584,8 @@ xcustom form elements
   }
 
   .checkbox-label.adjustCheckboxForEmbed {
-    padding-left: 10px;
+    padding-left: 0;
+    margin-left: 10px;
   }
 
   .cd-filter-block .label-before,
