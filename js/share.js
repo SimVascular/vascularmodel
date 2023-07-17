@@ -232,7 +232,11 @@ function displayModel(fromDropdown = false)
     //toggles header
     if(viewingSimulations && !fromDropdown)
     {
-        createDropDownForResults();
+        var output = createDropDownForResults();
+        if(output[0])
+        {
+            div.appendChild(output[1]);
+        }
     }
     else if(!viewingSimulations)
     {
@@ -289,8 +293,12 @@ function setUpDownload()
 
     if(viewingSimulations)
     {
-       downloadButton.classList.add("viewingSim")
-       h2.textContent = "Download this simulation result" 
+        if(simulationResultsOfModel.length > 1)
+        {
+            downloadButton.classList.add("viewingSim")
+        }
+        
+        h2.textContent = "Download this simulation result";
     }
     else
     {
@@ -560,9 +568,6 @@ $(".tab_in_modal").click(function () {
   function createDropDownForResults()
   {
     var dropdown = document.getElementById("modal_simResults_dropdown");
-
-    //access and display dropdown element
-    toggleDropDown(true);
   
     var options = [];
 
@@ -570,14 +575,19 @@ $(".tab_in_modal").click(function () {
     {
         options.push(simulationResultsOfModel[i]["Short Simulation File Name"]);
     }
+
     if(options.length == 1)
     {
-        var title = document.createElement("h1")
+        var title = document.createElement("h1");
         title.textContent = "You are viewing " + options[0] + ".";
-        dropdown.appendChild(title);
+        toggleDropDown(false);
+        return [true, title];
     }
     else
     {
+        //access and display dropdown element
+        toggleDropDown(true);
+
         //labels the drop down menu
         var title = document.createElement("div");
         title.classList.add("header_results");
@@ -603,6 +613,8 @@ $(".tab_in_modal").click(function () {
         }
     
         dropdown.appendChild(select);
+
+        return [false];
     }
 
   }

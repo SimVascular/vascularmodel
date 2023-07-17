@@ -213,6 +213,10 @@ table {
     display: inline;
   }
 
+  #modal_simResults_dropdown {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
 
   @media screen and (min-width: 1500px) {
     h1, .header_results {
@@ -245,19 +249,20 @@ table {
     }
   }
 
-  @media screen and (max-width: 416px) {
-    .header_results {
+  @media screen and (max-width: 600px) {
+    h1, .header_results {
       font-size: 24px;
-      padding-right: 0;
     }
     
     .select_dropdown {
       padding: 2px;
       font-size: 22px;
+      padding-right: 1px;
+      padding-left: 1px;
     }
   
     #downloadModel {
-      font-size: 17px;
+      font-size: 22px;
     }
   
     #downloadModel.viewingSim {
@@ -265,6 +270,19 @@ table {
       padding-bottom: 15px;
     }
   }
+
+  @media screen and (max-width: 430px) {
+    .header_results {
+      font-size: 25px;
+      padding-right: 0;
+    }
+
+    .select_dropdown {
+      /* padding: 2px; */
+      font-size: 22px;
+    }
+  }
+
 
   .spanForIcons {
     border-radius: 0%;
@@ -311,6 +329,7 @@ table {
     width: fit-content;
     position: relative;
     z-index: 10;
+    margin-top: 25px;
   }
 
   .hide {
