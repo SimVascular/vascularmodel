@@ -9,7 +9,7 @@ Model Name,Full Simulation File Name,Model Image Number,Short Simulation File Na
 0029_H_ABAO_H,0029_H_ABAO_H_3D_RIGID_VTU.zip,0029,3D_RIGID_VTU,0006_0001_vtu.zip,3D,Rigid Wall,-,Time-Resolved,Volume (vtu),-,-
 0054_H_PULMFON_TAT,0054_H_PULMFON_TAT_3D_RIGID_VTP.zip,0054,3D_RIGID_VTP,0063_0001_vtp.zip,3D,Rigid Wall,-,Time-Resolved,Surface (vtp),Alison Marsden,"Model of aorta on patients who have undergone the Fontan procedure without aortic reconstruction. \nSee \url(""http://www.doi.org/10.1111/j.1747-0803.2010.00383.x"", ""paper"") for more details."
 0054_H_PULMFON_TAT,0054_H_PULMFON_TAT_3D_RIGID_VTU.zip,0054,3D_RIGID_VTU,0063_0001_vtu.zip,3D,Rigid Wall,-,Time-Resolved,Volume (vtu),Alison Marsden,"Model of aorta on patients who have undergone the Fontan procedure without aortic reconstruction. \nSee \url(""http://www.doi.org/10.1111/j.1747-0803.2010.00383.x"", ""paper"") for more details."
-0001_H_AO_SVD,0001_H_AO_SVD_3D_RIGID_VTP.zip,0001,3D_RIGID_VTP,0063_1001_vtp.zip,3D,Rigid Wall,-,Time-Resolved,Surface (vtp),Alison Marsden,
+0001_H_AO_SVD,0001_H_AO_SVD_3D_RIGID_VTP.zip,0001,3D_RIGID_VTP,0063_1001_vtp.zip,3D,Rigid Wall,-,Time-Resolved,Surface (vtp),Alison Marsden,-
 0001_H_AO_SVD,0001_H_AO_SVD_3D_RIGID_VTU.zip,0001,3D_RIGID_VTU,0063_1001_vtu.zip,3D,Rigid Wall,-,Time-Resolved,Volume (vtu),Alison Marsden,-
 0055_H_PULMFON_HLHS,0055_H_PULMFON_HLHS_3D_RIGID_VTP.zip,0055,3D_RIGID_VTP,0064_0001_vtp.zip,3D,Rigid Wall,-,Time-Resolved,Surface (vtp),Alison Marsden,-
 0055_H_PULMFON_HLHS,0055_H_PULMFON_HLHS_3D_RIGID_VTU.zip,0055,3D_RIGID_VTU,0064_0001_vtu.zip,3D,Rigid Wall,-,Time-Resolved,Volume (vtu),Alison Marsden,-
