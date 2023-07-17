@@ -100,16 +100,26 @@ table {
     border-collapse: collapse;
     width: 100%;
   }
-
+  
   @media screen and (max-width: 576px) {
     table {
-      font-size: 4vw;
+      font-size: 3vw;
+    }
+
+    #whenModelsSelected {
+      padding: 15px;
     }
 
     .buttonDownload {
       font-size: 4vw;
       padding: 2vw !important;
       margin-bottom: 2vw !important;
+    }
+  }
+
+  @media screen and (max-width: 300px) {
+    #whenModelsSelected {
+      padding: 10px;
     }
   }
   
