@@ -835,15 +835,15 @@ function craftURL(model)
   return url;
 }
 
-function craftDownloadName(modelName)
+function craftDownloadName(model)
 {
-  if(downloadType == "zip")
+  if(viewingSimulations)
   {
-    return modelName
+    return model["Full Simulation File Name"]
   }
   else
   {
-    return modelName + "_" + downloadType
+    return model["Name"]
   }
 }
 
@@ -1038,22 +1038,22 @@ function dropDown(putDropDownHere, string)
 }
 
 //downloads individual models
-function downloadModel(modelName)
+function downloadModel(model)
   {
     //creates link of what the user wants to download
-    var fileUrl = craftURL(modelName);
+    var fileUrl = craftURL(model);
 
     //creates anchor tag to download
     var a = document.createElement("a");
     a.href = fileUrl;
-    a.setAttribute("download", craftDownloadName(modelName));
+    a.setAttribute("download", craftDownloadName(model));
     //simulates click
     a.click();
     
-    if(downloadType != "zip")
+    if(viewingSimulations)
     {
       //sends message to server with user's download
-      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+      gtag('event', 'download_results_' + model["Full Simulation File Name"], {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',
@@ -1063,7 +1063,7 @@ function downloadModel(modelName)
     else
     {
       //sends message to server with user's download
-      gtag('event', 'download_' + modelName, {
+      gtag('event', 'download_' + model["Name"], {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',

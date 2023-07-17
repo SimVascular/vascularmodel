@@ -755,7 +755,7 @@ $("#download-all-models").click(function () {
 //deals with downloading all models
 async function downloadAll()
 {
-    listOfNames = []
+    listOfModels = []
 
     for(var i = 0; i < array.length; i++)
     {
@@ -763,14 +763,14 @@ async function downloadAll()
         if(downloadType == "zip" || array[i]["Results"] == "1")
         {
             //takes in list of names of all the models to download
-            listOfNames.push(array[i]["Name"])
+            listOfModels.push(array[i])
         }
     }
 
     //sends to download all models
-    for(var i = 0; i < listOfNames.length; i++)
+    for(var i = 0; i < listOfModels.length; i++)
     {
-        downloadModel(listOfNames[i]);
+        downloadModel(listOfModels[i]);
         await new Promise(r => setTimeout(r, 3));
     }
 }
@@ -786,7 +786,7 @@ function downloadHook(){
         if(viewingSimulations)
         {
             doConfirm("Are you sure you want to download the simulation result " + model["Short Simulation File Name"] + "?", "Download", function yes(){
-                downloadModel(model["Full Simulation File Name"]);
+                downloadModel(model);
             })
 
             sizeWarning.textContent = "Size: " + getSizeIndiv(model)[1];
@@ -794,7 +794,7 @@ function downloadHook(){
         else
         {
             doConfirm("Are you sure you want to download the model " + model["Name"] + "?", "Download", function yes(){
-                downloadModel(model["Name"]);
+                downloadModel(model);
             })
 
             sizeWarning.textContent = "Size: " + getSizeIndiv(model)[1];

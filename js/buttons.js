@@ -155,33 +155,27 @@ function selectAllFilteredData()
 //downloading model in modalText
 $('.download-button-modal').click(function() {
   clearDoConfirm();
+  
+  //updates size with individual model
+  var sizeWarning = document.getElementById("downloadSize");
 
   if(!viewingSimulations)
   {
     var message = "Are you sure you want to download the model " + viewingModel["Name"] + "?";
+    
+    sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
+    
+    downloadFunction = function download() {downloadModel(viewingModel)};
   }
   else
   {
     var message = "Are you sure you want to download the simulation result " + simulationResult["Short Simulation File Name"] + "?";
+    
+    sizeWarning.textContent = "Size: " + getSizeIndiv(simulationResult)[1];
+    
+    downloadFunction = function download() {downloadModel(simulationResult)};
   }
-
-  // var putDropDownHere = document.getElementById("putDropDownHere");
-
-  // // resets downloadtype as well
-  // if(viewingModel["Results"] == "1")
-  // {
-  //   dropDown(putDropDownHere, "all");
-  // }
-  // else
-  // {
-  //   dropDown(putDropDownHere, "no results");
-  // }
-
-  //updates size with individual model
-  var sizeWarning = document.getElementById("downloadSize");
-  sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
-
-  downloadFunction = function download() {downloadModel(viewingModel["Name"])};
+  
   doConfirm(message, "Download", downloadFunction);
 });
 
@@ -235,7 +229,7 @@ async function downloadAllModels(){
     }
   }
   
-  listOfNames = []
+  listOfModels = []
 
   for(var i = 0; i < boolModels.length; i++)
   {
@@ -243,14 +237,14 @@ async function downloadAllModels(){
     if(boolModels[i])
     {
       //takes in list of names of all the models to download
-      listOfNames.push(preservedOrderData[i]["Name"])
+      listOfModels.push(preservedOrderData[i])
     }
   }
 
   //sends to download all models
-  for(var i = 0; i < listOfNames.length; i++)
+  for(var i = 0; i < listOfModels.length; i++)
   {
-    downloadModel(listOfNames[i]);
+    downloadModel(listOfModels[i]);
     await new Promise(r => setTimeout(r, 15));
   }
 
