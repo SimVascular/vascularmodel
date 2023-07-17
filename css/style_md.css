@@ -1,0 +1,15 @@
+h2 {
+    font-size: 1.5rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    line-height: 1.2;
+    color: inherit;
+  }
+  
+  p {
+    font-size: 1rem;
+  }
+  
+  a {
+    text-decoration: none;
+  }

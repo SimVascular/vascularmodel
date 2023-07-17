@@ -3,9 +3,18 @@ var models = []
 var simModels = []
 var boolArray = []
 var boolArrayWResults = []
+//model is the model being viewed
 var model;
+//simulationResultsOfModel is an array that has the simulation results of a model
+var simulationResultsOfModel= [];
+//project is the model when simulation results are viewed
+var project = "";
+var currentSimulation = "";
 var multiModel = false;
 var singleModel = false;
+var arrayToSearch;
+var modelName;
+var viewingSimulations;
 
 $(document).ready(function($){
     //reads CSV for data
@@ -19,6 +28,16 @@ $(document).ready(function($){
         preservedOrderData = data;
       }
     });
+
+    $.ajax({
+        type: "GET",
+        url: "dataset/dataset-svresults.csv",
+        dataType: "text",
+        async: false,
+        success: function(fdata) {
+          results = $.csv.toObjects(fdata);
+        }
+      });
 
     $.ajax({
         type: "GET",
@@ -45,11 +64,25 @@ function getVariable()
 {
     //reads what is after the ?
     const queryString = window.location.search;
+
     //skips ? and starts at what is after the ?
     var codedName = queryString.substring(1);
 
     //decodes the info from the URL
     var encodedNames = decodeRLE(encodeATOB(codedName));
+
+    if(encodedNames.length == data.length)
+    {
+        dataToSearch = data;
+        viewingSimulations = false;
+
+    }
+    else
+    {
+        dataToSearch = results;
+        viewingSimulations = true;
+    }
+
     var found = false;
 
     //searches for which are selected
@@ -58,25 +91,13 @@ function getVariable()
         //if Y, records model
         if(encodedNames[i] == "Y")
         {
-            models.push(data[i]);
+            models.push(dataToSearch[i]);
             boolArray.push(true);
             found = true;
-
-            //saves different arrays for later
-            if(preservedOrderData[i]["Results"] == "1")
-            {
-                simModels.push(data[i]);
-                boolArrayWResults.push(true);
-            }
-            else
-            {
-                boolArrayWResults.push(false);
-            }
         }
         else if (encodedNames[i] == "N")
         {
             boolArray.push(false);
-            boolArrayWResults.push(false);
         }
     }
 
@@ -89,13 +110,52 @@ function getVariable()
     {
         //display for one model
         singleModel = true;
+
         displayRelevant(2);
         model = models[0];
-        displayModel(model);
+
+        if(viewingSimulations)
+        {
+            currentSimulation = model;
+
+            var index = data.findIndex(p => p["Name"] == model["Model Name"]);
+            project = data[index];
+
+            var model_tab = document.getElementById("model_tab");
+            var results_tab = document.getElementById("results_tab");
+            
+            results_tab.classList.add("selected_tab");
+            model_tab.classList.remove("selected_tab");
+        }
+        else
+        {
+            modelName = model["Name"];
+            
+            if(model["Results"] == "1")
+            {
+                project = model;
+                var index = results.findIndex(p => p["Model Name"] == project["Name"]);
+                currentSimulation = results[index];
+            }
+        }
+
+        if(viewingSimulations || model["Results"] == "1")
+        {
+            for(var r = 0; r < results.length; r++)
+            {
+                if(project["Name"] == results[r]["Model Name"])
+                {
+                    simulationResultsOfModel.push(results[r]);
+                }
+            }
+        }
+
+        displayModel();
     }
     else{
-        multiModel = true;
         // multiple model display
+        multiModel = true;
+        
         displayRelevant(3);
         displayTableModels();
     }
@@ -146,37 +206,137 @@ function hideDiv(div)
 }
 
 //displaying one model
-function displayModel()
+function displayModel(fromDropdown = false)
 {
-    //creates "header"
-    var div = document.getElementById("displayedModel");
-    var title = document.createElement("h1");
-    title.textContent = "You are viewing " + model["Name"] + ".";
+    //creates tabs if simulation result
+    if(viewingSimulations || model["Results"] == "1")
+    {
+        document.getElementById("tab_for_modal").style.display = "block";
+    }
 
+    //clears div if it is full
+    var div = document.getElementById("placeModelHere");
+    div.innerHTML = "";
+
+    //shows or doesn't show dropdown depending on viewingSimulations
+    if(fromDropdown)
+    {
+        toggleDropDown(true);
+    }
+    else
+    {
+        toggleDropDown(false);
+    }
+    
+
+    //toggles header
+    if(viewingSimulations && !fromDropdown)
+    {
+        var output = createDropDownForResults();
+        if(output[0])
+        {
+            div.appendChild(output[1]);
+        }
+    }
+    else if(!viewingSimulations)
+    {
+        var title = document.createElement("h1");
+        title.textContent = "You are viewing " + model["Name"] + ".";
+        div.appendChild(title);
+    }
+
+    div.appendChild(setUpDownload());
+      
+
+    //displays image for model but not simulation results
+    if(!viewingSimulations)
+    {
+        div.appendChild(setUpImage());
+    }
+    
+    div.appendChild(setUpHelpIcon());
+
+    //table of information on model
+    if(!viewingSimulations)
+    {
+        var desc = descriptionForModel();
+    }
+    else
+    {
+        var desc = descriptionForResults();
+    }
+
+    div.appendChild(desc);
+
+    downloadHook()
+}
+
+function setUpImage()
+{
     //creates image
     let img = document.createElement("img");
-    img.src = 'img/vmr-images/' + model['Name'] + '.png'
+    img.src = 'img/vmr-images/' + model['Name'] + '.png';
     img.alt = model['Name'];
     img.classList.add("imgContainer");
     img.classList.add("center");
 
-    //table of information on model
-    var desc = getDescription(model);
-
-    //appends all to div
-    div.appendChild(title);
-    div.appendChild(img);
-    div.appendChild(desc);
-
-    //creates inside of icons
-    createIcons();
+    return img;
 }
 
-//deals with table of information
-function getDescription()
+function setUpDownload()
 {
+    var downloadButton = document.createElement("div");
+    downloadButton.setAttribute("id", "downloadModel");
+
+    var h2 = document.createElement("p");
+    h2.classList.add("h2_download_button");
+
+    if(viewingSimulations)
+    {
+        if(simulationResultsOfModel.length > 1)
+        {
+            downloadButton.classList.add("viewingSim")
+        }
+        
+        h2.textContent = "Download this simulation result";
+    }
+    else
+    {
+        h2.textContent = "Download this model"
+    }
+    
+    var icon = document.createElement("i");
+    icon.classList.add("fa-solid");
+    icon.classList.add("fa-download");
+    icon.classList.add("icon_download_button");
+
+    downloadButton.appendChild(h2);
+    downloadButton.appendChild(icon);
+    
+    return downloadButton;
+}
+
+function setUpHelpIcon()
+{
+    var iconPlace = document.createElement("div");
+    iconPlace.setAttribute("id", "helpIndiv")
+    iconPlace.textContent = "Help";
+    
+    var icon = document.createElement("i");
+    icon.classList.add("fa-regular");
+    icon.classList.add("fa-circle-question");
+    icon.style.paddingLeft = "5px";
+
+    iconPlace.appendChild(icon)
+
+    return iconPlace;
+
+}
+
+function descriptionForModel() {
+    var categoryName = getDetailsTitlesForModel(); 
+
     var table = document.createElement("table");
-    var categoryName = getDetailsTitles();
 
     for(var d = 0; d < categoryName.length; d++)
     {
@@ -240,12 +400,15 @@ function getDescription()
             }
             else if(categoryName[d] == "Size")
             {
-                details += getSizeIndiv(model["Name"])[1];
+                details += getSizeIndiv(model)[1];
             }
-            else
+            else if(categoryName[d] != "Legacy Name")
             {
                 //formats multiple details with "," and "and"
                 details += listFormater(valInCat);
+            }
+            else{
+                details += valInCat;
             }
         } //end else
 
@@ -259,10 +422,212 @@ function getDescription()
         newTR.appendChild(newHeader);
         newTR.appendChild(newColumn);
         table.appendChild(newTR)
+    }
+
+    return table;
+}
+
+function descriptionForResults() {
+    var categoryName = getDetailsTitlesForResults(); 
+    
+    var table = document.createElement("table");
+
+    for(var d = 0; d < categoryName.length; d++)
+    {
+        //new row for each detail
+        var newTR = document.createElement("tr");
+
+        //takes in title of detail
+        var newHeader = document.createElement("th");
+        newHeader.textContent = categoryName[d];
+        
+        //newColumn is the information on the model
+        var newColumn = document.createElement("td");
+        var details = "";
+        
+        var valInCat = model[categoryName[d]];
+        
+        //if no value is specified in the CSVs
+        if(valInCat == "-")
+        {
+            details += "N/A";
+        }
+        //deals differently with each information
+        else{
+            if(categoryName[d] == "Notes")
+            {
+                //works with URLs and \n for notes
+                if(model["Notes"] != '-')
+                {
+                    notes = model["Notes"];
+                    if(notes.includes("\\url"))
+                    {
+                        var string = notes;
+                        //allows for multiple URLs
+                        while(string.includes("\\url"))
+                        {
+                            var output = URLMaker(string);
+
+                            newColumn.appendChild(output[0]);
+                            newColumn.appendChild(output[1]);
+                            string = output[2].textContent;
+                        }
+                    
+                        newColumn.appendChild(output[2]);
+                    }
+                    else
+                    {
+                        //updates details if not dealing with URLs
+                        details += model["Notes"];
+                    }
+                }
+            }
+            else if(categoryName[d] == "Size")
+            {
+                details += getSizeIndiv(model)[1];
+            }
+            else if(categoryName[d] != "Model Name")
+            {
+                //formats multiple details with "," and "and"
+                details += listFormater(valInCat);
+            }
+            else{
+                details += valInCat;
+            }
+        } //end else
+
+        //details is "" if there was a URL
+        if(details != "")
+        {
+            newColumn.textContent = details;
+        }
+        
+        //appends new detail to table
+        newTR.appendChild(newHeader);
+        newTR.appendChild(newColumn);
+        table.appendChild(newTR)
+    }
+
+    return table;
+}
+
+$(".tab_in_modal").click(function () {
+    var model_tab = document.getElementById("model_tab");
+    var results_tab = document.getElementById("results_tab");
+  
+    if($(this).attr('id') == "model_tab")
+    {
+      model_tab.classList.add("selected_tab");
+      results_tab.classList.remove("selected_tab");
+  
+      viewingSimulations = false;
+      model = project;
+      displayModel();
+    }
+    else if($(this).attr('id') == "results_tab")
+    {
+      results_tab.classList.add("selected_tab");
+      model_tab.classList.remove("selected_tab");
+  
+      viewingSimulations = true;
+
+      model = currentSimulation;
+
+      var dropdown = document.getElementById("modal_simResults_dropdown");
+      dropdown.innerHTML = "";
+
+      displayModel();
+    }
+  });
+
+  $("#modal_simResults_dropdown").change(function () {
+    var valueOfDropdown = model['Model Name'] + "_"
+    valueOfDropdown += document.getElementById("chooseResult").value;
+    valueOfDropdown += ".zip"
+    var index = results.findIndex(p => p["Full Simulation File Name"] == valueOfDropdown);
+    model = results[index];
+    currentSimulation = model;
+    toggleDropDown(false)
+    displayModel(true);
+  });
+
+  function toggleDropDown(showDropDown)
+  {
+    var dropdown = document.getElementById("modal_simResults_dropdown");
+
+    if(showDropDown)
+    {
+        dropdown.style.display = "block"; 
+    }
+    else
+    {
+        dropdown.style.display = "none"; 
+    }
   }
 
-  return table;
-}
+  function createDropDownForResults()
+  {
+    var dropdown = document.getElementById("modal_simResults_dropdown");
+  
+    var options = [];
+    var optionModel = [];
+
+    for(var i = 0; i < simulationResultsOfModel.length; i++)
+    {
+        options.push(simulationResultsOfModel[i]["Short Simulation File Name"]);
+        optionModel.push(simulationResultsOfModel[i])
+    }
+
+    if(options.length == 1)
+    {
+        toggleDropDown(false);
+
+        var title = document.createElement("h1");
+        var presentName = optionModel[0]["Model Image Number"] + "_" + options[0];
+
+        title.textContent = "You are viewing " + presentName + ".";
+        return [true, title];
+    }
+    else
+    {
+        //access and display dropdown element
+        toggleDropDown(true);
+
+        //labels the drop down menu
+        var title = document.createElement("div");
+        title.classList.add("header_results");
+        title.textContent = "You are viewing";
+        dropdown.appendChild(title);
+
+        //creates the select box
+        var select = document.createElement("select");
+        select.setAttribute("id", "chooseResult");
+        select.classList.add("select_dropdown");
+
+        for(var i = 0; i < options.length; i++)
+        {
+            //create options under select
+            var option = document.createElement("option");
+            
+            option.setAttribute("value", options[i]);
+            
+            var presentName = optionModel[i]["Model Image Number"] + "_" + options[i];
+            option.textContent = presentName;
+      
+            if(options[i] == currentSimulation["Short Simulation File Name"])
+            {
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+        }
+    
+        dropdown.appendChild(select);
+
+        return [false];
+    }
+
+  }
 
 //function to display multiple models in a table
 function displayTableModels()
@@ -358,31 +723,44 @@ function createHook(model)
 
 function goToModel(model){
     //creates shareable URL
-    var array = makeshiftSelectedModels(data, model)
+    var array = makeshiftSelectedModels(dataToSearch, model)
 
     //opens new window with encoded model
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
 }
 
 //creates the icons
-function createIcons()
-{
-    //fills downloadModel with an icon
-    var downloadModel = document.getElementById("downloadModel");
-    var icon = document.createElement("i");
-    icon.classList.add("fa-solid");
-    icon.classList.add("fa-download");
-    icon.classList.add("featuresIcons")
-    downloadModel.appendChild(icon);
+// function createIcons()
+// {
+//     //fills downloadModel with an icon
+//     var downloadModel = document.getElementById("downloadModel");
+//     downloadModel.innerHTML = "";
 
-    //fills goToGallery with an icon
-    var goToGallery = document.getElementById("goToGallery");
-    var icon = document.createElement("i");
-    icon.classList.add("fa-solid");
-    icon.classList.add("fa-image");
-    icon.classList.add("featuresIcons")
-    goToGallery.appendChild(icon);
-}
+//     var icon = document.createElement("i");
+//     icon.classList.add("fa-solid");
+//     icon.classList.add("fa-download");
+//     icon.classList.add("featuresIcons")
+//     downloadModel.appendChild(icon);
+ 
+//     //sets title that shows on hover of what will be downloaded
+//     if(!viewingSimulations)
+//     {
+//         downloadModel.setAttribute("title", "Download Model")
+//     }
+//     else
+//     {
+//         downloadModel.setAttribute("title", "Download Simulation Result")
+//     }
+
+//     //fills goToGallery with an icon
+//     var goToGallery = document.getElementById("goToGallery");
+//     goToGallery.innerHTML = "";
+//     var icon = document.createElement("i");
+//     icon.classList.add("fa-solid");
+//     icon.classList.add("fa-image");
+//     icon.classList.add("featuresIcons")
+//     goToGallery.appendChild(icon);
+// }
 
 //listener to download all models when viewing table
 $("#download-all-models").click(function () {
@@ -391,27 +769,11 @@ $("#download-all-models").click(function () {
 
     //counts number of selected models
     countModels = models.length;
-    countResults = simModels.length;
+    // countResults = simModels.length;
 
     //if nothing to download, download-all button has no function
     if (countModels > 0)
     {
-        var simResults = document.getElementById("putDropDownHere");
-
-        if(countResults != 0)
-        {
-        simResults.textContent = "Simulation results for these models will be made available soon."
-        }
-        //dropDown defines downloadType
-        // if(countResults == 0)
-        // {
-        //     dropDown(putDropDownHere, "no results");
-        // }
-        // else
-        // {
-        //     dropDown(putDropDownHere, "all");
-        // }
-
         var message = downloadConfirmation(countModels, "model", boolArray);
 
         //if the user clicks "yes," downloads all selected models
@@ -424,53 +786,41 @@ $("#download-all-models").click(function () {
 //deals with downloading all models
 async function downloadAll()
 {
-    listOfNames = []
-
-    for(var i = 0; i < array.length; i++)
-    {
-        //only keeps what will be downloaded
-        if(downloadType == "zip" || array[i]["Results"] == "1")
-        {
-            //takes in list of names of all the models to download
-            listOfNames.push(array[i]["Name"])
-        }
-    }
-
     //sends to download all models
-    for(var i = 0; i < listOfNames.length; i++)
+    for(var i = 0; i < models.length; i++)
     {
-        downloadModel(listOfNames[i]);
+        downloadModel(models[i]);
         await new Promise(r => setTimeout(r, 3));
     }
 }
 
-//icon to download model
-$("#downloadModel").click(function () {
-    //clear confirmation message
-    clearDoConfirm();
+function downloadHook(){
+    $("#downloadModel").click(function () {
+        //clear confirmation message
+        clearDoConfirm();
 
-    var simResults = document.getElementById("putDropDownHere");
+        //updates size with individual model
+        var sizeWarning = document.getElementById("downloadSize");
 
-    //resets downloadtype as well
-    if(model["Results"] == "1")
-    {
-        simResults.textContent = "Simulation results for these models will be made available soon."
+        if(viewingSimulations)
+        {
+            doConfirm("Are you sure you want to download the simulation result " + model["Model Image Number"] + "_" + model["Short Simulation File Name"] + "?", "Download", function yes(){
+                downloadModel(model);
+            })
 
-        // dropDown(putDropDownHere, "all");
-    }
-    // else
-    // {
-    //     dropDown(putDropDownHere, "no results");
-    // }
-    
-    //updates size with individual model
-    var sizeWarning = document.getElementById("downloadSize");
-    sizeWarning.textContent = "Size: " + getSizeIndiv(model["Name"])[1];
+            sizeWarning.textContent = "Size: " + getSizeIndiv(model)[1];
+        }
+        else
+        {
+            doConfirm("Are you sure you want to download the model " + model["Name"] + "?", "Download", function yes(){
+                downloadModel(model);
+            })
 
-    doConfirm("Are you sure you want to download " + model["Name"] + "?", "Download", function yes(){
-        downloadModel(model["Name"]);
-    })
-});
+            sizeWarning.textContent = "Size: " + getSizeIndiv(model)[1];
+        }
+    }); 
+}
+
 
 //go to gallery icon
 $("#goToGallery").click(function () {
@@ -484,86 +834,6 @@ function goToGallery() {
     a.href = "dataset.html";
     a.click();
 }
-
-// //listener for change in drop down menu
-// $("#putDropDownHere").click(function () {
-//     downloadType = document.getElementById("chooseType").value;
-  
-//     //clear variables
-//     warningHTML.innerHTML = "";
-//     warningHTML.classList.remove("newParagraph");
-    
-//     if(singleModel)
-//     {
-//         //if viewing one model, calculates size for one model
-//         updateSize(makeBooleanArray(preservedOrderData, model));
-//     }
-//     else
-//     {
-//       //different confirmation message depending on downloadType
-//       if(downloadType == "zip")
-//       {
-//         var msg = downloadConfirmation(countModels, "model", boolArray);
-//       }
-//       else
-//       {
-//         var msg = downloadConfirmation(countResults, "simulation result", boolArrayWResults);
-//         difference(countModels, countResults, warningHTML);
-//       }
-  
-//       updateMessage(msg);
-//     }
-// });
-
-//listener for change in drop down menu
-$("#putDropDownHere").change(function () {
-    var downloadButton = document.getElementById("download-confirm-button");
-    bindsButtonConfirmation(".download", downloadFunction);
-    downloadButton.classList.remove("button-disabled");
-    downloadType = document.getElementById("chooseType").value;
-  
-    //clear variables
-    warningHTML.innerHTML = "";
-    warningHTML.classList.remove("newParagraph");
-    
-    //if viewing model (and therefore the modal greeting's overlay is on)
-    if(singleModel)
-    {
-      //updates size with one model
-      updateSize(makeBooleanArray(preservedOrderData, model));
-    }
-    else
-    {
-      //asks to confirm download differently depending on type selected
-      if(downloadType == "zip")
-      {
-        var msg = downloadConfirmation(countModels, "model", boolArray);
-      }
-      else
-      {
-        var msg = downloadConfirmation(countResults, "simulation result", boolArrayWResults);
-      
-        var sumOfSizes = getSumOfSizes(boolArrayWResults) / 1000000000
-        var maxGb = 30;
-        if (sumOfSizes > maxGb)
-        {
-          maxDownloadMessage(sumOfSizes, maxGb, warningHTML)
-          msg = "Please change download format."
-          downloadButton.classList.add("button-disabled");
-          $("#confirmBox").find(".download").unbind()
-        }
-        else 
-        {
-          // difference tells the user how many models have simulation 
-          // results to download
-          difference(countModels, countResults, warningHTML)
-        }
-      }
-  
-      //updates message with download confirmation
-      updateMessage(msg);
-    }
-  });
 
 //listeners for help buttons
 $("#helpIndiv").click(function () {

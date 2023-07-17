@@ -5,11 +5,11 @@
   --black: black;
   --dark1: #172229;
   --dark2: #3a596e;
-    --dark2shade: #2E4758;
+  --dark2shade: #2E4758;
   --dark3: #6195b8;
-    --dark3shade: #5786a5;
+  --dark3shade: #5786a5;
   --light1: #5db0e8;
-    --light1shade: #4a8cb9;
+  --light1shade: #4a8cb9;
   --light2: #f05d62;
   --grey: #e6e6e6;
   --darkgrey: #d9d9d9;
@@ -22,12 +22,24 @@
   --lighterselect: #e0dddd;
   --darkSimRe: #666;
   --lightSimRe: #9a9a9a;
+  --lighterpink: #f4a1a9b0;
 }
 
-body, html {
+body,
+html {
   height: 100%;
   font-family: "Poppins", sans-serif;
   font-size: 17px;
+}
+
+::selection {
+  background: var(--lighterpink);
+  /* WebKit/Blink Browsers */
+}
+
+::-moz-selection {
+  background: var(--lighterpink);
+  /* Gecko Browsers */
 }
 
 .link {
@@ -42,44 +54,44 @@ body, html {
 
 /* change the background color */
 .navbar-custom {
-    background-color: var(--dark1);
+  background-color: var(--dark1);
 }
 
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-    color: var(--white);
-    font-weight: 900;
-    font-size: 23px;
+  color: var(--white);
+  font-weight: 900;
+  font-size: 23px;
 }
 
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link {
-    color: var(--gray);
+  color: var(--gray);
 }
 
 /* change the color of active or hovered links */
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:focus .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: var(--white);
+  color: var(--white);
 }
 
 /* for dropdowns only */
 .navbar-custom .navbar-nav .dropdown-menu {
-    background-color: var(--white);
+  background-color: var(--white);
 }
 
 /* dropdown item text color */
 .navbar-custom .navbar-nav .dropdown-item {
-    color: var(--dark1);
+  color: var(--dark1);
 }
 
 /* dropdown item hover or focus */
 .navbar-custom .navbar-nav .dropdown-item:hover,
 .navbar-custom .navbar-nav .dropdown-item:focus {
-    color: var(--white);
-    background-color: var(--dark2);
+  color: var(--white);
+  background-color: var(--dark2);
 }
 
 .custom-toggler .navbar-toggler-icon {
@@ -124,6 +136,12 @@ body, html {
   color: white;
 }
 
+code {
+  font-size: 87.5%;
+  color: #e83e8c;
+  word-break: break-word;
+}
+
 /* ============= end Hero image ============= */
 
 /* ============= Tutorial section ============= */
@@ -147,12 +165,16 @@ body, html {
   color: var(--dark3);
 }
 
-.mainCat, .subCat, .subsubCat {
+.mainCat,
+.subCat,
+.subsubCat {
   display: block;
   padding: 10px;
 }
 
-.mainCat:hover, .subCat:hover, .subsubCat:hover {
+.mainCat:hover,
+.subCat:hover,
+.subsubCat:hover {
   text-decoration: none;
   color: var(--select);
 }
@@ -178,9 +200,7 @@ body, html {
   margin: 5px 0 10px;
 }
 
-.title-and-divider .title {
-
-}
+.title-and-divider .title {}
 
 .about-section p {
   padding-bottom: 60px;
@@ -230,15 +250,17 @@ body, html {
 .team-item {
   height: 200px;
 }
+
 .team-item .team-triangle {
   width: 200px;
   height: 200px;
   background: transparent;
   margin: 0 auto;
   position: relative;
-  margin-top:20px;
-  margin-bottom:20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
+
 .team-item img {
   max-width: 100%;
   max-height: 100%;
@@ -259,9 +281,10 @@ body, html {
   background: var(--dark2);
   opacity: 0;
   -webkit-transition: opacity 0.4s ease-in;
-    transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
   border-radius: 50% !important;
 }
+
 .team-item .team-triangle:hover .team-hover {
   opacity: 0.6;
 }
@@ -290,33 +313,42 @@ body, html {
   z-index: 2;
   min-height: 23vh;
 }
+
 #contact-section h4 {
-	font-weight: 400;
+  font-weight: 400;
 }
+
 #contact-section .cover {
   background-color: rgba(5, 8, 11, 0.93);
 }
+
 #contact-section .contact .contact-form {
   margin-bottom: 40px;
 }
+
 #contact-section .contact .contact-form h4 {
   margin-bottom: 25px;
 }
+
 #contact-section .contact .contact-form .input-lg {
   font-size: 14px;
 }
+
 #contact-section .contact .contact-form button {
   width: 100%;
   height: 40px;
 }
+
 #contact-section .contact .contact-form button:hover {
   color: #fff;
 }
+
 #contact-section .contact .form-control {
   background-color: rgba(255, 255, 255, 0.06);
   border-color: #2A2A2A;
   color: white;
 }
+
 #contact-section .contact .form-control:focus {
   background-color: #171717;
   box-shadow: none;
@@ -335,9 +367,11 @@ ul.contact-address li {
   padding: 0 0 20px;
   margin: 0;
 }
+
 ul.contact-address li:last-child {
   padding-bottom: 0;
 }
+
 ul.contact-address li i {
   margin-right: 10px;
 }
@@ -360,7 +394,7 @@ ul.contact-address li i {
   text-decoration: none;
 }
 
-.social-media > div {
+.social-media>div {
   padding-bottom: 10px;
 }
 
@@ -370,19 +404,12 @@ ul.contact-address li i {
 .license-faqs {
   color: #05080B;
   font-weight: 200;
-  width:100%;
-  height:700px;
+  width: 100%;
+  height: 700px;
   overflow-y: scroll;
   resize: none;
   padding: 10px;
   border: 2px solid var(--darkgrey)
-}
-
-.question-faqs {
-  font-size: 1.5rem;
-}
-.answer-faqs {
-  font-size: 1rem;
 }
 
 /* ============= end FAQs =============*/
@@ -391,7 +418,7 @@ ul.contact-address li i {
 
 .contact-us {
   color: var(--black);
-  width:100%;
+  width: 100%;
   height: auto;
   overflow-y: auto;
   resize: none;
@@ -422,6 +449,7 @@ ul.contact-address li i {
   .team-item {
     height: 150px;
   }
+
   .team-item .team-triangle {
     width: 150px;
     height: 150px;
@@ -439,12 +467,12 @@ ul.contact-address li i {
     color: var(--white);
     padding-left: 30px;
     border-left: 0px;
-    padding-top:20px;
-    padding-bottom:20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
   .social-media {
-    padding-top:20px;
-    padding-bottom:20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
