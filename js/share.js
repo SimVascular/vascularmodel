@@ -570,17 +570,22 @@ $(".tab_in_modal").click(function () {
     var dropdown = document.getElementById("modal_simResults_dropdown");
   
     var options = [];
+    var optionModel = [];
 
     for(var i = 0; i < simulationResultsOfModel.length; i++)
     {
         options.push(simulationResultsOfModel[i]["Short Simulation File Name"]);
+        optionModel.push(simulationResultsOfModel[i])
     }
 
     if(options.length == 1)
     {
-        var title = document.createElement("h1");
-        title.textContent = "You are viewing " + options[0] + ".";
         toggleDropDown(false);
+
+        var title = document.createElement("h1");
+        var presentName = optionModel[0]["Model Image Number"] + "_" + options[0];
+
+        title.textContent = "You are viewing " + presentName + ".";
         return [true, title];
     }
     else
@@ -603,12 +608,17 @@ $(".tab_in_modal").click(function () {
         {
             //create options under select
             var option = document.createElement("option");
+            
             option.setAttribute("value", options[i]);
-            option.textContent = options[i];
+            
+            var presentName = optionModel[i]["Model Image Number"] + "_" + options[i];
+            option.textContent = presentName;
+      
             if(options[i] == currentSimulation["Short Simulation File Name"])
             {
                 option.selected = true;
             }
+
             select.appendChild(option);
         }
     
@@ -806,7 +816,7 @@ function downloadHook(){
 
         if(viewingSimulations)
         {
-            doConfirm("Are you sure you want to download the simulation result " + model["Short Simulation File Name"] + "?", "Download", function yes(){
+            doConfirm("Are you sure you want to download the simulation result " + model["Model Image Number"] + "_" + model["Short Simulation File Name"] + "?", "Download", function yes(){
                 downloadModel(model);
             })
 

@@ -169,7 +169,8 @@ $('.download-button-modal').click(function() {
   }
   else
   {
-    var message = "Are you sure you want to download the simulation result " + simulationResult["Short Simulation File Name"] + "?";
+    var presentName = simulationResult["Model Image Number"] + "_" + simulationResult["Short Simulation File Name"];
+    var message = "Are you sure you want to download the simulation result " + presentName + "?";
     
     sizeWarning.textContent = "Size: " + getSizeIndiv(simulationResult)[1];
     
@@ -355,6 +356,7 @@ function createDropDownForResults()
   title.style.paddingRight = "5px";
 
   var options = [];
+  var optionModel = [];
   modelName = viewingModel['Name'];
 
   for(var i = 0; i < results.length; i++)
@@ -362,12 +364,14 @@ function createDropDownForResults()
     if(results[i]["Model Name"] == modelName)
     {
       options.push(results[i]["Short Simulation File Name"]);
+      optionModel.push(results[i])
     }
   }
 
   if(options.length == 1)
   {
-    title.textContent = "You are viewing " + options[0] + ".";
+    var presentName = optionModel[0]["Model Image Number"] + "_" + options[0];
+    title.textContent = "You are viewing " + presentName + ".";
     dropdown.appendChild(title);
   }
   else
@@ -383,8 +387,12 @@ function createDropDownForResults()
     {
       //create options under select
       var option = document.createElement("option");
+
       option.setAttribute("value", options[i]);
-      option.textContent = options[i];
+      
+      var presentName = optionModel[i]["Model Image Number"] + "_" + options[i];
+      option.textContent = presentName;
+      
       select.appendChild(option);
     }
 
