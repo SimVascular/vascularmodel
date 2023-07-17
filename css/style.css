@@ -136,6 +136,12 @@ html {
   color: white;
 }
 
+code {
+  font-size: 87.5%;
+  color: #e83e8c;
+  word-break: break-word;
+}
+
 /* ============= end Hero image ============= */
 
 /* ============= Tutorial section ============= */
@@ -404,14 +410,6 @@ ul.contact-address li i {
   resize: none;
   padding: 10px;
   border: 2px solid var(--darkgrey)
-}
-
-.question-faqs {
-  font-size: 1.5rem;
-}
-
-.answer-faqs {
-  font-size: 1rem;
 }
 
 /* ============= end FAQs =============*/
