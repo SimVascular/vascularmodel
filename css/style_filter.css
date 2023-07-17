@@ -575,10 +575,6 @@ xcustom form elements
     transform: translateY(-50%);
   }
 
-  .cd-filter-block h4.embedded::before {
-    /* top: 58%; */
-  }
-
   .checkbox-label {
     padding-left: 15px;
   }
