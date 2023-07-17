@@ -575,16 +575,13 @@ xcustom form elements
     transform: translateY(-50%);
   }
 
-  .cd-filter-block h4.embedded::before {
-    /* top: 58%; */
-  }
-
   .checkbox-label {
     padding-left: 15px;
   }
 
   .checkbox-label.adjustCheckboxForEmbed {
-    padding-left: 10px;
+    padding-left: 0;
+    margin-left: 10px;
   }
 
   .cd-filter-block .label-before,

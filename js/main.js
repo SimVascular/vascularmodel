@@ -19,6 +19,7 @@ $(document).ready(function($){
       data.sort(() => (Math.random() > .5) ? 1 : -1);
     }
   });
+
   $.ajax({
     type: "GET",
     url: "dataset/file_sizes.csv",
@@ -34,6 +35,7 @@ $(document).ready(function($){
       }
     }
   });
+
   $.ajax({
     type: "GET",
     url: "dataset/dataset-diseaseTree.csv",
@@ -42,6 +44,16 @@ $(document).ready(function($){
     success: function(fdata) {
       tree = $.csv.toObjects(fdata);
       parentArray = Object.keys(tree[0]);
+    }
+  });
+
+  $.ajax({
+    type: "GET",
+    url: "dataset/dataset-svresults.csv",
+    dataType: "text",
+    async: false,
+    success: function(fdata) {
+      results = $.csv.toObjects(fdata);
     }
   });
 
@@ -177,6 +189,13 @@ function greetingText(data)
   //sets global var viewingModel
   viewingModel = data;
 
+  //clear dropdown for simulation results if it was created
+  var dropdown = document.getElementById("modal_simResults_dropdown");
+  dropdown.innerHTML = "";
+
+  toggleButtons();
+  setUpResultsButton();
+
   $('.details-text').scrollTop(0);
 
   //modal's first line
@@ -186,6 +205,7 @@ function greetingText(data)
   var details = "";
   //all categories displayed in window
   var categoryName = getCategoryName();
+  categoryName.unshift("Legacy Name")
 
   for(var d = 0; d < categoryName.length; d++)
   {
@@ -211,7 +231,7 @@ function greetingText(data)
       else
       {
         //accounts for when there are multiple details, separated by a "_"
-        if(valInCat.indexOf("_") == -1)
+        if(valInCat.indexOf("_") == -1 || categoryName[d] == "Legacy Name")
         {
           details += categoryName[d] + ": " + valInCat;
         }
@@ -228,7 +248,7 @@ function greetingText(data)
     //adds new line per detail
     details += '\n';
 
-  } //end for-loop through categoryName
+  } //end for-loop through categoryName array
 
   //formatting for whether or not each fdr is avaliable
   var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
@@ -252,7 +272,7 @@ function greetingText(data)
   $('.details-text')[0].value = details
 
   downloadType = "zip";
-  var size = getSizeIndiv(viewingModel["Name"]);
+  var size = getSizeIndiv(viewingModel);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
@@ -313,8 +333,137 @@ function greetingText(data)
   }
 } //end greetingText()
 
+function setUpResultsButton()
+{
+  var tabs = document.getElementById("tab_for_modal");
+
+  if(hasSimulationResults(viewingModel['Name']))
+  {
+    tabs.style.display = "block";
+  }
+  else
+  {
+    tabs.style.display = "none";  
+  }
+}
+
+function greetingForSimulationResults()
+{
+  simulationResult = viewingThisSimulation;
+  toggleButtons();
+
+  $('.details-text').scrollTop(0);
+
+  //modal's first line
+  $('#modal-greeting')[0].innerText = 'Here are the details:'
+
+  //details inside window
+  var details = "";
+  
+  //all categories displayed in window
+  var categoryName = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"]
+
+  for(var d = 0; d < categoryName.length; d++)
+  {
+    //valInCat is the value in the category
+    var valInCat = simulationResult[categoryName[d]];
+
+    //accounts for when value is not specified
+    if(valInCat == "-")
+    {
+      details += categoryName[d] + ": N/A";
+    }
+    else{
+      //accounts for when there are multiple details, separated by a "_"
+      if(valInCat.indexOf("_") == -1 || categoryName[d] == "Model Name")
+      {
+        details += categoryName[d] + ": " + valInCat;
+      }
+      else
+      {
+        //formats multiple details
+        details += categoryName[d] + "s: ";
+
+        details += listFormater(valInCat)
+      }
+    }
+
+    if(d != categoryName.length - 1)
+    {
+      //adds new line per detail except on last line
+      details += '\n';
+    }
+
+  } //end for-loop through categoryName
+
+  //adds details to window
+  $('.details-text')[0].value = details
+
+  // come back to size when the file is created for simulation results
+  downloadType = "zip";
+  var size = getSizeIndiv(simulationResult);
+
+  //gets element after the window
+  var modalclosure = document.getElementById("modal-closure");
+  modalclosure.innerHTML = "";
+
+  //accounts for when there are no additional notes
+  if(simulationResult["Notes"] != '-')
+  {
+    notes = simulationResult["Notes"];
+
+    //allows for URLs in the Notes
+    if(notes.includes("\\url"))
+    {
+      var string = notes;
+      //allows for multiple URLs
+      while(string.includes("\\url"))
+      {
+        var output = URLMaker(string);
+
+        modalclosure.appendChild(output[0]);
+        modalclosure.appendChild(output[1]);
+        string = output[2].textContent;
+      }
+      
+      //adds last element since loop skips it
+      modalclosure.appendChild(output[2]);
+    }
+    else
+    {
+      //if no URL, adds notes as regular text
+      if (simulationResult["Notes"].includes("\\n"))
+      {
+        //allows for new lines in notes that don't have URLs
+        var text = newLineNoURL(simulationResult["Notes"], true)
+      }
+      else
+      {
+        //if no new line, creates regular span
+        var text = document.createElement("span");
+        text.classList.add("newParagraph");
+        text.textContent = simulationResult["Notes"];
+      }
+
+      modalclosure.appendChild(text);
+    }
+
+    //after notes, prints size
+    var sizeText = document.createElement("div");
+    sizeText.classList.add("newParagraph");
+    sizeText.textContent = '\n\nThe size of this result is ' + sizeConverter(size);
+
+    modalclosure.appendChild(sizeText);
+  }
+  else
+  {
+    //if no notes, only prints size
+    modalclosure.innerText = 'The size of this result is ' + sizeConverter(size);
+  }
+} //end greetingForSimulationResults()
+
 //function to prevent overlay from exiting when the user clicks on the modal
-$("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
+$(".safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
 //deals with clicking on the overlay
 $('#overlay').click(function() {
@@ -327,6 +476,7 @@ $('#overlay').click(function() {
 //turns off the overlay when the X is clicked
 $('.close-button-modal').click(function() {  
   overlayOff();
+  resetFromSimulationResult();
 });
 
 //checks status of overlay
@@ -342,7 +492,69 @@ function checkOverlay(){
     }
     else{
       overlayOff();
+      resetFromSimulationResult()
     }
+  }
+}
+
+function resetFromSimulationResult(){
+  viewingSimulations = false;
+  var model_tab = document.getElementById("model_tab");
+  var results_tab = document.getElementById("results_tab");
+
+  model_tab.classList.add("selected_tab");
+  results_tab.classList.remove("selected_tab");
+
+  toggleButtons()
+}
+
+function toggleButtons()
+{
+  if(viewingSimulations)
+  {
+    var pdf_div = document.getElementById("pdf_button");
+    pdf_div.style.display = "none";
+
+    var share_button = document.getElementById("share_button");
+    share_button.classList.remove("col-xs-4")
+    share_button.classList.remove("col-sm-4")
+    share_button.classList.add("col-xs-6")
+    share_button.classList.add("col-sm-6")
+
+    var download_button = document.getElementById("download_button");
+    download_button.classList.remove("col-xs-4")
+    download_button.classList.remove("col-sm-4")
+    download_button.classList.add("col-xs-6")
+    download_button.classList.add("col-sm-6")
+
+    var download_anchor = download_button.childNodes[1];
+    download_anchor.setAttribute("title", "Download Simulation Result");
+
+    var share_anchor = share_button.childNodes[1];
+    share_anchor.setAttribute("title", "Share Simulation Result");
+  }
+  else
+  {
+    var pdf_div = document.getElementById("pdf_button");
+    pdf_div.style.display = "inline-block";
+
+    var share_button = document.getElementById("share_button");
+    share_button.classList.add("col-xs-4")
+    share_button.classList.add("col-sm-4")
+    share_button.classList.remove("col-xs-6")
+    share_button.classList.remove("col-sm-6")
+
+    var download_button = document.getElementById("download_button");
+    download_button.classList.add("col-xs-4")
+    download_button.classList.add("col-sm-4")
+    download_button.classList.remove("col-xs-6")
+    download_button.classList.remove("col-sm-6")
+
+    var download_anchor = download_button.childNodes[1];
+    download_anchor.setAttribute("title", "Download Model");
+
+    var share_anchor = share_button.childNodes[1];
+    share_anchor.setAttribute("title", "Share Model");
   }
 }
 

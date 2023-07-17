@@ -27,6 +27,7 @@ a {
   color: var(--dark2);
   text-decoration: none;
 }
+  
 
 /* --------------------------------
 
@@ -369,14 +370,15 @@ error msg block behavior
   margin-bottom: 0px !important;
 }
 
-#modal-closure {
-  margin-top: 15px;
-}
-
 .newParagraph {
   margin-top: 15px;
   margin-bottom: 15px;
 }
+
+.firstParagraph {
+  margin-bottom: 15px;
+}
+
 
 .spaceBelow {
   margin-bottom: 15px;
@@ -390,23 +392,49 @@ error msg block behavior
   opacity:1;
   pointer-events: auto;
 }
-.modalDialog > div {
+
+#tab_for_modal {
+  width: 100%;
+  height: fit-content;
+  background-color: var(--grey);
+  border-radius: 8px 8px 0 0;
+}
+
+.tab_in_modal {
+  display: inline-block;
+  width: fit-content;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 7px;
+  height: fit-content;
+  background-color: var(--grey);
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+}
+
+.tab_for_modal {
+  background-color: var(--grey);
+}
+
+.selected_tab {
+  background-color: white;
+}
+
+.containing_and_positioning_of_modal {
+  border: 5px solid var(--darkgrey);
+  background-color: var(--grey);
   width: 300px;
   position: relative;
   margin-top: 125px;
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
-  /* padding: 20px 20px 13px 20px; */
   border-radius: 8px !important;
-  background: #fff;
-  /* background: -moz-linear-gradient(#fff, #999);
-  background: -webkit-linear-gradient(#fff, #999);
-  background: -o-linear-gradient(#fff, #999); */
 }
 
 @media only screen and (min-width: 576px) {
-  .modalDialog > div {
+  .containing_and_positioning_of_modal {
     width: 500px;
   }
 }
@@ -415,7 +443,7 @@ error msg block behavior
   color: #05080B;
   font-weight: 200;
   width:100%;
-  height: 200px;
+  height: 176px;
   overflow-y: auto;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -460,8 +488,8 @@ error msg block behavior
   border-radius: 5px !important;
   border-collapse: separate;
   font-weight: 400;
-  margin-top:10px;
-  margin-bottom:10px;
+  margin-top: 8.25px;
+  margin-bottom: 8.25px;
   cursor: pointer;
 }
 
@@ -493,6 +521,20 @@ error msg block behavior
   margin-bottom:10px;
   cursor: pointer;
   width: 100px;
+}
+
+.results-button-modal.button-modal {
+  width: 90%;
+}
+
+.results-button-modal {
+  background-color: var(--darkSimRe);
+}
+
+.results-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--lightSimRe);
 }
 
 .shareableLink-button-modal {
@@ -748,9 +790,11 @@ error msg block behavior
   cursor: default;
 }
 
-#safeOfOverlayClick {
+#body_of_modal {
   padding: 20px 20px 20px 20px;
   cursor: default;
+  background-color: #fff;
+
 }
 
 #chooseType {

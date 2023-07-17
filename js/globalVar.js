@@ -14,6 +14,8 @@
 
 //other global variables:
   var viewingModel = '';
+  var viewingThisSimulation = '';
+  var viewingSimulations = false;
   var curIndex = 0;
   var smallScreen = false
   var lastFapplied = 0;
@@ -59,10 +61,18 @@ function getBareMinimum()
   return output;
 }
 
-//returns titles for the share.html table
-function getDetailsTitles()
+//returns titles for the share.html table for data
+function getDetailsTitlesForModel()
 {
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
+  var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
+
+  return output;
+}
+
+//returns titles for the share.html table for results
+function getDetailsTitlesForResults()
+{
+  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator", "Notes", "Size"]
 
   return output;
 }
@@ -431,13 +441,22 @@ function newLineNoURL(text, isBefore)
   //creates div if \n
   var p = document.createElement("div");
   p.classList.add("newParagraph");
-  
+
+  var counter = 0;
+
   //allows for multiple \n
   while(text.includes("\\n"))
   {
     var index = text.indexOf("\\n");
     var pDiv = document.createElement("div");
-    pDiv.classList.add("newParagraph");
+    if(counter > 0)
+    {
+      pDiv.classList.add("newParagraph");
+    }
+    else
+    {
+      pDiv.classList.add("firstParagraph");
+    }
     
     //appends textContent between each \n
     pDiv.textContent = text.substring(0, index);
@@ -796,36 +815,35 @@ function informUser(msg, hasOk = false) {
 // }
 
 //creates url to download models depending on download type and model name
-function craftURL(modelName)
+function craftURL(model)
 {
-  if(downloadType == "zip")
+  if(viewingSimulations)
   {
-    var url = "svprojects/"
-    url += modelName + "." + downloadType;
+    var url = "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
   }
   else if (downloadType == 'additionaldata')
   {
     var url = "additionaldata/"
-    url += modelName + ".zip";
+    url += model["Name"] + ".zip";
   }
   else
   {
-    var url = "svresults/" + modelName + "/"
-    url += modelName + "_" + downloadType + ".zip";
+    var url = "svprojects/"
+    url += model["Name"] + ".zip";
   }
 
   return url;
 }
 
-function craftDownloadName(modelName)
+function craftDownloadName(model)
 {
-  if(downloadType == "zip")
+  if(viewingSimulations)
   {
-    return modelName
+    return model["Full Simulation File Name"]
   }
   else
   {
-    return modelName + "_" + downloadType
+    return model["Name"]
   }
 }
 
@@ -842,27 +860,22 @@ function sizeConverter(size)
 //returns sum of sizes of the arrays selected in the boolArray
 function getSumOfSizes(boolArray)
 {
-  //array with model names
-  var names = []
+  //array with models
+  var models = []
 
   for(var i = 0; i < boolArray.length; i++)
   {
     if(boolArray[i])
     {
-      //come back here
-      if(preservedOrderData[i]["Results"] == "1" || downloadType == "zip")
-      {
-        names.push(preservedOrderData[i]["Name"])
-      }
-      
+      models.push(preservedOrderData[i])
     }
   }
   
   var count = 0;
 
-  for(var i = 0 ; i < names.length; i++)
+  for(var i = 0 ; i < models.length; i++)
   {
-    var size = getSizeIndiv(names[i]);
+    var size = getSizeIndiv(models[i]);
     // then the fileSize exists (it's not nan)
     if (size[0] == size[0])
     {
@@ -1025,22 +1038,22 @@ function dropDown(putDropDownHere, string)
 }
 
 //downloads individual models
-function downloadModel(modelName)
+function downloadModel(model)
   {
     //creates link of what the user wants to download
-    var fileUrl = craftURL(modelName);
+    var fileUrl = craftURL(model);
 
     //creates anchor tag to download
     var a = document.createElement("a");
     a.href = fileUrl;
-    a.setAttribute("download", craftDownloadName(modelName));
+    a.setAttribute("download", craftDownloadName(model));
     //simulates click
     a.click();
     
-    if(downloadType != "zip")
+    if(viewingSimulations)
     {
       //sends message to server with user's download
-      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+      gtag('event', 'download_results_' + model["Full Simulation File Name"], {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',
@@ -1050,11 +1063,26 @@ function downloadModel(modelName)
     else
     {
       //sends message to server with user's download
-      gtag('event', 'download_' + modelName, {
+      gtag('event', 'download_' + model["Name"], {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',
         'value': '1'
       });
     }
+}
+
+function hasSimulationResults(modelName)
+{
+  var index = results.findIndex(p => p["Model Name"] == modelName);
+
+  return index != -1;
+}
+
+function returnDefaultSimulationResult()
+{
+  var index = results.findIndex(p => p["Model Name"] == viewingModel['Name']);
+  simulationResult = results[index];
+  
+  return simulationResult;
 }
