@@ -749,39 +749,6 @@ function goToModel(model){
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
 }
 
-//creates the icons
-// function createIcons()
-// {
-//     //fills downloadModel with an icon
-//     var downloadModel = document.getElementById("downloadModel");
-//     downloadModel.innerHTML = "";
-
-//     var icon = document.createElement("i");
-//     icon.classList.add("fa-solid");
-//     icon.classList.add("fa-download");
-//     icon.classList.add("featuresIcons")
-//     downloadModel.appendChild(icon);
- 
-//     //sets title that shows on hover of what will be downloaded
-//     if(!viewingSimulations)
-//     {
-//         downloadModel.setAttribute("title", "Download Model")
-//     }
-//     else
-//     {
-//         downloadModel.setAttribute("title", "Download Simulation Result")
-//     }
-
-//     //fills goToGallery with an icon
-//     var goToGallery = document.getElementById("goToGallery");
-//     goToGallery.innerHTML = "";
-//     var icon = document.createElement("i");
-//     icon.classList.add("fa-solid");
-//     icon.classList.add("fa-image");
-//     icon.classList.add("featuresIcons")
-//     goToGallery.appendChild(icon);
-// }
-
 //listener to download all models when viewing table
 $("#download-all-models").click(function () {
     //clears confirm message
