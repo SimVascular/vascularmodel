@@ -117,6 +117,7 @@ function getVariable()
         if(viewingSimulations)
         {
             currentSimulation = model;
+            toggleGalleryButton(false);
 
             var index = data.findIndex(p => p["Name"] == model["Model Name"]);
             project = data[index];
@@ -134,8 +135,13 @@ function getVariable()
             if(model["Results"] == "1")
             {
                 project = model;
+                toggleGalleryButton(false);
                 var index = results.findIndex(p => p["Model Name"] == project["Name"]);
                 currentSimulation = results[index];
+            }
+            else
+            {
+                toggleGalleryButton(true);
             }
         }
 
@@ -268,7 +274,7 @@ function displayModel(fromDropdown = false)
 
     div.appendChild(desc);
 
-    downloadHook()
+    hooks()
 }
 
 function setUpImage()
@@ -565,6 +571,20 @@ $(".tab_in_modal").click(function () {
     }
   }
 
+  function toggleGalleryButton(showButton)
+  {
+    var backToGallery = document.getElementById("galleryWhenNoSim")
+
+    if(showButton)
+    {
+        backToGallery.style.display = "block";
+    }
+    else
+    {
+        backToGallery.style.display = "none";
+    }
+  }
+
   function createDropDownForResults()
   {
     var dropdown = document.getElementById("modal_simResults_dropdown");
@@ -729,39 +749,6 @@ function goToModel(model){
     window.open("share.html?" + encodeBTOA(encodeRLE(array)));
 }
 
-//creates the icons
-// function createIcons()
-// {
-//     //fills downloadModel with an icon
-//     var downloadModel = document.getElementById("downloadModel");
-//     downloadModel.innerHTML = "";
-
-//     var icon = document.createElement("i");
-//     icon.classList.add("fa-solid");
-//     icon.classList.add("fa-download");
-//     icon.classList.add("featuresIcons")
-//     downloadModel.appendChild(icon);
- 
-//     //sets title that shows on hover of what will be downloaded
-//     if(!viewingSimulations)
-//     {
-//         downloadModel.setAttribute("title", "Download Model")
-//     }
-//     else
-//     {
-//         downloadModel.setAttribute("title", "Download Simulation Result")
-//     }
-
-//     //fills goToGallery with an icon
-//     var goToGallery = document.getElementById("goToGallery");
-//     goToGallery.innerHTML = "";
-//     var icon = document.createElement("i");
-//     icon.classList.add("fa-solid");
-//     icon.classList.add("fa-image");
-//     icon.classList.add("featuresIcons")
-//     goToGallery.appendChild(icon);
-// }
-
 //listener to download all models when viewing table
 $("#download-all-models").click(function () {
     //clears confirm message
@@ -794,7 +781,7 @@ async function downloadAll()
     }
 }
 
-function downloadHook(){
+function hooks(){
     $("#downloadModel").click(function () {
         //clear confirmation message
         clearDoConfirm();
@@ -819,13 +806,21 @@ function downloadHook(){
             sizeWarning.textContent = "Size: " + getSizeIndiv(model)[1];
         }
     }); 
+
+    //listeners for help buttons
+    $("#helpIndiv").click(function () {
+        window.open("sharingtutorial.html#Viewing_the_shared_model");
+    });
+
+    //go to gallery icon
+    $(".goToGallery").click(function () {
+        goToGallery();
+    });
+
+    $("#helpTable").click(function () {
+        window.open("sharingtutorial.html#Viewing_the_shared_models");
+    });
 }
-
-
-//go to gallery icon
-$("#goToGallery").click(function () {
-    goToGallery();
-});
 
 //brings user to dataset.html
 function goToGallery() {
@@ -834,12 +829,3 @@ function goToGallery() {
     a.href = "dataset.html";
     a.click();
 }
-
-//listeners for help buttons
-$("#helpIndiv").click(function () {
-    window.open("sharingtutorial.html#Viewing_the_shared_model");
-});
-
-$("#helpTable").click(function () {
-    window.open("sharingtutorial.html#Viewing_the_shared_models");
-});

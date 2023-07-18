@@ -40,11 +40,13 @@
     <link rel="stylesheet" href="css/style_dataset.css?v=1.0.1" />
     <link rel="stylesheet" href="css/style_filter.css?v=1.0.1" />
     <link rel="stylesheet" href="css/style_share.css?v=1.0.1" />
+
     <title>Vascular Model Repository</title>
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-YVVR1546XJ"
     ></script>
+    
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -115,7 +117,10 @@
         <div id="tab_for_modal" class="safeOfOverlayClick" style="display: none">
           <div title="View Model" id="model_tab" class="tab_in_modal selected_tab">Model</div>
           <div title="View Model's Simulation Results" id="results_tab" class="tab_in_modal">Results</div>
-          <div title="Return to Gallery" id="goToGallery"><i class="fa-solid fa-arrow-left" id="back_icon"></i></div>
+          <div title="Return to Gallery" class="goToGallery"><i class="fa-solid fa-arrow-left" id="back_icon"></i></div>
+        </div>
+        <div id="galleryWhenNoSim">
+          <div title="Return to Gallery" class="goToGallery"><i class="fa-solid fa-arrow-left" id="back_icon"></i></div>
         </div>
         <div id="modal_simResults_dropdown" style="display: none"></div>
         <div id="displayedModel">
@@ -287,8 +292,8 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
     <!-- <script src="js/jquery-2.1.1.js"></script> -->
-    <script src="js/jquery.mixitup.min.js"></script>
-    <script src="js/globalVar.js?v=1.0.3"></script>
-    <script src="js/share.js?v=1.0.2"></script>
+    <script src="js/jquery.mixitup.min.js?v=1.0.2"></script>
+    <script src="js/globalVar.js?v=1.0.4"></script>
+    <script src="js/share.js?v=1.0.3"></script>
   </body>
 </html>
