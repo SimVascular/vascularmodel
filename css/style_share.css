@@ -27,7 +27,7 @@ body {
   display: inline-block;
 }
 
-#goToGallery {
+.goToGallery {
   float: right;
   display: inline;
   font-size: 20px;
@@ -40,6 +40,15 @@ body {
   margin-right: 3.75px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+#galleryWhenNoSim .goToGallery {
+  margin-right: 5px;
+  margin-top: 5px;
+  height: fit-content;
+  z-index: 10;
+  position: relative;
+  border: 3px solid var(--border_darker_grey);
 }
 
 
@@ -295,7 +304,6 @@ table {
       font-size: 22px;
     }
   }
-
 
   .spanForIcons {
     border-radius: 0%;
