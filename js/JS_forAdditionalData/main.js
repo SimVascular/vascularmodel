@@ -220,6 +220,7 @@ function greetingText(data)
     modalclosure.innerText = 'The size of this project is ' + sizeConverter(size);
   }
 } //end greetingText()
+
 //function to prevent overlay from exiting when the user clicks on the modal
 $("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
