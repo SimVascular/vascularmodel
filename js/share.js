@@ -621,7 +621,9 @@ $(".tab_in_modal").click(function () {
       model_tab.classList.add("selected_tab");
       results_tab.classList.remove("selected_tab");
   
+      viewingModel = true;
       viewingSimulations = false;
+      viewingAdditionalData = false;
       model = project;
       displayModel();
     }
@@ -631,6 +633,8 @@ $(".tab_in_modal").click(function () {
       model_tab.classList.remove("selected_tab");
   
       viewingSimulations = true;
+      viewingModel = false;
+      viewingAdditionalData = false;
 
       model = currentSimulation;
 
