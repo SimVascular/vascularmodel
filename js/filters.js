@@ -105,6 +105,8 @@ function getFilterMenu()
     availableFilters["Image Modality"] = false
   }
 
+  // Project Must Contain is set in the dataset.html
+
   findModeOfListOfCheckboxLiMade();
 
   //loops through all hooks saved above
