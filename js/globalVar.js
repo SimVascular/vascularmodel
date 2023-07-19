@@ -249,8 +249,11 @@ function namesOfValuesPerKey(categoryName, returnSet = false)
   {
     if(categoryName == "Disease")
     {
-      //includes the general disease classifier as potential options for Disease
-      checkboxNameSet = namesOfValuesPerKey("General Disease Classifier", true)
+      //includes parents in tree in possible categories
+      for(var pA = 0; pA < parentArray.length; pA++)
+      {
+        checkboxNameSet.add(parentArray[pA]);
+      }
     }
     //goes through the data and gets all the possibilities the models offer
     for(var d = 0; d < data.length; d++)

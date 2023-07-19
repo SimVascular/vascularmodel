@@ -6,7 +6,7 @@ $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
-    url: "https://www.vascularmodel.com/dataset/dataset-svprojects.csv",
+    url: "dataset/dataset-svprojects.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -23,7 +23,7 @@ $(document).ready(function($){
 
   $.ajax({
     type: "GET",
-    url: "https://www.vascularmodel.com/dataset/file_sizes.csv",
+    url: "dataset/file_sizes.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -39,7 +39,7 @@ $(document).ready(function($){
 
   $.ajax({
     type: "GET",
-    url: "https://www.vascularmodel.com/dataset/dataset-diseaseTree.csv",
+    url: "dataset/dataset-diseaseTree.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -50,7 +50,7 @@ $(document).ready(function($){
 
   $.ajax({
     type: "GET",
-    url: "https://www.vascularmodel.com/dataset/dataset-svresults.csv",
+    url: "dataset/dataset-svresults.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
