@@ -416,7 +416,7 @@ $('.shareableLink-button-modal').click(function() {
 $('.pdf-button-modal').click(function() {
   //creates anchor tag to download
   var a = document.createElement("a");
-  a.href = "vmr-pdfs/" + viewingModel['Name'] + ".pdf";
+  a.href = "https://www.vascularmodel.com/vmr-pdfs/" + viewingModel['Name'] + ".pdf";
   // a.setAttribute("download", viewingModel['Name']);
   a.setAttribute("target", "_blank");
   //simulates click
@@ -427,7 +427,7 @@ $('.pdf-button-modal').click(function() {
 $('.download-button-additionaldata').click(function() {
   //creates anchor tag to download
   var a = document.createElement("a");
-  a.href = "additionaldata/" + viewingModel['Name'] + ".zip";
+  a.href = "https://www.vascularmodel.com/additionaldata/" + viewingModel['Name'] + ".zip";
   // a.setAttribute("download", viewingModel['Name']);
   a.setAttribute("target", "_blank");
   //simulates click

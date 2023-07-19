@@ -17,19 +17,9 @@
   
     var message = "Are you sure you want to download " + viewingModel["Name"] + "?";
   
-    //resets downloadtype as well
-    if(viewingModel["Results"] == "1")
-    {
-      dropDown(putDropDownHere, "all");
-    }
-    else
-    {
-      dropDown(putDropDownHere, "no results");
-    }
-  
     //updates size with individual model
     var sizeWarning = document.getElementById("downloadSize");
-    sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel["Name"])[1];
+    sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
   
     downloadFunction = function download() {downloadModel(viewingModel["Name"])};
     doConfirm(message, "Download", downloadFunction);
@@ -73,7 +63,7 @@
   $('.pdf-button-modal').click(function() {
     //creates anchor tag to download
     var a = document.createElement("a");
-    a.href = "vmr-pdfs/" + viewingModel['Name'] + ".pdf";
+    a.href = "https://www.vascularmodel.com/vmr-pdfs/" + viewingModel['Name'] + ".pdf";
     // a.setAttribute("download", viewingModel['Name']);
     a.setAttribute("target", "_blank");
     //simulates click
@@ -84,7 +74,7 @@
   $('.download-button-additionaldata').click(function() {
     //creates anchor tag to download
     var a = document.createElement("a");
-    a.href = "additionaldata/" + viewingModel['Name'] + ".zip";
+    a.href = "https://www.vascularmodel.com/additionaldata/" + viewingModel['Name'] + ".zip";
     // a.setAttribute("download", viewingModel['Name']);
     a.setAttribute("target", "_blank");
     //simulates click
