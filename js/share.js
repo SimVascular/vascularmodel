@@ -816,10 +816,6 @@ function hooks(){
     $(".goToGallery").click(function () {
         goToGallery();
     });
-
-    $("#helpTable").click(function () {
-        window.open("sharingtutorial.html#Viewing_the_shared_models");
-    });
 }
 
 //brings user to dataset.html
@@ -829,3 +825,7 @@ function goToGallery() {
     a.href = "dataset.html";
     a.click();
 }
+
+$("#helpTable").click(function () {
+    window.open("sharingtutorial.html#Viewing_the_shared_models");
+});
