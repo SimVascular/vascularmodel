@@ -105,7 +105,16 @@ function getFilterMenu()
     availableFilters["Image Modality"] = false
   }
 
-  // Project Must Contain is set in the dataset.html
+  // Project Must Contain defined in dataset.html
+  var titles = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations'];
+
+  for(var t = 0; t< titles.length; t++)
+  {
+    if(document.getElementById("checkbox-" + titles[t] + "_1"))
+    {
+      availableFilters[titles[t]] = true;
+    }
+  }
 
   findModeOfListOfCheckboxLiMade();
 
