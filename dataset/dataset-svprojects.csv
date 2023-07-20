@@ -398,25 +398,3 @@ https://doi.org/10.1007/s12265-023-10374-w",-,VTI,Nippon Medical School Hospital
 0196_H_ABAO_AAA,aorta18,0196,-,-,Human,-,-,Abdominal Aorta,Abdominal Aortic Aneurysm,None,1,1,1,1,0,0,Images from Ken Tran. Very suspect left iliac artery.,-,-,-,VTI,-,-,0,5 Jul 2023,224,Derrick Laurel
 0197_H_ABAO_H,aorta19,0197,-,-,Human,-,-,Abdominal Aorta,Healthy,None,1,1,1,1,0,0,Images from Ken Tran. Seem like no aneurysm.,-,-,-,VTI,-,-,0,5 Jul 2023,225,Derrick Laurel
 0198_H_ABAO_AAA,aorta20,0198,-,-,Human,-,-,Abdominal Aorta,Abdominal Aortic Aneurysm,None,1,1,1,1,1,0,Images from Ken Tran.,-,-,-,VTI,-,-,0,5 Jul 2023,226,Derrick Laurel
-0199_H_CERE_CA,ANR001_Growing,0199,Male,61.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,227,Allyson Weiss
-0200_H_CERE_CA,ANR002_Growing,0200,Male,60.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,228,Allyson Weiss
-0201_H_CERE_CA,ANR004_Growing,0201,Female,65.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,229,Aaron Panduro
-0202_H_CERE_CA,ANR005_Growing,0202,Female,71.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,230,Allyson Weiss
-0203_H_CERE_CA,ANR006_Growing,0203,Female,61.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,231,Aaron Panduro
-0204_H_CERE_CA,ANR008_Growing,0204,Female,48.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,232,Aaron Panduro
-0205_H_CERE_CA,ANR009_Growing,0205,Female,68.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,233,Allyson Weiss
-0206_H_CERE_CA,ANR011_Growing,0206,Female,74.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,234,Allyson Weiss
-0207_H_CERE_CA,ANR012_Growing,0207,Female,66.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,235,Derrick Laurel
-0208_H_CERE_CA,ANR016_Growing,0208,Female,80.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,236,Derrick Laurel
-0209_H_CERE_CA,ANR017_Growing,0209,Female,60.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,237,Derrick Laurel
-0210_H_CERE_CA,ANR101_Stable,0210,Male,69.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,238,Allyson Weiss
-0211_H_CERE_CA,ANR102_Stable,0211,Female,53.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,239,Allyson Weiss
-0212_H_CERE_CA,ANR106_Stable,0212,Female,71.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,240,Aaron Panduro
-0213_H_CERE_CA,ANR108_Stable,0213,Male,50.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,241,Aaron Panduro
-0214_H_CERE_CA,ANR109_Stable,0214,Female,75.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,242,Allyson Weiss
-0215_H_CERE_CA,ANR111_Stable,0215,Female,41.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,243,Allyson Weiss
-0216_H_CERE_CA,ANR112_Stable,0216,Female,59.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,244,Allyson Weiss
-0217_H_CERE_CA,ANR113_Stable,0217,Female,67.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,245,Derrick Laurel
-0218_H_CERE_CA,ANR114_Stable,0218,Female,60.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,246,Derrick Laurel
-0219_H_CERE_CA,ANR117_Stable,0219,Female,65.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,247,Aaron Panduro
-0220_H_CERE_CA,ANR118_Stable,0220,Female,64.00,Human,-,-,Cerebral,Cerebral Aneurysm,None,1,0,0,,,0,,-,-,,VTI,Stanford Health database,-,1,,248,Derrick Laurel
