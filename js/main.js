@@ -1,5 +1,6 @@
 var useAllFilters = false;
 var parentArray = [];
+var viewingAdditionalData = false;
 
 $(document).ready(function($){
   //reads csv file and sets it to the global variable data
@@ -22,7 +23,7 @@ $(document).ready(function($){
 
   $.ajax({
     type: "GET",
-    url: "dataset/file_sizes.csv",
+    url: "https://www.vascularmodel.com/dataset/file_sizes.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -709,7 +710,7 @@ function generateContent(modelData) {
   
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
+  innerImg.src = 'https://www.vascularmodel.com/img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 

@@ -37,7 +37,6 @@
   var modelsWithResults;
   var countResults;
   var warningHTML = document.getElementById("warning");
-  var putDropDownHere = document.getElementById("putDropDownHere");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -663,7 +662,6 @@ function clearDoConfirm()
   warningHTML.innerHTML = "";
   warningHTML.classList.remove("newParagraph");
 
-  putDropDownHere.innerHTML = "";
   document.getElementById("downloadSize").innerHTML = "";
 }
 
@@ -795,24 +793,11 @@ function informUser(msg, hasOk = false) {
 //   }
 // }
 
-//creates url to download models depending on download type and model name
-function craftURL(modelName)
+//in globalVar.js for additional data, always crafting url for additional data models
+function craftURL(model)
 {
-  if(downloadType == "zip")
-  {
-    var url = "svprojects/"
-    url += modelName + "." + downloadType;
-  }
-  else if (downloadType == 'additionaldata')
-  {
     var url = "additionaldata/"
-    url += modelName + ".zip";
-  }
-  else
-  {
-    var url = "svresults/" + modelName + "/"
-    url += modelName + "_" + downloadType + ".zip";
-  }
+    url += model["Name"] + ".zip";
 
   return url;
 }
@@ -878,11 +863,16 @@ function getSumOfSizes(boolArray)
 }
 
 //gets size of individual models given their name
-function getSizeIndiv(modelName)
+function getSizeIndiv(model)
 {
-  var url = craftURL(modelName);
+  var url = craftURL(model);
 
   var size = parseInt(fileSizes[url]);
+
+  // if(size == NaN)
+  // {
+  //   size = parseInt(fileSizes[url]);
+  // }
 
   //returns bytes and readable version of size
   return [size, sizeConverter(size)];
@@ -962,66 +952,6 @@ function maxDownloadMessage(downloadGb, maxGb, warningHTML)
 
   warningHTML.classList.add("newParagraph");
   warningHTML.textContent = warning;
-}
-
-//creates drop down menu for file types
-function dropDown(putDropDownHere, string)
-{
-  //labels the drop down menu
-  var title = document.createElement("div");
-  title.textContent = "Choose file type: ";
-  putDropDownHere.appendChild(title)
-
-  //creates the select box
-  var select = document.createElement("select");
-  select.setAttribute("id", "chooseType");
-  select.setAttribute("class", "spaceBelow");
-
-  //these values must be exactly the folder type
-  //i.e. "vtp", "vtu"
-  var options = []
-  if(string == "all")
-  {
-    options.push("zip");
-    options.push("vtp");
-    options.push("vtu");
-  }
-  if(string == "no results")
-  {
-    options.push("zip");
-  }
-  if(string == "only results")
-  {
-    options.push("vtp");
-    options.push("vtu");
-  }
-  
-  //reset type to default of select
-  downloadType = options[0]
-
-  for(var i = 0; i < options.length; i++)
-  {
-    //create options under select
-    var option = document.createElement("option");
-    option.setAttribute("value", options[i]);
-
-    //specify what the options are
-    if(options[i] == "vtp")
-    {
-      option.textContent = "Simulation Results (.vtp)";
-    }
-    else if(options[i] == "vtu")
-    {
-      option.textContent = "Simulation Results (.vtu)";
-    }
-    else if (options[i] == "zip")
-    {
-      option.textContent = "SimVascular Project (.zip)";
-    }
-    select.appendChild(option);
-  }
-
-  putDropDownHere.appendChild(select);
 }
 
 //downloads individual models

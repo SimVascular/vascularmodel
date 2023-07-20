@@ -22,7 +22,7 @@ $(document).ready(function($){
   });
   $.ajax({
     type: "GET",
-    url: "dataset/file_sizes_additionaldata.csv",
+    url: "https://www.vascularmodel.com/dataset/file_sizes_additionaldata.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -160,7 +160,7 @@ function greetingText(data)
   $('#modal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere are the associated notes:'
 
   downloadType = "additionaldata";
-  var size = getSizeIndiv(viewingModel["Name"]);
+  var size = getSizeIndiv(viewingModel);
 
   //gets element after the window
   var modalclosure = document.getElementById("modal-closure");
@@ -207,7 +207,12 @@ function greetingText(data)
       modalclosure.appendChild(text);
     }
 
-    //after notes, prints size
+    // var citation = document.createElement("div");
+    // citation.classList.add("newParagraph");
+    // citation.textContent = data["Citation"];
+    // modalclosure.appendChild(citation);
+
+    //after notes and citation, prints size of model download
     var sizeText = document.createElement("div");
     sizeText.classList.add("newParagraph");
     sizeText.textContent = '\n\nThe size of this project is ' + sizeConverter(size);
@@ -220,8 +225,9 @@ function greetingText(data)
     modalclosure.innerText = 'The size of this project is ' + sizeConverter(size);
   }
 } //end greetingText()
+
 //function to prevent overlay from exiting when the user clicks on the modal
-$("#safeOfOverlayClick").click(function() {isSafeSelected = true;});
+$(".safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
 //deals with clicking on the overlay
 $('#overlay').click(function() {
@@ -375,7 +381,7 @@ function generateContent(modelData) {
   
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'img/additionaldata-images/' + modelData['Name'] + '.png'
+  innerImg.src = 'https://www.vascularmodel.com/img/additionaldata-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 

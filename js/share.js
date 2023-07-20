@@ -14,7 +14,9 @@ var multiModel = false;
 var singleModel = false;
 var arrayToSearch;
 var modelName;
-var viewingSimulations;
+var viewingSimulations = false;
+var viewingAdditionalData = false;
+var viewingModel = false;
 
 $(document).ready(function($){
     //reads CSV for data
@@ -37,20 +39,43 @@ $(document).ready(function($){
         success: function(fdata) {
           results = $.csv.toObjects(fdata);
         }
-      });
+    });
 
     $.ajax({
         type: "GET",
-        url: "dataset/file_sizes.csv",
+        url: "dataset/additionaldata.csv",
+        dataType: "text",
+        async: false,
+        success: function(fdata) {
+            additionalData = $.csv.toObjects(fdata);
+        }
+    });
+
+    $.ajax({
+        type: "GET",
+        url: "https://www.vascularmodel.com/dataset/file_sizes.csv",
         dataType: "text",
         async: false,
         success: function(fdata) {
           fileSizes = {};
           fileSizesCsv = $.csv.toObjects(fdata);
-          var arrayLength = fileSizesCsv.length;
-          for (var i = 0; i < arrayLength; i++) 
+          for (var i = 0; i < fileSizesCsv.length; i++) 
           {
             fileSizes[fileSizesCsv[i]['Name']] = fileSizesCsv[i]['Size']
+          }
+        }
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "https://www.vascularmodel.com/dataset/file_sizes_additionaldata.csv",
+        dataType: "text",
+        async: false,
+        success: function(fdata) {
+          addFileSizesCsv = $.csv.toObjects(fdata);
+          for (var i = 0; i < addFileSizesCsv.length; i++) 
+          {
+            fileSizes[addFileSizesCsv[i]['Name']] = addFileSizesCsv[i]['Size']
           }
         }
       });
@@ -71,18 +96,22 @@ function getVariable()
     //decodes the info from the URL
     var encodedNames = decodeRLE(encodeATOB(codedName));
 
-    if(encodedNames.length == data.length)
+    if(encodedNames.includes("A"))
     {
-        dataToSearch = data;
-        viewingSimulations = false;
-
+        dataToSearch = additionalData;
+        viewingAdditionalData = true; 
     }
-    else
+    else if(encodedNames.includes("R"))
     {
         dataToSearch = results;
         viewingSimulations = true;
     }
-
+    else
+    {
+        dataToSearch = data;
+        viewingModel = true;
+    }
+    
     var found = false;
 
     //searches for which are selected
@@ -128,7 +157,7 @@ function getVariable()
             results_tab.classList.add("selected_tab");
             model_tab.classList.remove("selected_tab");
         }
-        else
+        else if(viewingModel)
         {
             modelName = model["Name"];
             
@@ -244,7 +273,7 @@ function displayModel(fromDropdown = false)
             div.appendChild(output[1]);
         }
     }
-    else if(!viewingSimulations)
+    else if(viewingModel || viewingAdditionalData)
     {
         var title = document.createElement("h1");
         title.textContent = "You are viewing " + model["Name"] + ".";
@@ -255,7 +284,7 @@ function displayModel(fromDropdown = false)
       
 
     //displays image for model but not simulation results
-    if(!viewingSimulations)
+    if(viewingModel || viewingAdditionalData)
     {
         div.appendChild(setUpImage());
     }
@@ -263,13 +292,17 @@ function displayModel(fromDropdown = false)
     div.appendChild(setUpHelpIcon());
 
     //table of information on model
-    if(!viewingSimulations)
+    if(viewingModel)
     {
         var desc = descriptionForModel();
     }
-    else
+    else if(viewingSimulations)
     {
         var desc = descriptionForResults();
+    }
+    else if(viewingAdditionalData)
+    {
+        var desc = descriptionForAdditional();
     }
 
     div.appendChild(desc);
@@ -281,7 +314,14 @@ function setUpImage()
 {
     //creates image
     let img = document.createElement("img");
-    img.src = 'img/vmr-images/' + model['Name'] + '.png';
+    if(viewingAdditionalData)
+    {
+        img.src = 'https://www.vascularmodel.com/img/additionaldata-images/' + model['Name'] + '.png';
+    }
+    else if(viewingModel)
+    {
+        img.src = 'https://www.vascularmodel.com/img/vmr-images/' + model['Name'] + '.png';
+    }
     img.alt = model['Name'];
     img.classList.add("imgContainer");
     img.classList.add("center");
@@ -517,6 +557,60 @@ function descriptionForResults() {
     return table;
 }
 
+function descriptionForAdditional() {
+    var notesHeader = document.createElement("h4");
+    notesHeader.textContent = "Here are the associated notes:"
+    notesHeader.classList.add("newParagraph");
+    notesHeader.style.display = "inline-block";
+    notesHeader.style.width = "100%";
+    notesHeader.style.float = "left";
+    notesHeader.style.position = "relative";
+
+    var notesContent = document.createElement("div");
+    notesContent.style.display = "inline-block";
+    notesContent.style.float = "left";
+
+    //works with URLs and \n for notes
+    if(model["Notes"] != '-')
+    {
+        notes = model["Notes"];
+        if(notes.includes("\\url"))
+        {
+            var string = notes;
+            //allows for multiple URLs
+            while(string.includes("\\url"))
+            {
+                var output = URLMaker(string);
+
+                notesContent.appendChild(output[0]);
+                notesContent.appendChild(output[1]);
+                string = output[2].textContent;
+            }
+        
+            notesContent.appendChild(output[2]);
+        }
+        else
+        {
+            //updates with text content if not dealing with URLs
+            notesContent.textContent = model["Notes"];
+        }
+    }
+
+    var sizeContent = document.createElement("p");
+    sizeContent.textContent = "Size: " + getSizeIndiv(model)[1];
+    sizeContent.style.display = "inline-block";
+    sizeContent.style.float = "left";
+    sizeContent.style.paddingTop = "15px";
+    sizeContent.style.fontSize = "20px";
+
+    var output = document.createElement("table");
+    output.appendChild(notesHeader);
+    output.appendChild(notesContent);
+    output.appendChild(sizeContent);
+
+    return output;
+}
+
 $(".tab_in_modal").click(function () {
     var model_tab = document.getElementById("model_tab");
     var results_tab = document.getElementById("results_tab");
@@ -526,7 +620,9 @@ $(".tab_in_modal").click(function () {
       model_tab.classList.add("selected_tab");
       results_tab.classList.remove("selected_tab");
   
+      viewingModel = true;
       viewingSimulations = false;
+      viewingAdditionalData = false;
       model = project;
       displayModel();
     }
@@ -536,6 +632,8 @@ $(".tab_in_modal").click(function () {
       model_tab.classList.remove("selected_tab");
   
       viewingSimulations = true;
+      viewingModel = false;
+      viewingAdditionalData = false;
 
       model = currentSimulation;
 
@@ -816,10 +914,6 @@ function hooks(){
     $(".goToGallery").click(function () {
         goToGallery();
     });
-
-    $("#helpTable").click(function () {
-        window.open("sharingtutorial.html#Viewing_the_shared_models");
-    });
 }
 
 //brings user to dataset.html
@@ -829,3 +923,7 @@ function goToGallery() {
     a.href = "dataset.html";
     a.click();
 }
+
+$("#helpTable").click(function () {
+    window.open("sharingtutorial.html#Viewing_the_shared_models");
+});

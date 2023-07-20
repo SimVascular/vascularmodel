@@ -100,7 +100,7 @@ function getCategoryName()
 //returns categories that you can search for in the search bar
 function searchBarCategories()
 {
-  var output = ["Name", "Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "General Disease Classifier", "Ethnicity", "Animal", "Image Type", "Model Creator"];
+  var output = ["Name", "Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "Ethnicity", "Animal", "Image Type", "Model Creator"];
 
   return output;
 }
@@ -249,8 +249,11 @@ function namesOfValuesPerKey(categoryName, returnSet = false)
   {
     if(categoryName == "Disease")
     {
-      //includes the general disease classifier as potential options for Disease
-      checkboxNameSet = namesOfValuesPerKey("General Disease Classifier", true)
+      //includes parents in tree in possible categories
+      for(var pA = 0; pA < parentArray.length; pA++)
+      {
+        checkboxNameSet.add(parentArray[pA]);
+      }
     }
     //goes through the data and gets all the possibilities the models offer
     for(var d = 0; d < data.length; d++)
@@ -821,7 +824,7 @@ function craftURL(model)
   {
     var url = "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
   }
-  else if (downloadType == 'additionaldata')
+  else if (viewingAdditionalData)
   {
     var url = "additionaldata/"
     url += model["Name"] + ".zip";
@@ -891,22 +894,15 @@ function getSumOfSizes(boolArray)
 }
 
 //gets size of individual models given their name
-function getSizeIndiv(modelName)
+function getSizeIndiv(model)
 {
-  var url = craftURL(modelName);
+  var url = craftURL(model);
 
   var size = parseInt(fileSizes[url]);
 
   //returns bytes and readable version of size
   return [size, sizeConverter(size)];
 }
-
-//returns file size given a URL
-// function getFileSize(url, key)
-// {
-//   var xhr = $.ajax({type:"HEAD", url: url, async: false})
-//   sizes[key] = xhr.getResponseHeader("Content-Length")
-// }
 
 //updates where the size is defined in the confirmbox
 function updateSize(boolArray)

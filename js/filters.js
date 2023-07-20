@@ -105,6 +105,17 @@ function getFilterMenu()
     availableFilters["Image Modality"] = false
   }
 
+  // Project Must Contain defined in dataset.html
+  var titles = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations'];
+
+  for(var t = 0; t < titles.length; t++)
+  {
+    if(document.getElementById("checkbox-" + titles[t] + "_1"))
+    {
+      availableFilters[titles[t]] = true;
+    }
+  }
+
   findModeOfListOfCheckboxLiMade();
 
   //loops through all hooks saved above
@@ -594,8 +605,16 @@ function applyFilters()
             //ID is related to the hook. Key is the value in the CSV
             IDs = checkboxNamesPerCategory(titles[t], false)
             keys = checkboxNamesPerCategory(titles[t], true)
+
+            var mustContain = false;
+
+            if(keys.includes(1))
+            {
+              mustContain = true;
+            }
+
             //sends each checkbox into the filter
-            filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData, whichToKeep)
+            filterOutput = checkboxFilter("checkbox-" + IDs[i], titles[t], keys[i], filteredData, whichToKeep, mustContain)
             //saves changes in whichToKeep
             whichToKeep = filterOutput[0]
             filterApplied = filterApplied || filterOutput[1]
@@ -846,15 +865,27 @@ function dropDownFilter(categoryName, partialData)
   return partialData;
 }
 
-function checkboxFilter(checkboxID, category, key, partialData, whichToKeep)
+function checkboxFilter(checkboxID, category, key, partialData, whichToKeep, mustContain)
 {
   //checks if checkbox is checked
   if (document.getElementById(checkboxID + "_1").checked)
   {  
-    for (var i = 0; i < partialData.length; i++) {
-      if (partialData[i][category].includes(key)) {
-        //if element under that category in csv == key, saves model
-        whichToKeep[i] = true;
+    if(mustContain)
+    {
+      for (var i = 0; i < partialData.length; i++) {
+        if (partialData[i][category] == "1") {
+          //if element under that category in csv == key, saves model
+          whichToKeep[i] = true;
+        }
+      }
+    }
+    else
+    {
+      for (var i = 0; i < partialData.length; i++) {
+        if (partialData[i][category].includes(key)) {
+          //if element under that category in csv == key, saves model
+          whichToKeep[i] = true;
+        }
       }
     }
   
@@ -1039,3 +1070,11 @@ function hasResults(partialData){
   }
   
 }
+
+$(".checkbox-mustcontain").click(function() {
+  // needs to wait that split second so the attribute checked = true
+  // by the time the filters are applied
+  setTimeout(() => {
+    applyFilters();
+  }, 15);
+});
