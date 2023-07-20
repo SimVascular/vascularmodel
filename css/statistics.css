@@ -1,0 +1,73 @@
+p {
+    text-align: justify;
+}
+
+.main-content {
+    position: relative;
+    min-height: 75vh;
+    height: auto;
+}
+
+body {
+    background-color: #e7e7e7;
+}
+
+.centerBox {
+    box-shadow: 0px 0px 8px var(--darkdarkgrey);
+    background-color: white;
+    position: relative;
+    width: 95%;
+    height: 65%;
+    height: auto;
+    padding: 5%;
+    margin: 2%;
+}
+
+@media screen and (min-width: 800px) {
+    .centerBox {
+        padding: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .centerBox {
+        padding: 30px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .centerBox {
+        padding: 5px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+}
+
+/* .js-plotly-plot .plotly .modebar{left: 40%} */
+
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 1.65rem;
+    margin-top: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+h4 {
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
