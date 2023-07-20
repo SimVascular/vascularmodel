@@ -400,6 +400,7 @@ $('.shareableLink-button-modal').click(function() {
     //creates array with all N except for the simulation result
     //the results array is already unscrambled
     var array = makeshiftSelectedModels(results, viewingThisSimulation);
+    array += "R";
   }
   else
   {

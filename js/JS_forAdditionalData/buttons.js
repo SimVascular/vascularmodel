@@ -54,6 +54,7 @@
   $('.shareableLink-button-modal').click(function() {
     //creates array with all N except for the model
     var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
+    array += "A";
     //copies encoded URL to clipboard
     copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
     informUser("Link copied");

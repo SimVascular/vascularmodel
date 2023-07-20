@@ -96,23 +96,22 @@ function getVariable()
     //decodes the info from the URL
     var encodedNames = decodeRLE(encodeATOB(codedName));
 
-    if(encodedNames.length == data.length)
-    {
-        dataToSearch = data;
-        viewingModel = true;
-
-    }
-    else if(encodedNames.length == additionalData.length)
+    if(encodedNames.includes("A"))
     {
         dataToSearch = additionalData;
-        viewingAdditionalData = true;
+        viewingAdditionalData = true; 
     }
-    else if(encodedNames.length == results.length)
+    else if(encodedNames.includes("R"))
     {
         dataToSearch = results;
         viewingSimulations = true;
     }
-
+    else
+    {
+        dataToSearch = data;
+        viewingModel = true;
+    }
+    
     var found = false;
 
     //searches for which are selected
