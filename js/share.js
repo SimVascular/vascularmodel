@@ -22,7 +22,7 @@ $(document).ready(function($){
     //reads CSV for data
     $.ajax({
       type: "GET",
-      url: "https://www.vascularmodel.com/dataset/dataset-svprojects.csv",
+      url: "dataset/dataset-svprojects.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -33,7 +33,7 @@ $(document).ready(function($){
 
     $.ajax({
         type: "GET",
-        url: "https://www.vascularmodel.com/dataset/dataset-svresults.csv",
+        url: "dataset/dataset-svresults.csv",
         dataType: "text",
         async: false,
         success: function(fdata) {
@@ -43,7 +43,7 @@ $(document).ready(function($){
 
     $.ajax({
         type: "GET",
-        url: "https://www.vascularmodel.com/dataset/additionaldata.csv",
+        url: "dataset/additionaldata.csv",
         dataType: "text",
         async: false,
         success: function(fdata) {
@@ -107,7 +107,7 @@ function getVariable()
         dataToSearch = additionalData;
         viewingAdditionalData = true;
     }
-    else
+    else if(encodedNames.length == results.length)
     {
         dataToSearch = results;
         viewingSimulations = true;

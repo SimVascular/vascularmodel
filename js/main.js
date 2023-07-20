@@ -23,7 +23,7 @@ $(document).ready(function($){
 
   $.ajax({
     type: "GET",
-    url: "dataset/file_sizes.csv",
+    url: "https://www.vascularmodel.com/dataset/file_sizes.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {

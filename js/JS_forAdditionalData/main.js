@@ -5,7 +5,7 @@ $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
-    url: "https://www.vascularmodel.com/dataset/additionaldata.csv",
+    url: "dataset/additionaldata.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
