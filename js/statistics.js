@@ -1,5 +1,3 @@
-var parentArray = [];
-
 $(document).ready(function($){
     //reads csv file and sets it to the global variable data
     $.ajax({
@@ -19,6 +17,17 @@ $(document).ready(function($){
       async: false,
       success: function(fdata) {
         abbreviations = $.csv.toObjects(fdata);
+      }
+    });
+
+    $.ajax({
+      type: "GET",
+      url: "dataset/dataset-diseaseTree.csv",
+      dataType: "text",
+      async: false,
+      success: function(fdata) {
+        tree = $.csv.toObjects(fdata);
+        parentArray = Object.keys(tree[0]);
       }
     });
     
@@ -43,19 +52,112 @@ function setAbbreviations(category) {
   return output;
 }
 
+var healthData = [];
+var ageData = [];
+var anatomyData = [];
+var diseaseData = [];
+
 function createCharts() {
-  var width = document.documentElement.clientWidth;
+  healthChart();
+  ageChart();
+  
+  anatomyChart();
+  diseaseChart();
 
-  var abbs = setAbbreviations("Anatomy");
-  var anatomyData = filterForAnatomy(data, abbs, width);
-  var title = "Number of Models per Type of Anatomy"
-  var x = anatomyData[0];
-  var y = anatomyData[1];
-
-  generateChart(title, x, y, "anatomy", width);
+  // simulation results chart + surface vs volume
+  // simulation method
 }
 
-function filterForAnatomy(data, abbs, width) {
+function healthChart()
+{
+  // chart for health
+  var id = "health"
+  var width = document.getElementById(id).offsetWidth;
+
+  if(healthData.length == 0)
+  {
+    //only filters and defines anatomyData once
+    healthData = filterForHealth();
+  }
+
+  var title = "Number of Healthy and Diseased Models";
+  var x = healthData[0];
+  var y = healthData[1];
+
+  generateBar(title, x, y, id, width);
+}
+
+function filterForHealth()
+{
+  var healthy = 0;
+  var diseased = 0;
+
+  for(var i = 0; i < data.length; i++)
+  {
+    if(data[i]["Disease"] == "Healthy")
+    {
+      healthy++;
+    }
+    else
+    {
+      diseased++;
+    }
+  }
+
+  return [["Healthy", "Diseased"], [healthy, diseased]];
+}
+
+function ageChart()
+{
+  // chart for age
+  var id = "age"
+  var width = document.getElementById(id).offsetWidth;
+
+  if(ageData.length == 0)
+  {
+    //only filters and defines ageData once
+    ageData = filterForAge();
+  }
+
+  var title = "Distribution of Age in Years";
+  var modedata = ageData;
+
+  generateBoxPlot(title, modedata, id, width);
+}
+
+function filterForAge()
+{
+  var modedata = new Array(data.length);
+
+  for(var i = 0 ; i < data.length; i++)
+  {
+    modedata[i] = data[i]["Age"];
+  }
+
+  return modedata;
+}
+
+function anatomyChart()
+{
+  // chart for anatomy
+  var id = "anatomy"
+  var width = document.getElementById(id).offsetWidth;
+  var abbs = setAbbreviations("Anatomy");
+
+  if(anatomyData.length == 0)
+  {
+    //only filters and defines anatomyData once
+    anatomyData = filterForAnatomy();
+  }
+
+  var title = "Number of Models per Type of Anatomy";
+  var x = abbreviate(anatomyData[0], abbs, width) 
+  var y = anatomyData[1];
+
+  generateBar(title, x, y, id, width);
+}
+
+function filterForAnatomy() {
   var x = namesOfValuesPerKey("Anatomy");
   var titles = new Set();
 
@@ -97,90 +199,215 @@ function filterForAnatomy(data, abbs, width) {
   {
       y.push(output[x[t]]);
   }
-  
-  //changes x-axis labels to abbreviations if the width is small
-  if(width <= 825)
-  {
-    for(var i = 0; i < x.length; i++)
-    {
-      x[i] = abbs[x[i]]
-    }
-  }
-  
+
   return [x, y];
 }
 
-function generateChart(titletext, xdata, ydata, id, width) {
+function diseaseChart()
+{
+  // chart for anatomy
+  var id = "disease"
+  var width = document.getElementById(id).offsetWidth;
+  var abbs = setAbbreviations("Disease");
+
+  if(diseaseData.length == 0)
+  {
+    //only filters and defines diseaseData once
+    diseaseData = filterForDisease();
+  }
+
+  var title = "Number of Models per Type of Disease";
+  
+  var x = abbreviate(diseaseData[0], abbs, width) 
+  var y = diseaseData[1];
+
+  generateBar(title, x, y, id, width);
+}
+
+function filterForDisease()
+{
+  var x = new Set();
+  var allDisease = namesOfValuesPerKey("Disease");
+  var children = getChildrenOfTree();
+
+  for(var i = 0; i < parentArray.length; i++)
+  {
+    x.add(parentArray[i])
+  }
+
+  for(var i = 0; i < allDisease.length; i++)
+  {
+    if(!children.includes(allDisease[i]) && allDisease[i] != "Healthy")
+    {
+      x.add(allDisease[i])
+    }
+  }
+
+  x = Array.from(x);
+
+  var output = [];
+
+  for(var t = 0; t < x.length; t++)
+  {
+      output[x[t]] = 0;
+  }
+
+  //adds Pulmonary Fontan and Glenn to Pulmonary for simplicity
+  for(var i = 0 ; i < data.length; i++)
+  {
+    if(children.includes(data[i]["Disease"]))
+    {
+      output[getParentsOfChild(data[i]["Disease"])]++;
+    }
+    else if(data[i]["Disease"] != "Healthy")
+    {
+      output[data[i]["Disease"]]++;
+    }
+  }
+
+  var y = [];
+
+  for(var t = 0; t < x.length; t++)
+  {
+      y.push(output[x[t]]);
+  }
+
+  return [x, y];
+}
+
+function abbreviate(x, abbs, width) {
+  //changes x-axis labels to abbreviations if the width is small
+  if(width <= 767)
+  {
+    var shortenedX = [];
+
+    for(var i = 0; i < x.length; i++)
+    {
+      shortenedX[i] = abbs[x[i]]
+    }
+
+    return shortenedX;
+  }
+  else
+  {
+    return x;
+  }  
+}
+
+function generateBoxPlot(titletext, modedata, id, width)
+{
+  var data = [
+    {
+      name: "",
+      x: modedata,
+      type: 'box',
+      marker: {
+        color: '#6195b8',
+        line: {
+          width: 1.5
+        }
+      },
+      boxpoints: "all",
+      hoverinfo: "x",
+      orientation: "h",
+      hoverlabel : {
+        bgcolor: "#cee7f8",
+        bordercolor: '#3a596e'
+      }
+    }
+  ];
+ 
+  generateChart(titletext, data, id, width);
+}
+
+function generateBar(titletext, xdata, ydata, id, width) {
+  var data = [
+    {
+      x: xdata,
+      y: ydata,
+      type: 'bar',
+      marker: {
+        color: '#6195b8',
+        line: {
+            width: 2.5
+        }
+      },
+      hoverlabel : {
+        bgcolor: "#cee7f8",
+        bordercolor: '#3a596e'
+      }
+    }
+  ];
+
+  generateChart(titletext, data, id, width);
+}
+
+function generateChart(titletext, data, id, width)
+{
   var output = responsiveForSizing(titletext, width);
   var titlesize = output[0];
   var bodysize = output[1];
-  var titletext_post = output[2]; 
-   
-  var data = [
-        {
-          x: xdata,
-          y: ydata,
-          type: 'bar',
-          marker: {
-            color: '#6195b8',
-            line: {
-                width: 2.5
-            }
-        }
-        }
-      ];
+  var titletext_post = output[2];
 
-    var layout = {
-      title: {
-        text: titletext_post,
-        font: {
-          size: titlesize
-        },
-      },
-
+  var layout = {
+    title: {
+      text: titletext_post,
       font: {
-        // dark2
-        color: "#3a596e",
-        family: ["Poppins", "sans-serif"],
-        size: bodysize
+        size: titlesize
       },
+    },
 
-      // showlegend: false,
+    xaxis: {
+      zeroline: false,
+    },
 
-      modebar: {
-        activecolor: "#6195b8"
-      },
+    yaxis: {
+      // zeroline: false,
+    },
 
-      margin: {
-        pad: 15
-      },
-    };
+    font: {
+      // dark2
+      color: "#3a596e",
+      family: ["Poppins", "sans-serif"],
+      size: bodysize
+    },
 
-    var config = {
-      toImageButtonOptions: {
-        format: 'png', // one of png, svg, jpeg, webp
-        filename: 'ModelsPerAnatomy',
-        height: 500,
-        width: 700,
-        scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
-      },
+    showlegend: false,
 
-      // responsive: true,
+    modebar: {
+      activecolor: "#6195b8"
+    },
 
-      displayModeBar: true,
-
-      // -'2D', zoom2d, pan2d, select2d, lasso2d, zoomIn2d, zoomOut2d, autoScale2d, resetScale2d
-      // -'3D', zoom3d, pan3d, orbitRotation, tableRotation, handleDrag3d, resetCameraDefault3d, resetCameraLastSave3d, hoverClosest3d
-      // -'Cartesian', hoverClosestCartesian, hoverCompareCartesian
-      // -'Geo', zoomInGeo, zoomOutGeo, resetGeo, hoverClosestGeo
-      // -'Other', hoverClosestGl2d, hoverClosestPie, toggleHover, resetViews, toImage, sendDataToCloud, toggleSpikelines, resetViewMapbox
-
-      modeBarButtonsToRemove: ['zoom2d', "pan2d", "lasso2d", "select2d", "resetScale2d"],
-
-      displaylogo: false
+    margin: {
+      pad: 15,
     }
-    
-    Plotly.newPlot(id, data, layout, config);
+  };
+
+  var config = {
+    toImageButtonOptions: {
+      format: 'png', // one of png, svg, jpeg, webp
+      filename: 'ModelsPerAnatomy',
+      height: 500,
+      width: 700,
+      scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+    },
+
+    responsive: true,
+
+    displayModeBar: true,
+
+    // -'2D', zoom2d, pan2d, select2d, lasso2d, zoomIn2d, zoomOut2d, autoScale2d, resetScale2d
+    // -'3D', zoom3d, pan3d, orbitRotation, tableRotation, handleDrag3d, resetCameraDefault3d, resetCameraLastSave3d, hoverClosest3d
+    // -'Cartesian', hoverClosestCartesian, hoverCompareCartesian
+    // -'Geo', zoomInGeo, zoomOutGeo, resetGeo, hoverClosestGeo
+    // -'Other', hoverClosestGl2d, hoverClosestPie, toggleHover, resetViews, toImage, sendDataToCloud, toggleSpikelines, resetViewMapbox
+
+    modeBarButtonsToRemove: ['zoom2d', "pan2d", "lasso2d", "select2d", "resetScale2d"],
+
+    displaylogo: false
+  }
+  
+  Plotly.newPlot(id, data, layout, config);
 }
 
 function responsiveForSizing(title_pre, width)
@@ -219,7 +446,7 @@ function responsiveForSizing(title_pre, width)
 function insertBreak(title){
   var array = title.split(" ");
   var spaceCount = array.length - 1;
-  var half = parseInt(spaceCount/2);
+  var half = parseInt(spaceCount/2 + 0.5);
   var title_post = "";
 
   for(var i = 0; i < array.length; i++)

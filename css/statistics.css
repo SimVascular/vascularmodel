@@ -71,3 +71,12 @@ h4 {
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
+.chart {
+    height: 425px;
+    width: 100%;
+}
+
+.row {
+    width: 100%;
+}
