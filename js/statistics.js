@@ -48,16 +48,18 @@ function createCharts() {
 
   var abbs = setAbbreviations("Anatomy");
   var anatomyData = filterForAnatomy(data, abbs, width);
+  var title = "Number of Models per Type of Anatomy"
   var x = anatomyData[0];
   var y = anatomyData[1];
 
-  generateChart(x, y, "anatomy", width);
+  generateChart(title, x, y, "anatomy", width);
 }
 
 function filterForAnatomy(data, abbs, width) {
   var x = namesOfValuesPerKey("Anatomy");
   var titles = new Set();
 
+  //adds Pulmonary Fontan and Glenn to Pulmonary for simplicity
   for(var t = 0; t < x.length; t++)
   {
     if(x[t].includes("Pulmonary"))
@@ -79,7 +81,7 @@ function filterForAnatomy(data, abbs, width) {
       output[x[t]] = 0;
   }
 
-
+  //adds Pulmonary Fontan and Glenn to Pulmonary for simplicity
   for(var i = 0 ; i < data.length; i++)
   {
     if(data[i]["Anatomy"].includes("Pulmonary"))
@@ -96,7 +98,7 @@ function filterForAnatomy(data, abbs, width) {
       y.push(output[x[t]]);
   }
   
-  //changes x to abbreviations if the width is small
+  //changes x-axis labels to abbreviations if the width is small
   if(width <= 825)
   {
     for(var i = 0; i < x.length; i++)
@@ -108,11 +110,11 @@ function filterForAnatomy(data, abbs, width) {
   return [x, y];
 }
 
-function generateChart(xdata, ydata, id, width) {
-  var output = responsiveForSizing(width);
+function generateChart(titletext, xdata, ydata, id, width) {
+  var output = responsiveForSizing(titletext, width);
   var titlesize = output[0];
   var bodysize = output[1];
-  var titletext = output[2]; 
+  var titletext_post = output[2]; 
    
   var data = [
         {
@@ -130,7 +132,7 @@ function generateChart(xdata, ydata, id, width) {
 
     var layout = {
       title: {
-        text: titletext,
+        text: titletext_post,
         font: {
           size: titlesize
         },
@@ -181,36 +183,57 @@ function generateChart(xdata, ydata, id, width) {
     Plotly.newPlot(id, data, layout, config);
 }
 
-function responsiveForSizing(width)
+function responsiveForSizing(title_pre, width)
 { 
   var titlesize;
   var bodysize;
-  var titletext;
 
   if(width <= 430)
   {
     var titlesize = 15;
     var bodysize = 10;
-    var titletext =  'Number of models<br>per type of anatomy';
+    var titletext = insertBreak(title_pre);
   }
   else if(width <= 550)
   {
     var titlesize = 17;
     var bodysize = 12;
-    var titletext =  'Number of models<br>per type of anatomy';
+    var titletext = insertBreak(title_pre);
   }
   else if(width <= 767)
   {
     var titlesize = 20;
     var bodysize = 17;
-    var titletext =  'Number of models per type of anatomy';
+    var titletext = title_pre;
   }
   else
   {
     var titlesize = 25;
     var bodysize = 17;
-    var titletext =  'Number of models per type of anatomy';
+    var titletext = title_pre;
   }
 
   return [titlesize, bodysize, titletext]
+}
+
+function insertBreak(title){
+  var array = title.split(" ");
+  var spaceCount = array.length - 1;
+  var half = parseInt(spaceCount/2);
+  var title_post = "";
+
+  for(var i = 0; i < array.length; i++)
+  {
+    title_post += array[i];
+    if(i == half - 1)
+    {
+      title_post += "<br>";
+    }
+    else if(i != spaceCount)
+    {
+      title_post += " ";
+    }
+  }
+
+  return title_post;
 }
