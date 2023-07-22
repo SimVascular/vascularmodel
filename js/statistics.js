@@ -82,9 +82,10 @@ function healthChart()
 
   var title = "Number of Healthy and Diseased Models";
   var x = healthData[0];
+  var longLabel = healthData[0];
   var y = healthData[1];
 
-  generateBar(title, x, y, id, width);
+  generateBar(title, x, longLabel, y, id, width);
 }
 
 function filterForHealth()
@@ -151,10 +152,11 @@ function anatomyChart()
   }
 
   var title = "Number of Models per Type of Anatomy";
-  var x = abbreviate(anatomyData[0], abbs, width) 
+  var x = abbreviate(anatomyData[0], abbs, width);
+  var longLabel = anatomyData[0];
   var y = anatomyData[1];
 
-  generateBar(title, x, y, id, width);
+  generateBar(title, x, longLabel, y, id, width);
 }
 
 function filterForAnatomy() {
@@ -218,10 +220,12 @@ function diseaseChart()
 
   var title = "Number of Models per Type of Disease";
   
-  var x = abbreviate(diseaseData[0], abbs, width) 
+  var x = abbreviate(diseaseData[0], abbs, width, true);
+  var longLabel = diseaseData[0];
+
   var y = diseaseData[1];
 
-  generateBar(title, x, y, id, width);
+  generateBar(title, x, longLabel, y, id, width);
 }
 
 function filterForDisease()
@@ -232,7 +236,10 @@ function filterForDisease()
 
   for(var i = 0; i < parentArray.length; i++)
   {
-    x.add(parentArray[i])
+    if(!children.includes(parentArray[i]))
+    {
+      x.add(parentArray[i])
+    }
   }
 
   for(var i = 0; i < allDisease.length; i++)
@@ -243,7 +250,7 @@ function filterForDisease()
     }
   }
 
-  x = Array.from(x);
+  x = Array.from(x).sort();
 
   var output = [];
 
@@ -257,12 +264,52 @@ function filterForDisease()
   {
     if(children.includes(data[i]["Disease"]))
     {
-      output[getParentsOfChild(data[i]["Disease"])]++;
+      var parents = getParentsOfChild(data[i]["Disease"]);
+      
+      for (var p = 0; p < parents.length; p++)
+      {
+        if(!children.includes(parents[p]))
+        {
+          output[parents[p]]++;
+        }
+      }
+      
     }
     else if(data[i]["Disease"] != "Healthy")
     {
       output[data[i]["Disease"]]++;
     }
+  }
+
+  var otherCategory = false;
+  var keepX = [];
+
+  // combine ones that are very small
+  for(var t = 0; t < x.length; t++)
+  {
+    if(output[x[t]] <= 10)
+    {
+      //if first time, sets output["Other"] value
+      if(!otherCategory)
+      {
+        output["Other"] = 0;
+      }
+
+      output["Other"] += output[x[t]];
+
+      otherCategory = true;
+    }
+    else
+    {
+      keepX.push(x[t])
+    }
+  }
+  
+  x = keepX;
+
+  if(otherCategory)
+  {
+    x.push("Other");
   }
 
   var y = [];
@@ -272,18 +319,32 @@ function filterForDisease()
       y.push(output[x[t]]);
   }
 
-  return [x, y];
+  return [x, y]
+  
 }
 
-function abbreviate(x, abbs, width) {
+function abbreviate(x, abbs, width, early = false) {
   //changes x-axis labels to abbreviations if the width is small
-  if(width <= 767)
+  var meetWidth = width <= 767
+  if(early)
+  {
+    meetWidth = true;
+  }
+  if(meetWidth)
   {
     var shortenedX = [];
 
     for(var i = 0; i < x.length; i++)
     {
-      shortenedX[i] = abbs[x[i]]
+      if(typeof abbs[x[i]] != "undefined")
+      {
+        shortenedX[i] = abbs[x[i]]
+      }
+      else
+      {
+        shortenedX[i] = x[i]
+      }
+      
     }
 
     return shortenedX;
@@ -320,7 +381,7 @@ function generateBoxPlot(titletext, modedata, id, width)
   generateChart(titletext, data, id, width);
 }
 
-function generateBar(titletext, xdata, ydata, id, width) {
+function generateBar(titletext, xdata, longLabel, ydata, id, width) {
   var data = [
     {
       x: xdata,
@@ -335,7 +396,13 @@ function generateBar(titletext, xdata, ydata, id, width) {
       hoverlabel : {
         bgcolor: "#cee7f8",
         bordercolor: '#3a596e'
-      }
+      },
+      textposition: "none",
+      text: longLabel,
+      hovertemplate:
+            "<b> %{y:,.0f} </b>" +
+            " %{text} <br>" +
+            "<extra></extra>"
     }
   ];
 
@@ -345,6 +412,7 @@ function generateBar(titletext, xdata, ydata, id, width) {
 function generateChart(titletext, data, id, width)
 {
   var output = responsiveForSizing(titletext, width);
+  
   var titlesize = output[0];
   var bodysize = output[1];
   var titletext_post = output[2];
@@ -358,7 +426,7 @@ function generateChart(titletext, data, id, width)
     },
 
     xaxis: {
-      zeroline: false,
+      zeroline: true
     },
 
     yaxis: {
@@ -392,15 +460,9 @@ function generateChart(titletext, data, id, width)
       scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
     },
 
-    responsive: true,
+    // responsive: true,
 
     displayModeBar: true,
-
-    // -'2D', zoom2d, pan2d, select2d, lasso2d, zoomIn2d, zoomOut2d, autoScale2d, resetScale2d
-    // -'3D', zoom3d, pan3d, orbitRotation, tableRotation, handleDrag3d, resetCameraDefault3d, resetCameraLastSave3d, hoverClosest3d
-    // -'Cartesian', hoverClosestCartesian, hoverCompareCartesian
-    // -'Geo', zoomInGeo, zoomOutGeo, resetGeo, hoverClosestGeo
-    // -'Other', hoverClosestGl2d, hoverClosestPie, toggleHover, resetViews, toImage, sendDataToCloud, toggleSpikelines, resetViewMapbox
 
     modeBarButtonsToRemove: ['zoom2d', "pan2d", "lasso2d", "select2d", "resetScale2d"],
 
@@ -411,7 +473,7 @@ function generateChart(titletext, data, id, width)
 }
 
 function responsiveForSizing(title_pre, width)
-{ 
+{
   var titlesize;
   var bodysize;
 
