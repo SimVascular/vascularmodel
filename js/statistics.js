@@ -117,7 +117,7 @@ function numbers()
     span.textContent = resultsText;
     div.appendChild(span);
   }
-  else if(document.documentElement.clientWidth <= 600)
+  else if(document.documentElement.clientWidth <= 620)
   {
     div.innerHTML = "";
 
