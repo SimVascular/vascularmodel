@@ -156,11 +156,12 @@ function healthChart()
   var width = document.getElementById(id).offsetWidth;
 
   var title = "Number of Healthy and Diseased Models";
+  var downloadfilename = "VMR_Healthy_And_Diseased"
   var x = healthData[0];
   var longLabel = healthData[0];
   var y = healthData[1];
 
-  generateBar(title, x, longLabel, y, id, width);
+  generateBar(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForHealth()
@@ -190,9 +191,11 @@ function ageChart()
   var width = document.getElementById(id).offsetWidth;
 
   var title = "Distribution of Age in Years for Human Models";
+  var downloadfilename = "VMR_Human_Age_Distribution"
+
   var modedata = ageData;
 
-  generateBoxPlot(title, modedata, id, width);
+  generateBoxPlot(title, downloadfilename, modedata, id, width);
 }
 
 function filterForAge()
@@ -218,11 +221,13 @@ function anatomyChart()
   var abbs = setAbbreviations("Anatomy");
 
   var title = "Number of Models per Type of Anatomy";
+  var downloadfilename = "VMR_Models_Per_Anatomy"
+
   var x = abbreviate(anatomyData[0], abbs, width);
   var longLabel = anatomyData[0];
   var y = anatomyData[1];
 
-  generateBar(title, x, longLabel, y, id, width);
+  generateBar(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForAnatomy() {
@@ -279,13 +284,15 @@ function diseaseChart()
   var abbs = setAbbreviations("Disease");
 
   var title = "Number of Models per Type of Disease";
+  var downloadfilename = "VMR_Models_Per_Disease"
+
   
   var x = abbreviate(diseaseData[0], abbs, width, true);
   var longLabel = diseaseData[0];
 
   var y = diseaseData[1];
 
-  generateBar(title, x, longLabel, y, id, width);
+  generateBar(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForDisease()
@@ -393,11 +400,13 @@ function simulationChart()
   abbs["Without Results"] = "Without";
 
   var title = "Number of Models With and Without Simulation Results";
+  var downloadfilename = "VMR_With_And_Without_Results"
+
   var x = abbreviate(simulationData[0], abbs, width);
   var longLabel = simulationData[0];
   var y = simulationData[1];
 
-  generateBar(title, x, longLabel, y, id, width);
+  generateBar(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForSimulation(){
@@ -427,11 +436,13 @@ function methodChart()
   var abbs = setAbbreviations("Method");
 
   var title = "Number of Simulation Results per Simulation Method";
+  var downloadfilename = "VMR_Results_Per_Method"
+
   var x = abbreviate(methodData[0], abbs, width);
   var longLabel = methodData[0];
   var y = methodData[1];
 
-  generateBar(title, x, longLabel, y, id, width);
+  generateBar(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForMethod()
@@ -493,7 +504,7 @@ function abbreviate(x, abbs, width, early = false) {
   }  
 }
 
-function generateBoxPlot(titletext, modedata, id, width)
+function generateBoxPlot(titletext, downloadfilename, modedata, id, width)
 {
   var data = [
     {
@@ -516,10 +527,10 @@ function generateBoxPlot(titletext, modedata, id, width)
     }
   ];
  
-  generateChart(titletext, data, id, width);
+  generateChart(titletext, downloadfilename, data, id, width);
 }
 
-function generateBar(titletext, xdata, longLabel, ydata, id, width) {
+function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, width) {
   var data = [
     {
       x: xdata,
@@ -544,10 +555,10 @@ function generateBar(titletext, xdata, longLabel, ydata, id, width) {
     }
   ];
 
-  generateChart(titletext, data, id, width);
+  generateChart(titletext, downloadfilename, data, id, width);
 }
 
-function generateChart(titletext, data, id, width)
+function generateChart(titletext, downloadfilename, data, id, width)
 {
   var output = responsiveForSizing(titletext, width);
   
@@ -561,14 +572,6 @@ function generateChart(titletext, data, id, width)
       font: {
         size: titlesize
       },
-    },
-
-    xaxis: {
-      zeroline: true
-    },
-
-    yaxis: {
-      // zeroline: false,
     },
 
     font: {
@@ -592,10 +595,10 @@ function generateChart(titletext, data, id, width)
   var config = {
     toImageButtonOptions: {
       format: 'png', // one of png, svg, jpeg, webp
-      filename: 'ModelsPerAnatomy',
+      filename: downloadfilename,
       height: 500,
       width: 700,
-      scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+      scale: 8 // Multiply title/legend/axis/canvas sizes by this factor
     },
 
     // responsive: true,
@@ -635,7 +638,14 @@ function responsiveForSizing(title_pre, width)
   }
   else
   {
-    var titlesize = 25;
+    if(title_pre.length >= 47)
+    {
+      var titlesize = 23;
+    }
+    else
+    {
+      var titlesize = 25;
+    }
     var bodysize = 17;
     var titletext = title_pre;
   }
