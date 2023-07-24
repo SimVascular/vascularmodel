@@ -69,9 +69,16 @@ var anatomyData = [];
 var diseaseData = [];
 var simulationData = [];
 var methodData = [];
+var arraysUndefined = true;
 
 function createCharts() {
   numbers();
+
+  if(arraysUndefined)
+  {
+    filters();
+  }
+
   healthChart();
   ageChart();
   
@@ -132,17 +139,22 @@ function numbers()
 
 }
 
+function filters()
+{
+  healthData = filterForHealth();
+  ageData = filterForAge();
+  anatomyData = filterForAnatomy();
+  diseaseData = filterForDisease();
+  simulationData = filterForSimulation();
+  methodData = filterForMethod();
+  arraysUndefined = false;
+}
+
 function healthChart()
 {
   // chart for health
   var id = "health"
   var width = document.getElementById(id).offsetWidth;
-
-  if(healthData.length == 0)
-  {
-    //only filters and defines anatomyData once
-    healthData = filterForHealth();
-  }
 
   var title = "Number of Healthy and Diseased Models";
   var x = healthData[0];
@@ -178,12 +190,6 @@ function ageChart()
   var id = "age"
   var width = document.getElementById(id).offsetWidth;
 
-  if(ageData.length == 0)
-  {
-    //only filters and defines ageData once
-    ageData = filterForAge();
-  }
-
   var title = "Distribution of Age in Years for Human Models";
   var modedata = ageData;
 
@@ -211,12 +217,6 @@ function anatomyChart()
   var id = "anatomy"
   var width = document.getElementById(id).offsetWidth;
   var abbs = setAbbreviations("Anatomy");
-
-  if(anatomyData.length == 0)
-  {
-    //only filters and defines anatomyData once
-    anatomyData = filterForAnatomy();
-  }
 
   var title = "Number of Models per Type of Anatomy";
   var x = abbreviate(anatomyData[0], abbs, width);
@@ -278,12 +278,6 @@ function diseaseChart()
   var id = "disease"
   var width = document.getElementById(id).offsetWidth;
   var abbs = setAbbreviations("Disease");
-
-  if(diseaseData.length == 0)
-  {
-    //only filters and defines diseaseData once
-    diseaseData = filterForDisease();
-  }
 
   var title = "Number of Models per Type of Disease";
   
@@ -399,12 +393,6 @@ function simulationChart()
   abbs["With Results"] = "With";
   abbs["Without Results"] = "Without";
 
-  if(simulationData.length == 0)
-  {
-    //only filters and defines anatomyData once
-    simulationData = filterForSimulation();
-  }
-
   var title = "Number of Models With and Without Simulation Results";
   var x = abbreviate(simulationData[0], abbs, width);
   var longLabel = simulationData[0];
@@ -438,12 +426,6 @@ function methodChart()
   var id = "method"
   var width = document.getElementById(id).offsetWidth;
   var abbs = setAbbreviations("Method");
-
-  if(methodData.length == 0)
-  {
-    //only filters and defines anatomyData once
-    methodData = filterForMethod();
-  }
 
   var title = "Number of Simulation Results per Simulation Method";
   var x = abbreviate(methodData[0], abbs, width);
