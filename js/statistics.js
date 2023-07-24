@@ -640,7 +640,7 @@ function responsiveForSizing(title_pre, width)
   {
     if(title_pre.length >= 47)
     {
-      var titlesize = 23;
+      var titlesize = 22;
     }
     else
     {
