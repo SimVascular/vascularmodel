@@ -227,7 +227,7 @@ function anatomyChart()
   var longLabel = anatomyData[0];
   var y = anatomyData[1];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+  generatePie(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForAnatomy() {
@@ -442,7 +442,7 @@ function methodChart()
   var longLabel = methodData[0];
   var y = methodData[1];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+  generatePie(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForMethod()
@@ -530,6 +530,33 @@ function generateBoxPlot(titletext, downloadfilename, modedata, id, width)
   generateChart(titletext, downloadfilename, data, id, width);
 }
 
+function generatePie(titletext, downloadfilename, xdata, longLabel, ydata, id, width)
+{
+  var data = [
+    {
+      values: ydata,
+      labels: xdata,
+      type: 'pie',
+      marker: {
+        color: '#6195b8',
+        line: {
+            width: 2.5
+        }
+      },
+      hoverlabel : {
+        bgcolor: "#cee7f8",
+        bordercolor: '#3a596e'
+      },
+      text: longLabel,
+      hoverinfo: "text+value+percent",
+      textinfo: "label+percent",
+      textposition: "outside",
+    }
+  ];
+
+  generateChart(titletext, downloadfilename, data, id, width);
+}
+
 function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, width) {
   var data = [
     {
@@ -589,7 +616,10 @@ function generateChart(titletext, downloadfilename, data, id, width)
 
     margin: {
       pad: 15,
-    }
+    },
+
+    colorway: ["#f3f8f8", "#c7dfe1", "#b5cdce",
+    "#83abad", "#20686b", "#07575b", "#043437"]
   };
 
   var config = {
