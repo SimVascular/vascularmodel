@@ -86,12 +86,12 @@ function numbers()
 {
   var id = "numbers";
   var text = "Our repository has "
-  var dataText = data.length + " Models";
-  var resultsText = results.length + " Simulation Results";
+  var dataText = data.length + " models";
+  var resultsText = results.length + " simulation results";
 
   var div = document.getElementById(id)
 
-  if(document.documentElement.clientWidth <= 600)
+  if(document.documentElement.clientWidth <= 450)
   {
     div.innerHTML = "";
 
@@ -109,6 +109,20 @@ function numbers()
 
     var span = document.createElement("span");
     span.textContent = resultsText;
+    div.appendChild(span);
+  }
+  else if(document.documentElement.clientWidth <= 600)
+  {
+    div.innerHTML = "";
+
+    var span = document.createElement("span");
+    span.textContent = text;
+    div.appendChild(span);
+
+    div.appendChild(document.createElement("br"))
+
+    var span = document.createElement("span");
+    span.textContent = dataText + " and " + resultsText;
     div.appendChild(span);
   }
   else
