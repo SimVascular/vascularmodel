@@ -596,8 +596,8 @@ function generateChart(titletext, downloadfilename, data, id, width)
     toImageButtonOptions: {
       format: 'png', // one of png, svg, jpeg, webp
       filename: downloadfilename,
-      height: 500,
-      width: 700,
+      // height: 500,
+      // width: 700,
       scale: 8 // Multiply title/legend/axis/canvas sizes by this factor
     },
 
