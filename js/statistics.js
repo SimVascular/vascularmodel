@@ -40,7 +40,6 @@ $(document).ready(function($){
         results = $.csv.toObjects(fdata);
       }
     });
-
     
     createCharts();
 
