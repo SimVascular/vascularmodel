@@ -30,6 +30,17 @@ $(document).ready(function($){
         parentArray = Object.keys(tree[0]);
       }
     });
+
+    $.ajax({
+      type: "GET",
+      url: "dataset/dataset-svresults.csv",
+      dataType: "text",
+      async: false,
+      success: function(fdata) {
+        results = $.csv.toObjects(fdata);
+      }
+    });
+
     
     createCharts();
 
@@ -56,16 +67,55 @@ var healthData = [];
 var ageData = [];
 var anatomyData = [];
 var diseaseData = [];
+var simulationData = [];
+var methodData = [];
 
 function createCharts() {
+  numbers();
   healthChart();
   ageChart();
   
   anatomyChart();
   diseaseChart();
 
-  // simulation results chart + surface vs volume
-  // simulation method
+  simulationChart();
+  methodChart();
+}
+
+function numbers()
+{
+  var id = "numbers";
+  var text = "Our repository has "
+  var dataText = data.length + " Models";
+  var resultsText = results.length + " Simulation Results";
+
+  var div = document.getElementById(id)
+
+  if(document.documentElement.clientWidth <= 600)
+  {
+    div.innerHTML = "";
+
+    var span = document.createElement("span");
+    span.textContent = text;
+    div.appendChild(span);
+
+    div.appendChild(document.createElement("br"))
+
+    var span = document.createElement("span");
+    span.textContent = dataText + " and";
+    div.appendChild(span);
+
+    div.appendChild(document.createElement("br"))
+
+    var span = document.createElement("span");
+    span.textContent = resultsText;
+    div.appendChild(span);
+  }
+  else
+  {
+    div.textContent = text + dataText + " and " + resultsText;
+  }
+
 }
 
 function healthChart()
@@ -120,7 +170,7 @@ function ageChart()
     ageData = filterForAge();
   }
 
-  var title = "Distribution of Age in Years";
+  var title = "Distribution of Age in Years for Human Models";
   var modedata = ageData;
 
   generateBoxPlot(title, modedata, id, width);
@@ -128,14 +178,17 @@ function ageChart()
 
 function filterForAge()
 {
-  var modedata = new Array(data.length);
+  var humanModeData = new Array(data.length);
 
   for(var i = 0 ; i < data.length; i++)
   {
-    modedata[i] = data[i]["Age"];
+    if(data[i]["Species"] == "Human")
+    {
+      humanModeData.push(data[i]["Age"]);
+    }
   }
 
-  return modedata;
+  return humanModeData;
 }
 
 function anatomyChart()
@@ -321,6 +374,96 @@ function filterForDisease()
 
   return [x, y]
   
+}
+
+function simulationChart()
+{
+  // chart for health
+  var id = "simulation"
+  var width = document.getElementById(id).offsetWidth;
+  var abbs = [];
+  abbs["With Results"] = "With";
+  abbs["Without Results"] = "Without";
+
+  if(simulationData.length == 0)
+  {
+    //only filters and defines anatomyData once
+    simulationData = filterForSimulation();
+  }
+
+  var title = "Number of Models With and Without Simulation Results";
+  var x = abbreviate(simulationData[0], abbs, width);
+  var longLabel = simulationData[0];
+  var y = simulationData[1];
+
+  generateBar(title, x, longLabel, y, id, width);
+}
+
+function filterForSimulation(){
+  var withResults = 0;
+  var withoutResults = 0;
+
+  for(var i = 0; i < data.length; i++)
+  {
+    if(data[i]["Results"] == "1")
+    {
+      withResults++;
+    }
+    else
+    {
+      withoutResults++;
+    }
+  }
+
+  return [["With Results", "Without Results"], [withResults, withoutResults]];
+}
+
+function methodChart()
+{
+  // chart for anatomy
+  var id = "method"
+  var width = document.getElementById(id).offsetWidth;
+  var abbs = setAbbreviations("Method");
+
+  if(methodData.length == 0)
+  {
+    //only filters and defines anatomyData once
+    methodData = filterForMethod();
+  }
+
+  var title = "Number of Simulation Results per Simulation Method";
+  var x = abbreviate(methodData[0], abbs, width);
+  var longLabel = methodData[0];
+  var y = methodData[1];
+
+  generateBar(title, x, longLabel, y, id, width);
+}
+
+function filterForMethod()
+{
+  var x = resultsNamesOfValuesPerKey("Simulation Method");
+
+  var output = [];
+
+  for(var t = 0; t < x.length; t++)
+  {
+      output[x[t]] = 0;
+  }
+
+  //adds Pulmonary Fontan and Glenn to Pulmonary for simplicity
+  for(var i = 0 ; i < results.length; i++)
+  {
+    output[results[i]["Simulation Method"]] = output[results[i]["Simulation Method"]] + 1;
+  }
+
+  var y = [];
+
+  for(var t = 0; t < x.length; t++)
+  {
+      y.push(output[x[t]]);
+  }
+
+  return [x, y];
 }
 
 function abbreviate(x, abbs, width, early = false) {

@@ -303,6 +303,43 @@ function namesOfValuesPerKey(categoryName, returnSet = false)
   return finalArray;
 }
 
+//returns all possible options under each category
+function resultsNamesOfValuesPerKey(categoryName)
+{
+  var data = results;
+  var checkboxNameSet = new Set();
+
+  //goes through the data and gets all the possibilities the models offer
+  for(var d = 0; d < data.length; d++)
+  {
+    //if the model has multiple tags separated by an underscore
+    if(data[d][categoryName].indexOf("_") != -1)
+    {
+      //if multiple categories to add separated by "_", different code
+      var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
+      for(var a = 0; a < toAdd.length; a++)
+      {
+        //does not add element if "-"
+        if (toAdd[a] != "-")
+        {
+          checkboxNameSet.add(toAdd[a]);
+        }
+      }
+    }
+    else
+    {
+      if (data[d][categoryName] != "-" && data[d][categoryName] != "Healthy" && data[d][categoryName] != "None"){
+        checkboxNameSet.add(data[d][categoryName]);
+      }
+    }
+  }
+
+  finalArray = Array.from(checkboxNameSet);
+  finalArray.sort();
+
+  return finalArray;
+}
+
 
 //returns an array taking in a string
 //delimiter = "_"

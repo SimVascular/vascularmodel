@@ -1,6 +1,6 @@
-Species ShortName,Species LongName,Anatomy ShortName,Anatomy LongName,Disease ShortName,Disease LongName,,,,,,,,
-H,Human,AO,Aorta,H,Healthy,,,,,,,,
-A,Animal,ABAO,Abdominal Aorta,AAA,Abdominal Aortic Aneurysm,,,,,,,,
+Species ShortName,Species LongName,Anatomy ShortName,Anatomy LongName,Disease ShortName,Disease LongName,Method ShortName,Method LongName,,,,,,
+H,Human,AO,Aorta,H,Healthy,RIGID,Rigid Wall,,,,,,
+A,Animal,ABAO,Abdominal Aorta,AAA,Abdominal Aortic Aneurysm,FSI,Fluid-Structure Interaction,,,,,,
 ,,CERE,Cerebral,AIOD,Aortoiliac Occlusive Disease,,,,,,,,
 ,,CORO,Coronary,ALGS,Alagille Syndrome,,,,,,,,-
 ,,PULM,Pulmonary,AOD,Aortic Dissection,,,,,,,,
