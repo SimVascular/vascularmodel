@@ -40,25 +40,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css?v=1.0.2" />
-    <link rel="stylesheet" href="css/style_documentation.css?v=1.0.2" />
+    <link rel="stylesheet" href="css/statistics.css" />
     <link rel="stylesheet" href="css/style_md.css?v=1.0.2" />
-
-    <script>
-      window.ZeroMd = {
-        config: {
-          cssUrls: [
-            "css/style.css?v=1.0.1",
-            "css/style_documentation.css?v=1.0.1",
-            "css/style_md.css",
-          ],
-        },
-      };
-    </script>
-
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"
-    ></script>
 
     <title>Vascular Model Repository</title>
     <script
@@ -76,7 +59,7 @@
     </script>
   </head>
   <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-custom">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-custom">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">VMR</a>
         <button
@@ -101,7 +84,7 @@
                 >Home <span class="sr-only">(current)</span></a
               >
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -121,7 +104,7 @@
                 <a class="dropdown-item" href="statistics.html">Statistics</a>
               </div>
             </li>
-            <li class="nav-item dropdown active">
+            <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -155,10 +138,37 @@
     </nav>
 
     <div class="container-fluid main-content centerBox">
-      <h1 id="top">Documentation</h1>
+      <h1>Repository Statistics</h1>
+      <div
+        style="
+          text-align: center;
+          font-style: italic;
+          margin-top: 10px;
+          margin-bottom: 15px;
+          font-size: 18px;
+        "
+        id="numbers"
+      ></div>
 
-      <!-- Documentation written in markdown file -->
-      <zero-md src="md_docs/documentation/readme.md"></zero-md>
+      <div class="row" style="margin-bottom: 15px">
+        <div class="chart col-xl-6 col-12" id="health"></div>
+        <div class="chart col-xl-6 col-12" id="age"></div>
+      </div>
+      <div class="row">
+        <div class="chart col-xl-6 col-12" id="anatomy"></div>
+        <div class="chart col-xl-6 col-12" id="disease">
+          <p style="text-align: center; font-size: 15px">
+            <i
+              >Note: Models may be counted multiple times<br />due to
+              overlapping categories</i
+            >
+          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 60px">
+        <div class="chart col-xl-6 col-12" id="simulation"></div>
+        <div class="chart col-xl-6 col-12" id="method"></div>
+      </div>
     </div>
     <!-- end container -->
 
@@ -258,11 +268,8 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
+    <script src="js/globalVar.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
       integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -273,6 +280,11 @@
       integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
       crossorigin="anonymous"
     ></script>
-    <script src="js/documentation.js?v=1.0.2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
+    <!-- <script src="js/jquery-2.1.1.js"></script> -->
+    <script src="js/jquery.mixitup.min.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="js/statistics.js?v=1.0.2"></script>
   </body>
 </html>
