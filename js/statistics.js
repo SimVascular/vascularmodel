@@ -569,8 +569,8 @@ function generatePie(titletext, downloadfilename, xdata, longLabel, ydata, id, w
       textposition: "outside",
       // text: names,
       hovertemplate:
-        "<b> %{value}</b> %{text} <br>" +
-        " %{percent} <br>" +
+        "<b> %{percent}</b> %{text} <br>" +
+        " %{value} models <br>" +
         "<extra></extra>"
     }
   ];
