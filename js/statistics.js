@@ -520,7 +520,7 @@ function generateBoxPlot(titletext, downloadfilename, modedata, names, id, width
 {
   var data = [
     {
-      name: "",
+      name:"",
       x: modedata,
       type: 'box',
       marker: {
@@ -530,6 +530,8 @@ function generateBoxPlot(titletext, downloadfilename, modedata, names, id, width
         }
       },
       boxpoints: "all",
+      jitter: 0.3,
+      pointpos: -1.8,
       orientation: "h",
       hoverlabel : {
         bgcolor: "#cee7f8",
@@ -537,9 +539,7 @@ function generateBoxPlot(titletext, downloadfilename, modedata, names, id, width
       },
       textposition: "none",
       text: names,
-      hovertemplate:
-      " %{text} <br>" +
-      "<b> %{x} year(s) old</b>"
+      hoverinfo: "text+x",
     }
   ];
  
@@ -564,10 +564,9 @@ function generatePie(titletext, downloadfilename, xdata, longLabel, ydata, id, w
         bordercolor: '#3a596e'
       },
       text: longLabel,
-      // hoverinfo: "text+value+percent",
+      hoverinfo: "text+value+percent",
       textinfo: "label+percent",
       textposition: "outside",
-      // text: names,
       hovertemplate:
         "<b> %{percent}</b> %{text} <br>" +
         " %{value} models <br>" +
