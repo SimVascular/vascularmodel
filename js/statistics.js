@@ -67,7 +67,7 @@ var ageData = [];
 var anatomyData = [];
 var diseaseData = [];
 var simulationData = [];
-var methodData = [];
+var typeAndMethodData = [];
 var arraysUndefined = true;
 
 function createCharts() {
@@ -145,7 +145,7 @@ function filters()
   anatomyData = filterForAnatomy();
   diseaseData = filterForDisease();
   simulationData = filterForSimulation();
-  methodData = filterForMethod();
+  // typeData = filterForType();
   arraysUndefined = false;
 }
 
@@ -193,24 +193,27 @@ function ageChart()
   var title = "Distribution of Age in Years for Human Models";
   var downloadfilename = "VMR_Human_Age_Distribution"
 
-  var modedata = ageData;
+  var modedata = ageData[0];
+  var names = ageData[1]
 
-  generateBoxPlot(title, downloadfilename, modedata, id, width);
+  generateBoxPlot(title, downloadfilename, modedata, names, id, width);
 }
 
 function filterForAge()
 {
   var humanModeData = new Array(data.length);
+  var names = new Array(data.length);
 
   for(var i = 0 ; i < data.length; i++)
   {
     if(data[i]["Species"] == "Human")
     {
+      names.push(data[i]["Name"]);
       humanModeData.push(data[i]["Age"]);
     }
   }
 
-  return humanModeData;
+  return [humanModeData, names];
 }
 
 function anatomyChart()
@@ -406,7 +409,7 @@ function simulationChart()
   var longLabel = simulationData[0];
   var y = simulationData[1];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+  generatePie(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForSimulation(){
@@ -435,41 +438,50 @@ function methodChart()
   var width = document.getElementById(id).offsetWidth;
   var abbs = setAbbreviations("Method");
 
-  var title = "Number of Simulation Results per Simulation Method";
-  var downloadfilename = "VMR_Results_Per_Method"
+  var title = "Number of Result Types Per Simulation Method";
+  var downloadfilename = "VMR_Types_Per_Method";
 
-  var x = abbreviate(methodData[0], abbs, width);
-  var longLabel = methodData[0];
-  var y = methodData[1];
+  if(typeAndMethodData.length == 0)
+  {
+    typeAndMethodData = filterForType();
+  }
+  
+  var vtpData = typeAndMethodData[0];
+  var vtuData = typeAndMethodData[1];
+  var methodNames = abbreviate(typeAndMethodData[2], abbs, width);
+  var typeNames = ["VTP", "VTU"];
 
-  generatePie(title, downloadfilename, x, longLabel, y, id, width);
+  generateDoubleBar(title, downloadfilename, methodNames, typeNames, vtpData, vtuData, id, width);
 }
 
-function filterForMethod()
+function filterForType()
 {
-  var x = resultsNamesOfValuesPerKey("Simulation Method");
+  //returns all possible simulation methods
+  var methodNames = resultsNamesOfValuesPerKey("Simulation Method");
 
-  var output = [];
+  var vtpData = new Array(methodNames.length);
+  var vtuData = new Array(methodNames.length);
 
-  for(var t = 0; t < x.length; t++)
+  for(var i = 0; i < methodNames.length; i++)
   {
-      output[x[t]] = 0;
+    vtpData[i] = 0;
+    vtuData[i] = 0;
   }
 
-  //adds Pulmonary Fontan and Glenn to Pulmonary for simplicity
-  for(var i = 0 ; i < results.length; i++)
+  for(var i = 0; i < results.length; i++)
   {
-    output[results[i]["Simulation Method"]] = output[results[i]["Simulation Method"]] + 1;
+    var index = methodNames.indexOf(results[i]["Simulation Method"]);
+    if(results[i]["Results File Type"] == "Surface (vtp)")
+    {
+      vtpData[index] = vtpData[index] + 1;
+    }
+    else if(results[i]["Results File Type"] == "Volume (vtu)")
+    {
+      vtuData[index] = vtuData[index] + 1;
+    }
   }
 
-  var y = [];
-
-  for(var t = 0; t < x.length; t++)
-  {
-      y.push(output[x[t]]);
-  }
-
-  return [x, y];
+  return [vtpData, vtuData, methodNames]
 }
 
 function abbreviate(x, abbs, width, early = false) {
@@ -504,7 +516,7 @@ function abbreviate(x, abbs, width, early = false) {
   }  
 }
 
-function generateBoxPlot(titletext, downloadfilename, modedata, id, width)
+function generateBoxPlot(titletext, downloadfilename, modedata, names, id, width)
 {
   var data = [
     {
@@ -518,12 +530,16 @@ function generateBoxPlot(titletext, downloadfilename, modedata, id, width)
         }
       },
       boxpoints: "all",
-      hoverinfo: "x",
       orientation: "h",
       hoverlabel : {
         bgcolor: "#cee7f8",
         bordercolor: '#3a596e'
-      }
+      },
+      textposition: "none",
+      text: names,
+      hovertemplate:
+      " %{text} <br>" +
+      "<b> %{x} year(s) old</b>"
     }
   ];
  
@@ -548,13 +564,71 @@ function generatePie(titletext, downloadfilename, xdata, longLabel, ydata, id, w
         bordercolor: '#3a596e'
       },
       text: longLabel,
-      hoverinfo: "text+value+percent",
+      // hoverinfo: "text+value+percent",
       textinfo: "label+percent",
       textposition: "outside",
+      // text: names,
+      hovertemplate:
+        "<b> %{value}</b> %{text} <br>" +
+        " %{percent} <br>" +
+        "<extra></extra>"
     }
   ];
 
   generateChart(titletext, downloadfilename, data, id, width);
+}
+
+function generateDoubleBar(titletext, downloadfilename, bottomNames, legendNames, data1, data2, id, width)
+{
+  var trace1 = {
+    x: bottomNames,
+    y: data1,
+    name: legendNames[0],
+    type: 'bar',
+    marker: {
+      color: '#3a596e',
+      line: {
+          width: 2.5
+      }
+    },
+    hoverlabel : {
+      bgcolor: "#cee7f8",
+      bordercolor: '#3a596e'
+    },
+    textposition: "none",
+    text: [legendNames[0], legendNames[0]],
+    hovertemplate:
+          "<b> %{y} </b>" +
+          " %{x} %{text} <br>" +
+          "<extra></extra>"
+  };
+
+  var trace2 = {
+    x: bottomNames,
+    y: data2,
+    name: legendNames[1],
+    type: 'bar',
+    marker: {
+      color: '#6195b8',
+      line: {
+          width: 2.5
+      }
+    },
+    hoverlabel : {
+      bgcolor: "#cee7f8",
+      bordercolor: '#3a596e'
+    },
+    textposition: "none",
+    text: [legendNames[1], legendNames[1]],
+    hovertemplate:
+          "<b> %{y} </b>" +
+          " %{x} %{text} <br>" +
+          "<extra></extra>"
+  };
+
+  var data = [trace1, trace2];
+
+  generateChart(titletext, downloadfilename, data, id, width, true);
 }
 
 function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, width) {
@@ -585,42 +659,15 @@ function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, w
   generateChart(titletext, downloadfilename, data, id, width);
 }
 
-function generateChart(titletext, downloadfilename, data, id, width)
+function generateChart(titletext, downloadfilename, data, id, width, showLegend = false)
 {
   var output = responsiveForSizing(titletext, width);
   
   var titlesize = output[0];
   var bodysize = output[1];
   var titletext_post = output[2];
-
-  var layout = {
-    title: {
-      text: titletext_post,
-      font: {
-        size: titlesize
-      },
-    },
-
-    font: {
-      // dark2
-      color: "#3a596e",
-      family: ["Poppins", "sans-serif"],
-      size: bodysize
-    },
-
-    showlegend: false,
-
-    modebar: {
-      activecolor: "#6195b8"
-    },
-
-    margin: {
-      pad: 15,
-    },
-
-    colorway: ["#f3f8f8", "#c7dfe1", "#b5cdce",
-    "#83abad", "#20686b", "#07575b", "#043437"]
-  };
+  
+  var layout = createLayout(titlesize, bodysize, titletext_post, showLegend);
 
   var config = {
     toImageButtonOptions: {
@@ -641,6 +688,76 @@ function generateChart(titletext, downloadfilename, data, id, width)
   }
   
   Plotly.newPlot(id, data, layout, config);
+}
+
+function createLayout(titlesize, bodysize, titletext_post, showLegend)
+{
+  if(showLegend)
+  {
+    return layout = {
+      title: {
+        text: titletext_post,
+        font: {
+          size: titlesize
+        }
+      },
+  
+      barmode: 'stack',
+  
+      font: {
+        // dark2
+        color: "#3a596e",
+        family: ["Poppins", "sans-serif"],
+        size: bodysize
+      },
+  
+      showlegend: true,
+  
+      modebar: {
+        activecolor: "#6195b8"
+      },
+  
+      margin: {
+        pad: 15,
+      },
+  
+      colorway: ["#f3f8f8", "#c7dfe1", "#b5cdce",
+      "#83abad", "#20686b", "#07575b", "#043437"]
+    };
+  }
+  else
+  {
+    return layout = {
+      title: {
+        text: titletext_post,
+        font: {
+          size: titlesize
+        }
+      },
+  
+      barmode: 'stack',
+  
+      font: {
+        // dark2
+        color: "#3a596e",
+        family: ["Poppins", "sans-serif"],
+        size: bodysize
+      },
+  
+      showlegend: false,
+  
+      modebar: {
+        activecolor: "#6195b8"
+      },
+  
+      margin: {
+        pad: 15,
+      },
+  
+      colorway: ["#f3f8f8", "#c7dfe1", "#b5cdce",
+      "#83abad", "#20686b", "#07575b", "#043437"]
+    };
+  }
 }
 
 function responsiveForSizing(title_pre, width)
