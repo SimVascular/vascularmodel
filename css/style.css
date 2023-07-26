@@ -188,6 +188,8 @@ code {
   background-color: var(--white);
   padding-top: 50px;
   padding-bottom: 50px;
+  width: 95%;
+  margin: auto;
 }
 
 .analytics-section .container .title-and-divider {

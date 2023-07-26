@@ -12,25 +12,35 @@ $(document).ready(function($){
 });
 
 function isInViewport(className) {
-  // Get the an HTML element
-  var element = document.querySelector('.' + className);
-
-  // Get its bounding client rectangle
-  var bounding = element.getBoundingClientRect();
-  
-  // Checking part. Here the code checks if it's *fully* visible
-  // Edit this part if you just want a partial visibility
-  if (
-      bounding.top >= 0 &&
-      bounding.left >= 0 &&
-      bounding.right <= (window.innerWidth || document.documentElement.clientWidth) &&
-      bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-  ) {
-      return true;
-  } else {
-      return false;
-  }
+    var element = document.querySelector('.' + className);
+  var rect = element.getBoundingClientRect();
+  var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+  return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
 }
+
+
+// function isInViewport(className) {
+//   // Get the an HTML element
+//   var element = document.querySelector('.' + className);
+
+//   // Get its bounding client rectangle
+//   var bounding = element.getBoundingClientRect();
+//   console.log("top: " + bounding.top)
+//   console.log("left: " + bounding.left)
+//   console.log("right: " + bounding.right + " <= " + window.innerWidth)
+//   console.log("bottom: " + bounding.bottom + " <= " + window.innerHeight)
+//   // Checking part. Here the code checks if it's *fully* visible
+//   // Edit this part if you just want a partial visibility
+//   if (
+//       (bounding.top >= 0 && bounding.top <= 735)  || bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+//       &&
+//       bounding.left >= 0 || bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+//   ) {
+//       return true;
+//   } else {
+//       return false;
+//   }
+// }
 
 var playAnimation = true;
 
@@ -42,15 +52,16 @@ if (playAnimation && isInViewport("analytics-section")) {
   console.log("sad")
 }
 
-$(window).scroll(function() { 
+window.addEventListener('scroll', function () {
+  {
   if (playAnimation && isInViewport("analytics-section")) {
     playAnimation = false;
     setTimeout(() => {
       animateCounters()
     }, 15);
-    console.log("sad")
   }
-}, false);
+  }
+});
 
 function animateCounters()
 {
