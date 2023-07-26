@@ -584,8 +584,8 @@ function generateBoxPlot(titletext, downloadfilename, modedata, names, id, width
       pointpos: -1.8,
       orientation: "h",
       hoverlabel : {
-        bgcolor: "#cee7f8",
-        bordercolor: '#3a596e'
+        bgcolor: "#fdecee",
+        bordercolor: "black"
       },
       textposition: "none",
       text: names,
@@ -604,14 +604,14 @@ function generatePie(titletext, downloadfilename, xdata, longLabel, ydata, id, w
       labels: xdata,
       type: 'pie',
       marker: {
-        color: '#3a596e',
+        color: '#6195b8',
         line: {
             width: 2.5
         }
       },
       hoverlabel : {
-        bgcolor: "#cee7f8",
-        bordercolor: '#3a596e'
+        bgcolor: "#fdecee",
+        bordercolor: "black"
       },
       text: longLabel,
       hoverinfo: "text+value+percent",
@@ -641,8 +641,8 @@ function generateDoubleBar(titletext, downloadfilename, bottomNames, legendNames
       }
     },
     hoverlabel : {
-      bgcolor: "#cee7f8",
-      bordercolor: '#3a596e'
+      bgcolor: "#fdecee",
+        bordercolor: "black"
     },
     textposition: "none",
     text: [legendNames[0], legendNames[0]],
@@ -664,8 +664,8 @@ function generateDoubleBar(titletext, downloadfilename, bottomNames, legendNames
       }
     },
     hoverlabel : {
-      bgcolor: "#cee7f8",
-      bordercolor: '#3a596e'
+      bgcolor: "#fdecee",
+      bordercolor: "black"
     },
     textposition: "none",
     text: [legendNames[1], legendNames[1]],
@@ -693,8 +693,8 @@ function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, w
         }
       },
       hoverlabel : {
-        bgcolor: "#cee7f8",
-        bordercolor: '#3a596e'
+        bgcolor: "#fdecee",
+        bordercolor: "black"
       },
       textposition: "none",
       text: longLabel,
