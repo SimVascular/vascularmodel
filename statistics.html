@@ -151,12 +151,20 @@
       ></div>
 
       <div class="row" style="margin-bottom: 45px">
-        <div class="chart col-xl-6 col-12" id="health"></div>
-        <div class="chart col-xl-6 col-12" id="age"></div>
+        <div class="chart col-xl-6 col-12" style="margin-bottom: 90px" id="sex">
+          <p style="text-align: center; font-size: 15px; padding-left: 2px">
+            <i id="unspecified"></i>
+          </p>
+        </div>
+        <div class="chart col-xl-6 col-12" id="anatomy"></div>
       </div>
       <div class="row">
-        <div class="chart col-xl-6 col-12" id="anatomy"></div>
-        <div class="chart col-xl-6 col-12" id="disease">
+        <div class="chart col-xl-6 col-12" id="health"></div>
+        <div
+          class="chart col-xl-6 col-12"
+          style="margin-bottom: 90px"
+          id="disease"
+        >
           <p style="text-align: center; font-size: 15px; padding-left: 2px">
             <i
               >Note: Models may be counted multiple times<br />due to
@@ -165,9 +173,10 @@
           </p>
         </div>
       </div>
-      <div class="row" style="margin-top: 90px">
+      <div class="row">
+        <div class="chart col-xl-6 col-12" id="age"></div>
         <div class="chart col-xl-6 col-12" id="simulation"></div>
-        <div class="chart col-xl-6 col-12" id="method"></div>
+        <!-- <div class="chart col-xl-6 col-12" id="method"></div> -->
       </div>
     </div>
     <!-- end container -->

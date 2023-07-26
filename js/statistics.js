@@ -2,7 +2,7 @@ $(document).ready(function($){
     //reads csv file and sets it to the global variable data
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-svprojects.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-svprojects.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -12,7 +12,7 @@ $(document).ready(function($){
 
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-abbreviations.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-abbreviations.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -22,7 +22,7 @@ $(document).ready(function($){
 
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-diseaseTree.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-diseaseTree.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -33,7 +33,7 @@ $(document).ready(function($){
 
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-svresults.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-svresults.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -63,11 +63,13 @@ function setAbbreviations(category) {
 }
 
 var healthData = [];
-var ageData = [];
 var anatomyData = [];
 var diseaseData = [];
+var sexData = [];
+var ageData = [];
 var simulationData = [];
-var typeAndMethodData = [];
+
+// var typeAndMethodData = [];
 var arraysUndefined = true;
 
 function createCharts() {
@@ -79,13 +81,14 @@ function createCharts() {
   }
 
   healthChart();
-  ageChart();
-  
   anatomyChart();
-  diseaseChart();
 
+  diseaseChart();
+  sexChart();
+
+  ageChart();
   simulationChart();
-  methodChart();
+  // methodChart();
 }
 
 function numbers()
@@ -145,6 +148,7 @@ function filters()
   anatomyData = filterForAnatomy();
   diseaseData = filterForDisease();
   simulationData = filterForSimulation();
+  sexData = filterForSex();
   // typeData = filterForType();
   arraysUndefined = false;
 }
@@ -161,7 +165,7 @@ function healthChart()
   var longLabel = healthData[0];
   var y = healthData[1];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+  generatePie(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForHealth()
@@ -393,6 +397,52 @@ function filterForDisease()
   
 }
 
+function sexChart()
+{
+  // chart for sex
+  var id = "sex"
+  var width = document.getElementById(id).offsetWidth;
+
+  var title = "Number of Human Models Per Sex";
+  var downloadfilename = "VMR_Models_Per_Sex"
+  var x = sexData[0];
+  var longLabel = sexData[0];
+  var y = sexData[1];
+
+  var unspecified = sexData[2];
+  document.getElementById("unspecified").textContent = "Note: Information on the sex of " + unspecified + " human models is not avaliable"
+
+  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+}
+
+function filterForSex()
+{
+  var male = 0;
+  var female = 0;
+  var unspecified = 0;
+
+  for(var i = 0; i < data.length; i++)
+  {
+    if(data[i]["Species"] == "Human")
+    {
+      if(data[i]["Sex"] == "Male")
+      {
+        male++;
+      }
+      else if(data[i]["Sex"] == "Female")
+      {
+        female++;
+      }
+      else
+      {
+        unspecified++;
+      }
+    }
+  }
+
+  return [["Male", "Female"], [male, female], unspecified];
+}
+
 function simulationChart()
 {
   // chart for health
@@ -413,8 +463,8 @@ function simulationChart()
 }
 
 function filterForSimulation(){
-  var withResults = 0;
   var withoutResults = 0;
+  var withResults = 0;
 
   for(var i = 0; i < data.length; i++)
   {
@@ -431,58 +481,58 @@ function filterForSimulation(){
   return [["With Results", "Without Results"], [withResults, withoutResults]];
 }
 
-function methodChart()
-{
-  // chart for anatomy
-  var id = "method"
-  var width = document.getElementById(id).offsetWidth;
-  var abbs = setAbbreviations("Method");
+// function methodChart()
+// {
+//   // chart for anatomy
+//   var id = "method"
+//   var width = document.getElementById(id).offsetWidth;
+//   var abbs = setAbbreviations("Method");
 
-  var title = "Number of Result Types Per Simulation Method";
-  var downloadfilename = "VMR_Types_Per_Method";
+//   var title = "Number of Result Types Per Simulation Method";
+//   var downloadfilename = "VMR_Types_Per_Method";
 
-  if(typeAndMethodData.length == 0)
-  {
-    typeAndMethodData = filterForType();
-  }
+//   if(typeAndMethodData.length == 0)
+//   {
+//     typeAndMethodData = filterForType();
+//   }
   
-  var vtpData = typeAndMethodData[0];
-  var vtuData = typeAndMethodData[1];
-  var methodNames = abbreviate(typeAndMethodData[2], abbs, width);
-  var typeNames = ["VTP", "VTU"];
+//   var vtpData = typeAndMethodData[0];
+//   var vtuData = typeAndMethodData[1];
+//   var methodNames = abbreviate(typeAndMethodData[2], abbs, width);
+//   var typeNames = ["VTP", "VTU"];
 
-  generateDoubleBar(title, downloadfilename, methodNames, typeNames, vtpData, vtuData, id, width);
-}
+//   generateDoubleBar(title, downloadfilename, methodNames, typeNames, vtpData, vtuData, id, width);
+// }
 
-function filterForType()
-{
-  //returns all possible simulation methods
-  var methodNames = resultsNamesOfValuesPerKey("Simulation Method");
+// function filterForType()
+// {
+//   //returns all possible simulation methods
+//   var methodNames = resultsNamesOfValuesPerKey("Simulation Method");
 
-  var vtpData = new Array(methodNames.length);
-  var vtuData = new Array(methodNames.length);
+//   var vtpData = new Array(methodNames.length);
+//   var vtuData = new Array(methodNames.length);
 
-  for(var i = 0; i < methodNames.length; i++)
-  {
-    vtpData[i] = 0;
-    vtuData[i] = 0;
-  }
+//   for(var i = 0; i < methodNames.length; i++)
+//   {
+//     vtpData[i] = 0;
+//     vtuData[i] = 0;
+//   }
 
-  for(var i = 0; i < results.length; i++)
-  {
-    var index = methodNames.indexOf(results[i]["Simulation Method"]);
-    if(results[i]["Results File Type"] == "Surface (vtp)")
-    {
-      vtpData[index] = vtpData[index] + 1;
-    }
-    else if(results[i]["Results File Type"] == "Volume (vtu)")
-    {
-      vtuData[index] = vtuData[index] + 1;
-    }
-  }
+//   for(var i = 0; i < results.length; i++)
+//   {
+//     var index = methodNames.indexOf(results[i]["Simulation Method"]);
+//     if(results[i]["Results File Type"] == "Surface (vtp)")
+//     {
+//       vtpData[index] = vtpData[index] + 1;
+//     }
+//     else if(results[i]["Results File Type"] == "Volume (vtu)")
+//     {
+//       vtuData[index] = vtuData[index] + 1;
+//     }
+//   }
 
-  return [vtpData, vtuData, methodNames]
-}
+//   return [vtpData, vtuData, methodNames]
+// }
 
 function abbreviate(x, abbs, width, early = false) {
   //changes x-axis labels to abbreviations if the width is small
