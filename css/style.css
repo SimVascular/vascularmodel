@@ -209,21 +209,39 @@ code {
 }
 
 .counterNumber {
-  font-size: 45px;
+  font-size: 40px;
+  font-weight: bold;
   margin: 0;
 }
 
 .counterLabel {
-  font-size: 22px;
+  font-size: 25px;
   margin: 0;
+}
+
+@media only screen and (min-width: 600px) {
+  .counterNumber {
+    font-size: 50px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .counterNumber {
+    font-size: 55px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .counterNumber {
+    font-size: 75px;
+  }
 }
 
 .counterBox {
   display: block;
   height: fit-content;
   text-align: center;
-  background-color: var(--lightgrey);
-  border: 5px solid var(--grey);
+  color: var(--dark3);
   border-radius: 15px;
   padding: 15px;
 }
