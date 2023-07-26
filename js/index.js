@@ -65,12 +65,12 @@ window.addEventListener('scroll', function () {
 
 function animateCounters()
 {
-  document.getElementById("modelsCounter").textContent = numberOfModels;
   var countupEls = document.getElementsByClassName('countup');
+  var numbers = [7000, 12000, numberOfModels]
   var label = ["Users", "Downloads", "Models"]
   for(var i = 0; i < countupEls.length; i++)
   {
-    animateCountUp(countupEls[i], label[i])
+    animateCountUp(countupEls[i], numbers[i], label[i])
   }
 }
 
@@ -84,12 +84,12 @@ const totalFrames = Math.round( animationDuration / frameDuration );
 const easeOutQuad = t => t * ( 2 - t );
 
 // The animation function, which takes an Element
-function animateCountUp(el, label) {
+function animateCountUp(el, number, label) {
   let frame = 0;
-  const countTo = parseInt( el.innerHTML, 10 );
+  const countTo = number;
   // Start the animation running 60 times per second
   const counter = setInterval( () => {
-    frame++;
+    frame+=1;
     // Calculate our progress as a value between 0 and 1
     // Pass that value to our easing function to get our
     // progress on a curve
@@ -99,13 +99,14 @@ function animateCountUp(el, label) {
 
     // If the current count has changed, update the element
     if ( parseInt( el.innerHTML, 10 ) !== currentCount ) {
-      el.innerHTML = currentCount;
+      var number = currentCount.toLocaleString("en-US")
+      el.innerHTML = number;
     }
 
     // If we’ve reached our last frame, stop the animation
-    if ( frame === totalFrames ) {
+    if ( frame >= totalFrames ) {
       clearInterval( counter );
-      var number = parseInt(el.textContent)
+      var number = el.textContent
       el.textContent = number.toLocaleString("en-US");
       if(label != "Models")
       {
