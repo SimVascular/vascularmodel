@@ -574,7 +574,7 @@ function generateBoxPlot(titletext, downloadfilename, modedata, names, id, width
       x: modedata,
       type: 'box',
       marker: {
-        color: '#6195b8',
+        color: '#3a596e',
         line: {
           width: 1.5
         }
@@ -604,7 +604,7 @@ function generatePie(titletext, downloadfilename, xdata, longLabel, ydata, id, w
       labels: xdata,
       type: 'pie',
       marker: {
-        color: '#6195b8',
+        color: '#3a596e',
         line: {
             width: 2.5
         }
@@ -687,7 +687,7 @@ function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, w
       y: ydata,
       type: 'bar',
       marker: {
-        color: '#6195b8',
+        color: '#3a596e',
         line: {
             width: 2.5
         }
@@ -768,10 +768,7 @@ function createLayout(titlesize, bodysize, titletext_post, showLegend)
   
       margin: {
         pad: 15,
-      },
-  
-      colorway: ["#f3f8f8", "#c7dfe1", "#b5cdce",
-      "#83abad", "#20686b", "#07575b", "#043437"]
+      }
     };
   }
   else
@@ -802,9 +799,9 @@ function createLayout(titlesize, bodysize, titletext_post, showLegend)
       margin: {
         pad: 15,
       },
-  
-      colorway: ["#f3f8f8", "#c7dfe1", "#b5cdce",
-      "#83abad", "#20686b", "#07575b", "#043437"]
+
+      colorway: ["#fdecee", "#d8b4c4", "#b39bb3",
+      "#8a84a0", "#626e89", "#3a596e"]
     };
   }
 }
