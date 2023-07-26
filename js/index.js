@@ -42,7 +42,7 @@ if (playAnimation && isInViewport("analytics-section")) {
   console.log("sad")
 }
 
-window.addEventListener('scroll', function () {
+$(window).scroll(function() { 
   if (playAnimation && isInViewport("analytics-section")) {
     playAnimation = false;
     setTimeout(() => {
