@@ -228,3 +228,15 @@ a.noDec:hover {
 .inline:nth-child(even) {
     margin-right: 5%;
 }
+
+img {
+    display: block;
+    width: 50%;
+    margin: auto;
+}
+
+@media (max-width: 767px){
+    img {
+        width: 100%;
+    }
+}

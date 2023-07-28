@@ -23,11 +23,149 @@ In addition to SimVascular projects, some models are equipped with simulation re
 
 For help on how to navigate our model gallery and to download SimVascular projects or simulation results, we refer to our <a href="tutorial.html">Tutorial</a>.
 
+## Model Naming Convention
+
+Each model in the Vascular Model Repository follows a standard naming convention. The format of each name is **Image_Species_Anatomy_Disease.**
+
+#### **Examples:**
+
+**0012_H_AO_COA** - Medical Image 0012, Human, Aorta, Coarctation of Aorta
+
+**0059_H_PULM_ALGS** - Medical Image 0059, Human, Pulmonary, Alagille Syndrome
+
+**0121_A_AO_H** - Medical Image 0121, Animal, Aorta, Healthy
+
+**0012_H_CORO_KD** - Medical Image 0012, Human, Coronary, Kawasaki Disease
+
+The abbreviations used in each portion of the name are defined as follows:
+
+#### **Image Identifier**
+
+**####** - a unique 4-digit identifier assigned to the medical image associated with the model. The number generated for each medical image is based on when the model and its image were added to the VMR, so **0001** is associated with the medical image of the first model added to the VMR, **0002** is associated with the medical image of the second model added, and so on.
+
+Most of the time, each model will have a unique image identifier, but there are cases where multiple models share a 4-digit image identifier if the same medical image was used when creating the model.
+
+For example:
+
+<img src="/img/documentation/fig1_same_image_number.png"/>
+
+In this case, the coronary model **0146_H_CORO_SVG** and the aorta model **0146_H_AO_H** were created from the same medical image so they share the same 4-digit image identifier **0146**.
+
+#### **Species Identifier**
+
+**H** - human subject
+
+**A** - animal subject
+
+#### **Anatomy Identifier**
+
+**AO** - aorta
+
+**ABAO** - abdominal aorta
+
+**CERE** - cerebral arteries
+
+**CORO** - coronary arteries
+
+**PULM** - pulmonary arteries
+
+**PULMFON** - pulmonary arteries after going through the Fontan procedure
+
+**PULMGLN** - pulmonary arteries after going through the Glenn procedure
+
+#### **Disease Identifier**
+
+**H** - Healthy
+
+**AAA** - Abdominal Aortic Aneurysm
+
+**AIOD** - Aortoiliac Occlusive Disease
+
+**ALGS** - Alagille Syndrome
+
+**AOD** - Aortic Dissection
+
+**CA** - Cerebral Aneurysm
+
+**CAD** - Coronary Artery Disease
+
+**COA** - Coarctation of Aorta
+
+**HLHS** - Hypoplastic Left Heart Syndrome
+
+**KD** - Kawasaki Disease
+
+**MFS** - Marfan Syndrome
+
+**PAH** - Pulmonary Arterial Hypertension
+
+**PAT** - Pulmonary Atresia
+
+**SVD** - Single Ventricle Defect
+
+**SVGD** - Saphenous Vein Graft Disease
+
+**TAT** - Tricuspid Atresia
+
+**TOF** - Tetralogy of Fallot
+
+**WS** - Williams Syndrome
+
+#### **Legacy Names**
+
+Some of the models on the VMR had already been given names before they were added to the repository, but in order to maintain a consistent and easily searchable repository, those models were renamed according to the VMR naming convention. These replaced “legacy names” are still linked with the model and searching for the original legacy name in the filter section will still bring up the model.
+
+<img src="/img/documentation/fig2_legacy_name_example.png"/>
+
+## Simulation Results Naming Convention
+
+Each simulation result in the Vascular Model Repository follows a standard naming convention. The format of each name is **Model_Simulation fidelity_Simulation type_Boundary condition (optional)\_File type.**
+
+#### **Examples:**
+
+**0241_H_CORO_KD_3D_FSI_REST_VTP.zip** - 3D, FSI simulation, resting condition, `.vtp` file
+
+**0241_H_CORO_KD_FSI_HYPER_VTU.zip** - 3D, FSI simulation, hyperemic condition, `.vtu` file
+
+The abbreviations used in each portion of the name are defined as follows:
+
+#### **Simulation Fidelity Identifier**
+
+**0D** - zero-dimensional spatial representation of a vascular network modeled as an electrical circuit
+
+**1D** - solves for blood pressure and flow in deformable one-dimensional hemodynamic networks.
+
+**3D** - full three-dimensional simulation
+
+#### **Simulation Type Identifier**
+
+**RIGID** - Rigid Wall simulation
+
+**FSI** - Fluid Solid Interaction simulation (deformable walls)
+
+#### **Boundary Condition Identifier (optional)**
+
+**REST** - Simulations run at resting conditions
+
+**HYPER** - Simulations run at hyperemic conditions (exercise conditions)
+
+#### **File Type Identifier**
+
+**VTP** - `.vtp` files (surface mesh simulation results)
+
+**VTU** - `.vtu` files (volume mesh simulation results)
+
+When viewing simulation results on the VMR, a shortened version of the name will appear that does not include the full model name at the beginning but only the image identifier.
+
+<img src="/img/documentation/fig3_shortened_sim_results_name.png"/>
+
+However, the downloaded file will show the full name.
+
 ## History
 
 The Vascular Model Repository was originally created by
 <a class="link" href="https://www.anderson.ucla.edu/faculty-and-research/global-economics-and-management/faculty/wilson" target="_blank">Nathan Wilson</a>
-and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institues of Health (NIH).
+and the Open Source Medical Software Corporation (OSMSC) under contract HHSN268201100035C with the National Institute of Health (NIH).
 The repository has then been migrated into its current form in a joint effort between the <a href="https://cbcl.stanford.edu" class="link" target="_blank">Cardiovascular Biomechanics Computation Lab</a>
 at Stanford University, the
 <a href="https://shaddenlab.berkeley.edu" class="link" target="_blank">Shadden Lab</a>
@@ -49,4 +187,4 @@ arXiv:2111.04878.
 
 Still have questions? Check out the <a href="FAQs.html">FAQs</a> page.
 
-Let us know what functions you would like to see in the Vascular Model Respository by <a href="contacts.html" target="_blank">contacting us.</a>
+Let us know what functions you would like to see in the Vascular Model Repository by <a href="contacts.html" target="_blank">contacting us.</a>
