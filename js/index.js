@@ -101,6 +101,7 @@ function animateCountUp(el, number, label) {
     if ( parseInt( el.innerHTML, 10 ) !== currentCount ) {
       var number = currentCount.toLocaleString("en-US")
       el.innerHTML = number;
+      el.style.opacity = progress;
     }
 
     // If we’ve reached our last frame, stop the animation
