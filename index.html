@@ -197,8 +197,8 @@
               </div>
             </div>
             <!-- /.row -->
+            <!-- /.container -->
           </div>
-          <!-- /.container -->
         </div>
       </div>
     </section>
@@ -259,35 +259,58 @@
       </div>
     </section>
 
-    <section class="contributors-section">
+    <section class="analytics-section">
       <div class="container">
         <div class="title-and-divider">
-          <h2 class="title">INSTITUTIONS</h2>
+          <h2 class="title">VMR IN NUMBERS</h2>
           <div class="divider"></div>
           <!-- <p class="subtitle">An open-source database of cardiovascular models</p> -->
         </div>
       </div>
 
       <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6 col-sm-12" style="padding-bottom: 40px">
-            <div class="sv-logo">
-              <img src="img/stanford-logo.png" alt="sv-logo" width="80%" />
+        <div class="row g-xl-6 g-2">
+          <div class="col-md-4 col-12 p-xl-6 p-3">
+            <div class="counterBox">
+              <div class="countup counterNumber">0</div>
+              <div class="counterLabel">
+                <i class="fa-solid fa-user icon"></i>Users
+              </div>
             </div>
           </div>
-          <div class="col-md-6 col-sm-12" style="padding-bottom: 40px">
-            <div class="sv-logo">
-              <img src="img/berkeley-logo.png" alt="sv-logo" width="80%" />
+          <div class="col-md-4 col-12 p-xl-6 p-3">
+            <div class="counterBox">
+              <div class="countup counterNumber">0</div>
+              <div class="counterLabel">
+                <i class="fa-solid fa-download icon"></i>Downloads
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12 p-xl-6 p-3">
+            <div class="counterBox">
+              <div id="modelsCounter" class="countup counterNumber">0</div>
+              <div class="counterLabel">
+                <i class="fa-solid fa-cube icon"></i>Models
+              </div>
             </div>
           </div>
         </div>
+        <i>
+          <a class="statisticsLink" href="statistics.html" target="_blank">
+            View database statistics
+            <i
+              style="font-size: 18px"
+              class="fa-solid fa-arrow-up-right-from-square"
+            ></i>
+          </a>
+        </i>
       </div>
     </section>
 
     <section class="team-section">
       <div class="container">
         <div class="title-and-divider">
-          <h2 class="title">PEOPLE</h2>
+          <h2 class="title">TEAM</h2>
           <div class="divider"></div>
           <!-- <p class="subtitle">An open-source database of cardiovascular models</p> -->
         </div>
@@ -295,7 +318,7 @@
 
       <div class="container">
         <div class="row">
-          <div class="col-md-4 col-6">
+          <div class="col-md-3 col-6">
             <div class="team-item">
               <div class="team-triangle">
                 <a
@@ -315,7 +338,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-6">
+          <div class="col-md-3 col-6">
             <div class="team-item">
               <div class="team-triangle">
                 <a
@@ -335,7 +358,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-6">
+          <div class="col-md-3 col-6">
             <div class="team-item">
               <div class="team-triangle">
                 <a
@@ -355,7 +378,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-md-3 col-6">
             <div class="team-item">
               <div class="team-triangle">
@@ -376,61 +398,106 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-6">
-            <div class="team-item">
-              <div class="team-triangle">
-                <a
-                  href="https://www.linkedin.com/in/numi-sveinsson-3a0069173"
-                  target="_blank"
-                >
-                  <div class="content">
-                    <img
-                      src="img/team/numi-sveinsson.jpeg"
-                      alt="numi-sveinsson"
-                    />
-                    <div class="team-hover text-center">
-                      <p style="font-size: 17px">Numi Sveinsson</p>
+        </div>
+          <div class="row">
+            <div class="col-md-3 col-6">
+              <div class="team-item">
+                <div class="team-triangle">
+                  <a
+                    href="https://www.linkedin.com/in/numi-sveinsson-3a0069173"
+                    target="_blank"
+                  >
+                    <div class="content">
+                      <img
+                        src="img/team/numi-sveinsson.jpeg"
+                        alt="numi-sveinsson"
+                      />
+                      <div class="team-hover text-center">
+                        <p style="font-size: 17px">Numi Sveinsson</p>
+                      </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="team-item">
+                <div class="team-triangle">
+                  <a
+                    href="https://profiles.stanford.edu/luca-pegolotti"
+                    target="_blank"
+                  >
+                    <div class="content">
+                      <img
+                        src="img/team/luca-pegolotti.jpeg"
+                        alt="luca-pegolotti"
+                      />
+                      <div class="team-hover text-center">
+                        <p style="font-size: 17px">Luca Pegolotti</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="team-item">
+                <div class="team-triangle">
+                  <a
+                    href="https://www.linkedin.com/in/brian-wu-054b76169"
+                    target="_blank"
+                  >
+                    <div class="content">
+                      <img src="img/team/brian-wu.jpeg" alt="brian-wu" />
+                      <div class="team-hover text-center">
+                        <p style="font-size: 17px">Brian Wu</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="team-item">
+                <div class="team-triangle">
+                  <a
+                    href="https://www.linkedin.com/in/carole-darve-12410423b/"
+                    target="_blank"
+                  >
+                    <div class="content">
+                      <img src="img/team/carole-darve.JPG" alt="carole-darve" />
+                      <div class="team-hover text-center">
+                        <p style="font-size: 17px">Carole Darve</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-6">
-            <div class="team-item">
-              <div class="team-triangle">
-                <a
-                  href="https://profiles.stanford.edu/luca-pegolotti"
-                  target="_blank"
-                >
-                  <div class="content">
-                    <img
-                      src="img/team/luca-pegolotti.jpeg"
-                      alt="luca-pegolotti"
-                    />
-                    <div class="team-hover text-center">
-                      <p style="font-size: 17px">Luca Pegolotti</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contributors-section">
+      <div class="container">
+        <div class="title-and-divider">
+          <h2 class="title">INSTITUTIONS</h2>
+          <div class="divider"></div>
+          <!-- <p class="subtitle">An open-source database of cardiovascular models</p> -->
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6 col-sm-12" style="padding-bottom: 40px">
+            <div class="sv-logo">
+              <img src="img/stanford-logo.png" alt="sv-logo" width="80%" />
             </div>
           </div>
-          <div class="col-md-3 col-12">
-            <div class="team-item">
-              <div class="team-triangle">
-                <a
-                  href="https://www.linkedin.com/in/brian-wu-054b76169"
-                  target="_blank"
-                >
-                  <div class="content">
-                    <img src="img/team/brian-wu.jpeg" alt="brian-wu" />
-                    <div class="team-hover text-center">
-                      <p style="font-size: 17px">Brian Wu</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
+          <div class="col-md-6 col-sm-12" style="padding-bottom: 40px">
+            <div class="sv-logo">
+              <img src="img/berkeley-logo.png" alt="sv-logo" width="80%" />
             </div>
           </div>
         </div>
@@ -562,12 +629,10 @@
     </section>
 
     <!-- Optional JavaScript -->
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
+    <script src="js/globalVar.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
       integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -578,5 +643,10 @@
       integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
+    <!-- <script src="js/jquery-2.1.1.js"></script> -->
+    <script src="js/jquery.mixitup.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="js/index.js"></script>
   </body>
 </html>
