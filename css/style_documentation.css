@@ -50,13 +50,14 @@ h2 {
 }
 
 h3 {
-    font-size: 1.25rem;
+    font-size: 1.45rem;
     margin-top: 10px;
     margin-bottom: 5px;
 }
 
 h4 {
-    font-size: 1rem;
+    font-weight: normal;
+    font-size: 1.25rem;
     margin-top: 10px;
     margin-bottom: 5px;
 }
@@ -235,7 +236,7 @@ img {
     margin: auto;
 }
 
-@media (max-width: 767px){
+@media (max-width: 960px){
     img {
         width: 100%;
     }
