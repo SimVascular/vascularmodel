@@ -2,7 +2,7 @@ $(document).ready(function($){
     //reads csv file and sets it to the global variable data
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-svprojects.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-svprojects.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -12,7 +12,7 @@ $(document).ready(function($){
 
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-abbreviations.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-abbreviations.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -22,7 +22,7 @@ $(document).ready(function($){
 
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-diseaseTree.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-diseaseTree.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -33,7 +33,7 @@ $(document).ready(function($){
 
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-svresults.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-svresults.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -63,11 +63,13 @@ function setAbbreviations(category) {
 }
 
 var healthData = [];
-var ageData = [];
 var anatomyData = [];
 var diseaseData = [];
+var sexData = [];
+var ageData = [];
 var simulationData = [];
-var methodData = [];
+
+// var typeAndMethodData = [];
 var arraysUndefined = true;
 
 function createCharts() {
@@ -79,13 +81,14 @@ function createCharts() {
   }
 
   healthChart();
-  ageChart();
-  
   anatomyChart();
-  diseaseChart();
 
+  diseaseChart();
+  sexChart();
+
+  ageChart();
   simulationChart();
-  methodChart();
+  // methodChart();
 }
 
 function numbers()
@@ -145,7 +148,8 @@ function filters()
   anatomyData = filterForAnatomy();
   diseaseData = filterForDisease();
   simulationData = filterForSimulation();
-  methodData = filterForMethod();
+  sexData = filterForSex();
+  // typeData = filterForType();
   arraysUndefined = false;
 }
 
@@ -161,7 +165,7 @@ function healthChart()
   var longLabel = healthData[0];
   var y = healthData[1];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+  generatePie(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForHealth()
@@ -193,24 +197,27 @@ function ageChart()
   var title = "Distribution of Age in Years for Human Models";
   var downloadfilename = "VMR_Human_Age_Distribution"
 
-  var modedata = ageData;
+  var modedata = ageData[0];
+  var names = ageData[1]
 
-  generateBoxPlot(title, downloadfilename, modedata, id, width);
+  generateBoxPlot(title, downloadfilename, modedata, names, id, width);
 }
 
 function filterForAge()
 {
   var humanModeData = new Array(data.length);
+  var names = new Array(data.length);
 
   for(var i = 0 ; i < data.length; i++)
   {
     if(data[i]["Species"] == "Human")
     {
+      names.push(data[i]["Name"]);
       humanModeData.push(data[i]["Age"]);
     }
   }
 
-  return humanModeData;
+  return [humanModeData, names];
 }
 
 function anatomyChart()
@@ -227,7 +234,7 @@ function anatomyChart()
   var longLabel = anatomyData[0];
   var y = anatomyData[1];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+  generatePie(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForAnatomy() {
@@ -390,6 +397,52 @@ function filterForDisease()
   
 }
 
+function sexChart()
+{
+  // chart for sex
+  var id = "sex"
+  var width = document.getElementById(id).offsetWidth;
+
+  var title = "Number of Human Models Per Sex";
+  var downloadfilename = "VMR_Models_Per_Sex"
+  var x = sexData[0];
+  var longLabel = sexData[0];
+  var y = sexData[1];
+
+  var unspecified = sexData[2];
+  document.getElementById("unspecified").textContent = "Note: Information on the sex of " + unspecified + " human models is not avaliable"
+
+  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+}
+
+function filterForSex()
+{
+  var male = 0;
+  var female = 0;
+  var unspecified = 0;
+
+  for(var i = 0; i < data.length; i++)
+  {
+    if(data[i]["Species"] == "Human")
+    {
+      if(data[i]["Sex"] == "Male")
+      {
+        male++;
+      }
+      else if(data[i]["Sex"] == "Female")
+      {
+        female++;
+      }
+      else
+      {
+        unspecified++;
+      }
+    }
+  }
+
+  return [["Male", "Female"], [male, female], unspecified];
+}
+
 function simulationChart()
 {
   // chart for health
@@ -406,12 +459,12 @@ function simulationChart()
   var longLabel = simulationData[0];
   var y = simulationData[1];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
+  generatePie(title, downloadfilename, x, longLabel, y, id, width);
 }
 
 function filterForSimulation(){
-  var withResults = 0;
   var withoutResults = 0;
+  var withResults = 0;
 
   for(var i = 0; i < data.length; i++)
   {
@@ -428,49 +481,58 @@ function filterForSimulation(){
   return [["With Results", "Without Results"], [withResults, withoutResults]];
 }
 
-function methodChart()
-{
-  // chart for anatomy
-  var id = "method"
-  var width = document.getElementById(id).offsetWidth;
-  var abbs = setAbbreviations("Method");
+// function methodChart()
+// {
+//   // chart for anatomy
+//   var id = "method"
+//   var width = document.getElementById(id).offsetWidth;
+//   var abbs = setAbbreviations("Method");
 
-  var title = "Number of Simulation Results per Simulation Method";
-  var downloadfilename = "VMR_Results_Per_Method"
+//   var title = "Number of Result Types Per Simulation Method";
+//   var downloadfilename = "VMR_Types_Per_Method";
 
-  var x = abbreviate(methodData[0], abbs, width);
-  var longLabel = methodData[0];
-  var y = methodData[1];
+//   if(typeAndMethodData.length == 0)
+//   {
+//     typeAndMethodData = filterForType();
+//   }
+  
+//   var vtpData = typeAndMethodData[0];
+//   var vtuData = typeAndMethodData[1];
+//   var methodNames = abbreviate(typeAndMethodData[2], abbs, width);
+//   var typeNames = ["VTP", "VTU"];
 
-  generateBar(title, downloadfilename, x, longLabel, y, id, width);
-}
+//   generateDoubleBar(title, downloadfilename, methodNames, typeNames, vtpData, vtuData, id, width);
+// }
 
-function filterForMethod()
-{
-  var x = resultsNamesOfValuesPerKey("Simulation Method");
+// function filterForType()
+// {
+//   //returns all possible simulation methods
+//   var methodNames = resultsNamesOfValuesPerKey("Simulation Method");
 
-  var output = [];
+//   var vtpData = new Array(methodNames.length);
+//   var vtuData = new Array(methodNames.length);
 
-  for(var t = 0; t < x.length; t++)
-  {
-      output[x[t]] = 0;
-  }
+//   for(var i = 0; i < methodNames.length; i++)
+//   {
+//     vtpData[i] = 0;
+//     vtuData[i] = 0;
+//   }
 
-  //adds Pulmonary Fontan and Glenn to Pulmonary for simplicity
-  for(var i = 0 ; i < results.length; i++)
-  {
-    output[results[i]["Simulation Method"]] = output[results[i]["Simulation Method"]] + 1;
-  }
+//   for(var i = 0; i < results.length; i++)
+//   {
+//     var index = methodNames.indexOf(results[i]["Simulation Method"]);
+//     if(results[i]["Results File Type"] == "Surface (vtp)")
+//     {
+//       vtpData[index] = vtpData[index] + 1;
+//     }
+//     else if(results[i]["Results File Type"] == "Volume (vtu)")
+//     {
+//       vtuData[index] = vtuData[index] + 1;
+//     }
+//   }
 
-  var y = [];
-
-  for(var t = 0; t < x.length; t++)
-  {
-      y.push(output[x[t]]);
-  }
-
-  return [x, y];
-}
+//   return [vtpData, vtuData, methodNames]
+// }
 
 function abbreviate(x, abbs, width, early = false) {
   //changes x-axis labels to abbreviations if the width is small
@@ -504,30 +566,118 @@ function abbreviate(x, abbs, width, early = false) {
   }  
 }
 
-function generateBoxPlot(titletext, downloadfilename, modedata, id, width)
+function generateBoxPlot(titletext, downloadfilename, modedata, names, id, width)
 {
   var data = [
     {
-      name: "",
+      name:"",
       x: modedata,
       type: 'box',
       marker: {
-        color: '#6195b8',
+        color: '#3a596e',
         line: {
           width: 1.5
         }
       },
       boxpoints: "all",
-      hoverinfo: "x",
+      jitter: 0.3,
+      pointpos: -1.8,
       orientation: "h",
       hoverlabel : {
-        bgcolor: "#cee7f8",
-        bordercolor: '#3a596e'
-      }
+        bgcolor: "#fdecee",
+        bordercolor: "black"
+      },
+      textposition: "none",
+      text: names,
+      hoverinfo: "text+x",
     }
   ];
  
   generateChart(titletext, downloadfilename, data, id, width);
+}
+
+function generatePie(titletext, downloadfilename, xdata, longLabel, ydata, id, width)
+{
+  var data = [
+    {
+      values: ydata,
+      labels: xdata,
+      type: 'pie',
+      marker: {
+        color: '#6195b8',
+        line: {
+            width: 2.5
+        }
+      },
+      hoverlabel : {
+        bgcolor: "#fdecee",
+        bordercolor: "black"
+      },
+      text: longLabel,
+      hoverinfo: "text+value+percent",
+      textinfo: "label+percent",
+      textposition: "outside",
+      hovertemplate:
+        "<b> %{percent}</b> %{text} <br>" +
+        " %{value} models <br>" +
+        "<extra></extra>"
+    }
+  ];
+
+  generateChart(titletext, downloadfilename, data, id, width);
+}
+
+function generateDoubleBar(titletext, downloadfilename, bottomNames, legendNames, data1, data2, id, width)
+{
+  var trace1 = {
+    x: bottomNames,
+    y: data1,
+    name: legendNames[0],
+    type: 'bar',
+    marker: {
+      color: '#3a596e',
+      line: {
+          width: 2.5
+      }
+    },
+    hoverlabel : {
+      bgcolor: "#fdecee",
+        bordercolor: "black"
+    },
+    textposition: "none",
+    text: [legendNames[0], legendNames[0]],
+    hovertemplate:
+          "<b> %{y} </b>" +
+          " %{x} %{text} <br>" +
+          "<extra></extra>"
+  };
+
+  var trace2 = {
+    x: bottomNames,
+    y: data2,
+    name: legendNames[1],
+    type: 'bar',
+    marker: {
+      color: '#6195b8',
+      line: {
+          width: 2.5
+      }
+    },
+    hoverlabel : {
+      bgcolor: "#fdecee",
+      bordercolor: "black"
+    },
+    textposition: "none",
+    text: [legendNames[1], legendNames[1]],
+    hovertemplate:
+          "<b> %{y} </b>" +
+          " %{x} %{text} <br>" +
+          "<extra></extra>"
+  };
+
+  var data = [trace1, trace2];
+
+  generateChart(titletext, downloadfilename, data, id, width, true);
 }
 
 function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, width) {
@@ -537,14 +687,14 @@ function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, w
       y: ydata,
       type: 'bar',
       marker: {
-        color: '#6195b8',
+        color: '#3a596e',
         line: {
             width: 2.5
         }
       },
       hoverlabel : {
-        bgcolor: "#cee7f8",
-        bordercolor: '#3a596e'
+        bgcolor: "#fdecee",
+        bordercolor: "black"
       },
       textposition: "none",
       text: longLabel,
@@ -558,39 +708,15 @@ function generateBar(titletext, downloadfilename, xdata, longLabel, ydata, id, w
   generateChart(titletext, downloadfilename, data, id, width);
 }
 
-function generateChart(titletext, downloadfilename, data, id, width)
+function generateChart(titletext, downloadfilename, data, id, width, showLegend = false)
 {
   var output = responsiveForSizing(titletext, width);
   
   var titlesize = output[0];
   var bodysize = output[1];
   var titletext_post = output[2];
-
-  var layout = {
-    title: {
-      text: titletext_post,
-      font: {
-        size: titlesize
-      },
-    },
-
-    font: {
-      // dark2
-      color: "#3a596e",
-      family: ["Poppins", "sans-serif"],
-      size: bodysize
-    },
-
-    showlegend: false,
-
-    modebar: {
-      activecolor: "#6195b8"
-    },
-
-    margin: {
-      pad: 15,
-    }
-  };
+  
+  var layout = createLayout(titlesize, bodysize, titletext_post, showLegend);
 
   var config = {
     toImageButtonOptions: {
@@ -611,6 +737,73 @@ function generateChart(titletext, downloadfilename, data, id, width)
   }
   
   Plotly.newPlot(id, data, layout, config);
+}
+
+function createLayout(titlesize, bodysize, titletext_post, showLegend)
+{
+  if(showLegend)
+  {
+    return layout = {
+      title: {
+        text: titletext_post,
+        font: {
+          size: titlesize
+        }
+      },
+  
+      barmode: 'stack',
+  
+      font: {
+        // dark2
+        color: "#3a596e",
+        family: ["Poppins", "sans-serif"],
+        size: bodysize
+      },
+  
+      showlegend: true,
+  
+      modebar: {
+        activecolor: "#6195b8"
+      },
+  
+      margin: {
+        pad: 15,
+      }
+    };
+  }
+  else
+  {
+    return layout = {
+      title: {
+        text: titletext_post,
+        font: {
+          size: titlesize
+        }
+      },
+  
+      barmode: 'stack',
+  
+      font: {
+        // dark2
+        color: "#3a596e",
+        family: ["Poppins", "sans-serif"],
+        size: bodysize
+      },
+  
+      showlegend: false,
+  
+      modebar: {
+        activecolor: "#6195b8"
+      },
+  
+      margin: {
+        pad: 15,
+      },
+
+      colorway: ["#fdecee", "#d8b4c4", "#b39bb3",
+      "#8a84a0", "#626e89", "#3a596e"]
+    };
+  }
 }
 
 function responsiveForSizing(title_pre, width)
