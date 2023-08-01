@@ -233,7 +233,7 @@ a.noDec:hover {
 img {
     display: block;
     width: 50%;
-    margin: auto;
+    /* margin: auto; */
 }
 
 @media (max-width: 960px){
