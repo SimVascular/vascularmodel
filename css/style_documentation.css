@@ -1,3 +1,7 @@
+html {
+    scroll-padding-top: 75px;
+}
+
 p {
     text-align: justify;
 }
@@ -203,13 +207,15 @@ img {
     opacity: 0.3;
 }
 
-.skiptoTop a{
-    color: var(--dark2);
-}
-
 .skiptoTop:hover {
     opacity: 1.0;
     transition: 0.4s;
+}
+
+#top {
+    color: var(--dark2);
+    cursor: pointer;
+    z-index: 100;
 }
 
 .text {
@@ -219,11 +225,6 @@ img {
     font-size: 18px;
     margin-top: 15px;
     color: var(--black);
-}
-
-a.noDec:hover {
-    text-decoration: none;
-    z-index: 99999;
 }
 
 .inline:nth-child(even) {
