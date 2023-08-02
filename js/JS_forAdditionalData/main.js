@@ -325,10 +325,7 @@ function preventScroll(e){
 }
 
 function populate(dataArray, num_images = 24) {
-  //clears not-allowed function when data is repopulated on select all icon
-  document.getElementById("select-all").classList.remove("cannotSelect");
-  isSelectAllApplied(false);
-
+  
   //clears confirm message if data repopulated
   $("#confirmBox").hide();
 
