@@ -891,7 +891,7 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep, mus
     else
     {
       for (var i = 0; i < partialData.length; i++) {
-        if (partialData[i][category].includes(key)) {
+        if (partialData[i][category] == key) {
           //if element under that category in csv == key, saves model
           whichToKeep[i] = true;
         }
