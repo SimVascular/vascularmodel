@@ -12,7 +12,7 @@ function getFilterMenu()
 {
   var allHooks = []
   
-  //sets default values for Age
+  //sets values of Age to default
   if (document.getElementById("min-age"))
   {
     availableFilters['Age'] = true
@@ -22,9 +22,14 @@ function getFilterMenu()
   {
     availableFilters["Age"] = false
   }
+
   if (document.getElementById("max-age"))
   {
     document.getElementById("max-age").value = 120;
+  }
+  else
+  {
+    availableFilters["Age"] = false
   }
 
   //generates html of Sex dropdown menu
