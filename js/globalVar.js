@@ -2,28 +2,50 @@
 
 //data has all the models read in the csv, scrambled
 var data;
+
 //filteredData has the models that correspond to the filters selected
 var filteredData;
+
 //preservedOrderData is data read from the csv but unscrambled
 var preservedOrderData = [];
+
 //displayedData is the data that is displayed in the view selected models
 var displayedData;
+
 //selectedModels is an array of booleans that contains which models are selected by the user
 var selectedModels = [];
-//viewingModel describes which model is current selected
+
+//viewingModel describes which model is currently selected
 var viewingModel = '';
+
+//viewingModel describes which simulation result is currently selected
 var viewingThisSimulation = '';
+
+//viewingSimulations is true when the user is viewing simulations
 var viewingSimulations = false;
+
+//variable for dynamically generating scroll bar
 var curIndex = 0;
+
+//smallScreen is true when the user is on mobile
 var smallScreen = false
+
+//global variables keeping track of when filters are applied and the filtered data
 var lastFapplied = 0;
 var lastFdata = [];
 var lastSelectedData = [];
+
+//viewingSelectedModels is true when the user is viewing their selected models
 var viewingSelectedModels = false;
+
 var doneDownloading = false;
+
+//variable that is true when the modal dialog is on to place an overlay
 var isOverlayOn = false;
+
 var isSafeSelected = false;
 var menuBarShowing = false;
+
 // var modeIsResults = false;
 var selectAllIconApplied = false;
 //default is always "zip"
@@ -31,8 +53,8 @@ var downloadType = "zip";
 //dictionary with the sizes of all the files
 var fileSizes;
 
+//global variables accessed for the confirmdownload panel
 var downloadFunction;
-
 var countModels;
 var modelsWithResults;
 var countResults;
@@ -846,20 +868,6 @@ function informUser(msg, hasOk = false) {
   }
 }
 
-// this is too slow. We give it for granted to improve ux
-//checks if a file exists given url
-// function checkFileExist(url) {
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('HEAD', url, false);
-//   xhr.send();
-   
-//   if (xhr.status == "404") {
-//       return false;
-//   } else {
-//       return true;
-//   }
-// }
-
 //creates url to download models depending on download type and model name
 function craftURL(model)
 {
@@ -881,6 +889,7 @@ function craftURL(model)
   return url;
 }
 
+//name is accessed differently for simulation results and models
 function craftDownloadName(model)
 {
   if(viewingSimulations)
@@ -929,9 +938,6 @@ function getSumOfSizes(boolArray)
       count += size[0];
     }
   }
-
-  //count is size in bytes
-  // count = sizeConverter(count)
 
   return count;
 }
@@ -1016,66 +1022,6 @@ function maxDownloadMessage(downloadGb, maxGb, warningHTML)
   warningHTML.textContent = warning;
 }
 
-//creates drop down menu for file types
-function dropDown(putDropDownHere, string)
-{
-  //labels the drop down menu
-  var title = document.createElement("div");
-  title.textContent = "Choose file type: ";
-  putDropDownHere.appendChild(title)
-
-  //creates the select box
-  var select = document.createElement("select");
-  select.setAttribute("id", "chooseType");
-  select.setAttribute("class", "spaceBelow");
-
-  //these values must be exactly the folder type
-  //i.e. "vtp", "vtu"
-  var options = []
-  if(string == "all")
-  {
-    options.push("zip");
-    options.push("vtp");
-    options.push("vtu");
-  }
-  if(string == "no results")
-  {
-    options.push("zip");
-  }
-  if(string == "only results")
-  {
-    options.push("vtp");
-    options.push("vtu");
-  }
-  
-  //reset type to default of select
-  downloadType = options[0]
-
-  for(var i = 0; i < options.length; i++)
-  {
-    //create options under select
-    var option = document.createElement("option");
-    option.setAttribute("value", options[i]);
-
-    //specify what the options are
-    if(options[i] == "vtp")
-    {
-      option.textContent = "Simulation Results (.vtp)";
-    }
-    else if(options[i] == "vtu")
-    {
-      option.textContent = "Simulation Results (.vtu)";
-    }
-    else if (options[i] == "zip")
-    {
-      option.textContent = "SimVascular Project (.zip)";
-    }
-    select.appendChild(option);
-  }
-
-  putDropDownHere.appendChild(select);
-}
-
 //downloads individual models
 function downloadModel(model)
   {
@@ -1111,6 +1057,7 @@ function downloadModel(model)
     }
 }
 
+//checks if model has simulation results
 function hasSimulationResults(modelName)
 {
   var index = results.findIndex(p => p["Model Name"] == modelName);
@@ -1118,6 +1065,7 @@ function hasSimulationResults(modelName)
   return index != -1;
 }
 
+//returns first simulation result in the csv that corresponds to the current model
 function returnDefaultSimulationResult()
 {
   var index = results.findIndex(p => p["Model Name"] == viewingModel['Name']);

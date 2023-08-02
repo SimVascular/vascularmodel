@@ -27,6 +27,7 @@ $(document).ready(function($){
     dataType: "text",
     async: false,
     success: function(fdata) {
+      // sets up the fileSizes array with keys and values
       fileSizes = {};
       fileSizesCsv = $.csv.toObjects(fdata);
       var arrayLength = fileSizesCsv.length;
@@ -334,6 +335,7 @@ function greetingText(data)
   }
 } //end greetingText()
 
+// if results are visible, displays the two model and results tab
 function setUpResultsButton()
 {
   var tabs = document.getElementById("tab_for_modal");
@@ -348,6 +350,7 @@ function setUpResultsButton()
   }
 }
 
+// greetingText but for when the user is viewing simulation results
 function greetingForSimulationResults()
 {
   simulationResult = viewingThisSimulation;
@@ -361,7 +364,7 @@ function greetingForSimulationResults()
   //details inside window
   var details = "";
   
-  //all categories displayed in window
+  //gets the names of the categories to display for simulation results
   var categoryName = getCategoryNameResults();
 
   for(var d = 0; d < categoryName.length; d++)
@@ -498,6 +501,8 @@ function checkOverlay(){
   }
 }
 
+// resets tabs and variables so that the next time someone opens the
+// modaldialog, the default is viewing the model
 function resetFromSimulationResult(){
   viewingSimulations = false;
   var model_tab = document.getElementById("model_tab");
@@ -509,6 +514,10 @@ function resetFromSimulationResult(){
   toggleButtons()
 }
 
+// toggles the buttons
+// does not show the pdf button in the simulation results tab
+// adjusts the bootstrap columns to recenter the buttons when there are only two
+// adjusts what displays if someone hovers on a button
 function toggleButtons()
 {
   if(viewingSimulations)
@@ -702,11 +711,6 @@ function generateContent(modelData) {
 
   //creates ID for hook to open modalDialog
   selectBox.setAttribute("id", modelData['Name'] + "_selects");
-
-  // let threeD = document.createElement("i");
-  // threeD.textContent = "3D"
-  // threeD.classList.add("bottom-left");
-  // threeD.setAttribute("id", modelData['Name'] + "_3D")
   
   //creates image of model
   let innerImg = document.createElement("img");
@@ -743,6 +747,7 @@ function removeContent() {
   }
 }
 
+// adds the border and checked select icon if a model is selected
 function formatSelectedModels(wholeModel, selectBox, isSelected)
 {
   if(isSelected)
@@ -773,7 +778,6 @@ function formatSelectedModels(wholeModel, selectBox, isSelected)
     selectBox.classList.remove("selected");
 
   }
-
 }
 
 //updates selectedModels when a change has been made
