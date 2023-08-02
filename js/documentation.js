@@ -1,3 +1,4 @@
+//sets up the accordian in the tutorial for the menubar
 var acc = document.getElementsByClassName("tOCDropDown");
 var i;
 
@@ -20,18 +21,12 @@ for (i = 0; i < acc.length; i++) {
   });
 }
 
-$('#opening_filter').click(function() {
-  var a = document.createElement("a");
-  a.href = "#Opening_the_filter_menu";
-  a.click();
-  offsetAnchor();
-});
-
+//clicking on skipToTop icon triggers scrollToTop() function
 $('#top').click(function() {
   scrollToTop()
 });
 
-
+//smooth scrolling to return to top
 function scrollToTop() {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
