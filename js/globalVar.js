@@ -1,45 +1,43 @@
 //all global variables to stay organized
 
-//all arrays of datas:
-  //data has all the models read in the csv, scrambled
-  var data;
-  //filteredData has the models that correspond to the filters selected
-  var filteredData;
-  //preservedOrderData is data read from the csv but unscrambled
-  var preservedOrderData = [];
-  //displayedData is the data that is displayed in the view selected models
-  var displayedData;
-  //selectedModels is an array of booleans that contains which models are selected by the user
-  var selectedModels = [];
+//data has all the models read in the csv, scrambled
+var data;
+//filteredData has the models that correspond to the filters selected
+var filteredData;
+//preservedOrderData is data read from the csv but unscrambled
+var preservedOrderData = [];
+//displayedData is the data that is displayed in the view selected models
+var displayedData;
+//selectedModels is an array of booleans that contains which models are selected by the user
+var selectedModels = [];
+//viewingModel describes which model is current selected
+var viewingModel = '';
+var viewingThisSimulation = '';
+var viewingSimulations = false;
+var curIndex = 0;
+var smallScreen = false
+var lastFapplied = 0;
+var lastFdata = [];
+var lastSelectedData = [];
+var viewingSelectedModels = false;
+var doneDownloading = false;
+var isOverlayOn = false;
+var isSafeSelected = false;
+var menuBarShowing = false;
+// var modeIsResults = false;
+var selectAllIconApplied = false;
+//default is always "zip"
+var downloadType = "zip";
+//dictionary with the sizes of all the files
+var fileSizes;
 
-//other global variables:
-  var viewingModel = '';
-  var viewingThisSimulation = '';
-  var viewingSimulations = false;
-  var curIndex = 0;
-  var smallScreen = false
-  var lastFapplied = 0;
-  var lastFdata = [];
-  var lastSelectedData = [];
-  var viewingSelectedModels = false;
-  var doneDownloading = false;
-  var isOverlayOn = false;
-  var isSafeSelected = false;
-  var menuBarShowing = false;
-  // var modeIsResults = false;
-  var selectAllIconApplied = false;
-  //default is always "zip"
-  var downloadType = "zip";
-  //dictionary with the sizes of all the files
-  var fileSizes;
+var downloadFunction;
 
-  var downloadFunction;
-
-  var countModels;
-  var modelsWithResults;
-  var countResults;
-  var warningHTML = document.getElementById("warning");
-  var putDropDownHere = document.getElementById("putDropDownHere");
+var countModels;
+var modelsWithResults;
+var countResults;
+var warningHTML = document.getElementById("warning");
+var putDropDownHere = document.getElementById("putDropDownHere");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
