@@ -53,7 +53,7 @@ function getAllCategories()
   return allCategories;
 }
 
-//returns titles for the share multiple models table
+//returns details that will show in the table when sharing multiple models
 function getBareMinimum()
 {
   var output = ["Name", "Species", "Anatomy"]
@@ -61,7 +61,7 @@ function getBareMinimum()
   return output;
 }
 
-//returns titles for the share.html table for data
+//returns the details that will show in the share.html table for models
 function getDetailsTitlesForModel()
 {
   var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
@@ -69,7 +69,22 @@ function getDetailsTitlesForModel()
   return output;
 }
 
-//returns titles for the share.html table for results
+// this returns the details that will show in the modaldialog when viewing a model in the gallery
+function getCategoryName()
+{
+  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
+
+  return output;
+}
+
+// this returns the details that will show in the modaldialog when viewing a simulation result in the gallery
+function getCategoryNameResults()
+{
+  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"];
+  return output;
+}
+
+//returns the details that will show in the share.html table for results
 function getDetailsTitlesForResults()
 {
   var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator", "Notes", "Size"]
@@ -77,7 +92,7 @@ function getDetailsTitlesForResults()
   return output;
 }
 
-//excludes titles that aren't filtered in the filter bar
+// this function determines what categories show up in the filter bar
 function getFilterTitles()
 {
   if (useAllFilters)
@@ -86,18 +101,11 @@ function getFilterTitles()
 
     return output;
   }
+  
   return [];
 }
 
-//returns the different categories someone can filter through
-function getCategoryName()
-{
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
-
-  return output;
-}
-
-//returns categories that you can search for in the search bar
+// this function determines what you can search for in the search bar
 function searchBarCategories()
 {
   var output = ["Name", "Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "Ethnicity", "Animal", "Image Type", "Model Creator"];
@@ -105,7 +113,7 @@ function searchBarCategories()
   return output;
 }
 
-//returns the titles under ProjectMustContain
+//returns the titles under ProjectMustContain filter
 function getMustContainFilterTitles()
 {
   var output = ["Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"];

@@ -362,7 +362,7 @@ function greetingForSimulationResults()
   var details = "";
   
   //all categories displayed in window
-  var categoryName = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"]
+  var categoryName = getCategoryNameResults();
 
   for(var d = 0; d < categoryName.length; d++)
   {
