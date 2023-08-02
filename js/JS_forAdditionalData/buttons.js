@@ -21,7 +21,7 @@
     var sizeWarning = document.getElementById("downloadSize");
     sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
   
-    downloadFunction = function download() {downloadModel(viewingModel["Name"])};
+    downloadFunction = function download() {downloadModel(viewingModel)};
     doConfirm(message, "Download", downloadFunction);
   });
   
@@ -64,18 +64,18 @@
   $('.pdf-button-modal').click(function() {
     //creates anchor tag to download
     var a = document.createElement("a");
-    a.href = "https://www.vascularmodel.com/vmr-pdfs/" + viewingModel['Name'] + ".pdf";
+    a.href = pathToFiles + "additionaldata/" + viewingModel['Name'];
     // a.setAttribute("download", viewingModel['Name']);
     a.setAttribute("target", "_blank");
     //simulates click
     a.click();
   });
   
-  //PDF button inside modalText
+  //download button inside modalText
   $('.download-button-additionaldata').click(function() {
     //creates anchor tag to download
     var a = document.createElement("a");
-    a.href = "https://www.vascularmodel.com/additionaldata/" + viewingModel['Name'] + ".zip";
+    a.href = pathToFiles + "additionaldata/" + viewingModel['Name'] + ".zip";
     // a.setAttribute("download", viewingModel['Name']);
     a.setAttribute("target", "_blank");
     //simulates click

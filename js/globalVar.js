@@ -1,4 +1,4 @@
-//all global variables to stay organized
+var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
 
 //data has all the models read in the csv, scrambled
 var data;
@@ -868,22 +868,29 @@ function informUser(msg, hasOk = false) {
   }
 }
 
-//creates url to download models depending on download type and model name
-function craftURL(model)
+//creates url to download models depending on what the user is viewing
+function craftURL(model, type = "global")
 {
+  if(type == "global")
+  {
+    var url = pathToFiles;
+  }
+  else if(type == "relative")
+  {
+    var url = "";
+  }
+
   if(viewingSimulations)
   {
-    var url = "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
+    url += "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
   }
   else if (viewingAdditionalData)
   {
-    var url = "additionaldata/"
-    url += model["Name"] + ".zip";
+    url += "additionaldata/" + model["Name"] + ".zip";
   }
   else
   {
-    var url = "svprojects/"
-    url += model["Name"] + ".zip";
+    url += "svprojects/" +  model["Name"] + ".zip";
   }
 
   return url;
@@ -945,7 +952,8 @@ function getSumOfSizes(boolArray)
 //gets size of individual models given their name
 function getSizeIndiv(model)
 {
-  var url = craftURL(model);
+  // url for size is not a global relative but a relative path
+  var url = craftURL(model, "relative");
 
   var size = parseInt(fileSizes[url]);
 

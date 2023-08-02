@@ -6,7 +6,7 @@ $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
-    url: "dataset/dataset-svprojects.csv",
+    url: "https://www.vascularmodel.com/dataset/dataset-svprojects.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -40,7 +40,7 @@ $(document).ready(function($){
 
   $.ajax({
     type: "GET",
-    url: "dataset/dataset-diseaseTree.csv",
+    url: "https://www.vascularmodel.com/dataset/dataset-diseaseTree.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -51,7 +51,7 @@ $(document).ready(function($){
 
   $.ajax({
     type: "GET",
-    url: "dataset/dataset-svresults.csv",
+    url: "https://www.vascularmodel.com/dataset/dataset-svresults.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -714,7 +714,7 @@ function generateContent(modelData) {
   
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'https://www.vascularmodel.com/img/vmr-images/' + modelData['Name'] + '.png'
+  innerImg.src = pathToFiles + 'vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 

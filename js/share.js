@@ -33,7 +33,7 @@ $(document).ready(function($){
     //reads CSV for data
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-svprojects.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-svprojects.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -44,7 +44,7 @@ $(document).ready(function($){
 
     $.ajax({
         type: "GET",
-        url: "dataset/dataset-svresults.csv",
+        url: "https://www.vascularmodel.com/dataset/dataset-svresults.csv",
         dataType: "text",
         async: false,
         success: function(fdata) {
@@ -54,7 +54,7 @@ $(document).ready(function($){
 
     $.ajax({
         type: "GET",
-        url: "dataset/additionaldata.csv",
+        url: "https://www.vascularmodel.com/dataset/additionaldata.csv",
         dataType: "text",
         async: false,
         success: function(fdata) {
@@ -343,13 +343,9 @@ function setUpImage()
 {
     //creates image
     let img = document.createElement("img");
-    if(viewingAdditionalData)
+    if(viewingModel || viewingAdditionalData)
     {
-        img.src = 'https://www.vascularmodel.com/img/additionaldata-images/' + model['Name'] + '.png';
-    }
-    else if(viewingModel)
-    {
-        img.src = 'https://www.vascularmodel.com/img/vmr-images/' + model['Name'] + '.png';
+        img.src = pathToFiles + 'vmr-images/' + model['Name'] + '.png';
     }
     img.alt = model['Name'];
     img.classList.add("imgContainer");

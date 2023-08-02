@@ -1,42 +1,43 @@
+var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
+
 //all global variables to stay organized
 
-//all arrays of datas:
-  //data has all the models read in the csv, scrambled
-  var data;
-  //filteredData has the models that correspond to the filters selected
-  var filteredData;
-  //preservedOrderData is data read from the csv but unscrambled
-  var preservedOrderData = [];
-  //displayedData is the data that is displayed in the view selected models
-  var displayedData;
-  //selectedModels is an array of booleans that contains which models are selected by the user
-  var selectedModels = [];
+//data has all the models read in the csv, scrambled
+var data;
+//filteredData has the models that correspond to the filters selected
+var filteredData;
+//preservedOrderData is data read from the csv but unscrambled
+var preservedOrderData = [];
+//displayedData is the data that is displayed in the view selected models
+var displayedData;
+//selectedModels is an array of booleans that contains which models are selected by the user
+var selectedModels = [];
 
 //other global variables:
-  var viewingModel = '';
-  var curIndex = 0;
-  var smallScreen = false
-  var lastFapplied = 0;
-  var lastFdata = [];
-  var lastSelectedData = [];
-  var viewingSelectedModels = false;
-  var doneDownloading = false;
-  var isOverlayOn = false;
-  var isSafeSelected = false;
-  var menuBarShowing = false;
-  // var modeIsResults = false;
-  var selectAllIconApplied = false;
-  //default is always "zip"
-  var downloadType = "zip";
-  //dictionary with the sizes of all the files
-  var fileSizes;
+var viewingModel = '';
+var curIndex = 0;
+var smallScreen = false
+var lastFapplied = 0;
+var lastFdata = [];
+var lastSelectedData = [];
+var viewingSelectedModels = false;
+var doneDownloading = false;
+var isOverlayOn = false;
+var isSafeSelected = false;
+var menuBarShowing = false;
+// var modeIsResults = false;
+var selectAllIconApplied = false;
+//default is always "zip"
+var downloadType = "zip";
+//dictionary with the sizes of all the files
+var fileSizes;
 
-  var downloadFunction;
+var downloadFunction;
 
-  var countModels;
-  var modelsWithResults;
-  var countResults;
-  var warningHTML = document.getElementById("warning");
+var countModels;
+var modelsWithResults;
+var countResults;
+var warningHTML = document.getElementById("warning");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -549,10 +550,19 @@ function informUser(msg, hasOk = false) {
 }
 
 //in globalVar.js for additional data, always crafting url for additional data models
-function craftURL(model)
+function craftURL(model, type = "global")
 {
-    var url = "additionaldata/"
-    url += model["Name"] + ".zip";
+  if(type == "global")
+  {
+    var url = pathToFiles;
+  }
+  else if(type == "relative")
+  {
+    var url = "";
+  }
+  
+  url += "additionaldata/"
+  url += model["Name"] + ".zip";
 
   return url;
 }
@@ -611,16 +621,14 @@ function getSumOfSizes(boolArray)
     }
   }
 
-  //count is size in bytes
-  // count = sizeConverter(count)
-
   return count;
 }
 
 //gets size of individual models given their name
 function getSizeIndiv(model)
 {
-  var url = craftURL(model);
+  // path for size is not a global url but a relative one
+  var url = craftURL(model, "relative");
 
   var size = parseInt(fileSizes[url]);
 
@@ -698,22 +706,22 @@ function maxDownloadMessage(downloadGb, maxGb, warningHTML)
 }
 
 //downloads individual models
-function downloadModel(modelName)
+function downloadModel(model)
   {
     //creates link of what the user wants to download
-    var fileUrl = craftURL(modelName);
+    var fileUrl = craftURL(model);
 
     //creates anchor tag to download
     var a = document.createElement("a");
     a.href = fileUrl;
-    a.setAttribute("download", craftDownloadName(modelName));
+    a.setAttribute("download", craftDownloadName(model["Name"]));
     //simulates click
     a.click();
     
     if(downloadType != "zip")
     {
       //sends message to server with user's download
-      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+      gtag('event', 'download_results_' + model["Name"] + "." + downloadType, {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',
