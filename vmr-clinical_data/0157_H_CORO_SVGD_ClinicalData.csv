@@ -1,6 +1,0 @@
-﻿name,sex,age,notes,"Age, years","Female, n (%)","Years since CABG, years","Body mass index, kg/m^2","Diabetes, n (%)","Hypertension, n (%)","Hyperlipidemia, n (%)","Smoking history, n (%)","Family history of CAD, n (%)","Previous MI, n (%)",LVEF,No. of SVGs per patient,"No. of patients with LIMA grafts, n (%)","No. of patients with RIMA grafts, n (%)"
-O344211000_2006,-,-,"Specific patient data is not available for this model. However, this model and the following models 
-
-O0171SC, O6397SC, O8963SC, O11908, O20719_2006, O51001_2009, O145207, O150323_2009, O227241_2006, O351095_2016, O683375_2005, O344211000_2006, O128301_2008, O690801_2007 
-
-are all part of the same publication (https://doi.org/10.1007/s12265-020-09982-7) and the aggregate patient data between all 15 models can be found below. ",71.5 ± 9.5,1 (7),10 ± 6,25.2 ± 2.2,7 (47),14 (100),14 (100),6 (40),11 (73),14 (100),48% ± 15%,2.7 ± 0.7,12 (80),1 (7)

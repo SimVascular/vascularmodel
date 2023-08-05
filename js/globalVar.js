@@ -92,7 +92,7 @@ function getDetailsTitlesForModel()
 // this returns the details that will show in the modaldialog when viewing a model in the gallery
 function getCategoryName()
 {
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
+  var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
 
   return output;
 }
@@ -112,7 +112,9 @@ function getDetailsTitlesForResults()
   return output;
 }
 
-// this function determines what categories show up in the filter bar
+// this function helps with the applyFilters() function
+// it is more complicated to change this function, as code needs to be updated
+// in dataset.html and getFilterMenu() and applyFilters() to add new filtering categories
 function getFilterTitles()
 {
   if (useAllFilters)

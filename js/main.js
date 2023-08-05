@@ -207,7 +207,6 @@ function greetingText(data)
   var details = "";
   //all categories displayed in window
   var categoryName = getCategoryName();
-  categoryName.unshift("Legacy Name")
 
   for(var d = 0; d < categoryName.length; d++)
   {
@@ -253,7 +252,8 @@ function greetingText(data)
   } //end for-loop through categoryName array
 
   //formatting for whether or not each fdr is avaliable
-  var fdrs = ['Images', 'Paths', 'Segmentations', 'Models', 'Meshes', 'Simulations']
+  var fdrs = getMustContainFilterTitles();
+  
   for (var i = 0; i < fdrs.length; i++) {
     //changes "1" to "yes" and "0" to "no"
     if (data[fdrs[i]] == '1') {
