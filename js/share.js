@@ -217,7 +217,9 @@ function getVariable()
 
         if(models.length > 6)
         {
-           document.getElementById("download-all-models").style.display = "none" 
+            document.getElementById("download-all-models").classList.add("cannotClick")
+           document.getElementById("download-all-models").title = "Unfortunately, you cannot download more than 6 models at once.";
+           $("#download-all-models").unbind();
         }
         
     }
