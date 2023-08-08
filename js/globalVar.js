@@ -757,7 +757,7 @@ function clearDoConfirm()
 }
 
 //lets us confirm actions with users
-function doConfirm(msg, confirmText, downloadFn) {
+function doConfirm(msg, confirmText, downloadFn, hasDownload = true) {
   //show overlay
   var overlay = document.getElementById("confirmOverlay");
   overlay.style.display = "block";
@@ -788,6 +788,21 @@ function doConfirm(msg, confirmText, downloadFn) {
 
   var confirmBox = $("#confirmBox");
   confirmBox.find(".message").text(msg);
+
+  // toggles the "Download" button because the ability to download
+  // is removed over 6 models
+  if(!hasDownload)
+  {
+    document.getElementById("confirmButtons").style.display = "none";
+  }
+  else
+  {
+    if(document.getElementById("confirmButtons"))
+    {
+      document.getElementById("confirmButtons").style.display = "block";
+    }
+    
+  }
 
   $('#download-confirm-button').text(confirmText)
   bindsButtonConfirmation(".download", downloadFn)
@@ -1037,13 +1052,15 @@ function downloadModel(model)
   {
     //creates link of what the user wants to download
     var fileUrl = craftURL(model);
+    document.getElementById("iframeForDownload").src = fileUrl;
+    // window.open(fileUrl)
 
-    //creates anchor tag to download
-    var a = document.createElement("a");
-    a.href = fileUrl;
-    a.setAttribute("download", craftDownloadName(model));
-    //simulates click
-    a.click();
+    // //creates anchor tag to download
+    // var a = document.createElement("a");
+    // a.href = fileUrl;
+    // a.setAttribute("download", craftDownloadName(model));
+    // //simulates click
+    // a.click();
     
     if(viewingSimulations)
     {

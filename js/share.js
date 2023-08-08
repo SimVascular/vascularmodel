@@ -214,6 +214,12 @@ function getVariable()
         
         displayRelevant(3);
         displayTableModels();
+
+        if(models.length > 6)
+        {
+           document.getElementById("download-all-models").style.display = "none" 
+        }
+        
     }
 }
 
@@ -919,7 +925,6 @@ $("#download-all-models").click(function () {
     //counts number of selected models
     countModels = models.length;
 
-    //if nothing to download, download-all button has no function
     if (countModels > 0)
     {
         var message = downloadConfirmation(countModels, "model", boolArray);
@@ -938,7 +943,7 @@ async function downloadAll()
     for(var i = 0; i < models.length; i++)
     {
         downloadModel(models[i]);
-        await new Promise(r => setTimeout(r, 3));
+        await new Promise(r => setTimeout(r, 500));
     }
 }
 

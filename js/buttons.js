@@ -193,7 +193,12 @@ $("#download-all").click(function () {
   countResults = modelsWithResults.filter(value => value === true).length;
 
   //if nothing to download, download-all button has no function
-  if (countModels > 0)
+  if (countModels > 6)
+  {
+    var message = "Unfortunately, you cannot download more than 6 models at once."
+    doConfirm(message, "Download", downloadFunction, false);
+  }  
+  else if (countModels > 0)
   {
     var message = downloadConfirmation(countModels, "model", selectedModels);
 
@@ -217,12 +222,11 @@ async function downloadAllModels(){
       listOfModels.push(preservedOrderData[i])
     }
   }
-
   //sends to download all models
   for(var i = 0; i < listOfModels.length; i++)
   {
     downloadModel(listOfModels[i]);
-    await new Promise(r => setTimeout(r, 15));
+    await new Promise(r => setTimeout(r, 500));
   }
 
   //selected models not cleared
