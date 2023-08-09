@@ -367,3 +367,11 @@ table {
     display: block;
     opacity: 1;
   }
+
+  .cannotClick {
+    cursor: not-allowed;
+  }
+
+  .cannotClick:hover {
+   background-color: #F0F0F0; 
+  }

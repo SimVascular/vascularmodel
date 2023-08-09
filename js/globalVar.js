@@ -1,45 +1,65 @@
-//all global variables to stay organized
+var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
 
-//all arrays of datas:
-  //data has all the models read in the csv, scrambled
-  var data;
-  //filteredData has the models that correspond to the filters selected
-  var filteredData;
-  //preservedOrderData is data read from the csv but unscrambled
-  var preservedOrderData = [];
-  //displayedData is the data that is displayed in the view selected models
-  var displayedData;
-  //selectedModels is an array of booleans that contains which models are selected by the user
-  var selectedModels = [];
+//data has all the models read in the csv, scrambled
+var data;
 
-//other global variables:
-  var viewingModel = '';
-  var viewingThisSimulation = '';
-  var viewingSimulations = false;
-  var curIndex = 0;
-  var smallScreen = false
-  var lastFapplied = 0;
-  var lastFdata = [];
-  var lastSelectedData = [];
-  var viewingSelectedModels = false;
-  var doneDownloading = false;
-  var isOverlayOn = false;
-  var isSafeSelected = false;
-  var menuBarShowing = false;
-  // var modeIsResults = false;
-  var selectAllIconApplied = false;
-  //default is always "zip"
-  var downloadType = "zip";
-  //dictionary with the sizes of all the files
-  var fileSizes;
+//filteredData has the models that correspond to the filters selected
+var filteredData;
 
-  var downloadFunction;
+//preservedOrderData is data read from the csv but unscrambled
+var preservedOrderData = [];
 
-  var countModels;
-  var modelsWithResults;
-  var countResults;
-  var warningHTML = document.getElementById("warning");
-  var putDropDownHere = document.getElementById("putDropDownHere");
+//displayedData is the data that is displayed in the view selected models
+var displayedData;
+
+//selectedModels is an array of booleans that contains which models are selected by the user
+var selectedModels = [];
+
+//viewingModel describes which model is currently selected
+var viewingModel = '';
+
+//viewingModel describes which simulation result is currently selected
+var viewingThisSimulation = '';
+
+//viewingSimulations is true when the user is viewing simulations
+var viewingSimulations = false;
+
+//variable for dynamically generating scroll bar
+var curIndex = 0;
+
+//smallScreen is true when the user is on mobile
+var smallScreen = false
+
+//global variables keeping track of when filters are applied and the filtered data
+var lastFapplied = 0;
+var lastFdata = [];
+var lastSelectedData = [];
+
+//viewingSelectedModels is true when the user is viewing their selected models
+var viewingSelectedModels = false;
+
+var doneDownloading = false;
+
+//variable that is true when the modal dialog is on to place an overlay
+var isOverlayOn = false;
+
+var isSafeSelected = false;
+var menuBarShowing = false;
+
+// var modeIsResults = false;
+var selectAllIconApplied = false;
+//default is always "zip"
+var downloadType = "zip";
+//dictionary with the sizes of all the files
+var fileSizes;
+
+//global variables accessed for the confirmdownload panel
+var downloadFunction;
+var countModels;
+var modelsWithResults;
+var countResults;
+var warningHTML = document.getElementById("warning");
+var putDropDownHere = document.getElementById("putDropDownHere");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -53,7 +73,7 @@ function getAllCategories()
   return allCategories;
 }
 
-//returns titles for the share multiple models table
+//returns details that will show in the table when sharing multiple models
 function getBareMinimum()
 {
   var output = ["Name", "Species", "Anatomy"]
@@ -61,7 +81,7 @@ function getBareMinimum()
   return output;
 }
 
-//returns titles for the share.html table for data
+//returns the details that will show in the share.html table for models
 function getDetailsTitlesForModel()
 {
   var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
@@ -69,7 +89,22 @@ function getDetailsTitlesForModel()
   return output;
 }
 
-//returns titles for the share.html table for results
+// this returns the details that will show in the modaldialog when viewing a model in the gallery
+function getCategoryName()
+{
+  var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
+
+  return output;
+}
+
+// this returns the details that will show in the modaldialog when viewing a simulation result in the gallery
+function getCategoryNameResults()
+{
+  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"];
+  return output;
+}
+
+//returns the details that will show in the share.html table for results
 function getDetailsTitlesForResults()
 {
   var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator", "Notes", "Size"]
@@ -77,7 +112,9 @@ function getDetailsTitlesForResults()
   return output;
 }
 
-//excludes titles that aren't filtered in the filter bar
+// this function helps with the applyFilters() function
+// it is more complicated to change this function, as code needs to be updated
+// in dataset.html and getFilterMenu() and applyFilters() to add new filtering categories
 function getFilterTitles()
 {
   if (useAllFilters)
@@ -86,18 +123,11 @@ function getFilterTitles()
 
     return output;
   }
+  
   return [];
 }
 
-//returns the different categories someone can filter through
-function getCategoryName()
-{
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
-
-  return output;
-}
-
-//returns categories that you can search for in the search bar
+// this function determines what you can search for in the search bar
 function searchBarCategories()
 {
   var output = ["Name", "Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "Ethnicity", "Animal", "Image Type", "Model Creator"];
@@ -105,7 +135,7 @@ function searchBarCategories()
   return output;
 }
 
-//returns the titles under ProjectMustContain
+//returns the titles under ProjectMustContain filter
 function getMustContainFilterTitles()
 {
   var output = ["Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"];
@@ -727,7 +757,7 @@ function clearDoConfirm()
 }
 
 //lets us confirm actions with users
-function doConfirm(msg, confirmText, downloadFn) {
+function doConfirm(msg, confirmText, downloadFn, hasDownload = true) {
   //show overlay
   var overlay = document.getElementById("confirmOverlay");
   overlay.style.display = "block";
@@ -758,6 +788,21 @@ function doConfirm(msg, confirmText, downloadFn) {
 
   var confirmBox = $("#confirmBox");
   confirmBox.find(".message").text(msg);
+
+  // toggles the "Download" button because the ability to download
+  // is removed over 6 models
+  if(!hasDownload)
+  {
+    document.getElementById("confirmButtons").style.display = "none";
+  }
+  else
+  {
+    if(document.getElementById("confirmButtons"))
+    {
+      document.getElementById("confirmButtons").style.display = "block";
+    }
+    
+  }
 
   $('#download-confirm-button').text(confirmText)
   bindsButtonConfirmation(".download", downloadFn)
@@ -840,41 +885,35 @@ function informUser(msg, hasOk = false) {
   }
 }
 
-// this is too slow. We give it for granted to improve ux
-//checks if a file exists given url
-// function checkFileExist(url) {
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('HEAD', url, false);
-//   xhr.send();
-   
-//   if (xhr.status == "404") {
-//       return false;
-//   } else {
-//       return true;
-//   }
-// }
-
-//creates url to download models depending on download type and model name
-function craftURL(model)
+//creates url to download models depending on what the user is viewing
+function craftURL(model, type = "global")
 {
+  if(type == "global")
+  {
+    var url = pathToFiles;
+  }
+  else if(type == "relative")
+  {
+    var url = "";
+  }
+
   if(viewingSimulations)
   {
-    var url = "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
+    url += "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
   }
   else if (viewingAdditionalData)
   {
-    var url = "additionaldata/"
-    url += model["Name"] + ".zip";
+    url += "additionaldata/" + model["Name"] + ".zip";
   }
   else
   {
-    var url = "svprojects/"
-    url += model["Name"] + ".zip";
+    url += "svprojects/" +  model["Name"] + ".zip";
   }
 
   return url;
 }
 
+//name is accessed differently for simulation results and models
 function craftDownloadName(model)
 {
   if(viewingSimulations)
@@ -924,16 +963,14 @@ function getSumOfSizes(boolArray)
     }
   }
 
-  //count is size in bytes
-  // count = sizeConverter(count)
-
   return count;
 }
 
 //gets size of individual models given their name
 function getSizeIndiv(model)
 {
-  var url = craftURL(model);
+  // url for size is not a global relative but a relative path
+  var url = craftURL(model, "relative");
 
   var size = parseInt(fileSizes[url]);
 
@@ -1010,78 +1047,20 @@ function maxDownloadMessage(downloadGb, maxGb, warningHTML)
   warningHTML.textContent = warning;
 }
 
-//creates drop down menu for file types
-function dropDown(putDropDownHere, string)
-{
-  //labels the drop down menu
-  var title = document.createElement("div");
-  title.textContent = "Choose file type: ";
-  putDropDownHere.appendChild(title)
-
-  //creates the select box
-  var select = document.createElement("select");
-  select.setAttribute("id", "chooseType");
-  select.setAttribute("class", "spaceBelow");
-
-  //these values must be exactly the folder type
-  //i.e. "vtp", "vtu"
-  var options = []
-  if(string == "all")
-  {
-    options.push("zip");
-    options.push("vtp");
-    options.push("vtu");
-  }
-  if(string == "no results")
-  {
-    options.push("zip");
-  }
-  if(string == "only results")
-  {
-    options.push("vtp");
-    options.push("vtu");
-  }
-  
-  //reset type to default of select
-  downloadType = options[0]
-
-  for(var i = 0; i < options.length; i++)
-  {
-    //create options under select
-    var option = document.createElement("option");
-    option.setAttribute("value", options[i]);
-
-    //specify what the options are
-    if(options[i] == "vtp")
-    {
-      option.textContent = "Simulation Results (.vtp)";
-    }
-    else if(options[i] == "vtu")
-    {
-      option.textContent = "Simulation Results (.vtu)";
-    }
-    else if (options[i] == "zip")
-    {
-      option.textContent = "SimVascular Project (.zip)";
-    }
-    select.appendChild(option);
-  }
-
-  putDropDownHere.appendChild(select);
-}
-
 //downloads individual models
 function downloadModel(model)
   {
     //creates link of what the user wants to download
     var fileUrl = craftURL(model);
+    document.getElementById("iframeForDownload").src = fileUrl;
+    // window.open(fileUrl)
 
-    //creates anchor tag to download
-    var a = document.createElement("a");
-    a.href = fileUrl;
-    a.setAttribute("download", craftDownloadName(model));
-    //simulates click
-    a.click();
+    // //creates anchor tag to download
+    // var a = document.createElement("a");
+    // a.href = fileUrl;
+    // a.setAttribute("download", craftDownloadName(model));
+    // //simulates click
+    // a.click();
     
     if(viewingSimulations)
     {
@@ -1105,6 +1084,7 @@ function downloadModel(model)
     }
 }
 
+//checks if model has simulation results
 function hasSimulationResults(modelName)
 {
   var index = results.findIndex(p => p["Model Name"] == modelName);
@@ -1112,6 +1092,7 @@ function hasSimulationResults(modelName)
   return index != -1;
 }
 
+//returns first simulation result in the csv that corresponds to the current model
 function returnDefaultSimulationResult()
 {
   var index = results.findIndex(p => p["Model Name"] == viewingModel['Name']);

@@ -7,12 +7,12 @@ JavaScript for Filter Bar
 var availableFilters = {};
 var listOfCheckboxLiMade = [];
 
-
+//creates the filter bar
 function getFilterMenu()
 {
   var allHooks = []
   
-  //sets default values for Age
+  //sets values of Age to default
   if (document.getElementById("min-age"))
   {
     availableFilters['Age'] = true
@@ -22,9 +22,14 @@ function getFilterMenu()
   {
     availableFilters["Age"] = false
   }
+
   if (document.getElementById("max-age"))
   {
     document.getElementById("max-age").value = 120;
+  }
+  else
+  {
+    availableFilters["Age"] = false
   }
 
   //generates html of Sex dropdown menu
@@ -116,9 +121,11 @@ function getFilterMenu()
     }
   }
 
+  //calculates the maximum of duplicate children checkboxes
   findModeOfListOfCheckboxLiMade();
 
-  //loops through all hooks saved above
+  //hooks are set after the element has been created
+  //otherwise it does not work
   for (var i = 0; i < allHooks.length; i++)
   {
     for(var j = 0; j < allHooks[i].length; j++)
@@ -132,6 +139,7 @@ function getFilterMenu()
   headerHooks();
 }
 
+//generates the options under each filter category with checkboxes
 function generateCheckboxUl(category, ul, fromParent = false)
 {
   //array of the possible options in that category
@@ -268,7 +276,7 @@ function makeEmbeddedParent(checkboxNames, parentName)
   return [hooks, checkboxNames, li];
 }
 
-//makes the names compaitble for hooks and IDs
+//makes the names compatible for hooks and IDs
 function codifyHookandID(checkboxName)
 {
   //if no spaces to replace
@@ -379,8 +387,8 @@ function generateOptions(optionName)
 
 var mode = -1;
 
-//finds the mode for the listOfCheckboxLiMade array
 //returns maximum times a name appears in listOfCheckboxLiMade
+//to determine maximum duplicates of children checkboxes
 function findModeOfListOfCheckboxLiMade(){
   var names = [];
   var max = -1;
@@ -420,6 +428,7 @@ function addHook(hook) {
   }
   else
   {
+    //creates hook regularly if not a checkbox
     $("#" + hook).change(function() {
       applyFilters();
     });
@@ -774,6 +783,8 @@ JavaScript for Filter Bar:
   The Three to Four Different Types of Filters
 
 ----------------------------*/
+
+//sets up the way the age filter works
 function ageFilter(partialData)
 {
   //takes in input from filter
@@ -831,6 +842,7 @@ function ageFilter(partialData)
   }
 }
 
+//sets up the way the filter works for dropdown menus
 function dropDownFilter(categoryName, partialData)
 {
   //reads which is selected in dropdown menu
@@ -865,11 +877,13 @@ function dropDownFilter(categoryName, partialData)
   return partialData;
 }
 
+//sets up the way the filters work for checkboxes
 function checkboxFilter(checkboxID, category, key, partialData, whichToKeep, mustContain)
 {
-  //checks if checkbox is checked
+  //checks which checkboxes are checked
   if (document.getElementById(checkboxID + "_1").checked)
   {  
+    //different filtering method if the checkbox is from the ProjectMustContain section
     if(mustContain)
     {
       for (var i = 0; i < partialData.length; i++) {
@@ -882,7 +896,7 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep, mus
     else
     {
       for (var i = 0; i < partialData.length; i++) {
-        if (partialData[i][category].includes(key)) {
+        if (partialData[i][category] == key) {
           //if element under that category in csv == key, saves model
           whichToKeep[i] = true;
         }
@@ -896,6 +910,7 @@ function checkboxFilter(checkboxID, category, key, partialData, whichToKeep, mus
   return [whichToKeep, false]
 }
 
+//sets up how the search bar works for the filter
 function searchBarFilter(partialData)
 {
   //checks for input in search bar
@@ -1054,13 +1069,13 @@ function hasResults(partialData){
   {
     var filteredData = []
 
-      for (var i = 0; i < partialData.length; i++) {
-        if(partialData[i]["Results"] == "1")
-        {
-          //saves in both arrays
-          filteredData.push(partialData[i]);
-        }
+    for (var i = 0; i < partialData.length; i++) {
+      if(partialData[i]["Results"] == "1")
+      {
+        //saves in both arrays
+        filteredData.push(partialData[i]);
       }
+    }
 
     return [filteredData, true];
   }
@@ -1071,9 +1086,10 @@ function hasResults(partialData){
   
 }
 
+//sets up checkbox hooks for the ProjectMustContain filters separately
 $(".checkbox-mustcontain").click(function() {
-  // needs to wait that split second so the attribute checked = true
-  // by the time the filters are applied
+  // needs to wait that split second so the attribute checked = true by the time 
+  // the filters are applied
   setTimeout(() => {
     applyFilters();
   }, 15);

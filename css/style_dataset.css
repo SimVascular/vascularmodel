@@ -902,7 +902,7 @@ error msg block behavior
 {
   cursor: not-allowed;
   color: var(--applied);
-  background-color: var(--select)
+  background-color: var(--select);
 }
 
 .hideElement{

@@ -11,6 +11,7 @@ $(document).ready(function($){
     });
 });
 
+//checks if the user is viewing the analytics section
 function isInViewport(className) {
     var element = document.querySelector('.' + className);
   var rect = element.getBoundingClientRect();
@@ -18,44 +19,27 @@ function isInViewport(className) {
   return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
 }
 
-
-// function isInViewport(className) {
-//   // Get the an HTML element
-//   var element = document.querySelector('.' + className);
-
-//   // Get its bounding client rectangle
-//   var bounding = element.getBoundingClientRect();
-//   console.log("top: " + bounding.top)
-//   console.log("left: " + bounding.left)
-//   console.log("right: " + bounding.right + " <= " + window.innerWidth)
-//   console.log("bottom: " + bounding.bottom + " <= " + window.innerHeight)
-//   // Checking part. Here the code checks if it's *fully* visible
-//   // Edit this part if you just want a partial visibility
-//   if (
-//       (bounding.top >= 0 && bounding.top <= 735)  || bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-//       &&
-//       bounding.left >= 0 || bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
-//   ) {
-//       return true;
-//   } else {
-//       return false;
-//   }
-// }
-
+//boolean to check if the animation has already been played once
 var playAnimation = true;
 
+// if the user loads the page already viewing the analytics section
+// the animation immediately runs
 if (playAnimation && isInViewport("analytics-section")) {
   playAnimation = false;
+  // very slight delay to allow the dataset to be read before animating the
+  // modelcount display
   setTimeout(() => {
     animateCounters()
   }, 1);
-  console.log("sad")
 }
 
+// listener for when the user scroll until they scroll to the analytics section
+// then the animation plays
 window.addEventListener('scroll', function () {
   {
   if (playAnimation && isInViewport("analytics-section")) {
     playAnimation = false;
+    // slight delay to let the user scroll into the section
     setTimeout(() => {
       animateCounters()
     }, 15);
@@ -63,16 +47,22 @@ window.addEventListener('scroll', function () {
   }
 });
 
+// sets up the counters
 function animateCounters()
 {
   var countupEls = document.getElementsByClassName('countup');
-  var numbers = [7000, 12000, numberOfModels]
-  var label = ["Users", "Downloads", "Models"]
+
+  // update analytic numbers here
+  var numbers = [7000, 12000, numberOfModels];
+  var label = ["Users", "Downloads", "Models"];
+
   for(var i = 0; i < countupEls.length; i++)
   {
     animateCountUp(countupEls[i], numbers[i], label[i])
   }
 }
+
+// sets up global variables for the animation counter
 
 // How long you want the animation to take, in ms
 const animationDuration = 1200;
@@ -107,8 +97,9 @@ function animateCountUp(el, number, label) {
     // If we’ve reached our last frame, stop the animation
     if ( frame >= totalFrames ) {
       clearInterval( counter );
-      var number = el.textContent
+      var number = el.textContent;
       el.textContent = number.toLocaleString("en-US");
+      // adds a "+" after counters that aren't that of the model counter
       if(label != "Models")
       {
         el.textContent += "+";

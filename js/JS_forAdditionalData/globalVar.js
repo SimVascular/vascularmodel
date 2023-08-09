@@ -1,42 +1,43 @@
+var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
+
 //all global variables to stay organized
 
-//all arrays of datas:
-  //data has all the models read in the csv, scrambled
-  var data;
-  //filteredData has the models that correspond to the filters selected
-  var filteredData;
-  //preservedOrderData is data read from the csv but unscrambled
-  var preservedOrderData = [];
-  //displayedData is the data that is displayed in the view selected models
-  var displayedData;
-  //selectedModels is an array of booleans that contains which models are selected by the user
-  var selectedModels = [];
+//data has all the models read in the csv, scrambled
+var data;
+//filteredData has the models that correspond to the filters selected
+var filteredData;
+//preservedOrderData is data read from the csv but unscrambled
+var preservedOrderData = [];
+//displayedData is the data that is displayed in the view selected models
+var displayedData;
+//selectedModels is an array of booleans that contains which models are selected by the user
+var selectedModels = [];
 
 //other global variables:
-  var viewingModel = '';
-  var curIndex = 0;
-  var smallScreen = false
-  var lastFapplied = 0;
-  var lastFdata = [];
-  var lastSelectedData = [];
-  var viewingSelectedModels = false;
-  var doneDownloading = false;
-  var isOverlayOn = false;
-  var isSafeSelected = false;
-  var menuBarShowing = false;
-  // var modeIsResults = false;
-  var selectAllIconApplied = false;
-  //default is always "zip"
-  var downloadType = "zip";
-  //dictionary with the sizes of all the files
-  var fileSizes;
+var viewingModel = '';
+var curIndex = 0;
+var smallScreen = false
+var lastFapplied = 0;
+var lastFdata = [];
+var lastSelectedData = [];
+var viewingSelectedModels = false;
+var doneDownloading = false;
+var isOverlayOn = false;
+var isSafeSelected = false;
+var menuBarShowing = false;
+// var modeIsResults = false;
+var selectAllIconApplied = false;
+//default is always "zip"
+var downloadType = "zip";
+//dictionary with the sizes of all the files
+var fileSizes;
 
-  var downloadFunction;
+var downloadFunction;
 
-  var countModels;
-  var modelsWithResults;
-  var countResults;
-  var warningHTML = document.getElementById("warning");
+var countModels;
+var modelsWithResults;
+var countResults;
+var warningHTML = document.getElementById("warning");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -48,173 +49,6 @@ function getAllCategories()
       allCategories.push(key);
   }
   return allCategories;
-}
-
-//returns titles for the share multiple models table
-function getBareMinimum()
-{
-  var output = ["Name", "Species", "Anatomy"]
-
-  return output;
-}
-
-//returns titles for the share.html table
-function getDetailsTitles()
-{
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
-
-  return output;
-}
-
-//excludes titles that aren't filtered in the filter bar
-function getFilterTitles()
-{
-  if (useAllFilters)
-  {
-    var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
-
-    return output;
-  }
-  return [];
-}
-
-//returns the different categories someone can filter through
-function getCategoryName()
-{
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
-
-  return output;
-}
-
-//returns categories that you can search for in the search bar
-function searchBarCategories()
-{
-  var output = ["Name", "VMR Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "General Disease Classifier", "Ethnicity", "Animal", "Image Type", "Model Creator"];
-
-  return output;
-}
-
-//returns the titles under ProjectMustContain
-function getMustContainFilterTitles()
-{
-  var output = ["Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"];
-  
-  return output;
-}
-
-//returns if the categoryName is a parent in the diseaseTree.csv
-function checksIfParent(categoryName)
-{
-  //searches for the categoryName in the parentArray
-  for(var p = 0; p < parentArray.length; p++)
-  {
-    if(parentArray[p].toLowerCase() == categoryName.toLowerCase())
-    {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-//returns if an element is a child of a specific parent in the diseaseTree.csv
-function checksIfChildofParent(parent, categoryName)
-{
-  for(var i = 0; i < tree.length; i++)
-  {
-    if(tree[i][parent] == categoryName)
-    {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-//spawns elements in childrenArray that pushes all names that have a parent in the diseaseTree.csv
-var childrenArray = [];
-function getChildrenOfTree()
-{
-  if(childrenArray.length == 0)
-  {
-    //the child only appears once in the set if there were duplicates
-    var childrenSet = new Set();
-
-    for(var i = 0; i < tree.length; i++)
-    {
-      for(var p = 0; p < parentArray.length; p++)
-      {
-        //removes empty children names
-        if(tree[i][parentArray[p]] != "")
-        {
-          childrenSet.add(tree[i][parentArray[p]]);
-        }
-      }
-    }
-    
-    childrenArray = Array.from(childrenSet);
-  }
-
-  return childrenArray;
-}
-
-//returns the parents of a child
-function getParentsOfChild(child)
-{
-  var orphan = true;
-  var finalArray = [];
-  for(var i = 0; i < tree.length; i++)
-  {
-    for(var p = 0; p < parentArray.length; p++)
-    {
-      if(tree[i][parentArray[p]] == child)
-      {
-        //adds the name of the parent if it has that child
-        finalArray.push(parentArray[p])
-
-        //adds the parents of that parent if the child has it
-        var nestedParents = getParentsOfChild(parentArray[p]);
-
-        //nestedParents would return "orphan" if the child has no more parents
-        if(nestedParents != "orphan")
-        {
-          for (var n = 0; n < nestedParents.length; n++)
-          {
-            //adds the praents of the parent as necessary
-            finalArray.push(nestedParents[n]);
-          }
-        }
-
-        orphan = false;
-      }
-    }
-  }
-
-  if(orphan)
-  {
-    return "orphan";
-  }
-
-  //returns array of what parents the child has
-  return finalArray;
-}
-
-//gets the children of a parent
-function getChildrenOfParent(parent)
-{
-  var children = new Set();
-
-  for(var i = 0; i < tree.length; i++)
-  {
-    if(typeof (tree[i][parent]) != "undefined" && tree[i][parent] != "")
-    {
-      children.add(tree[i][parent])
-    }
-  }
-
-  children = Array.from(children);
-
-  return children;
 }
 
 //returns all possible options under each category
@@ -338,33 +172,6 @@ function listFormater(string)
   }
 
   return output;
-}
-
-function ageCalculator(value)
-{
-  //calculates age in the most relevant unit
-  //rounds to the nearest 100s
-  if(value > 1)
-  {
-    return Math.round(value*100)/100 + " years"
-  }
-  else
-  {
-    var months = value * 12;
-    var weeks = value * 52;
-    var days = value * 365;
-    if (months > 1)
-    {
-      return Math.round(months*100)/100 + " months"
-    }
-    else if (weeks > 1)
-    {
-      return Math.round(weeks*100)/100 + " weeks"
-    }
-    else {
-      return Math.round(days*100)/100 + " days"
-    }
-  }
 }
 
 //reads "\url()" format in URL
@@ -617,43 +424,6 @@ function valueToSearchInArrayForm(valueToSearch)
   return array;
 }
 
-//returns an array of booleans of the selected models that has results
-function selectedModelsWithResults()
-{
-  var withResults = [];
-
-  for(var i = 0; i < selectedModels.length; i++)
-  {
-    //if is selected and has results
-    if(selectedModels[i] && preservedOrderData[i]["Results"] == "1")
-    {
-      withResults[i] = true;
-    }
-    else
-    {
-      withResults[i] = false;
-    }
-  }
-
-  return withResults;
-}
-
-//updates the select-all icon
-//updates global variable selectAllIconApplied and the class the element select-all has
-function isSelectAllApplied(bool)
-{
-  if(bool)
-  {
-    selectAllIconApplied = true;
-    document.getElementById("select-all").classList.add("applied");
-  }
-  else
-  {
-    selectAllIconApplied = false;
-    document.getElementById("select-all").classList.remove("applied");
-  }
-}
-
 //clears the code in the download confirmation box
 function clearDoConfirm()
 {
@@ -779,25 +549,20 @@ function informUser(msg, hasOk = false) {
   }
 }
 
-// this is too slow. We give it for granted to improve ux
-//checks if a file exists given url
-// function checkFileExist(url) {
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('HEAD', url, false);
-//   xhr.send();
-   
-//   if (xhr.status == "404") {
-//       return false;
-//   } else {
-//       return true;
-//   }
-// }
-
 //in globalVar.js for additional data, always crafting url for additional data models
-function craftURL(model)
+function craftURL(model, type = "global")
 {
-    var url = "additionaldata/"
-    url += model["Name"] + ".zip";
+  if(type == "global")
+  {
+    var url = pathToFiles;
+  }
+  else if(type == "relative")
+  {
+    var url = "";
+  }
+  
+  url += "additionaldata/"
+  url += model["Name"] + ".zip";
 
   return url;
 }
@@ -856,34 +621,20 @@ function getSumOfSizes(boolArray)
     }
   }
 
-  //count is size in bytes
-  // count = sizeConverter(count)
-
   return count;
 }
 
 //gets size of individual models given their name
 function getSizeIndiv(model)
 {
-  var url = craftURL(model);
+  // path for size is not a global url but a relative one
+  var url = craftURL(model, "relative");
 
   var size = parseInt(fileSizes[url]);
-
-  // if(size == NaN)
-  // {
-  //   size = parseInt(fileSizes[url]);
-  // }
 
   //returns bytes and readable version of size
   return [size, sizeConverter(size)];
 }
-
-//returns file size given a URL
-// function getFileSize(url, key)
-// {
-//   var xhr = $.ajax({type:"HEAD", url: url, async: false})
-//   sizes[key] = xhr.getResponseHeader("Content-Length")
-// }
 
 //updates where the size is defined in the confirmbox
 function updateSize(boolArray)
@@ -955,22 +706,22 @@ function maxDownloadMessage(downloadGb, maxGb, warningHTML)
 }
 
 //downloads individual models
-function downloadModel(modelName)
+function downloadModel(model)
   {
     //creates link of what the user wants to download
-    var fileUrl = craftURL(modelName);
+    var fileUrl = craftURL(model);
 
     //creates anchor tag to download
     var a = document.createElement("a");
     a.href = fileUrl;
-    a.setAttribute("download", craftDownloadName(modelName));
+    a.setAttribute("download", craftDownloadName(model["Name"]));
     //simulates click
     a.click();
     
     if(downloadType != "zip")
     {
       //sends message to server with user's download
-      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+      gtag('event', 'download_results_' + model["Name"] + "." + downloadType, {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',

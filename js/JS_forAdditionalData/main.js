@@ -5,7 +5,7 @@ $(document).ready(function($){
   //reads csv file and sets it to the global variable data
   $.ajax({
     type: "GET",
-    url: "dataset/additionaldata.csv",
+    url: "https://www.vascularmodel.com/dataset/additionaldata.csv",
     dataType: "text",
     async: false,
     success: function(fdata) {
@@ -325,10 +325,7 @@ function preventScroll(e){
 }
 
 function populate(dataArray, num_images = 24) {
-  //clears not-allowed function when data is repopulated on select all icon
-  document.getElementById("select-all").classList.remove("cannotSelect");
-  isSelectAllApplied(false);
-
+  
   //clears confirm message if data repopulated
   $("#confirmBox").hide();
 
@@ -374,14 +371,9 @@ function generateContent(modelData) {
   divModelImage.setAttribute("id", modelData['Name']);
   divModelImage.setAttribute("title", "View details for " + modelData["Name"]);
 
-  // let threeD = document.createElement("i");
-  // threeD.textContent = "3D"
-  // threeD.classList.add("bottom-left");
-  // threeD.setAttribute("id", modelData['Name'] + "_3D")
-  
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'https://www.vascularmodel.com/img/additionaldata-images/' + modelData['Name'] + '.png'
+  innerImg.src = pathToFiles + 'vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 

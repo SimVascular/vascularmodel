@@ -1,19 +1,30 @@
 //global variables of share.js
 var models = []
-var simModels = []
+
+// a boolean array with which models are selected as true
 var boolArray = []
-var boolArrayWResults = []
+
 //model is the model being viewed
 var model;
+
 //simulationResultsOfModel is an array that has the simulation results of a model
 var simulationResultsOfModel= [];
-//project is the model when simulation results are viewed
+
+//project saves the model when simulation results are viewed
 var project = "";
+
+//saves the simulation the user was viewing if they go to the model tab
 var currentSimulation = "";
+
+// variables to determine if the user is viewing multiple models or one model
 var multiModel = false;
 var singleModel = false;
+
+// determines the array to search through for the models selected
+// ex: the array with the models or with the results
 var arrayToSearch;
-var modelName;
+
+// booleans to save the model/result/additional data the user is viewing
 var viewingSimulations = false;
 var viewingAdditionalData = false;
 var viewingModel = false;
@@ -22,7 +33,7 @@ $(document).ready(function($){
     //reads CSV for data
     $.ajax({
       type: "GET",
-      url: "dataset/dataset-svprojects.csv",
+      url: "https://www.vascularmodel.com/dataset/dataset-svprojects.csv",
       dataType: "text",
       async: false,
       success: function(fdata) {
@@ -33,7 +44,7 @@ $(document).ready(function($){
 
     $.ajax({
         type: "GET",
-        url: "dataset/dataset-svresults.csv",
+        url: "https://www.vascularmodel.com/dataset/dataset-svresults.csv",
         dataType: "text",
         async: false,
         success: function(fdata) {
@@ -43,7 +54,7 @@ $(document).ready(function($){
 
     $.ajax({
         type: "GET",
-        url: "dataset/additionaldata.csv",
+        url: "https://www.vascularmodel.com/dataset/additionaldata.csv",
         dataType: "text",
         async: false,
         success: function(fdata) {
@@ -57,6 +68,7 @@ $(document).ready(function($){
         dataType: "text",
         async: false,
         success: function(fdata) {
+          // fileSizes is an array with keys and values
           fileSizes = {};
           fileSizesCsv = $.csv.toObjects(fdata);
           for (var i = 0; i < fileSizesCsv.length; i++) 
@@ -96,6 +108,7 @@ function getVariable()
     //decodes the info from the URL
     var encodedNames = decodeRLE(encodeATOB(codedName));
 
+    // checks for which type of array was shared using the "A" or "R" label
     if(encodedNames.includes("A"))
     {
         dataToSearch = additionalData;
@@ -143,11 +156,13 @@ function getVariable()
         displayRelevant(2);
         model = models[0];
 
+        // this is the case if the shareable link was of a simulation result
         if(viewingSimulations)
         {
+            // sets currentSimulation to the simulation result that was shared
             currentSimulation = model;
             toggleGalleryButton(false);
-
+            
             var index = data.findIndex(p => p["Name"] == model["Model Name"]);
             project = data[index];
 
@@ -158,24 +173,30 @@ function getVariable()
             model_tab.classList.remove("selected_tab");
         }
         else if(viewingModel)
-        {
-            modelName = model["Name"];
-            
+        {   
+            // checks if the model has simulation results to determine whether or not
+            // to show the tabs
             if(model["Results"] == "1")
             {
                 project = model;
                 toggleGalleryButton(false);
+
+                // sets default currentSimulation to the first in the dropdown menu
                 var index = results.findIndex(p => p["Model Name"] == project["Name"]);
                 currentSimulation = results[index];
             }
             else
             {
+                // toggles which gallery button to show depending on whether or not
+                // there are tabs
                 toggleGalleryButton(true);
             }
         }
 
         if(viewingSimulations || model["Results"] == "1")
         {
+            // if the model has simulation results, it fills the simulationResultsOfModel
+            // array with all of those results
             for(var r = 0; r < results.length; r++)
             {
                 if(project["Name"] == results[r]["Model Name"])
@@ -193,10 +214,18 @@ function getVariable()
         
         displayRelevant(3);
         displayTableModels();
+
+        if(models.length > 6)
+        {
+            document.getElementById("download-all-models").classList.add("cannotClick")
+           document.getElementById("download-all-models").title = "Unfortunately, you cannot download more than 6 models at once.";
+           $("#download-all-models").unbind();
+        }
+        
     }
 }
 
-//deals with which page to show
+//toggles which page to show
 function displayRelevant(num) {
     var errorMsg = document.getElementById("errorBlock");
     errorMsg.textContent = "It looks like there are no models to exhibit!";
@@ -227,7 +256,7 @@ function displayRelevant(num) {
     }
 }
 
-//deals with hiding and showing DIVs
+//toggles with hide and show classes to help with showing and hiding divs
 function showDiv(div)
 {
     div.classList.remove("hide");
@@ -264,10 +293,15 @@ function displayModel(fromDropdown = false)
     }
     
 
-    //toggles header
+    //toggles header depending on what the user is viewing
     if(viewingSimulations && !fromDropdown)
     {
+        // creates new dropdown menu if it hasn't been done before
+        // and if the user is viewing simulation results
         var output = createDropDownForResults();
+
+        // output[0] is a boolean that determines whether or not
+        // something should be appended to the div
         if(output[0])
         {
             div.appendChild(output[1]);
@@ -275,6 +309,7 @@ function displayModel(fromDropdown = false)
     }
     else if(viewingModel || viewingAdditionalData)
     {
+        // has a regular title if not viewing a simulation result
         var title = document.createElement("h1");
         title.textContent = "You are viewing " + model["Name"] + ".";
         div.appendChild(title);
@@ -291,7 +326,7 @@ function displayModel(fromDropdown = false)
     
     div.appendChild(setUpHelpIcon());
 
-    //table of information on model
+    //table of information on model depending on what the user is viewing
     if(viewingModel)
     {
         var desc = descriptionForModel();
@@ -307,20 +342,18 @@ function displayModel(fromDropdown = false)
 
     div.appendChild(desc);
 
+    // adds hooks at the end, after the html has been generated
     hooks()
 }
 
+// sets up the image path depending on the path
 function setUpImage()
 {
     //creates image
     let img = document.createElement("img");
-    if(viewingAdditionalData)
+    if(viewingModel || viewingAdditionalData)
     {
-        img.src = 'https://www.vascularmodel.com/img/additionaldata-images/' + model['Name'] + '.png';
-    }
-    else if(viewingModel)
-    {
-        img.src = 'https://www.vascularmodel.com/img/vmr-images/' + model['Name'] + '.png';
+        img.src = pathToFiles + 'vmr-images/' + model['Name'] + '.png';
     }
     img.alt = model['Name'];
     img.classList.add("imgContainer");
@@ -329,6 +362,7 @@ function setUpImage()
     return img;
 }
 
+// sets up the download link under the name of what the user is viewing
 function setUpDownload()
 {
     var downloadButton = document.createElement("div");
@@ -337,6 +371,7 @@ function setUpDownload()
     var h2 = document.createElement("p");
     h2.classList.add("h2_download_button");
 
+    // different text content depending on what the user is viewing
     if(viewingSimulations)
     {
         if(simulationResultsOfModel.length > 1)
@@ -351,6 +386,7 @@ function setUpDownload()
         h2.textContent = "Download this model"
     }
     
+    // creates download icon
     var icon = document.createElement("i");
     icon.classList.add("fa-solid");
     icon.classList.add("fa-download");
@@ -362,6 +398,7 @@ function setUpDownload()
     return downloadButton;
 }
 
+// creates the help icon when viewing an individual model
 function setUpHelpIcon()
 {
     var iconPlace = document.createElement("div");
@@ -376,9 +413,9 @@ function setUpHelpIcon()
     iconPlace.appendChild(icon)
 
     return iconPlace;
-
 }
 
+// sets up the table for when the user is viewing one model
 function descriptionForModel() {
     var categoryName = getDetailsTitlesForModel(); 
 
@@ -473,6 +510,7 @@ function descriptionForModel() {
     return table;
 }
 
+// sets up the table for when the user is viewing a simulation result
 function descriptionForResults() {
     var categoryName = getDetailsTitlesForResults(); 
     
@@ -557,7 +595,9 @@ function descriptionForResults() {
     return table;
 }
 
+// sets up the table for when the user is viewing an additional data
 function descriptionForAdditional() {
+    // only reads and shows notes for additional data
     var notesHeader = document.createElement("h4");
     notesHeader.textContent = "Here are the associated notes:"
     notesHeader.classList.add("newParagraph");
@@ -596,6 +636,7 @@ function descriptionForAdditional() {
         }
     }
 
+    // shows the size of the additional data file
     var sizeContent = document.createElement("p");
     sizeContent.textContent = "Size: " + getSizeIndiv(model)[1];
     sizeContent.style.display = "inline-block";
@@ -603,6 +644,7 @@ function descriptionForAdditional() {
     sizeContent.style.paddingTop = "15px";
     sizeContent.style.fontSize = "20px";
 
+    // still creates a table for formatting
     var output = document.createElement("table");
     output.appendChild(notesHeader);
     output.appendChild(notesContent);
@@ -611,50 +653,67 @@ function descriptionForAdditional() {
     return output;
 }
 
+// toggles the tabs between Model and Result
+// both have the class "tab_in_modal"
 $(".tab_in_modal").click(function () {
+    viewingAdditionalData = false;
+
     var model_tab = document.getElementById("model_tab");
     var results_tab = document.getElementById("results_tab");
   
+    // checks which tab was clicked using the id attribute
     if($(this).attr('id') == "model_tab")
     {
-      model_tab.classList.add("selected_tab");
-      results_tab.classList.remove("selected_tab");
-  
-      viewingModel = true;
-      viewingSimulations = false;
-      viewingAdditionalData = false;
-      model = project;
-      displayModel();
+        // resets tabs and displays model if model tab selected
+        model_tab.classList.add("selected_tab");
+        results_tab.classList.remove("selected_tab");
+    
+        viewingModel = true;
+        viewingSimulations = false;
+        
+        // sets model to what is currently being viewed
+        model = project;
+
+        // displayModel() will toggle between the different pages the user can view
+        displayModel();
     }
     else if($(this).attr('id') == "results_tab")
     {
-      results_tab.classList.add("selected_tab");
-      model_tab.classList.remove("selected_tab");
-  
-      viewingSimulations = true;
-      viewingModel = false;
-      viewingAdditionalData = false;
+        // resets tabs and displays simulation result if results tab selected
+        results_tab.classList.add("selected_tab");
+        model_tab.classList.remove("selected_tab");
+    
+        viewingSimulations = true;
+        viewingModel = false;
 
-      model = currentSimulation;
+        // sets model to what is currently being viewed
+        model = currentSimulation;
 
-      var dropdown = document.getElementById("modal_simResults_dropdown");
-      dropdown.innerHTML = "";
+        var dropdown = document.getElementById("modal_simResults_dropdown");
+        dropdown.innerHTML = "";
 
-      displayModel();
+        // displayModel() will toggle between the different pages the user can view
+        displayModel();
     }
   });
 
+  // listener for the simulation results dropdown menu
   $("#modal_simResults_dropdown").change(function () {
+    // recrafts the full simulation result file name from the shortened name of the dropdown
     var valueOfDropdown = model['Model Name'] + "_"
     valueOfDropdown += document.getElementById("chooseResult").value;
     valueOfDropdown += ".zip"
+
+    // sets model to the new selected simulation result
     var index = results.findIndex(p => p["Full Simulation File Name"] == valueOfDropdown);
     model = results[index];
     currentSimulation = model;
-    toggleDropDown(false)
+
+    // displays a new page for the selected simulation result
     displayModel(true);
   });
 
+  // shows or does not show dropdown depending on parameter
   function toggleDropDown(showDropDown)
   {
     var dropdown = document.getElementById("modal_simResults_dropdown");
@@ -669,6 +728,7 @@ $(".tab_in_modal").click(function () {
     }
   }
 
+  // if showButton = true, displays the return to gallery button outside the tab bar
   function toggleGalleryButton(showButton)
   {
     var backToGallery = document.getElementById("galleryWhenNoSim")
@@ -683,11 +743,14 @@ $(".tab_in_modal").click(function () {
     }
   }
 
+  // creates dropdown menu for simulation results
   function createDropDownForResults()
   {
     var dropdown = document.getElementById("modal_simResults_dropdown");
   
+    // options is the array with only the names
     var options = [];
+    // and optionModel is the array with the full results object
     var optionModel = [];
 
     for(var i = 0; i < simulationResultsOfModel.length; i++)
@@ -696,14 +759,19 @@ $(".tab_in_modal").click(function () {
         optionModel.push(simulationResultsOfModel[i])
     }
 
+    // different presentation if only one simulation result and no need for a 
+    // dropdown menu
     if(options.length == 1)
     {
+        // removes the dropdown menu
         toggleDropDown(false);
 
+        // creates header without a dropdown menu
         var title = document.createElement("h1");
         var presentName = optionModel[0]["Model Image Number"] + "_" + options[0];
-
         title.textContent = "You are viewing " + presentName + ".";
+
+        // returns true that the div needs to append the title element
         return [true, title];
     }
     else
@@ -722,6 +790,7 @@ $(".tab_in_modal").click(function () {
         select.setAttribute("id", "chooseResult");
         select.classList.add("select_dropdown");
 
+        // creates html for simulation result options
         for(var i = 0; i < options.length; i++)
         {
             //create options under select
@@ -729,9 +798,11 @@ $(".tab_in_modal").click(function () {
             
             option.setAttribute("value", options[i]);
             
+            // crafts the shorter dropdown menu name
             var presentName = optionModel[i]["Model Image Number"] + "_" + options[i];
             option.textContent = presentName;
       
+            // selects the currentSimulation in the dropdown menu
             if(options[i] == currentSimulation["Short Simulation File Name"])
             {
                 option.selected = true;
@@ -839,6 +910,7 @@ function createHook(model)
     $('#' + model["Name"] + "_row").click(function() {goToModel(model);});
 }
 
+// opens a new share page with the individual model selected from the multimodel table
 function goToModel(model){
     //creates shareable URL
     var array = makeshiftSelectedModels(dataToSearch, model)
@@ -854,9 +926,7 @@ $("#download-all-models").click(function () {
 
     //counts number of selected models
     countModels = models.length;
-    // countResults = simModels.length;
 
-    //if nothing to download, download-all button has no function
     if (countModels > 0)
     {
         var message = downloadConfirmation(countModels, "model", boolArray);
@@ -875,10 +945,11 @@ async function downloadAll()
     for(var i = 0; i < models.length; i++)
     {
         downloadModel(models[i]);
-        await new Promise(r => setTimeout(r, 3));
+        await new Promise(r => setTimeout(r, 500));
     }
 }
 
+// creates hooks for the html that was generated after it was created
 function hooks(){
     $("#downloadModel").click(function () {
         //clear confirmation message
@@ -887,6 +958,7 @@ function hooks(){
         //updates size with individual model
         var sizeWarning = document.getElementById("downloadSize");
 
+        // different download confirmation message
         if(viewingSimulations)
         {
             doConfirm("Are you sure you want to download the simulation result " + model["Model Image Number"] + "_" + model["Short Simulation File Name"] + "?", "Download", function yes(){
@@ -910,7 +982,7 @@ function hooks(){
         window.open("sharingtutorial.html#Viewing_the_shared_model");
     });
 
-    //go to gallery icon
+    //listener for go to gallery icon
     $(".goToGallery").click(function () {
         goToGallery();
     });
@@ -924,6 +996,7 @@ function goToGallery() {
     a.click();
 }
 
+// listener for help button when viewing multiple models
 $("#helpTable").click(function () {
     window.open("sharingtutorial.html#Viewing_the_shared_models");
 });
