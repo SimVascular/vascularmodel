@@ -1,4 +1,5 @@
-var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
+// var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
+var pathToFiles = "";
 
 //all global variables to stay organized
 
