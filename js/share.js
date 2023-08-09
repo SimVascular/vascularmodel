@@ -353,7 +353,7 @@ function setUpImage()
     let img = document.createElement("img");
     if(viewingModel || viewingAdditionalData)
     {
-        img.src = pathToFiles + 'vmr-images/' + model['Name'] + '.png';
+        img.src = pathToFiles + 'img/vmr-images/' + model['Name'] + '.png';
     }
     img.alt = model['Name'];
     img.classList.add("imgContainer");
