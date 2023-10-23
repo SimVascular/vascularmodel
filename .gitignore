@@ -5,3 +5,5 @@ svresults/
 extra_data/
 vmr-pdfs
 additionaldata
+doc/html
+doc/latex
