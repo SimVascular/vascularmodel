@@ -5,4 +5,5 @@
 [![Documentation](https://github.com/SimVascular/vascularmodel/actions/workflows/documentation.yml/badge.svg)](https://github.com/SimVascular/vascularmodel/actions)
 </div>
 
-This repository contains the source code for the Vascular Model Repository website (www.vascularmodel.com). The documentation can be found [here](https://simvascular.github.io/vascularmodel/index.html).
+This repository contains the source code for the Vascular Model Repository website (www.vascularmodel.com). The documentation can be found here:
+1. [Getting started](https://github.com/SimVascular/vascularmodel/doc/getting-started.md)
