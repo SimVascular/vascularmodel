@@ -114,9 +114,8 @@ $(document).ready(function($){
 
 The syntax `$(document).ready(function($)` defines a jQuery function that gets executed when the document is first launched (see "External Packages" section for more information on jQuery). Similarly, `ajax` is an asynchronous HTTP request used to open `https://www.vascularmodel.com/dataset/dataset-svprojects.csv` and populate the `data` array.
 
-Links to useful CSS introductions:
-1. [CSS Tutorial](https://www.w3schools.com/css/)
-2. [Learn CSS in 20 Minutes](https://www.youtube.com/watch?v=1PnVor36_40)
+Links to useful Javascript introductions:
+1. [Javascript](https://www.w3schools.com/js/js_intro.asp)
 
 ## External Packages
  The VMR website relies on a few external packages that provide useful functionality. Below is a list of the most important ones. Please visit the documentation of each for more information.
