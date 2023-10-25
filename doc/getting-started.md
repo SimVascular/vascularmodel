@@ -1,6 +1,5 @@
-@mainpage Getting started
+# The Vascular Model Repository: getting started with the website
 
-[TOC]
 The [Vascular Model Repository](www.vascularmodel.com) (VMR) is a publicly available collection of cardiovascular models and simulations. This guide explains how the website works, how it can be edited, where it is deployed, and how new models can be added to the repository.
 
 # Structure of the website
