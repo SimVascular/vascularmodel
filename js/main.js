@@ -466,6 +466,25 @@ function greetingForSimulationResults()
   }
 } //end greetingForSimulationResults()
 
+//code for 3D embed
+function threeDEmbed(data)
+{
+  //sets global var viewingModel
+  viewingModel = data;
+
+  let iframe = document.getElementById("game-window");
+  let input = event.target;
+  let newProject = input.value;
+  
+  iframe.src="http://thien-test-iframe.s3-website-us-east-1.amazonaws.com/index.html?project=" + data['Name'].toLowerCase();
+  //iframe.src = "/?project=" + newProject;
+
+  //modal's first line
+  $('#3Dmodal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere is the 3D visualization:'
+
+} //end threeDembed()
+
+
 //function to prevent overlay from exiting when the user clicks on the modal
 $(".safeOfOverlayClick").click(function() {isSafeSelected = true;});
 
@@ -477,11 +496,35 @@ $('#overlay').click(function() {
   isSafeSelected = !isSafeSelected;
 });
 
+$('#threeDOverlay').click(function() {
+  //checks if safe was selected
+  check3DOverlay();
+  //allows for click and unclick
+  isSafeSelected = !isSafeSelected;
+});
+
 //turns off the overlay when the X is clicked
 $('.close-button-modal').click(function() {  
   overlayOff();
+  threeDOverlayOff();
   resetFromSimulationResult();
 });
+
+function check3DOverlay(){
+  //if user clicked on overlay and not modalDialog
+  if(!isSafeSelected)
+  {
+    //updates overlay
+    is3DOverlayOn = !is3DOverlayOn;
+    if(is3DOverlayOn)
+    {
+      threeDOverlayOn();
+    }
+    else{
+      threeDOverlayOff();
+    }
+  }
+}
 
 //checks status of overlay
 function checkOverlay(){
@@ -601,6 +644,34 @@ function overlayOn(){
   document.body.style.top = `-${prevBodyY}px`;
 }
 
+function threeDOverlayOn(){
+  //updates displat and global variable is3DOverlayOn
+  document.getElementById("threeDOverlay").style.display = "block";
+  is3DOverlayOn = true;
+
+  //opens modalDialog
+  $('.modalDialog').css({"opacity":"1", "pointer-events": "auto"})
+
+  //turns off scroll and sets height to auto
+  if (smallScreen) {
+    // padding is not necessary on mobile
+    $('.html').css({"height": "auto", "overflow-y": "hidden"})
+    $('.body').css({"height": "auto", "overflow-y": "hidden"})
+  }
+  else {
+    $('.html').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+    $('.body').css({"height": "auto", "overflow-y": "hidden", "padding-right": "7px"})
+  }
+
+  //sets listener for scroll
+  document.querySelector('.body').addEventListener('scroll', preventScroll, {passive: false});
+  document.body.style.position = '';
+
+  //saves where the user was before overlay turned on
+  var prevBodyY = window.scrollY
+  document.body.style.top = `-${prevBodyY}px`;
+}
+
 //deals with turning overlay off
 function overlayOff(){
   //updates variables
@@ -611,6 +682,25 @@ function overlayOff(){
   //remove border when no longer viewing model
   var borderOutline = document.getElementById(viewingModel['Name']);
   borderOutline.classList.remove("viewingModel");
+
+  //resets html, body, modalDialog
+  $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
+  $('.html').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+  $('.body').css({"overflow-y":"auto", "height": "auto", "padding-right": "0px"})
+
+  //resets scrolling
+  const scrollY = document.body.style.top;
+  document.body.style.position = '';
+  document.body.style.top = '';
+  window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  document.querySelector('.body').removeEventListener('scroll', preventScroll);
+}
+
+function threeDOverlayOff(){
+  //updates variables
+  document.getElementById("threeDOverlay").style.display = "none";
+  isSafeSelected = true;
+  is3DOverlayOn = false;
 
   //resets html, body, modalDialog
   $('.modalDialog').css({"opacity":"0", "pointer-events": "none"})
@@ -711,6 +801,18 @@ function generateContent(modelData) {
 
   //creates ID for hook to open modalDialog
   selectBox.setAttribute("id", modelData['Name'] + "_selects");
+
+  let microscapeButton = document.createElement("i");
+  microscapeButton.classList.add("microscape-button");
+  microscapeButton.setAttribute("id",modelData['Name'] + "_3D");
+
+  let mcpImgHover = document.createElement("img");
+  mcpImgHover.classList.add("icon-hover");
+  mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
+
+  let mcpImg = document.createElement("img");
+  mcpImg.classList.add("icon");
+  mcpImg.src = 'img/group-logos/MCP_Icon_GreyOverAlpha.png'
   
   //creates image of model
   let innerImg = document.createElement("img");
@@ -721,6 +823,9 @@ function generateContent(modelData) {
   divModelImage.appendChild(innerImg);
   divModelImage.appendChild(selectBox);
   // divModelImage.appendChild(threeD);
+  divModelImage.appendChild(microscapeButton);
+  microscapeButton.appendChild(mcpImg);
+  microscapeButton.appendChild(mcpImgHover);
   div.appendChild(divModelImage);
 
   return div
@@ -737,6 +842,7 @@ function addClickListener(model) {
 
   // //show 3D version of model if you click on it
   // $("#" + modelName + "_3D").click(function() {show3D(model);});
+  $('#' + modelName  + "_3D").click(function() {threeDEmbed(model); check3DOverlay();});
 }
 
 //removes models from gallery
