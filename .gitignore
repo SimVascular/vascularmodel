@@ -3,4 +3,8 @@ svprojects/
 svresults/
 *.sh
 extra_data/
-VMR_PDFs
+vmr-pdfs
+additionaldata
+doc/html
+doc/latex
+.vscode

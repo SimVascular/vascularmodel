@@ -9,9 +9,6 @@ Primary style
   box-sizing: border-box;
 }
 
-/* html {
-font-size: 62.5%;
-} */
 
 html * {
   -webkit-font-smoothing: antialiased;
@@ -30,6 +27,7 @@ a {
   color: var(--dark2);
   text-decoration: none;
 }
+  
 
 /* --------------------------------
 
@@ -244,6 +242,15 @@ gallery
   transition: 0.3s;
 }
 
+.model-image.viewingModel img{
+  /* box-shadow: inset 0px 0px 50px 10px var(--select); */
+  box-sizing: border-box;
+  border-width: inset;
+  border: 3px solid;
+  background-color: white;
+  border-color: var(--dark2);
+}
+
 .model-image.selected img {
   /* box-shadow: inset 0px 0px 50px 10px var(--select); */
   box-sizing: border-box;
@@ -251,7 +258,7 @@ gallery
   border-width: inset;
   border: 3px solid;
   background-color: white;
-  border-color: var(--applied);
+  border-color: var(--midpointSelectApplied);
 }
 
 /* FORMATING TEXT OVER GALLERY IMAGES */
@@ -265,38 +272,19 @@ gallery
 .top-left {
   position: absolute;
   top: 30px;
+  object-fit: cover;
+  font-size: 200%;
+  padding: 5px;
+}
+
+.top-left.selected {
+  color: var(--midpointSelectApplied);
+  left: 13px;
+}
+
+.top-left.notSelected {
+  color: var(--darkgrey);
   left: 30px;
-  object-fit: cover;
-  font-size: 150%;
-  padding: 5px;
-}
-
-.microscape-button img{
-  position: absolute;
-  top: 80px;
-  left: 20px;
-  width:50px;
-  border:none;
-  object-fit: cover;
-  font-size: 150%;
-  padding: 5px;
-}
-
-.microscape-button:hover .icon,
-.microscape-button .icon-hover {
-    display: none;
-}
-.microscape-button:hover .icon-hover {
-    display: inline;
-}
-
-.model-image.selected .microscape-button img {
-  /* box-shadow: inset 0px 0px 50px 10px var(--select); */
-  box-sizing: border-box;
-  border-width: inset;
-  border: none;
-  background-color: white;
-  border-color: var(--applied);
 }
 
 .top-left:hover, bottom-left:hover{
@@ -387,6 +375,11 @@ error msg block behavior
   margin-bottom: 15px;
 }
 
+.firstParagraph {
+  margin-bottom: 15px;
+}
+
+
 .spaceBelow {
   margin-bottom: 15px;
 }
@@ -399,27 +392,54 @@ error msg block behavior
   opacity:1;
   pointer-events: auto;
 }
-.modalDialog > div {
+
+#tab_for_modal {
+  width: 100%;
+  height: fit-content;
+  background-color: var(--grey);
+  border-radius: 8px 8px 0 0;
+}
+
+.tab_in_modal {
+  display: inline-block;
+  width: fit-content;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 7px;
+  height: fit-content;
+  background-color: var(--grey);
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+}
+
+.tab_for_modal {
+  background-color: var(--grey);
+}
+
+.selected_tab {
+  background-color: white;
+}
+
+.containing_and_positioning_of_modal {
+  border: 5px solid var(--darkgrey);
+  background-color: var(--grey);
   width: 300px;
   position: relative;
   margin-top: 125px;
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
-  /* padding: 20px 20px 13px 20px; */
   border-radius: 8px !important;
-  background: #fff;
-  /* background: -moz-linear-gradient(#fff, #999);
-  background: -webkit-linear-gradient(#fff, #999);
-  background: -o-linear-gradient(#fff, #999); */
 }
 
 #threeDOverlay .modalDialog > div {
   width: 1000px;
 }
 
+
 @media only screen and (min-width: 576px) {
-  .modalDialog > div {
+  .containing_and_positioning_of_modal {
     width: 500px;
   }
 }
@@ -434,7 +454,7 @@ error msg block behavior
   color: #05080B;
   font-weight: 200;
   width:100%;
-  height: 200px;
+  height: 176px;
   overflow-y: auto;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -479,8 +499,8 @@ error msg block behavior
   border-radius: 5px !important;
   border-collapse: separate;
   font-weight: 400;
-  margin-top:10px;
-  margin-bottom:10px;
+  margin-top: 8.25px;
+  margin-bottom: 8.25px;
   cursor: pointer;
 }
 
@@ -514,6 +534,20 @@ error msg block behavior
   width: 100px;
 }
 
+.results-button-modal.button-modal {
+  width: 90%;
+}
+
+.results-button-modal {
+  background-color: var(--darkSimRe);
+}
+
+.results-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--lightSimRe);
+}
+
 .shareableLink-button-modal {
   background-color: var(--dark2);
 }
@@ -540,6 +574,17 @@ error msg block behavior
 }
 
 .download-button-modal:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: var(--light1shade); 
+  /* text-decoration: underline !important; */
+}
+
+.download-button-additionaldata {
+  background-color: var(--light1);
+}
+
+.download-button-additionaldata:hover {
   color: white;
   transition: 0.3s;
   background-color: var(--light1shade); 
@@ -663,6 +708,11 @@ error msg block behavior
   padding-right: 22.5px;
 }
 
+.fa-square-check.selectingIndivModelsIcon {
+  padding-left: 22.5px;
+  padding-right: 22.5px;
+}
+
 #selected-counter {
   float: right;
   right: 0px;
@@ -711,8 +761,9 @@ error msg block behavior
 }
 
 .filterButtons {
-  margin-bottom: 20px;
   height: 60px;
+  padding: 70px 20px;
+  border-bottom: 2px solid var(--grey);
 }
 
 .clearAllButton {
@@ -750,9 +801,11 @@ error msg block behavior
   cursor: default;
 }
 
-#safeOfOverlayClick {
+#body_of_modal {
   padding: 20px 20px 20px 20px;
   cursor: default;
+  background-color: #fff;
+
 }
 
 #chooseType {
@@ -860,7 +913,7 @@ error msg block behavior
 {
   cursor: not-allowed;
   color: var(--applied);
-  background-color: var(--select)
+  background-color: var(--select);
 }
 
 .hideElement{
@@ -869,6 +922,38 @@ error msg block behavior
   margin: 0px;
   padding: 0px;
   border: 0px;
+}
+
+.microscape-button img{
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  width:50px;
+  border:none;
+  object-fit: cover;
+  font-size: 150%;
+  padding: 5px;
+}
+
+.microscape-button:hover .icon,
+.microscape-button .icon-hover {
+    display: none;
+}
+.microscape-button:hover .icon-hover {
+    display: inline;
+}
+
+.model-image.selected .microscape-button img {
+  /* box-shadow: inset 0px 0px 50px 10px var(--select); */
+  box-sizing: border-box;
+  border-width: inset;
+  border: none;
+  background-color: white;
+  border-color: var(--applied);
+}
+
+.top-left:hover, bottom-left:hover{
+  color: var(--midpointSelectApplied);
 }
 
 .lds-ring {

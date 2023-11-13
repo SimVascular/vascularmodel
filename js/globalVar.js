@@ -1,44 +1,67 @@
-//all global variables to stay organized
+// var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
+var pathToFiles = "";
 
-//all arrays of datas:
-  //data has all the models read in the csv, scrambled
-  var data;
-  //filteredData has the models that correspond to the filters selected
-  var filteredData;
-  //preservedOrderData is data read from the csv but unscrambled
-  var preservedOrderData = [];
-  //displayedData is the data that is displayed in the view selected models
-  var displayedData;
-  //selectedModels is an array of booleans that contains which models are selected by the user
-  var selectedModels = [];
+//data has all the models read in the csv, scrambled
+var data;
 
-//other global variables:
-  var viewingModel = '';
-  var curIndex = 0;
-  var smallScreen = false
-  var lastFapplied = 0;
-  var lastFdata = [];
-  var lastSelectedData = [];
-  var viewingSelectedModels = false;
-  var doneDownloading = false;
-  var isOverlayOn = false;
-  var is3DOverlayOn = false;
-  var isSafeSelected = false;
-  var menuBarShowing = false;
-  // var modeIsResults = false;
-  var selectAllIconApplied = false;
-  //default is always "zip"
-  var downloadType = "zip";
-  //dictionary with the sizes of all the files
-  var fileSizes;
+//filteredData has the models that correspond to the filters selected
+var filteredData;
 
-  var downloadFunction;
+//preservedOrderData is data read from the csv but unscrambled
+var preservedOrderData = [];
 
-  var countModels;
-  var modelsWithResults;
-  var countResults;
-  var warningHTML = document.getElementById("warning");
-  var putDropDownHere = document.getElementById("putDropDownHere");
+//displayedData is the data that is displayed in the view selected models
+var displayedData;
+
+//selectedModels is an array of booleans that contains which models are selected by the user
+var selectedModels = [];
+
+//viewingModel describes which model is currently selected
+var viewingModel = '';
+
+//viewingModel describes which simulation result is currently selected
+var viewingThisSimulation = '';
+
+//viewingSimulations is true when the user is viewing simulations
+var viewingSimulations = false;
+
+//variable for dynamically generating scroll bar
+var curIndex = 0;
+
+//smallScreen is true when the user is on mobile
+var smallScreen = false
+
+//global variables keeping track of when filters are applied and the filtered data
+var lastFapplied = 0;
+var lastFdata = [];
+var lastSelectedData = [];
+
+//viewingSelectedModels is true when the user is viewing their selected models
+var viewingSelectedModels = false;
+
+var doneDownloading = false;
+
+//variable that is true when the modal dialog is on to place an overlay
+var isOverlayOn = false;
+var is3DOverlayOn = false;
+
+var isSafeSelected = false;
+var menuBarShowing = false;
+
+// var modeIsResults = false;
+var selectAllIconApplied = false;
+//default is always "zip"
+var downloadType = "zip";
+//dictionary with the sizes of all the files
+var fileSizes;
+
+//global variables accessed for the confirmdownload panel
+var downloadFunction;
+var countModels;
+var modelsWithResults;
+var countResults;
+var warningHTML = document.getElementById("warning");
+var putDropDownHere = document.getElementById("putDropDownHere");
 
 //returns the keys of all the categories except "Results"
 function getAllCategories()
@@ -52,7 +75,7 @@ function getAllCategories()
   return allCategories;
 }
 
-//returns titles for the share multiple models table
+//returns details that will show in the table when sharing multiple models
 function getBareMinimum()
 {
   var output = ["Name", "Species", "Anatomy"]
@@ -60,31 +83,61 @@ function getBareMinimum()
   return output;
 }
 
-//returns titles for the share.html table
-function getDetailsTitles()
+//returns the details that will show in the share.html table for models
+function getDetailsTitlesForModel()
 {
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Size"]
+  var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Notes", "Image Modality", "Size"]
 
   return output;
 }
 
-//excludes titles that aren't filtered in the filter bar
-function getFilterTitles()
-{
-  var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
-
-  return output;
-}
-
-//returns the different categories someone can filter through
+// this returns the details that will show in the modaldialog when viewing a model in the gallery
 function getCategoryName()
 {
-  var output = ["Sex", "Age", "Species", "Anatomy", "Disease", "Procedure"];
+  var output = ["Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality"];
 
   return output;
 }
 
-//returns the titles under ProjectMustContain
+// this returns the details that will show in the modaldialog when viewing a simulation result in the gallery
+function getCategoryNameResults()
+{
+  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator"];
+  return output;
+}
+
+//returns the details that will show in the share.html table for results
+function getDetailsTitlesForResults()
+{
+  var output = ["Model Name", "Simulation Fidelity","Simulation Method","Simulation Condition","Results Type","Results File Type","Simulation Creator", "Notes", "Size"]
+
+  return output;
+}
+
+// this function helps with the applyFilters() function
+// it is more complicated to change this function, as code needs to be updated
+// in dataset.html and getFilterMenu() and applyFilters() to add new filtering categories
+function getFilterTitles()
+{
+  if (useAllFilters)
+  {
+    var output = ["Age", "Sex", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"]
+
+    return output;
+  }
+  
+  return [];
+}
+
+// this function determines what you can search for in the search bar
+function searchBarCategories()
+{
+  var output = ["Name", "Legacy Name", "Sex", "Age", "Species", "Anatomy", "Disease", "Procedure", "Image Modality", "DOI", "Ethnicity", "Animal", "Image Type", "Model Creator"];
+
+  return output;
+}
+
+//returns the titles under ProjectMustContain filter
 function getMustContainFilterTitles()
 {
   var output = ["Images", "Paths", "Segmentations", "Models", "Meshes", "Simulations"];
@@ -92,36 +145,233 @@ function getMustContainFilterTitles()
   return output;
 }
 
+//returns if the categoryName is a parent in the diseaseTree.csv
+function checksIfParent(categoryName)
+{
+  //searches for the categoryName in the parentArray
+  for(var p = 0; p < parentArray.length; p++)
+  {
+    if(parentArray[p].toLowerCase() == categoryName.toLowerCase())
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+//returns if an element is a child of a specific parent in the diseaseTree.csv
+function checksIfChildofParent(parent, categoryName)
+{
+  for(var i = 0; i < tree.length; i++)
+  {
+    if(tree[i][parent] == categoryName)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+//spawns elements in childrenArray that pushes all names that have a parent in the diseaseTree.csv
+var childrenArray = [];
+function getChildrenOfTree()
+{
+  if(childrenArray.length == 0)
+  {
+    //the child only appears once in the set if there were duplicates
+    var childrenSet = new Set();
+
+    for(var i = 0; i < tree.length; i++)
+    {
+      for(var p = 0; p < parentArray.length; p++)
+      {
+        //removes empty children names
+        if(tree[i][parentArray[p]] != "")
+        {
+          childrenSet.add(tree[i][parentArray[p]]);
+        }
+      }
+    }
+    
+    childrenArray = Array.from(childrenSet);
+  }
+
+  return childrenArray;
+}
+
+//returns the parents of a child
+function getParentsOfChild(child)
+{
+  var orphan = true;
+  var finalArray = [];
+  for(var i = 0; i < tree.length; i++)
+  {
+    for(var p = 0; p < parentArray.length; p++)
+    {
+      if(tree[i][parentArray[p]] == child)
+      {
+        //adds the name of the parent if it has that child
+        finalArray.push(parentArray[p])
+
+        //adds the parents of that parent if the child has it
+        var nestedParents = getParentsOfChild(parentArray[p]);
+
+        //nestedParents would return "orphan" if the child has no more parents
+        if(nestedParents != "orphan")
+        {
+          for (var n = 0; n < nestedParents.length; n++)
+          {
+            //adds the praents of the parent as necessary
+            finalArray.push(nestedParents[n]);
+          }
+        }
+
+        orphan = false;
+      }
+    }
+  }
+
+  if(orphan)
+  {
+    return "orphan";
+  }
+
+  //returns array of what parents the child has
+  return finalArray;
+}
+
+//gets the children of a parent
+function getChildrenOfParent(parent)
+{
+  var children = new Set();
+
+  for(var i = 0; i < tree.length; i++)
+  {
+    if(typeof (tree[i][parent]) != "undefined" && tree[i][parent] != "")
+    {
+      children.add(tree[i][parent])
+    }
+  }
+
+  children = Array.from(children);
+
+  return children;
+}
+
 //returns all possible options under each category
-function namesOfValuesPerKey(categoryName)
+function namesOfValuesPerKey(categoryName, returnSet = false)
 {
   var checkboxNameSet = new Set();
 
-  //does not add element if "-"
+  //if the categoryName is a parent, then the options under it are its children
+  if(checksIfParent(categoryName))
+  {
+
+    //returns an array containing the children of a parent
+    var children = getChildrenOfParent(categoryName);
+    
+    for(var i = 0; i < children.length; i++)
+    {
+      checkboxNameSet.add(children[i]);
+    }
+  }
+  else
+  {
+    if(categoryName == "Disease")
+    {
+      //includes parents in tree in possible categories
+      for(var pA = 0; pA < parentArray.length; pA++)
+      {
+        checkboxNameSet.add(parentArray[pA]);
+      }
+    }
+    //goes through the data and gets all the possibilities the models offer
+    for(var d = 0; d < data.length; d++)
+    {
+      //if the model has multiple tags separated by an underscore
+      if(data[d][categoryName].indexOf("_") != -1)
+      {
+        //if multiple categories to add separated by "_", different code
+        var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
+        for(var a = 0; a < toAdd.length; a++)
+        {
+          //does not add element if "-"
+          if (toAdd[a] != "-")
+          {
+            checkboxNameSet.add(toAdd[a]);
+          }
+        }
+      }
+      else
+      {
+        if (data[d][categoryName] != "-" && data[d][categoryName] != "Healthy" && data[d][categoryName] != "None"){
+          checkboxNameSet.add(data[d][categoryName]);
+        }
+      }
+    }
+  }
+  if(returnSet)
+  {
+    return checkboxNameSet;
+  }
+
+  finalArray = Array.from(checkboxNameSet);
+  finalArray.sort();
+
+
+  //adds category-specific options
+  //unshift() places the option at the beginning of the array
+  if(categoryName == "Disease")
+  {
+    finalArray.unshift("Healthy");
+  }
+  else if (categoryName == "Procedure")
+  {
+    finalArray.unshift("None");
+  }
+
+  return finalArray;
+}
+
+//returns all possible options under each category
+function resultsNamesOfValuesPerKey(categoryName)
+{
+  var data = results;
+  var checkboxNameSet = new Set();
+
+  //goes through the data and gets all the possibilities the models offer
   for(var d = 0; d < data.length; d++)
   {
+    //if the model has multiple tags separated by an underscore
     if(data[d][categoryName].indexOf("_") != -1)
     {
       //if multiple categories to add separated by "_", different code
       var toAdd = checkboxNameInArrayForm(data[d][categoryName]);
       for(var a = 0; a < toAdd.length; a++)
       {
+        //does not add element if "-"
         if (toAdd[a] != "-")
+        {
           checkboxNameSet.add(toAdd[a]);
+        }
       }
     }
     else
     {
-      if (data[d][categoryName] != "-")
+      if (data[d][categoryName] != "-" && data[d][categoryName] != "Healthy" && data[d][categoryName] != "None"){
         checkboxNameSet.add(data[d][categoryName]);
+      }
     }
   }
 
-  categoryName = Array.from(checkboxNameSet);
-  categoryName.sort();
+  finalArray = Array.from(checkboxNameSet);
+  finalArray.sort();
 
-  return categoryName;
+  return finalArray;
 }
+
 
 //returns an array taking in a string
 //delimiter = "_"
@@ -263,13 +513,22 @@ function newLineNoURL(text, isBefore)
   //creates div if \n
   var p = document.createElement("div");
   p.classList.add("newParagraph");
-  
+
+  var counter = 0;
+
   //allows for multiple \n
   while(text.includes("\\n"))
   {
     var index = text.indexOf("\\n");
     var pDiv = document.createElement("div");
-    pDiv.classList.add("newParagraph");
+    if(counter > 0)
+    {
+      pDiv.classList.add("newParagraph");
+    }
+    else
+    {
+      pDiv.classList.add("firstParagraph");
+    }
     
     //appends textContent between each \n
     pDiv.textContent = text.substring(0, index);
@@ -487,6 +746,7 @@ function isSelectAllApplied(bool)
   }
 }
 
+//clears the code in the download confirmation box
 function clearDoConfirm()
 {
   document.getElementById("downloadSize").innerHTML = "";
@@ -499,7 +759,7 @@ function clearDoConfirm()
 }
 
 //lets us confirm actions with users
-function doConfirm(msg, confirmText, downloadFn) {
+function doConfirm(msg, confirmText, downloadFn, hasDownload = true) {
   //show overlay
   var overlay = document.getElementById("confirmOverlay");
   overlay.style.display = "block";
@@ -530,6 +790,21 @@ function doConfirm(msg, confirmText, downloadFn) {
 
   var confirmBox = $("#confirmBox");
   confirmBox.find(".message").text(msg);
+
+  // toggles the "Download" button because the ability to download
+  // is removed over 6 models
+  if(!hasDownload)
+  {
+    document.getElementById("confirmButtons").style.display = "none";
+  }
+  else
+  {
+    if(document.getElementById("confirmButtons"))
+    {
+      document.getElementById("confirmButtons").style.display = "block";
+    }
+    
+  }
 
   $('#download-confirm-button').text(confirmText)
   bindsButtonConfirmation(".download", downloadFn)
@@ -612,49 +887,45 @@ function informUser(msg, hasOk = false) {
   }
 }
 
-// this is too slow. We give it for granted to improve ux
-//checks if a file exists given url
-// function checkFileExist(url) {
-//   var xhr = new XMLHttpRequest();
-//   xhr.open('HEAD', url, false);
-//   xhr.send();
-   
-//   if (xhr.status == "404") {
-//       return false;
-//   } else {
-//       return true;
-//   }
-// }
-
-//creates url to download models depending on download type and model name
-function craftURL(modelName)
+//creates url to download models depending on what the user is viewing
+function craftURL(model, type = "global")
 {
-  if(downloadType == "zip")
+  if(type == "global")
   {
-    var url = "svprojects/"
-    url += modelName + "." + downloadType;
+    var url = pathToFiles;
+  }
+  else if(type == "relative")
+  {
+    var url = "";
+  }
+
+  if(viewingSimulations)
+  {
+    url += "svresults/" + model["Model Name"] + "/" + model["Full Simulation File Name"];
+  }
+  else if (viewingAdditionalData)
+  {
+    url += "additionaldata/" + model["Name"] + ".zip";
   }
   else
   {
-    var url = "svresults/" + modelName + "/"
-    url += modelName + "_" + downloadType + ".zip";
+    url += "svprojects/" +  model["Name"] + ".zip";
   }
 
   return url;
 }
 
-function craftDownloadName(modelName)
+//name is accessed differently for simulation results and models
+function craftDownloadName(model)
 {
-  if(downloadType == "zip")
+  if(viewingSimulations)
   {
-    return modelName
+    return model["Full Simulation File Name"]
   }
   else
   {
-    return modelName + "_" + downloadType
+    return model["Name"]
   }
-
-  return url;
 }
 
 //deals with units for size
@@ -670,27 +941,22 @@ function sizeConverter(size)
 //returns sum of sizes of the arrays selected in the boolArray
 function getSumOfSizes(boolArray)
 {
-  //array with model names
-  var names = []
+  //array with models
+  var models = []
 
   for(var i = 0; i < boolArray.length; i++)
   {
     if(boolArray[i])
     {
-      //come back here
-      if(preservedOrderData[i]["Results"] == "1" || downloadType == "zip")
-      {
-        names.push(preservedOrderData[i]["Name"])
-      }
-      
+      models.push(preservedOrderData[i])
     }
   }
   
   var count = 0;
 
-  for(var i = 0 ; i < names.length; i++)
+  for(var i = 0 ; i < models.length; i++)
   {
-    var size = getSizeIndiv(names[i]);
+    var size = getSizeIndiv(models[i]);
     // then the fileSize exists (it's not nan)
     if (size[0] == size[0])
     {
@@ -699,29 +965,20 @@ function getSumOfSizes(boolArray)
     }
   }
 
-  //count is size in bytes
-  // count = sizeConverter(count)
-
   return count;
 }
 
 //gets size of individual models given their name
-function getSizeIndiv(modelName)
+function getSizeIndiv(model)
 {
-  var url = craftURL(modelName);
+  // url for size is not a global relative but a relative path
+  var url = craftURL(model, "relative");
 
   var size = parseInt(fileSizes[url]);
 
   //returns bytes and readable version of size
   return [size, sizeConverter(size)];
 }
-
-//returns file size given a URL
-// function getFileSize(url, key)
-// {
-//   var xhr = $.ajax({type:"HEAD", url: url, async: false})
-//   sizes[key] = xhr.getResponseHeader("Content-Length")
-// }
 
 //updates where the size is defined in the confirmbox
 function updateSize(boolArray)
@@ -792,83 +1049,25 @@ function maxDownloadMessage(downloadGb, maxGb, warningHTML)
   warningHTML.textContent = warning;
 }
 
-//creates drop down menu for file types
-function dropDown(putDropDownHere, string)
-{
-  //labels the drop down menu
-  var title = document.createElement("div");
-  title.textContent = "Choose file type: ";
-  putDropDownHere.appendChild(title)
-
-  //creates the select box
-  var select = document.createElement("select");
-  select.setAttribute("id", "chooseType");
-  select.setAttribute("class", "spaceBelow");
-
-  //these values must be exactly the folder type
-  //i.e. "vtp", "vtu"
-  var options = []
-  if(string == "all")
-  {
-    options.push("zip");
-    options.push("vtp");
-    options.push("vtu");
-  }
-  if(string == "no results")
-  {
-    options.push("zip");
-  }
-  if(string == "only results")
-  {
-    options.push("vtp");
-    options.push("vtu");
-  }
-  
-  //reset type to default of select
-  downloadType = options[0]
-
-  for(var i = 0; i < options.length; i++)
-  {
-    //create options under select
-    var option = document.createElement("option");
-    option.setAttribute("value", options[i]);
-
-    //specify what the options are
-    if(options[i] == "vtp")
-    {
-      option.textContent = "Simulation Results (.vtp)";
-    }
-    else if(options[i] == "vtu")
-    {
-      option.textContent = "Simulation Results (.vtu)";
-    }
-    else if (options[i] == "zip")
-    {
-      option.textContent = "SimVascular Project (.zip)";
-    }
-    select.appendChild(option);
-  }
-
-  putDropDownHere.appendChild(select);
-}
-
 //downloads individual models
-function downloadModel(modelName)
+function downloadModel(model)
   {
     //creates link of what the user wants to download
-    var fileUrl = craftURL(modelName);
+    var fileUrl = craftURL(model);
+    document.getElementById("iframeForDownload").src = fileUrl;
+    // window.open(fileUrl)
 
-    //creates anchor tag to download
-    var a = document.createElement("a");
-    a.href = fileUrl;
-    a.setAttribute("download", craftDownloadName(modelName));
-    //simulates click
-    a.click();
+    // //creates anchor tag to download
+    // var a = document.createElement("a");
+    // a.href = fileUrl;
+    // a.setAttribute("download", craftDownloadName(model));
+    // //simulates click
+    // a.click();
     
-    if(downloadType != "zip")
+    if(viewingSimulations)
     {
       //sends message to server with user's download
-      gtag('event', 'download_results_' + modelName + "." + downloadType, {
+      gtag('event', 'download_results_' + model["Full Simulation File Name"], {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',
@@ -878,11 +1077,28 @@ function downloadModel(modelName)
     else
     {
       //sends message to server with user's download
-      gtag('event', 'download_' + modelName, {
+      gtag('event', 'download_' + model["Name"], {
         'send_to': 'G-YVVR1546XJ',
         'event_category': 'Model download',
         'event_label': 'test',
         'value': '1'
       });
     }
+}
+
+//checks if model has simulation results
+function hasSimulationResults(modelName)
+{
+  var index = results.findIndex(p => p["Model Name"] == modelName);
+
+  return index != -1;
+}
+
+//returns first simulation result in the csv that corresponds to the current model
+function returnDefaultSimulationResult()
+{
+  var index = results.findIndex(p => p["Model Name"] == viewingModel['Name']);
+  simulationResult = results[index];
+  
+  return simulationResult;
 }

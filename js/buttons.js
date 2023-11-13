@@ -2,7 +2,9 @@
 $("#closeAllButton").click(function() {
   // gets all elements with h4 headings
   var h4Elements = document.getElementsByTagName("h4");
-  var changeClass = []
+
+  var changeClass = [];
+
   for(var i = 0; i < h4Elements.length; i++)
   {
     //if the element is open, add to changeClass array
@@ -13,8 +15,8 @@ $("#closeAllButton").click(function() {
   }
   //makes css adjustments to close all menus
   $(changeClass).addClass('closed').siblings(".cd-filter-content").slideToggle(300);
-  var contentH4 = document.getElementsByClassName(".cd-filter-content");
-  $(contentH4).css({ "display": "none" });
+  $(changeClass).addClass('closed').parent().siblings(".cd-filter-content").slideToggle(300);
+
 });
 
 //clears all filters in filter bar
@@ -65,7 +67,7 @@ function deselectAll()
 
     clearDoConfirm();
 
-    //sends a "confirm action" notification
+    //sends a "confirm action" notification to deselect all models
     doConfirm("Are you sure you want to deselect all selected models?", "Yes", function yes() {
       //if user confirms, clears selectedModels array
       selectedModels.fill(false);
@@ -96,9 +98,12 @@ function deselectModel(model)
   //index corresponds to preservedOrderData for shareable links
   selectedModels[preservedOrderData.indexOf(model)] = false;
 
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.remove("selected");
+  var selectBox = document.getElementById(model['Name'] + "_selects");
+  if (selectBox)
+  {
+    var wholeModel = document.getElementById(model['Name']);
+    formatSelectedModels(wholeModel, selectBox, false)
+  }
 }
 
 //selects given model
@@ -107,9 +112,14 @@ function selectModel(model)
   //sets value to true in selectedModels
   //index corresponds to preservedOrderData for shareable links
   selectedModels[preservedOrderData.indexOf(model)] = true;
-  var element = document.getElementById(model['Name'] + "_isSelected");
-  if (element)
-    element.classList.add("selected");
+
+  var selectBox = document.getElementById(model['Name'] + "_selects");
+  if (selectBox)
+  {
+    var wholeModel = document.getElementById(model['Name']);
+    formatSelectedModels(wholeModel, selectBox, true)
+  }
+  
 }
 
 //selects everything the user is viewing in gallery (filteredData)
@@ -144,24 +154,30 @@ function selectAllFilteredData()
 //downloading model in modalText
 $('.download-button-modal').click(function() {
   clearDoConfirm();
+  
+  //updates size with individual model
+  var sizeWarning = document.getElementById("downloadSize");
 
-  var message = "Are you sure you want to download " + viewingModel["Name"] + "?";
-
-  //resets downloadtype as well
-  if(viewingModel["Results"] == "1")
+  // changes confirm-download depending on whether or not 
+  // what is being downloaded is a simulation result or a model project
+  if(!viewingSimulations)
   {
-    dropDown(putDropDownHere, "all");
+    var message = "Are you sure you want to download the model " + viewingModel["Name"] + "?";
+    
+    sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
+    
+    downloadFunction = function download() {downloadModel(viewingModel)};
   }
   else
   {
-    dropDown(putDropDownHere, "no results");
+    var presentName = simulationResult["Model Image Number"] + "_" + simulationResult["Short Simulation File Name"];
+    var message = "Are you sure you want to download the simulation result " + presentName + "?";
+    
+    sizeWarning.textContent = "Size: " + getSizeIndiv(simulationResult)[1];
+    
+    downloadFunction = function download() {downloadModel(simulationResult)};
   }
-
-  //updates size with individual model
-  var sizeWarning = document.getElementById("downloadSize");
-  sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel["Name"])[1];
-
-  downloadFunction = function download() {downloadModel(viewingModel["Name"])};
+  
   doConfirm(message, "Download", downloadFunction);
 });
 
@@ -177,18 +193,13 @@ $("#download-all").click(function () {
   countResults = modelsWithResults.filter(value => value === true).length;
 
   //if nothing to download, download-all button has no function
-  if (countModels > 0)
+  if (countModels > 6)
   {
-    //dropDown defines downloadType
-    if(countResults == 0)
-    {
-      dropDown(putDropDownHere, "no results");
-    }
-    else
-    {
-      dropDown(putDropDownHere, "all");
-    }
-
+    var message = "Unfortunately, you cannot download more than 6 models at once."
+    doConfirm(message, "Download", downloadFunction, false);
+  }  
+  else if (countModels > 0)
+  {
     var message = downloadConfirmation(countModels, "model", selectedModels);
 
     downloadFunction = function download() {downloadAllModels()};
@@ -199,37 +210,23 @@ $("#download-all").click(function () {
 
 //deals with downloading multiple models
 async function downloadAllModels(){
-  var boolModels = selectedModels;
+  //finds models from boolean array selectedModels
+  listOfModels = [];
 
-  //if downloadType != zip, takes selectedModels and only works with those that have results
-  if(downloadType != "zip")
+  for(var i = 0; i < selectedModels.length; i++)
   {
-    for(var i = 0 ; i < boolModels.length; i++)
-    {
-      if(boolModels[i] && preservedOrderData[i]["Results"] != "1") 
-      {
-        boolModels[i] = false;
-      }
-    }
-  }
-  
-  listOfNames = []
-
-  for(var i = 0; i < boolModels.length; i++)
-  {
-    //index of boolModels corresponds with preservedOrderData
-    if(boolModels[i])
+    //index of selectedModels corresponds with preservedOrderData
+    if(selectedModels[i])
     {
       //takes in list of names of all the models to download
-      listOfNames.push(preservedOrderData[i]["Name"])
+      listOfModels.push(preservedOrderData[i])
     }
   }
-
   //sends to download all models
-  for(var i = 0; i < listOfNames.length; i++)
+  for(var i = 0; i < listOfModels.length; i++)
   {
-    downloadModel(listOfNames[i]);
-    await new Promise(r => setTimeout(r, 15));
+    downloadModel(listOfModels[i]);
+    await new Promise(r => setTimeout(r, 500));
   }
 
   //selected models not cleared
@@ -281,20 +278,148 @@ $("#returnToGalleryButton").click(function () {
     }
 });
 
+// toggles the simulation results dropdown menu
+// sets viewingThisSimulation depending on the dropdown menu value
+$("#modal_simResults_dropdown").change(function () {
+  // re-crafts the fullname from the shortened name in the dropdown menu
+  var valueOfDropdown = viewingModel['Name'] + "_"
+  valueOfDropdown += document.getElementById("chooseResult").value;
+  valueOfDropdown += ".zip";
+
+  //sets viewingThisSimulation to the entire simulation result object, not just the name
+  var index = results.findIndex(p => p["Full Simulation File Name"] == valueOfDropdown);
+  viewingThisSimulation = results[index];
+
+  greetingForSimulationResults();
+});
+
+// toggles the tabs if simulation results are avaliable
+$(".tab_in_modal").click(function () {
+  var model_tab = document.getElementById("model_tab");
+  var results_tab = document.getElementById("results_tab");
+
+  // changes the greetingText depending on which tab is selected
+  if($(this).attr('id') == "model_tab")
+  {
+    model_tab.classList.add("selected_tab");
+    results_tab.classList.remove("selected_tab");
+
+    viewingSimulations = false;
+    greetingText(viewingModel)
+  }
+  else if($(this).attr('id') == "results_tab")
+  {
+    results_tab.classList.add("selected_tab");
+    model_tab.classList.remove("selected_tab");
+
+    viewingSimulations = true;
+    viewSimulations()
+  }
+});
+
+// sets up the modaldialog when viewing simulations
+function viewSimulations()
+{
+  //creates the dropdown menu to toggle between simulation results
+  createDropDownForResults();
+
+  //sets viewingThisSimulation to default
+  var first = returnDefaultSimulationResult();
+  viewingThisSimulation = first;
+
+  // loads the rest of the modal dialog
+  greetingForSimulationResults();
+}
+
+function createDropDownForResults()
+{
+  //access and display dropdown element
+  //clear the html inside the dropdown element
+  var dropdown = document.getElementById("modal_simResults_dropdown");
+  dropdown.innerHTML = "";
+  dropdown.style.display = "block";
+
+  simulationResult = viewingThisSimulation;
+
+  //labels the drop down menu
+  var title = document.createElement("div");
+  title.style.display = "inline-block";
+  title.style.paddingRight = "5px";
+
+  var options = [];
+  var optionModel = [];
+  modelName = viewingModel['Name'];
+
+  //every option is a simulation result the model has
+  //adds all options to the dropdown menu
+  for(var i = 0; i < results.length; i++)
+  {
+    if(results[i]["Model Name"] == modelName)
+    {
+      options.push(results[i]["Short Simulation File Name"]);
+      optionModel.push(results[i])
+    }
+  }
+
+  if(options.length == 1)
+  {
+    // does not have a dropdown menu if only on simulation result
+    var presentName = optionModel[0]["Model Image Number"] + "_" + options[0];
+    title.textContent = "You are viewing " + presentName + ".";
+    dropdown.appendChild(title);
+  }
+  else
+  {
+    title.textContent = "You are viewing";
+    dropdown.appendChild(title);
+
+    //creates the dropdown menu with a select element
+    var select = document.createElement("select");
+    select.setAttribute("id", "chooseResult");
+
+    //sets up the html for the dropdown menu
+    for(var i = 0; i < options.length; i++)
+    {
+      var option = document.createElement("option");
+
+      option.setAttribute("value", options[i]);
+      
+      var presentName = optionModel[i]["Model Image Number"] + "_" + options[i];
+      option.textContent = presentName;
+      
+      select.appendChild(option);
+    }
+
+    dropdown.appendChild(select);
+  }
+}
+
 //share button inside modalText
 $('.shareableLink-button-modal').click(function() {
-  //creates array with all N except for the model
-  var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
+  //length of the array differentiates between models and arrays
+  if(viewingSimulations)
+  {
+    //creates array with all N except for the simulation result
+    //the results array is already unscrambled
+    var array = makeshiftSelectedModels(results, viewingThisSimulation);
+    array += "R";
+  }
+  else
+  {
+    //creates array with all N except for the model
+    var array = makeshiftSelectedModels(preservedOrderData, viewingModel);
+  }
+  
   //copies encoded URL to clipboard
   copyText("https://www.vascularmodel.com/share.html?" + encodeBTOA(encodeRLE(array)));
   informUser("Link copied");
 });
 
-//share button inside modalText
+//PDF button inside modalText
 $('.pdf-button-modal').click(function() {
   //creates anchor tag to download
   var a = document.createElement("a");
-  a.href = "VMR_PDFs/" + viewingModel['Name'] + ".pdf";
+  a.href = pathToFiles + "vmr-pdfs/" + viewingModel['Name'] + ".pdf";
   // a.setAttribute("download", viewingModel['Name']);
   a.setAttribute("target", "_blank");
   //simulates click
@@ -496,31 +621,8 @@ $("#putDropDownHere").change(function () {
   }
   else
   {
-    //asks to confirm download differently depending on type selected
-    if(downloadType == "zip")
-    {
-      var msg = downloadConfirmation(countModels, "model", selectedModels);
-    }
-    else
-    {
-      var msg = downloadConfirmation(countResults, "simulation result", modelsWithResults);
-    
-      var sumOfSizes = getSumOfSizes(modelsWithResults) / 1000000000
-      var maxGb = 30;
-      if (sumOfSizes > maxGb)
-      {
-        maxDownloadMessage(sumOfSizes, maxGb, warningHTML)
-        msg = "Please select fewer models."
-        downloadButton.classList.add("button-disabled");
-        $("#confirmBox").find(".download").unbind()
-      }
-      else 
-      {
-        // difference tells the user how many models have simulation 
-        // results to download
-        difference(countModels, countResults, warningHTML)
-      }
-    }
+    //confirmation message to download multiple models
+    var msg = downloadConfirmation(countModels, "model", selectedModels);
 
     //updates message with download confirmation
     updateMessage(msg);

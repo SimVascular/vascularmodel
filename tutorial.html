@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico?v=2" />
+    <link
+      rel="mask-icon"
+      href="{{ base_path }}/img/favicon.ico?v=M44lzPylqQ"
+      color="#000000"
+    />
     <!-- This corresponds to a fontawesome kit but can be customized -->
     <script
       src="https://kit.fontawesome.com/48644805cd.js"
@@ -65,7 +71,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-  
+
         <div
           class="collapse navbar-collapse justify-content-end"
           id="navbarSupportedContent"
@@ -77,15 +83,42 @@
               >
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white;">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
                 Repository
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="dataset.html">Dataset</a>
-                <a class="dropdown-item" href="tutorial.html">Tutorial</a>
+                <a class="dropdown-item" href="additionaldata.html"
+                  >Additional data</a
+                >
+                <a class="dropdown-item" href="statistics.html">Statistics</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown active">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Support
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="documentation.html"
                   >Documentation</a
                 >
+                <a class="dropdown-item" href="tutorial.html">Tutorial</a>
                 <a class="dropdown-item" href="FAQs.html">FAQs</a>
               </div>
             </li>
@@ -101,55 +134,41 @@
         </div>
       </div>
     </nav>
+
     <div class="container-fluid main-content centerBox">
       <h1 style="margin-bottom: 30px">Tutorial</h1>
       <div class="row" id="model-gallery">
         <div class="col-lg-6 col-12">
-          <a class="mainCat" href="gallerytutorial.html"
-            >Using the Gallery</a
-          >
-          <a
-            class="subCat"
-            href="gallerytutorial.html#Helpful_tools"
+          <a class="mainCat" href="gallerytutorial.html">Using the Gallery</a>
+          <a class="subCat" href="gallerytutorial.html#Helpful_tools"
             >Helpful tools</a
           >
-          <a
-            class="subCat"
-            href="gallerytutorial.html#Viewing_model_details"
+          <a class="subCat" href="gallerytutorial.html#Viewing_model_details"
             >Viewing model details</a
           >
           <a
             class="subCat"
-            href="gallerytutorial.html#Selecting_Models"
+            href="gallerytutorial.html#Viewing_simulation_results"
+            >Viewing simulation results</a
+          >
+          <a class="subCat" href="gallerytutorial.html#Selecting_Models"
             >Selecting models</a
           >
 
-          <a class="mainCat" href="filtertutorial.html"
-            >Using the Filters</a
-          >
-          <a
-            class="subCat"
-            href="filtertutorial.html#Opening_the_Menu"
+          <a class="mainCat" href="filtertutorial.html">Using the Filters</a>
+          <a class="subCat" href="filtertutorial.html#Opening_the_filter_menu"
             >Opening the Menu</a
           >
-          <a
-            class="subCat"
-            href="filtertutorial.html#About_the_filter_menu"
+          <a class="subCat" href="filtertutorial.html#About_the_filter_menu"
             >About the filter menu</a
           >
-          <a
-            class="subsubCat"
-            href="filtertutorial.html#The_Gallery_Header"
+          <a class="subsubCat" href="filtertutorial.html#The_Gallery_Header"
             >The Gallery Header</a
           >
-          <a
-            class="subsubCat"
-            href="filtertutorial.html#The_Error_Message"
+          <a class="subsubCat" href="filtertutorial.html#The_Error_Message"
             >The Error Message</a
           >
-          <a
-            class="subsubCat"
-            href="filtertutorial.html#The_Clear_All_Button"
+          <a class="subsubCat" href="filtertutorial.html#The_Clear_All_Button"
             >The Clear All Button</a
           >
           <a
@@ -162,9 +181,7 @@
             href="filtertutorial.html#Looking_at_the_different_categories"
             >The Different Categories</a
           >
-          <a
-            class="subsubCat"
-            href="filtertutorial.html#The_Search_Bar"
+          <a class="subsubCat" href="filtertutorial.html#The_Search_Bar"
             >The Search Bar</a
           >
           <a
@@ -172,19 +189,13 @@
             href="filtertutorial.html#The_Simulation_Results_Filter"
             >The Simulation Results Filter</a
           >
-          <a
-            class="subsubCat"
-            href="filtertutorial.html#The_Age_Filter"
+          <a class="subsubCat" href="filtertutorial.html#The_Age_Filter"
             >The Age Filter</a
           >
-          <a
-            class="subsubCat"
-            href="filtertutorial.html#The_Drop-Down_Menus"
+          <a class="subsubCat" href="filtertutorial.html#The_Drop-Down_Menus"
             >The Drop-Down Menus</a
           >
-          <a
-            class="subsubCat"
-            href="filtertutorial.html#The_Checkboxes"
+          <a class="subsubCat" href="filtertutorial.html#The_Checkboxes"
             >The Checkboxes</a
           >
           <a
@@ -194,12 +205,8 @@
           >
         </div>
         <div class="col-lg-6 col-12">
-          <a class="mainCat" href="menututorial.html"
-            >Using the Menu Bar</a
-          >
-          <a
-            class="subCat"
-            href="menututorial.html#Opening_the_Menu_Bar"
+          <a class="mainCat" href="menututorial.html">Using the Menu Bar</a>
+          <a class="subCat" href="menututorial.html#Opening_the_Menu_Bar"
             >Opening the Menu Bar</a
           >
           <a
@@ -212,23 +219,15 @@
             href="menututorial.html#The_View_Selected_Models_Icon"
             >The View Selected Models Icon</a
           >
-          <a
-            class="subCat"
-            href="menututorial.html#The_Download_All_Icon"
+          <a class="subCat" href="menututorial.html#The_Download_All_Icon"
             >The Download All Icon</a
           >
-          <a
-            class="subCat"
-            href="menututorial.html#The_Share_Icon"
+          <a class="subCat" href="menututorial.html#The_Share_Icon"
             >The Share Icon</a
           >
 
-          <a class="mainCat" href="sharingtutorial.html"
-            >Sharing Models</a
-          >
-          <a
-            class="subCat"
-            href="sharingtutorial.html#Sharing_a_model"
+          <a class="mainCat" href="sharingtutorial.html">Sharing Models</a>
+          <a class="subCat" href="sharingtutorial.html#Sharing_a_model"
             >Sharing a model</a
           >
           <a
@@ -243,7 +242,20 @@
           >
           <a
             class="subCat"
-            href="sharingtutorial.html#Sharing_multiple_models"
+            href="sharingtutorial.html#Sharing_a_simulation_result"
+            >Sharing a simulation result</a
+          >
+          <a
+            class="subsubCat"
+            href="sharingtutorial.html#How_to_get_the_Link_for_Sim_Results"
+            >How to get the link</a
+          >
+          <a
+            class="subsubCat"
+            href="sharingtutorial.html#Viewing_the_shared_result"
+            >Viewing the shared result</a
+          >
+          <a class="subCat" href="sharingtutorial.html#Sharing_multiple_models"
             >Sharing multiple models</a
           >
           <a
@@ -375,6 +387,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
     <!-- <script src="js/jquery-2.1.1.js"></script> -->
     <script src="js/jquery.mixitup.min.js"></script>
-    <script src="js/documentation.js?v=1.0.1"></script>
+    <script src="js/documentation.js?v=1.0.2"></script>
   </body>
 </html>

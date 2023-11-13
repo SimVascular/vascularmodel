@@ -1,3 +1,7 @@
+html {
+    scroll-padding-top: 75px;
+}
+
 p {
     text-align: justify;
 }
@@ -50,13 +54,14 @@ h2 {
 }
 
 h3 {
-    font-size: 1.25rem;
+    font-size: 1.45rem;
     margin-top: 10px;
     margin-bottom: 5px;
 }
 
 h4 {
-    font-size: 1rem;
+    font-weight: normal;
+    font-size: 1.25rem;
     margin-top: 10px;
     margin-bottom: 5px;
 }
@@ -202,13 +207,15 @@ img {
     opacity: 0.3;
 }
 
-.skiptoTop a{
-    color: var(--dark2);
-}
-
 .skiptoTop:hover {
     opacity: 1.0;
     transition: 0.4s;
+}
+
+#top {
+    color: var(--dark2);
+    cursor: pointer;
+    z-index: 100;
 }
 
 .text {
@@ -220,11 +227,18 @@ img {
     color: var(--black);
 }
 
-a.noDec:hover {
-    text-decoration: none;
-    z-index: 99999;
-}
-
 .inline:nth-child(even) {
     margin-right: 5%;
+}
+
+img {
+    display: block;
+    width: 50%;
+    /* margin: auto; */
+}
+
+@media (max-width: 960px){
+    img {
+        width: 100%;
+    }
 }

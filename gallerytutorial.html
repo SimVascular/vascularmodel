@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico?v=2"/>
+    <link rel="mask-icon" href="{{ base_path }}/img/favicon.ico?v=M44lzPylqQ" 
+ color="#000000">
     <!-- This corresponds to a fontawesome kit but can be customized -->
     <script
       src="https://kit.fontawesome.com/48644805cd.js"
@@ -65,7 +68,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-  
+
         <div
           class="collapse navbar-collapse justify-content-end"
           id="navbarSupportedContent"
@@ -77,15 +80,42 @@
               >
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white;">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
                 Repository
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="dataset.html">Dataset</a>
-                <a class="dropdown-item" href="tutorial.html">Tutorial</a>
+                <a class="dropdown-item" href="additionaldata.html"
+                  >Additional data</a
+                >
+                <a class="dropdown-item" href="statistics.html">Statistics</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown active">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Support
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="documentation.html"
                   >Documentation</a
                 >
+                <a class="dropdown-item" href="tutorial.html">Tutorial</a>
                 <a class="dropdown-item" href="FAQs.html">FAQs</a>
               </div>
             </li>
@@ -101,11 +131,12 @@
         </div>
       </div>
     </nav>
+    
     <section class="skiptoTop">
-      <a class="noDec" href="#top"><i class="fa-solid fa-circle-arrow-up"></i></a></a>
+      <span id="top"><i class="fa-solid fa-circle-arrow-up"></i></span>
     </section>
     <div class="container-fluid main-content centerBox">
-      <h1 id="top">Using the Gallery</h1>
+      <h1>Using the Gallery</h1>
       <div class="row" id="model-gallery">
         <div class="col-lg-3 col-sm-12 tOC">
           <form>
@@ -127,7 +158,10 @@
             <a class="accordion" href="#Viewing_model_details"
               >Viewing model details</a
             >
-            <a class="accordion" href="#Selecting_Models">Selecting models</a>
+            <a class="accordion" href="#Viewing_simulation_results"
+              >Viewing simulation results</a
+            >
+            <a class="accordion" href="#Selecting_models">Selecting models</a>
             <!-- end panel -->
           </form>
           <!-- end form for table of contents -->
@@ -152,7 +186,8 @@
               >.
             </p>
             <p>
-              To learn more about the files you can download, go to the
+              To learn more about the files you can download and the VMR naming 
+              convention for models and simulation results, go to the
               <a href="documentation.html">Documentation</a>
               page.
             </p>
@@ -167,18 +202,17 @@
             </p>
             <h2 id="Viewing_model_details">Viewing model details</h2>
             <p>
-              On every model, there is a small magnifying glass icon on the top
-              left. To learn more about one specific model, click on this
-              magnifying glass and an informational panel will appear.
+              To learn more about one specific model, click on the image of the model
+              and an informational panel will appear.
             </p>
             <img
               class="inline"
-              src="img/help/magnifyingGlassEx.jpg"
+              src="img/help/gallery/model_gallery_highlight.png"
               alt="Image of gallery with highlight on magnifying glass"
             />
             <img
               class="inline"
-              src="img/help/magnifyingGlassExPanel.jpg"
+              src="img/help/gallery/viewing_model.jpg"
               alt="Image of panel that opens when you click on the magnifying glass"
             />
             <p>
@@ -188,110 +222,201 @@
             </p>
             <img
               class="inline"
-              src="img/help/magnifyingGlassExPanelName.png"
+              src="img/help/gallery/viewing_model_name.png"
               alt="Image of panel highlight on name"
             />
             <img
               class="inline"
-              src="img/help/magnifyingGlassExPanel.jpgDetails.png"
+              src="img/help/gallery/viewing_model_details.png"
               alt="Image of panel highlight on details"
             />
             <p>
               If the model has any additional notes, they will be shown under
-              the details window. You are able to view the size of the model's
-              SimVascular Project <code>.zip</code> files as well.
+              the details window. You are able to view the size of project
+              you are viewing.
             </p>
             <img
               class="inline"
-              src="img/help/magnifyingGlassExPanelNotes.png"
+              src="img/help/gallery/viewing_model_notes.png"
               alt="Image of panel highlight on additional notes"
             />
             <img
               class="inline"
-              src="img/help/magnifyingGlassExPanelSize.png"
-              alt="Image of panel highlight on size"
+              src="img/help/gallery/viewing_model_size.png"
+              alt="Image of panel highlight on size information"
             />
             <p>
-              You can download the files of the individual model you are viewing
-              by clicking on the download icon. If you click on this icon, a
-              confirmation message will appear.
-            </p>
-            <img
-              class="inline"
-              src="img/help/magnifyingGlassExPanelDownload.png"
-              alt="Image of panel highlight on download icon"
-            />
-            <img
-              class="inline"
-              src="img/help/downloadConfirmationIndiv.png"
-              alt="Image of panel highlight on confirmation message"
-            />
-            <p>
-              If simulation results are avaliable for the model, you will be
-              able to choose which file type you want to download. As you change
-              the file type, the displayed size will update.
-            </p>
-            <img
-              class="inline"
-              src="img/help/magnifyingGlassExPanelChooseType.png"
-              alt="Image of panel highlight on confirmation message choosing type"
-            />
-            <img
-              class="inline"
-              src="img/help/downloadConfirmationIndivSize.png"
-              alt="Image of panel highlight on confirmation message choosing type"
-            />
-            <p>
-              Clicking on the PDF button in the middle allows you to inspect the PDF
-              description file associated with the model.
-            </p>
-            <img
-              src="img/help/magnifyingGlassExPanelPDF.png"
-              alt="Image of panel highlight on share button"
-            />
-            <p>
-              You can also click on the share icon to copy a shareable link. To
-              view how to use this link, go to
+              You can click on the share icon to copy a shareable link 
+              to share models with others. For this example model, the link
+              would be 
+              <a 
+                target="_blank"
+                style="word-wrap: break-word"
+                href="https://www.vascularmodel.com/share.html?NThOWTE4OU4_"
+                >https://www.vascularmodel.com/share.html?NThOWTE4OU4_</a>.
+              To view how to use this link, go to
               <a
                 href="sharingtutorial.html#Viewing_the_shared_model"
                 >viewing a shared model</a
               >.
             </p>
             <img
-              src="img/help/magnifyingGlassExPanelShare.png"
+              src="img/help/gallery/viewing_model_sharebutton.png"
               alt="Image of panel highlight on share button"
+            />
+            <p>
+              Clicking on the button with the PDF icon allows you to access the PDF
+              description file associated with the model you are viewing.
+            </p>
+            <img
+              class="inline"
+              src="img/help/gallery/viewing_model_pdfbutton.png"
+              alt="Image of panel highlight on pdf button"
+            />
+            <img
+              class="inline"
+              src="img/help/gallery/pdf_example.jpg"
+              alt="Image of panel highlight on pdf button"
+            />
+            <p>
+              You can download the files of the project you are viewing
+              by clicking on the download icon. If you click on this icon, a
+              confirmation message will appear.
+            </p>
+            <img
+              class="inline"
+              src="img/help/gallery/viewing_model_downloadbutton.png"
+              alt="Image of panel highlight on download icon"
+            />
+            <img
+              class="inline"
+              src="img/help/gallery/model_confirm_download.jpg"
+              alt="Image of panel highlight on download confirmation message"
             />
             <p>
               To exit the informational panel, you can click anywhere outside
               the panel, or you can click on the close button located on the top
-              right.
+              right of the panel.
             </p>
-            <h2 id="Selecting_Models">Selecting models</h2>
+            <h2 id="Viewing_simulation_results">Viewing simulation results</h2>
             <p>
-              Instead of downloading or creating shareable links for individual
-              models, you may want to work with multiple models at once.
+              When viewing a model that has simulation result files, 
+              a Results tab will be visible at the top of the informational panel.
+              For more information on how to access this information panel to view
+              a model, go to 
+              <a href="#Viewing_model_details"> viewing model details</a>.
+            </p>
+            <img
+              src="img/help/gallery/results_tab.png"
+              alt="Image of panel highlight on results tab"
+            />
+            <p>
+              To view the model's simulation results, click on this Results tab.
+              The informational panel will now show details on the model's simulation results.
+            </p>
+            <img
+              src="img/help/gallery/viewing_results.jpg"
+              alt="Image of panel"
+            />
+            <p>
+              To know which simulation result is showing, look at the top of the 
+              informational panel. To view another simulation result from the same model, 
+              click on the dropdown menu and toggle between the various
+              avaliable simulation results. 
+            </p>
+            <img
+              class="inline"
+              src="img/help/gallery/viewing_results_name.png"
+              alt="Image of panel highlight on name"
+            />
+            <img
+              class="inline"
+              src="img/help/gallery/gallery_toggle_results.jpg"
+              alt="Image of panel highlight on dropdown menu"
+            />
+            <p>
+              Under the dropdown menu, there is a details panel, which specifies helpful
+              information on the simulation result that you are viewing. Under these details,
+              there is information on the size of the simulation result file.              
+            </p>
+            <img
+              class="inline"
+              src="img/help/gallery/viewing_results_2_details.png"
+              alt="Image of panel highlight on detail"
+            />
+            <img
+              class="inline"
+              src="img/help/gallery/viewing_results_2_size.png"
+              alt="Image of panel highlight on size"
+            />
+            <p>
+              To share the simulation result you are viewing, click on the share button.
+              For this example simulation result, the link copied
+              would be 
+              <a 
+                target="_blank"
+                style="word-wrap: break-word"
+                href="https://www.vascularmodel.com/share.html?NDVOWTI4Mk5S"
+                >https://www.vascularmodel.com/share.html?NDVOWTI4Mk5S</a>.
+              To view how to use this link, go to
+              <a
+                href="sharingtutorial.html#Viewing_the_shared_result"
+                >viewing a shared result</a
+              >.
+            </p>
+            <img
+              src="img/help/gallery/viewing_results_2_sharebutton.png"
+              alt="Image of panel highlight on share button"
+            />
+            <p>
+              To download the simulation result that you are viewing, click on the 
+              download button. If you click on this icon, a
+              confirmation message will appear.
+            </p>
+            <img
+              class="inline"
+              src="img/help/gallery/viewing_results_2_downloadbutton.png"
+              alt="Image of panel highlight on detail"
+            />
+            <img
+              class="inline"
+              src="img/help/gallery/results_confirm_download.jpg"
+              alt="Image of panel highlight on size"
+            />
+            <p>
+              To return to the model, click on the Model tab at the top of the panel. 
+              To exit the informational panel, you can click anywhere outside
+              the panel, or you can click on the close button located on the top
+              right of the panel.
+            </p>
+            <h2 id="Selecting_models">Selecting models</h2>
+            <p>
+              Instead of downloading or sharing individual models, 
+              you may want to work with multiple models at once.
             </p>
             <p>
               To select and deselect a model to add it to or remove it from your
-              collection of selected models, simply click or unclick on the
-              model's image.
+              collection of selected models, click on the select icon on the 
+              top left of the model image in the gallery. The model's border will
+              appear highlighted when the model is selected.
+            </p>
+            <p>
+              To unselect a model, click on the now-checked select icon. The highlight
+              around the model's border will disappear accordingly.
             </p>
             <img
               class="inline"
-              src="img/help/readyToSelect.jpg"
-              alt="Image of a model"
+              src="img/help/gallery/select_button.png"
+              alt="Image of gallery highlight on select button"
             />
             <img
               class="inline"
-              src="img/help/selectedModel.jpg"
+              src="img/help/gallery/selected_model.jpg"
               alt="Image of selected model"
             />
             <p>
-              The example above demonstrates where to click and what a selected
-              model looks like.
-            </p>
-            <p>
-              You can also select multiple models at once with the Select All
+              You can select as many models as you need this way, but you can also 
+              select multiple models at once with the Select All
               icon in the menu bar. For more information on this feature, go to
               <a
                 href="menututorial.html#The_Select_and_Deselect_All_Icon"
@@ -308,8 +433,9 @@
             </p>
             <p>
               Once you have selected the models you want to download or share,
-              either click on the Download All icon or the Get Shareable Link
-              icon. For more information on these icons, go to
+              you can download or share them by clicking on the Download All icon 
+              or the Get Shareable Link icon respectively. For more information on 
+              these icons, go to
               <a href="menututorial.html#The_Download_All_Icon"
                 >The Download All Icon</a
               >
@@ -442,6 +568,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
     <!-- <script src="js/jquery-2.1.1.js"></script> -->
     <script src="js/jquery.mixitup.min.js"></script>
-    <script src="js/documentation.js?v=1.0.1"></script>
+    <script src="js/documentation.js?v=1.0.2"></script>
   </body>
 </html>
