@@ -484,19 +484,19 @@
 <div id="threeDOverlay">
   <div class="container">
     <div id="open3DModal" class="modalDialog">
-      <div>
-        <!-- safeOfOverlayClick is where the user can click and the detailsModal does not close -->
-        <div id ="safeOfOverlayClick">
+      <div class="containing_and_positioning_of_modal">
+        <div id="body_of_modal" class="safeOfOverlayClick">
           <p id="3Dmodal-greeting">Placeholder</p>
           <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
           <iframe id="game-window" src="http://thien-test-iframe.s3-website-us-east-1.amazonaws.com/index.html?project=0001_h_ao_svd" width="100%" height="600px" style="position: relative; z-index:10;" frameborder="0"></iframe>
-          <div id="modal-closure" style="margin-bottom:10px;"><a href="http://www.microscape.xyz">www.microscape.xyz</a></div>
+          <div id="modal-closure" style="margin-bottom:10px;">
+            <a href="http://www.microscape.xyz">www.microscape.xyz</a></div>
         </div> 
         <div class="row">
           <div class="col-xs-4 col-sm-4 top-right">
-            <a title = "Close" class="button close-button-modal"><i class="fa-solid fa-xmark"></i></a>
-          </div>
+            <a title = "Close" class="button close-button-modal"><i class="fa-solid fa-xmark"></i></a></div>
           <!-- 6LedB9gdAAAAANK8mQLhxsR7-mpeDlxzPdm9fQkV secret key -->
+          </div>
         </div>
       </div>
     </div>
