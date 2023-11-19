@@ -802,19 +802,25 @@ function generateContent(modelData) {
   //creates ID for hook to open modalDialog
   selectBox.setAttribute("id", modelData['Name'] + "_selects");
 
-  let microscapeButton = document.createElement("i");
-  microscapeButton.classList.add("microscape-button");
-  microscapeButton.setAttribute("id",modelData['Name'] + "_3D");
+  if("0001_h_ao_svd 0002_h_ao_svd 0004_h_ao_svd 0005_h_ao_svd 0006_h_ao_svd 0007_h_ao_h 0010_h_ao_h 0012_h_ao_h 0013_h_ao_coa 0014_h_ao_coa 0015_h_ao_coa 0016_h_ao_coa 0017_h_ao_coa 0018_h_ao_coa 0019_h_ao_coa 0020_h_ao_coa 0022_h_ao_mfs 0023_h_ao_mfs 0024_h_ao_h 0029_h_abao_h 0050_h_cere_h 0051_h_cere_h 0052_h_cere_h 0053_h_cere_h 0054_h_pulmfon_tat 0055_h_pulmfon_hlhs 0057_h_pulmfon_tat 0058_h_pulmfon_pat 0059_h_pulmfon_tat 0060_h_pulmgln_svd 0062_h_pulmgln_svd 0063_h_pulmgln_svd 0069_h_coro_kd 0078_h_pulm_h 0079_h_pulm_h 0080_h_pulm_h 0081_h_pulm_pah 0082_h_pulm_h 0083_h_pulm_pah 0084_h_pulm_h 0085_h_pulm_pah 0086_h_pulm_pah 0088_h_pulm_pah 0091_h_pulm_tof 0092_h_pulm_h 0093_a_ao_h 0094_a_ao_h 0095_a_ao_h 0096_a_ao_coa 0097_a_ao_coa 0098_a_ao_coa 0099_a_ao_coa 0099_a_ao_coa 0100_a_ao_coa 0101_a_ao_coa 0136_h_coro_kd 0137_h_ao_h 0137_h_coro_kd 0138_h_ao_h 0138_h_coro_kd 0139_h_ao_h 0139_h_coro_kd 0140_h_ao_h 0140_h_coro_kd 0141_h_ao_h 0141_h_coro_kd 0142_h_ao_h 0142_h_coro_kd 0143_h_ao_h 0143_h_coro_kd 0144_h_coro_kd 0145_h_ao_h 0145_h_coro_kd 0161_h_pulmfon_svd 0162_h_pulmfon_svd 0164_h_pulmfon_svd 0166_h_pulmfon_svd 0168_h_pulmfon_svd".includes(modelData['Name'].toLowerCase())){
+    let microscapeButton = document.createElement("i");
+    microscapeButton.classList.add("microscape-button");
+    microscapeButton.setAttribute("id",modelData['Name'] + "_3D");
 
-  let mcpImgHover = document.createElement("img");
-  mcpImgHover.classList.add("icon-hover");
-  mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
+    let mcpImgHover = document.createElement("img");
+    mcpImgHover.classList.add("icon-hover");
+    mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
 
-  let mcpImg = document.createElement("img");
-  mcpImg.classList.add("icon");
-  mcpImg.src = 'img/group-logos/MCP_Icon_GreyOverAlpha.png'
-  
-  //creates image of model
+    let mcpImg = document.createElement("img");
+    mcpImg.classList.add("icon");
+    mcpImg.src = 'img/group-logos/MCP_Icon_GreyOverAlpha.png'
+
+    divModelImage.appendChild(microscapeButton);
+    microscapeButton.appendChild(mcpImg);
+    microscapeButton.appendChild(mcpImgHover);
+  }
+    
+    //creates image of model
   let innerImg = document.createElement("img");
   innerImg.src = pathToFiles + 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
@@ -823,9 +829,7 @@ function generateContent(modelData) {
   divModelImage.appendChild(innerImg);
   divModelImage.appendChild(selectBox);
   // divModelImage.appendChild(threeD);
-  divModelImage.appendChild(microscapeButton);
-  microscapeButton.appendChild(mcpImg);
-  microscapeButton.appendChild(mcpImgHover);
+
   div.appendChild(divModelImage);
 
   return div
