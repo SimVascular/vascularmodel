@@ -943,6 +943,12 @@ error msg block behavior
     display: inline;
 }
 
+@media only screen and (max-width: 420px) {
+  .microscape-button{
+    display: none;
+  }
+}
+
 .model-image.selected .microscape-button img {
   /* box-shadow: inset 0px 0px 50px 10px var(--select); */
   box-sizing: border-box;
