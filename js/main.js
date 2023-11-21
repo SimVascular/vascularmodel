@@ -476,7 +476,7 @@ function threeDEmbed(data)
   let input = event.target;
   let newProject = input.value;
   
-  iframe.src="http://thien-test-iframe.s3-website-us-east-1.amazonaws.com/index.html?project=" + data['Name'].toLowerCase();
+  iframe.src="https://iframe.microscape.xyz/index.html?project=" + data['Name'].toLowerCase();
   //iframe.src = "/?project=" + newProject;
 
   //modal's first line
