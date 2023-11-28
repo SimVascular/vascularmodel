@@ -926,14 +926,15 @@ error msg block behavior
 
 .microscape-button img{
   position: absolute;
-  top: 80px;
-  left: 20px;
+  top: 30px;
+  right: 30px;
   width:50px;
   border:none;
   object-fit: cover;
   font-size: 150%;
   padding: 5px;
 }
+
 
 .microscape-button:hover .icon,
 .microscape-button .icon-hover {
