@@ -811,6 +811,7 @@ function generateContent(modelData) {
     mcpImgHover.classList.add("icon-hover");
     //mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
     mcpImgHover.src = 'img/3D-icon-2 hover.png'
+    mcpImgHover.setAttribute("title", "Volume rendering of " + modelData['Name']);
 
 
     let mcpImg = document.createElement("img");
