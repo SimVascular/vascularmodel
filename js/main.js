@@ -476,11 +476,11 @@ function threeDEmbed(data)
   let input = event.target;
   let newProject = input.value;
   
-  iframe.src="http://thien-test-iframe.s3-website-us-east-1.amazonaws.com/index.html?project=" + data['Name'].toLowerCase();
+  iframe.src="https://iframe.microscape.xyz/index.html?project=" + data['Name'].toLowerCase();
   //iframe.src = "/?project=" + newProject;
 
   //modal's first line
-  $('#3Dmodal-greeting')[0].innerText = 'You are viewing ' + data['Name'] + '.\nHere is the 3D visualization:'
+  $('#3Dmodal-greeting')[0].innerText = 'Volume Rendering of image ' + data['Name'] + '.\n'
 
 } //end threeDembed()
 
@@ -809,11 +809,15 @@ function generateContent(modelData) {
 
     let mcpImgHover = document.createElement("img");
     mcpImgHover.classList.add("icon-hover");
-    mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
+    //mcpImgHover.src = 'img/group-logos/MCP_Icon_BlueOverWhite.png'
+    mcpImgHover.src = 'img/3D-icon-2 hover.png'
+    mcpImgHover.setAttribute("title", "Volume rendering of " + modelData['Name']);
+
 
     let mcpImg = document.createElement("img");
     mcpImg.classList.add("icon");
-    mcpImg.src = 'img/group-logos/MCP_Icon_GreyOverAlpha.png'
+    //mcpImg.src = 'img/group-logos/MCP_Icon_GreyOverAlpha.png'
+    mcpImg.src = 'img/3D-icon-2.png'
 
     divModelImage.appendChild(microscapeButton);
     microscapeButton.appendChild(mcpImg);
