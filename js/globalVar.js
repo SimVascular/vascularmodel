@@ -43,6 +43,7 @@ var doneDownloading = false;
 
 //variable that is true when the modal dialog is on to place an overlay
 var isOverlayOn = false;
+var is3DOverlayOn = false;
 
 var isSafeSelected = false;
 var menuBarShowing = false;
