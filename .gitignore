@@ -5,3 +5,8 @@ svresults/
 extra_data/
 vmr-pdfs
 additionaldata
+doc/html
+doc/latex
+.vscode
+vmr-clinical_data/
+img/vmr-images/

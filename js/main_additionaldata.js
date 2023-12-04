@@ -386,7 +386,7 @@ function generateContent(modelData) {
 
   //creates image of model
   let innerImg = document.createElement("img");
-  innerImg.src = 'img/vmr-images/' + modelData['Name'] + '.png'
+  innerImg.src = pathToFiles + 'img/vmr-images/' + modelData['Name'] + '.png'
   innerImg.alt = modelData['Name']
   innerImg.setAttribute("id", modelData['Name'] + "_details");
 

@@ -1,5 +1,5 @@
 // var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
-var pathToFiles = "";
+var pathToFiles = "http://www.vascularmodel.com/";
 
 //data has all the models read in the csv, scrambled
 var data;
@@ -43,6 +43,7 @@ var doneDownloading = false;
 
 //variable that is true when the modal dialog is on to place an overlay
 var isOverlayOn = false;
+var is3DOverlayOn = false;
 
 var isSafeSelected = false;
 var menuBarShowing = false;
