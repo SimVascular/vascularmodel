@@ -1,5 +1,5 @@
 // var pathToFiles = "http://simvascular.stanford.edu/downloads/public/vmr/"
-var pathToFiles = "http://www.vascularmodel.com/";
+var pathToFiles = "https://www.vascularmodel.com/";
 
 //data has all the models read in the csv, scrambled
 var data;
