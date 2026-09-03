@@ -1,5 +1,5 @@
 p {
-    text-align: justify;
+    text-align: left;
 }
 
 .main-content {
@@ -232,13 +232,11 @@ a.noDec:hover {
 
 .contributor-box {
     border-radius: 5px;
-    /* border: 0.5px solid var(--light1); */
+    border: 1px solid var(--darkgrey);
     text-align: left;
-    vertical-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    height: 100%;
+    padding: 14px;
     margin-bottom: 20px;
-    /* margin: 10px; */
 }
 
 .group-name {
@@ -265,9 +263,28 @@ a.noDec:hover {
 }
 
 .group-logo {
-    width: 120px;
-    height: 120px;
-    border: 1px solid var(--light1);
-    object-fit: cover;
-    /* margin-top: 10px; */
+    width: 100%;
+    max-width: 230px;
+    height: auto;
+}
+
+#contributors .col-md-3 {
+    flex: 0 0 46%;
+    max-width: 46%;
+}
+
+#contributors .col-md-9 {
+    flex: 0 0 54%;
+    max-width: 54%;
+}
+
+/* the Marsden logo is far wider than the rest, so its text sits below it */
+#contributors .contributor-box:has(.group-logo[src*="CBCL"]) .col-md-3,
+#contributors .contributor-box:has(.group-logo[src*="CBCL"]) .col-md-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+#contributors .group-logo[src*="CBCL"] {
+    max-width: 340px;
 } 
