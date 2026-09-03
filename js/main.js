@@ -1,3 +1,26 @@
+/*
+//// ADDED TO TRIGGER MAINTENANCE MODE IN CASE OF ERRORS /////////////
+
+// only install these global handlers in production
+const IS_PROD = window.location.hostname === "www.vascularmodel.com";
+
+// always allow the manual “?maintenance” toggle
+if (window.location.search.includes("maintenance")) {
+  showMaintenanceMode();
+}
+
+if (IS_PROD) {
+  // 1) AJAX errors
+  $(document).ajaxError((e, xhr, settings, err) => {
+    showMaintenanceMode();
+  });
+  // 2) uncaught runtime errors
+  window.addEventListener("error", () => showMaintenanceMode());
+  // 3) unhandled promise rejections
+  window.addEventListener("unhandledrejection", () => showMaintenanceMode());
+}
+*/
+
 var useAllFilters = false;
 var parentArray = [];
 var viewingAdditionalData = false;
@@ -190,6 +213,7 @@ function greetingText(data)
 {
   //sets global var viewingModel
   viewingModel = data;
+  // Add debugging logs
 
   //clear dropdown for simulation results if it was created
   var dropdown = document.getElementById("modal_simResults_dropdown");
@@ -319,7 +343,7 @@ function greetingText(data)
       }
 
       modalclosure.appendChild(text);
-    }
+    }    
 
     //after notes, prints size
     var sizeText = document.createElement("div");
@@ -331,9 +355,35 @@ function greetingText(data)
   else
   {
     //if no notes, only prints size
-    modalclosure.innerText = 'The size of this project is ' + sizeConverter(size);
+    modalclosure.innerText = 'The size of this project is ' + sizeConverter(size);   
   }
+
+  
+// Add DOI section - with debugging
+    var sdr_DOI = data["SDR DOI"];
+
+    if(sdr_DOI && sdr_DOI !== "-")
+    {
+        var doi_div = document.createElement("div");
+        doi_div.classList.add("newParagraph");
+
+        var descOfDoi = document.createElement("span");
+        descOfDoi.textContent = "Model DOI: ";
+
+        var sdr_DOI_link = document.createElement("a");
+        sdr_DOI_link.setAttribute("href", sdr_DOI);
+        sdr_DOI_link.setAttribute("target", "_blank");
+        sdr_DOI_link.classList.add("link");
+        sdr_DOI_link.setAttribute("style", "word-wrap: break-word");
+        sdr_DOI_link.textContent = sdr_DOI;
+
+        doi_div.appendChild(descOfDoi);
+        doi_div.appendChild(sdr_DOI_link);
+        modalclosure.appendChild(doi_div);
+    } else {
+    }
 } //end greetingText()
+
 
 // if results are visible, displays the two model and results tab
 function setUpResultsButton()
@@ -452,6 +502,8 @@ function greetingForSimulationResults()
       modalclosure.appendChild(text);
     }
 
+
+
     //after notes, prints size
     var sizeText = document.createElement("div");
     sizeText.classList.add("newParagraph");
@@ -463,6 +515,29 @@ function greetingForSimulationResults()
   {
     //if no notes, only prints size
     modalclosure.innerText = 'The size of this result is ' + sizeConverter(size);
+  }
+
+
+  var sdr_DOI = viewingModel["SDR DOI"];
+
+    if(sdr_DOI != "-")
+    {
+      var doi_div = document.createElement("div");
+      doi_div.classList.add("newParagraph");
+
+      var descOfDoi = document.createElement("span");
+      descOfDoi.textContent = "\n\nModel DOI: "
+
+      var sdr_DOI_link = document.createElement("a")
+      sdr_DOI_link.setAttribute("href", sdr_DOI);
+      sdr_DOI_link.setAttribute("target", "_blank");
+      sdr_DOI_link.classList.add("link");
+      sdr_DOI_link.setAttribute("style", "word-wrap: break-word")
+      sdr_DOI_link.textContent = sdr_DOI;
+
+      doi_div.appendChild(descOfDoi);
+      doi_div.appendChild(sdr_DOI_link);
+      modalclosure.appendChild(doi_div);
   }
 } //end greetingForSimulationResults()
 

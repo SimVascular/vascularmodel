@@ -26,6 +26,7 @@
   --lighterpink: #f4a1a9b0;
 }
 
+
 body,
 html {
   height: 100%;
@@ -282,6 +283,46 @@ code {
 
 /* ============= end About section ============= */
 
+/* ============= Submit your model ============= */
+.submission-form-section {
+  background-color: var(--lightgrey); /* or another color from your palette */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.submission-form-section .title {
+  font-weight: bold;
+  margin-bottom: 10px}
+
+
+  .submission-form-section .intro-text {
+    font-size: 1.2rem;        /* Slightly larger text */
+    font-weight: 500;         /* Medium-bold */
+    color: var(--dark2);      /* A darker color for emphasis */
+    margin-bottom: 2.5rem;      /* Extra spacing before the button */
+    line-height: 1.5;         /* Comfortable line spacing */
+  }
+
+.btn-prominent {
+  background-color: var(--light1); /* Use your site’s primary accent color */
+  color: var(--white);             /* Ensure text is readable */
+  font-size: 1.2em;                /* Increase font size */
+  font-weight: bold;               /* Bold text for emphasis */
+  padding: 15px 30px;              /* Increase padding for a larger button */
+  border: none;                   /* Remove any border */
+  border-radius: 5px;             /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+}
+
+.btn-prominent:hover {
+  background-color: var(--light1shade); /* Slightly darker on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+/* ============= end Submit your model section ============= */
+
+
 /* ============= Simvascular section ============= */
 
 .simvascular-section {
@@ -368,6 +409,56 @@ code {
 }
 
 /* ============= end Team section ============= */
+
+
+
+/* ============= Recents News section ============= */
+.recent-news-section {
+  background-color: var(--lightgrey); /* Or another color from your palette */
+  /* Or for a darker section, try var(--dark1) with white text */
+  ;
+}
+
+.recent-news-section .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.recent-news-section .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recent-news-section .card-body {
+  padding: 1.5rem;  /* Adjust this value for optimal spacing */
+}
+.recent-news-section .card-title {
+  color: var(--dark2); /* Ensure contrast */
+}
+
+.recent-news-section .card-text {
+  color: var(--dark3shade);
+}
+
+.recent-news-section .card-footer {
+  background-color: transparent;
+  border-top: none;
+  font-size: 0.9rem;
+  padding-top: 0.5rem;
+}
+
+.recent-news-section .btn-primary:hover {
+  background-color: var(--light1shade);
+}
+
+/* For the 'Learn More' button, you can use Bootstrap's .btn-primary or override it: */
+.recent-news-section .btn-primary {
+  background-color: var(--light1);
+  border: none;
+  /* etc. */
+}
+
+
+
+/* ============= end Recent NEWS section ============= */
 
 /* ============= Social section ============= */
 
@@ -546,3 +637,73 @@ ul.contact-address li i {
     padding-bottom: 20px;
   }
 }
+
+/* ============= Maintenance Mode Banner ============= */
+
+/* Hide by default */
+#maintenance-mode {
+  display: none;
+  position: relative;
+  width: 100%;
+  height: 100vh;                      /* force full‑viewport height */
+
+  /* Heart image background */
+
+  background-image: url("../img/maintenance/maintenance_heart.png");
+  background-size: contain;           /* scale the whole image in view */
+  background-position: center center; /* center it */
+  background-repeat: no-repeat;
+
+  /* Fallback color if image fails */
+  background-color: var(--lightgrey);
+  color: var(--dark1);
+
+  padding: 2rem 1rem;
+  text-align: center;
+  z-index: 1000;
+}
+
+/* Semi‑opaque white overlay above the image */
+#maintenance-mode::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.8);
+  z-index: 1;
+}
+
+/* Ensure your text sits above the overlay */
+#maintenance-mode > * {
+  position: relative;
+  z-index: 2;
+}
+
+#maintenance-mode h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+#maintenance-mode p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+  #maintenance-mode h1 { font-size: 2rem; }
+  #maintenance-mode p  { font-size: 1rem; }
+}
+
+/* When we add “.show”, force it to flex and center content */
+#maintenance-mode.show {
+  display: flex !important;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  padding-top: 25vh;
+}
+
+/* ============= end Maintenance Mode Banner ============= */

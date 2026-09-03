@@ -13,7 +13,7 @@ for folder in folders:
                 path = os.path.join(root, file)
                 sizes_dict.append({'Name': path, 'Size': os.path.getsize(path)})
 
-with open('/home/www/vascularmodel/dataset/file_sizes.csv', 'w') as csvfile:
+with open('/var/www/vascularmodel/dataset/file_sizes.csv', 'w') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames = csv_columns)
     writer.writeheader()
     writer.writerows(sizes_dict)

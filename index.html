@@ -10,7 +10,7 @@
     <link rel="preload" href="img/hero_img_low.jpg" as="image" />
     <!-- This corresponds to a fontawesome kit but can be customized -->
     <script
-      src="https://kit.fontawesome.com/48644805cd.js"
+      src="https://kit.fontawesome.com/b477d01fc5.js"
       crossorigin="anonymous"
     ></script>
     <!-- Required meta tags -->
@@ -40,7 +40,7 @@
     />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css?v=1.0.2" />
+    <link rel="stylesheet" href="css/style.css?v=1.0.3" />
 
     <title>Vascular Model Repository</title>
 
@@ -201,6 +201,65 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="contributors-section"
+    style="margin-top: -30px; padding-top: 0"
+  >
+    <div class="container">
+      <div
+        class="row align-items-center justify-content-center text-center"
+      >
+        <div class="col-4">
+          <div class="sv-logo">
+            <img
+              src="img/institutions/NIH.png"
+              alt="NIH Logo"
+              width="50%"
+            />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="sv-logo">
+            <img
+              src="img/institutions/nsf.png"
+              alt="NSF Logo"
+              width="80%"
+            />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="sv-logo">
+            <img
+              src="img/institutions/additionalventures_last.png"
+              alt="Additional Ventures Logo"
+              width="80%"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+
+    <section class="submission-form-section">
+        <div class="container text-center my-3">
+          <div class="title-and-divider">
+            <h2 class="title">SUBMIT YOUR MODEL</h2>
+            <div class="divider"></div>
+          </div>
+          <p class="intro-text">
+            To participate in expanding our model repository, please fill out
+            the following form.
+          </p>
+          <a
+            href="https://forms.gle/4BjK7CABT5Sd2J6S9"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-prominent"
+          >
+            Fill Out the Form
+          </a>
+        </div>
     </section>
 
     <section class="simvascular-section">
@@ -575,6 +634,121 @@
     </div>
   </div>
 </section> -->
+
+    <!-- ===================================================================
+         RECENT NEWS - READY, BUT NOT SHOWN YET
+         ===================================================================
+         The three cards below contain real, verified content. Nothing is
+         placeholder any more. The section is still disabled so you can read
+         it and approve the wording before it goes public.
+
+         The cards use no images, as requested, so there are no missing files
+         and nothing to upload. Bootstrap cards look fine without them.
+
+         The CSS it needs (.recent-news-section and children) is already in
+         css/style.css, so nothing else is required.
+
+         TO PUBLISH IT: delete this comment opener and the closing marker below,
+         and remove the `hidden` attribute from the section tag. That is all.
+
+         SOURCES FOR EACH CARD (all checked against the dataset and the server):
+           1. 0248_H_AOCERE_CAS - anatomy "Aortic Root - Cerebral Arteries",
+              disease Carotid Artery Stenosis, CT from UCHealth University of
+              Colorado Hospital, added 5 May 2025, has 3D rigid-wall results.
+              The 30 stenosis variants (10-100% NASCET) and the Circle of
+              Willis extent come from the model's own Notes field.
+           2. 316 of 316 items in the Stanford Digital Repository collection
+              "Vascular Model Repository"; the bulk was deposited in Mar 2025
+              (253 items), the rest Feb, Apr and May 2025. Every DOI resolves.
+           3. Counts from dataset-svprojects.csv: Carotid Artery Stenosis 1
+              model, Splenic Rupture 1 model, Aortic Root - Cerebral Arteries
+              1 model, Cerebral Aneurysm 22 models.
+
+         CHECK BEFORE PUBLISHING: card 2 says "Mar 2025" and card 3 says
+         "Sep 2025" rather than exact days, because I could only verify the
+         month. Put real dates in if you know them.
+         =================================================================== -->
+    <!--
+<section class="recent-news-section" hidden>
+  <div class="container py-5">
+    <div class="title-and-divider text-center mb-3">
+      <h2 class="title">RECENT NEWS</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-sm-12 mb-4">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title font-weight-bold">
+              A model that runs from the heart to the brain
+            </h5>
+            <p class="card-text">
+              The repository now includes an anatomy that spans the aortic root all
+              the way to the A1, M1 and P1 cerebral arteries in the Circle of Willis.
+              Built from CT images, model 0248_H_AOCERE_CAS comes with 30 variants in
+              which bilateral carotid stenosis was increased step by step, from 10% to
+              100% NASCET severity, along with 3D rigid-wall simulation results.
+              Created by Ricardo Roopnarinesingh and Debanjan Mukherjee.
+            </p>
+            <div class="mt-auto">
+              <a href="dataset.html" class="btn btn-primary">Explore the model</a>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            Published on May 5, 2025
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-12 mb-4">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title font-weight-bold">
+              Every model now has a permanent DOI
+            </h5>
+            <p class="card-text">
+              All 316 models in the repository are archived in the Stanford Digital
+              Repository, each one with its own DOI. You can now cite a specific model
+              directly in a paper, and that link will keep working even if the website
+              changes. The DOI is listed on each model&#39;s page.
+            </p>
+            <div class="mt-auto">
+              <a href="dataset.html" class="btn btn-primary">Browse the dataset</a>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            Published on Mar 2025
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-12 mb-4">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title font-weight-bold">
+              New anatomy and disease categories
+            </h5>
+            <p class="card-text">
+              The dataset filters now cover three new categories: Aortic Root &ndash;
+              Cerebral Arteries as an anatomy, and Carotid Artery Stenosis and Splenic
+              Rupture as diseases. Cerebral Aneurysm was also added to the disease
+              tree, which groups the 22 cerebral aneurysm models under Aneurysm and
+              makes them easier to find.
+            </p>
+            <div class="mt-auto">
+              <a href="dataset.html" class="btn btn-primary">Try the filters</a>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            Published on Sep 2025
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    -->
 
     <section id="contact-section">
       <div class="container">

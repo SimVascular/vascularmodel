@@ -160,14 +160,37 @@ $('.download-button-modal').click(function() {
 
   // changes confirm-download depending on whether or not 
   // what is being downloaded is a simulation result or a model project
-  if(!viewingSimulations)
-  {
-    var message = "Are you sure you want to download the model " + viewingModel["Name"] + "?";
+  if (!viewingSimulations)
+    {
+      // ── PROJECT‐LEVEL download ──
+      if(viewingModel["Name"] === "0248_H_AOCERE_CAS") {
+        // Special handling for model 0248
+        var message = "Do you want to download the reference case or all cases for model 0248_H_AOCERE_CAS?";
+        var dropdownDiv = document.getElementById("putDropDownHere");
+        dropdownDiv.innerHTML = `
+          <select id="folderSelect" style="margin-bottom: 10px;">
+            <option value="reference">Reference version</option>
+            <option value="all">Complete version (all cases)</option>
+          </select>
+        `;
+        
+        downloadFunction = function download() {
+          var selected = document.getElementById("folderSelect").value;
+          var url = pathToFiles + "svprojects/0248_H_AOCERE_CAS/0248_H_AOCERE_CAS_" + selected + ".zip";
+          document.getElementById("iframeForDownload").src = url;
+        };
+      } else {
+        // default project download
+
     
-    sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
+        var message = "Are you sure you want to download the model " + viewingModel["Name"] + "?";
     
-    downloadFunction = function download() {downloadModel(viewingModel)};
-  }
+        sizeWarning.textContent = "Size: " + getSizeIndiv(viewingModel)[1];
+        downloadFunction = function download() {
+          downloadModel(viewingModel);
+        };
+      } 
+    }
   else
   {
     var presentName = simulationResult["Model Image Number"] + "_" + simulationResult["Short Simulation File Name"];
@@ -222,13 +245,23 @@ async function downloadAllModels(){
       listOfModels.push(preservedOrderData[i])
     }
   }
-  //sends to download all models
-  for(var i = 0; i < listOfModels.length; i++)
-  {
-    downloadModel(listOfModels[i]);
+  for (var i = 0; i < listOfModels.length; i++) {
+    const m = listOfModels[i];
+  
+    if (m["Name"] === "0248_H_AOCERE_CAS") {
+      // download only the reference.zip for 0248
+      document.getElementById("iframeForDownload").src =
+        pathToFiles +
+        "svprojects/0248_H_AOCERE_CAS/" +
+        "0248_H_AOCERE_CAS_reference.zip";
+    } else {
+      // default: download the project ZIP
+      downloadModel(m);
+    }
+  
+    // small pause so downloads don’t collide
     await new Promise(r => setTimeout(r, 500));
-  }
-
+  }  
   //selected models not cleared
 
   //resets page
